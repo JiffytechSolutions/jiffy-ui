@@ -1,6 +1,6 @@
 # Ounce
 
-> @cedcommerce-integration/Ounce
+> @cedcommerce-integration/ounce
 
 [![NPM](https://img.shields.io/badge/GIT-Ounce-yellowgreen)](https://github.com/CedCommerce-Integration/Ounce.git) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
