@@ -1,0 +1,83 @@
+.inte-pageHeader {
+  padding-bottom: 3.2rem;
+}
+.inte-pageHeader:not(.inte-pageHeader--onMobile) {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.6rem;
+}
+.inte-pageHeader__titleAndReverseNavigation {
+  display: flex;
+  gap: 1.6rem;
+  align-items: flex-start;
+}
+.inte-pageHeader--onMobile .inte-pageHeader__titleAndReverseNavigation {
+  gap: 0.8rem;
+}
+.inte-pageHeader__titleDescContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.inte-pageHeader--hasTitleBadge {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  align-items: center;
+}
+.inte-pageHeader__title > h1 {
+  color: var(--inte-G800);
+  font-size: 2.4rem;
+  font-weight: var(--weight-bolder);
+  line-height: 3.6rem;
+}
+.inte-pageHeader__title--embededView > h1 {
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+}
+.inte-pageHeader__description {
+  color: var(--inte-G450);
+  font-size: 1.6rem;
+  font-weight: var(--weight-normal);
+  line-height: 2.2rem;
+}
+.inte-pageHeader--fixed {
+  top: 7.2rem;
+  position: sticky;
+  background-color: var(--inte-G0);
+  z-index: var(--inte-Z-6);
+}
+.inte-pageHeader__action {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.inte-pageHeader .inte-svgIcon {
+  min-width: 2rem;
+}
+.inte-AnnouncementBar ~ .inte__Main .inte-pageHeader--fixed {
+  top: 11.2rem;
+}
+/* Mobile case css */
+.inte-pageHeader--onMobile .inte-pageHeader__title > h1 {
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+}
+.inte-pageHeader--onMobile .inte-pageHeader__title--embededView > h1 {
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+.inte-pageHeader__action--atBottom {
+  z-index: var(--inte-Z-4);
+  border-top: 0.1rem solid var(--inte-G40);
+  background-color: var(--inte-G0);
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  padding: 1.2rem;
+  right: 0;
+}
+.inte-pageHeader__action--atBottom > * {
+  flex: 1 1 10rem;
+}

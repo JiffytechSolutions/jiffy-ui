@@ -1,0 +1,146 @@
+.inte-pagination,
+.inte-pagination__perPage,
+.inte-pagination__controls,
+.inte-pagination__buttons,
+.inte-pagination__goPage,
+.inte-pagination__items {
+  display: flex;
+  align-items: center;
+}
+.inte-pagination {
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+  justify-content: space-between;
+  width: 100%;
+}
+/* select  */
+.inte-pagination__select .inte-formElement__control {
+  height: 3.8rem !important;
+  padding: 0.9rem 3.2rem 0.9rem 0.9rem !important;
+  max-width: max-content;
+}
+.inte-pagination__selectItem .inte-select__options .inte-select__item {
+  display: flex;
+  justify-content: center;
+}
+.inte-pagination__selectItem > ul {
+  padding: unset !important;
+}
+.inte-pagination__select .inte-formElement__arrow {
+  border-left: unset !important;
+  right: 0.9rem !important;
+}
+.inte-pagination__select .inte-formElement__value {
+  max-width: unset !important;
+}
+.inte-select__dropdown--onMobile.inte-pagination__selectItem
+  .inte-select__options {
+  height: calc(100vh - 13.9rem) !important;
+}
+.inte-select__dropdown--onMobile.inte-pagination__selectItem
+  .inte-select__options
+  .inte-select__item {
+  justify-content: flex-start;
+}
+.inte-pagination__selectItem .inte-select__itemInner {
+  overflow: unset;
+}
+.inte-pagination__selectItem .inte-select__item {
+  border-radius: unset;
+}
+/* label  */
+.inte-pagination__label {
+  padding-left: 0.8rem;
+  font-weight: var(--weight-normal);
+  font-size: 1.6rem;
+  color: var(--inte-G200);
+}
+
+/* Buttons  */
+.inte-pagination__buttons > button:first-child {
+  margin-right: 1.2rem;
+}
+.inte-pagination__buttons > button:last-child {
+  margin-left: 1.2rem;
+}
+.inte-pagination .inte-btn:focus {
+  box-shadow: none !important;
+}
+.inte-pagination .inte-btn {
+  text-decoration: none !important;
+  transition: none;
+  min-height: 3.8rem;
+  min-width: 3.8rem;
+  font-weight: 400 !important;
+  color: var(--inte-G800);
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+.inte-pagination__dotItems {
+  height: 3.8rem !important;
+  width: 3.8rem !important;
+}
+.inte-pagination__items .inte-btn--primary {
+  color: var(--inte-G10) !important;
+  height: 3.8rem;
+  padding: 0 !important;
+}
+.inte-pagination__items .inte-btn--primary:hover {
+  background-color: var(--inte-button-primary);
+}
+.inte-pagination .inte-btn--narrow {
+  padding: unset !important;
+}
+
+.inte-pagination__items .inte-btn .inte-btn__text {
+  font-weight: var(--weight-normal) !important;
+}
+
+/* dots  */
+.inte-pagination__dotItems {
+  font-size: 1.6rem;
+  font-weight: 400;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Go to Page  */
+.inte-pagination__textField {
+  padding: 0 1.2rem 0 2rem;
+}
+.inte-pagination__goPage
+  .inte-pagination__textField
+  .inte-formElement__textField {
+  width: 4.1rem !important;
+  height: 3.8rem !important;
+  padding-left: 3px !important;
+  padding-right: 3px !important;
+  text-align: center;
+}
+
+.inte-pagination__goPage .inte-btn--textButton:not(.inte-btn--disable) {
+  color: var(--inte-P1000) !important;
+}
+.inte-pagination__goPage
+  .inte-btn--textButton:not(.inte-btn--disable):not(:hover) {
+  color: var(--inte-G450) !important;
+}
+/* showCurrentLastPage */
+.inte-pagination__showCurrentLastPage h3 {
+  color: var(--inte-G200) !important;
+}
+/* nav pagination  */
+.inte-pagination .inte-pagination__controls:first-child {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.inte-pagination
+  .inte-pagination__controls:first-child
+  .inte-pagination__buttons
+  > button:first-child {
+  margin-right: unset !important;
+}

@@ -1,0 +1,94 @@
+import { Story } from "@storybook/react";
+import React from "react";
+import { ProgressCircle, Card } from "../..";
+import { ProgressCircleI } from "../progressCircle";
+
+export default {
+  title: "Components/Behaviour/ProgressCircle",
+  component: ProgressCircle,
+  parameters: {
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-3.0-(Production)?node-id=5547-256332&t=tb1dL4Z7hEk2Cb1x-0",
+    },
+
+  },
+  argTypes: {
+    percentage: {
+      description: "set Percentage of circlebar",
+      control: {
+        type: "number",
+      },
+
+    },
+    customClass: {
+      description: "set CustomClass",
+      control: {
+        type: "text",
+      },
+
+    },
+    size: {
+      description: "Set Type of Skelton",
+      control: {
+        type: "radio",
+        options: ["large", "small"]
+      },
+      defaultValue: "large",
+    },
+    enablePercentage: {
+      description: "enable percentage",
+      control: {
+        type: "boolean",
+      },
+      defaultValue: true,
+    },
+    fontsize: {
+      description: "set fontsize of circlebar",
+      control: {
+        type: "number",
+      },
+      defaultValue: 7,
+    },
+  },
+};
+
+const Template: Story<ProgressCircleI> = (rest: ProgressCircleI) => {
+  return (
+    <Card title="Progress Circle">
+      <ProgressCircle {...rest} />
+    </Card>
+  );
+};
+
+export const Primary = Template.bind({
+  percentage: 10,
+});
+//
+export const ProgressCircleSize: any = Template.bind({});
+ProgressCircleSize.decorators = [
+  () => {
+    return (
+      <Card title="Progress Circle Size">
+        {
+          ["large", "small"].map((items: any) => {
+            return (
+              <ProgressCircle size={items} />
+            )
+          })
+        }
+      </Card>
+    )
+  },
+];
+//Progress CircleWithoutPercentage
+export const ProgressCircleWithoutPercentage: any = Template.bind({});
+ProgressCircleWithoutPercentage.decorators = [
+  () => {
+    return (
+      <Card title="Progress Circle without Percentage Symbol">
+        <ProgressCircle percentage={11} />
+      </Card>
+    )
+  },
+];

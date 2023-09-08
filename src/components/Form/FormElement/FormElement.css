@@ -1,0 +1,26 @@
+.inte-form {
+  display: flex;
+  flex-direction: column;
+}
+.inte-form--horizontal {
+  margin-left: -1.6rem;
+  margin-top: -1.6rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.inte-form--horizontal > .inte-form__item {
+  margin-left: 1.6rem;
+  margin-top: 1.6rem;
+  flex: 1 1 22rem;
+  min-width: 22rem;
+}
+.inte-form--horizontal.inte-form--condensed > .inte-form__item {
+  flex: 1 1 11rem;
+  min-width: 11rem;
+}
+.inte-form__item + .inte-form__item,
+.inte-form + .inte-form {
+  margin-top: 1.6rem;
+}

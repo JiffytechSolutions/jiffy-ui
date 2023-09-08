@@ -1,0 +1,541 @@
+html {
+  scroll-behavior: smooth;
+}
+div[id^="story--components"] > .inte-card {
+  border: 0;
+}
+div#anchor--ounce-button--scroller {
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 250px;
+}
+
+#anchor--ounce-button--scroller .docs-story {
+  padding: 10px;
+}
+
+div#anchor--ounce-button--scroller .css-11xgcgt {
+  display: none;
+}
+
+.story-scroller ul {
+  margin: 0;
+  padding-left: 2rem;
+}
+
+.story-scroller ul li {
+  list-style: disc !important;
+  color: var(--inte-P900);
+  font-size: 1.6rem;
+}
+
+.sbdocs.sbdocs-wrapper .sbdocs-content {
+  position: relative;
+}
+
+/* .sbdocs.sbdocs-wrapper .inte--Badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+} */
+div[id$="--documentation"] .sbdocs.sbdocs-preview.css-tmvzag,
+div[id$="--documentation"] .sbdocs.sbdocs-preview.css-tmvzag>div.docs-story {
+  border: unset;
+  background: unset !important;
+  padding: 1rem;
+}
+
+div[id$="--documentation"] .css-11xgcgt {
+  display: none;
+}
+
+.story-documentation-section {
+  border-bottom: 0.1rem solid #dddddd;
+}
+
+.active+.story-documentation-section-data {
+  padding: 1rem;
+}
+
+.story-documentation-section+.story-documentation-section {
+  margin-top: 1rem;
+}
+
+.story-documentation-section-data {
+  padding: 0 1rem;
+  overflow: hidden;
+  transition: 300ms all linear;
+}
+
+.story-documentation-section:last-child {
+  border-bottom: unset;
+}
+
+.story-documentation-section h3 {
+  position: relative;
+  cursor: pointer;
+  color: var(--inte-P900);
+  font-size: 1.8rem;
+  border-radius: var(--radius-rounded-5);
+  transition: 100ms all linear;
+}
+
+.story-documentation-section h3:hover,
+.story-documentation-section h3.active {
+  background-color: var(--inte-P30);
+}
+
+.story-documentation-section span.story-documentation-heading-arrow {
+  position: absolute;
+  right: 1rem;
+  transition: 300ms all linear;
+}
+
+.story-documentation-section span.down {
+  transform: rotate(180deg);
+}
+
+.story-container {
+  background-color: #dddddd;
+}
+
+/* Does and Donts */
+.story-DoesDonts {
+  display: flex;
+  width: 100%;
+  gap: 1rem;
+  padding-bottom: 4rem;
+}
+
+.story-DoesDonts>div {
+  flex-grow: 1;
+  background-color: var(--inte-G30);
+  padding: 2rem;
+  border-radius: var(--radius-rounded-8);
+  position: relative;
+}
+
+.story-does {
+  border-bottom: 0.4rem solid rgba(19, 234, 0, 1);
+}
+
+.story-does:after,
+.story-donts:after {
+  position: absolute;
+  bottom: -45px;
+  left: 0;
+  font-size: 18px;
+}
+
+.story-does:after {
+  content: "Does";
+  color: rgba(19, 234, 0, 1);
+}
+
+.story-donts:after {
+  content: "Dont's";
+  color: rgba(231, 22, 14, 1);
+}
+
+.story-donts {
+  border-bottom: 0.4rem solid rgba(231, 22, 14, 1);
+}
+
+.py-15 {
+  padding: 1.5rem 0 !important;
+}
+
+.p-10 {
+  padding: 1rem !important;
+}
+
+/* Color Documentation */
+.story-color-documentation {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.6rem;
+  margin-bottom: 2.6rem;
+}
+
+.story-color-documentation h3 {
+  width: 100%;
+  margin-bottom: 1rem;
+}
+
+.story-color-items {
+  flex-basis: 20rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  flex-grow: 1;
+  border: 0.1rem solid #e7e7e7;
+  border-radius: var(--radius-rounded-6);
+  max-width: 21.7rem;
+}
+
+.story-color-aria {
+  height: 12rem;
+  width: 100%;
+  border-top-right-radius: var(--radius-rounded-6);
+  border-top-left-radius: var(--radius-rounded-6);
+}
+
+
+.story-colorCodeWrapper>div {
+  margin: auto;
+  border-radius: var(--radius-rounded-6);
+  transition: 100ms all linear;
+}
+
+.story-colorCodeWrapper>div:hover {
+  background-color: var(--inte-P20);
+}
+
+.story-colorCodeWrapper>div .inte-flex__item:nth-child(2) {
+  opacity: 0;
+  visibility: hidden;
+  transition: 100ms all linear;
+}
+
+.story-colorCodeWrapper>div:hover .inte-flex__item:nth-child(2) {
+  opacity: 1;
+  visibility: visible;
+}
+
+.story-color-box {
+  position: relative;
+}
+
+.story-color-box p {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: unset;
+  transform: translate(-50%, -50%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 1px #dddddd;
+  font-size: 4rem;
+  cursor: default;
+}
+
+/* Page footer fix*/
+.docs-story.css-kdwx3d .inte-pageFooter {
+  position: relative;
+}
+
+/* Storybook Documentation design */
+
+.inte-do-dont--line {
+  height: 2px;
+  width: 100%;
+
+}
+
+.inte-do-dont--line.no {
+  background: #E7160E;
+}
+
+.text--do-dont.no h3 {
+  color: #E7160E;
+}
+
+.inte-do-dont--line.yes {
+  background-color: #13EA00;
+}
+
+.text--do-dont.yes h3 {
+  color: #13EA00 !important;
+  text-align: right;
+}
+
+.break-word--btn button {
+  width: 114px;
+  height: auto;
+}
+
+.storybook-doc--heading {
+  font-size: 3rem;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+.storybook-doc--subheading {
+  color: #474D59 !important;
+  font-size: 2rem;
+}
+
+.storybook-doc--paragraph {
+  font-size: 1.6rem;
+  color: #474D59 !important;
+}
+
+.story-documentation {
+  background: #fff;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+}
+
+/* / Button group / */
+.button--group-hoverState .inte-ButtonGroup button:first-child {
+  background: var(--inte-G40);
+}
+
+.button--group-FocusedState .inte-ButtonGroup button:first-child {
+  box-shadow: 0 0 0 0.1rem var(--inte-G0), 0 0 0 0.3rem var(--inte-B80);
+}
+
+.button--group-clickedState .inte-ButtonGroup button:first-child {
+  box-shadow: 0 0 0 0.1rem var(--inte-G0), 0 0 0 0.3rem var(--inte-B80);
+  background: var(--inte-G30);
+}
+
+/* / Text Link / */
+.txtLink-hoverState .inte-TextLink--Default .inte-TextLink--Label {
+  text-decoration: underline;
+}
+
+.txtLink-hoverState .inte-TextLink--Danger .inte-TextLink--Label {
+  text-decoration: none;
+}
+
+.txtLink-hoverState .inte-TextLink--Warning .inte-TextLink--Label {
+  text-decoration: none;
+}
+
+.txtLink-clickedState .inte-TextLink--Default .inte-TextLink--Label {
+  text-decoration: underline;
+  color: var(--inte-P1100) !important;
+}
+
+.txtLink-clickedState .inte-TextLink--Danger .inte-TextLink--Label {
+  text-decoration: none;
+  color: var(--inte-R400) !important;
+}
+
+.txtLink-clickedState .inte-TextLink--Warning .inte-TextLink--Label {
+  text-decoration: none;
+  color: var(--inte-Y500) !important;
+}
+
+/* / popover / */
+.custom--popover-doc--inner {
+  max-width: 300px;
+  width: 100%;
+  margin: 0px auto;
+}
+
+.custom--popover-doc--inner .inte-card--shadowed {
+  border: 1px solid var(--inte-G40);
+  margin-top: .2rem;
+  border-radius: .6rem;
+}
+
+/* / checkbox / */
+.revert--checkbox .inte-form__checkbox>label {
+  direction: rtl;
+}
+
+.storybook_checkbox,
+.storybook_radio {
+  text-align: center;
+}
+
+.storybook_checkbox.limited_width {
+  width: 250px;
+  text-align: left;
+  margin: 0pc auto;
+}
+
+/* / footer component  / */
+.storybook--footer .inte-pageFooter {
+  position: static;
+}
+
+/* / radio button / */
+.storybook_radio.left--space {
+  padding-left: 2.5rem;
+}
+
+.storybook_radio.manage--width {
+  width: 45%;
+  margin: 0px auto;
+  text-align: left;
+}
+
+.storybook_radio.manage--width.top .inte-form__Radio span.inte__RadioWrap {
+  align-items: flex-start;
+  -webkit-align-items: flex-start;
+}
+
+/* / toggle  / */
+.story--toggle-boxed_layout {
+  width: 70%;
+  margin: 0px auto;
+}
+
+.story--toggle-boxed_layout>.inte-flex>.inte-flex__item {
+  flex: 0 0 100%;
+  width: 100%;
+}
+
+/* / story spinner / */
+.story--spinner-button__size button.inte-btn {
+  width: 150px !important;
+}
+
+/* / skeleton / */
+.story--customCard-skeleton {
+  margin-bottom: 1.6rem;
+  margin-left: -1.6rem;
+  margin-right: -1.6rem;
+}
+
+.story--customCard-skeleton.bottom {
+  margin-top: 2.8rem;
+}
+
+.story--customCard-skeleton hr {
+  border-top: .1rem solid var(--inte-G42);
+  background: transparent !important;
+  height: 0;
+  box-shadow: unset;
+}
+
+.story--customCard__skeleton {
+  max-width: 60%;
+  margin-left: 0;
+  width: 100%;
+}
+
+/* / breadcrumbs / */
+.story--breadcurmbs-item.hide-last>.inte-flex>.inte-flex__item:last-child>.inte-flex>.inte-flex__item:last-child {
+  display: none;
+}
+
+/* input field */
+.storybook--connected-button .inte-form--connectRight button {
+  border: none;
+}
+
+.story--connectedleft-width .inte-form--connectLeft {
+  min-width: 17rem;
+}
+
+#anchor--components-actions-button--documentation .sbdocs-preview .docs-story,
+#anchor--components-actions-buttongroup--documentation .sbdocs-preview .docs-story,
+#anchor--components-actions-textlink--documentation .sbdocs-preview .docs-story,
+#anchor--components-overlays-popover--documentation .sbdocs-preview .docs-story,
+#anchor--components-form-checkbox--documentation .sbdocs-preview .docs-story,
+#anchor--components-layout-pagefooter--documentation .sbdocs-preview .docs-story,
+#anchor--components-form-radio--documentation .sbdocs-preview .docs-story,
+#anchor--components-actions-switcher--documentation .sbdocs-preview .docs-story,
+#anchor--components-form-toggle--documentation .sbdocs-preview .docs-story,
+#anchor--components-behaviour-spinner--documentation .sbdocs-preview .docs-story,
+#anchor--components-layout-skeleton--documentation .sbdocs-preview .docs-story,
+#anchor--components-form-textfield--documentation .sbdocs-preview .docs-story,
+#anchor--components-actions-breadcrumb--documentation .sbdocs-preview .docs-story,
+#anchor--components-actions-actionlists--documentation .sbdocs-preview .docs-story,
+#anchor--components-overlays-modal--documentation .sbdocs-preview .docs-story {
+  background: transparent !important;
+  padding: 0;
+}
+
+div#anchor--components-actions-button--documentation,
+#anchor--components-actions-buttongroup--documentation,
+#anchor--components-actions-textlink--documentation,
+#anchor--components-overlays-popover--documentation,
+#anchor--components-form-checkbox--documentation,
+#anchor--components-layout-pagefooter--documentation,
+#anchor--components-form-radio--documentation,
+#anchor--components-actions-switcher--documentation,
+#anchor--components-form-toggle--documentation,
+#anchor--components-behaviour-spinner--documentation,
+#anchor--components-layout-skeleton--documentation,
+#anchor--components-form-textfield--documentation,
+#anchor--components-actions-breadcrumb--documentation,
+#anchor--components-actions-actionlists--documentation,
+#anchor--components-overlays-modal--documentation {
+  border-top: 6px solid #413BBC;
+  border-left: 1px solid #f1f1f1;
+  border-right: 1px solid #f1f1f1;
+}
+
+.svg-Valign {
+  display: block;
+}
+
+.custom--card-doc-storybook .inte-card {
+  border: 1px solid #E0E1E3;
+}
+
+.custom--card-doc-storybook hr {
+  margin-left: -1.6rem;
+  margin-right: -1.6rem;
+  border-bottom: 1px solid #E0E1E3;
+  border-top: none;
+  box-shadow: none;
+}
+
+h3#documentation {
+  font-size: 3rem;
+  background: #f9f9f9;
+  padding: 7px 10px;
+}
+
+.section-devider {
+  border: none;
+  margin-bottom: 4rem;
+  background: #E0E1E3;
+  height: .1px;
+  margin-top: 4.8rem;
+}
+
+hr.section-devider.sub-section {
+  margin-bottom: 3rem;
+  margin-top: 3.5rem;
+}
+
+.inner_card_custom {
+  margin-top: 1.2rem;
+  pointer-events: none;
+}
+
+.story-documentation .block--section:last-child {
+  margin-bottom: 0;
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.storybook--lists ul.inte__List {
+  list-style: none !important;
+  padding-left: .8rem;
+}
+
+.storybook--lists ul.inte__List li {
+  font-size: 1.6rem;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.storybook--lists ul.inte__List li::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  position: absolute;
+  left: 0;
+  top: 9px;
+  background: #605d5d;
+  border-radius: 50%;
+}
+
+.storybook--lists ul.inte__List li p {
+  color: #706868 !important;
+}
+
+
+.storybook-footer {
+  margin-top: 5rem;
+  margin-bottom: 2rem;
+}

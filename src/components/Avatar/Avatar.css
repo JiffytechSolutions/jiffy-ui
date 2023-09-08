@@ -1,0 +1,119 @@
+.inte-avatar {
+  position: relative;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+}
+.inte-avatar--pointer {
+  cursor: pointer;
+}
+.inte-avatar__text {
+  display: flex;
+  font-weight: bolder;
+  line-height: normal;
+}
+.inte-avatar img {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+/* Avatar with badges */
+.inte-avatar .inte-badge__dot {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+}
+.inte-avatar--large .inte-badge__dot {
+  box-shadow: 0 0 0 3px var(--inte-G0);
+}
+.inte-avatar--medium .inte-badge__dot {
+  box-shadow: 0 0 0 2px var(--inte-G0);
+}
+.inte-avatar--small .inte-badge__dot {
+  box-shadow: 0 0 0 1px var(--inte-G0);
+}
+/* Avatar with badges end*/
+
+/* Avatar size */
+.inte-avatar--large {
+  width: 4.8rem;
+  height: 4.8rem;
+  font-size: 2rem;
+}
+.inte-avatar--medium {
+  width: 3.2rem;
+  height: 3.2rem;
+  font-size: 1.4rem;
+}
+.inte-avatar--small {
+  width: 2.4rem;
+  height: 2.4rem;
+  font-size: 1.2rem;
+}
+/* Avatar size end*/
+
+/* Avatar Colors */
+.inte-avtar--primary {
+  background-color: var(--inte-P30);
+  color: var(--inte-P900);
+}
+.inte-avtar--secondary {
+  background-color: var(--inte-G20);
+  color: var(--inte-G300);
+}
+.inte-avtar--red {
+  background-color: var(--inte-R50);
+  color: var(--inte-R400);
+}
+.inte-avtar--green {
+  background-color: var(--inte-GR50);
+  color: var(--inte-GR300);
+}
+.inte-avtar--yellow {
+  background-color: var(--inte-Y70);
+  color: var(--inte-Y800);
+}
+/* Avatar Colors end */
+/* Loader animation css starts */
+.inte-avatar--animate svg {
+  fill: none;
+  stroke-dashoffset: 136;
+  animation: rotation 6s ease-out infinite alternate;
+  transform: rotate(1567deg);
+}
+.inte-avatar--animate img {
+  width: calc(100% - 15px);
+  height: calc(100% - 15px);
+}
+.inte-avatar--animate.inte-avatar--medium img {
+  width: calc(100% - 12px);
+  height: calc(100% - 12px);
+}
+.inte-avatar--animate.inte-avatar--small img {
+  width: calc(100% - 10px);
+  height: calc(100% - 10px);
+}
+.inte-avatar--animate span {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  border-radius: 50%;
+}
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
+}

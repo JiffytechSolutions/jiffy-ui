@@ -1,0 +1,44 @@
+/* border types */
+.inte-seprator--solid {
+  border-top: 0.1rem solid var(--inte-G40);
+}
+
+.inte-seprator--dotted {
+  border-top: 0.1rem dotted var(--inte-G40);
+}
+
+.inte-seprator--dashed {
+  border-top: 0.1rem dashed var(--inte-G40);
+}
+
+/* border with text  */
+.inte-seprator__textDivider {
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+}
+
+.inte-seprator__textDivider::before,
+.inte-seprator__textDivider::after {
+  content: "";
+  flex-grow: 1;
+}
+.inte-seprator__textDivider.inte-seprator__text--solid::before,
+.inte-seprator__textDivider.inte-seprator__text--solid::after {
+  border-top: 0.1rem solid var(--inte-G40);
+}
+.inte-seprator__textDivider.inte-seprator__text--dotted::before,
+.inte-seprator__textDivider.inte-seprator__text--dotted::after {
+  border-top: 0.1rem dotted var(--inte-G40);
+}
+.inte-seprator__textDivider.inte-seprator__text--dashed::before,
+.inte-seprator__textDivider.inte-seprator__text--dashed::after {
+  border-top: 0.1rem dashed var(--inte-G40);
+}
+.inte-seprator__textDivider::before {
+  margin-right: 1rem;
+}
+
+.inte-seprator__textDivider::after {
+  margin-left: 1rem;
+}

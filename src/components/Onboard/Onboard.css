@@ -1,0 +1,10 @@
+.init-Onboard__Wrapper {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.init-Onboard__Image {
+  padding-bottom: 0.5rem;
+}

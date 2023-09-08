@@ -1,0 +1,262 @@
+/*text alignments*/
+.inte-Align--right {
+  text-align: right !important;
+}
+
+.inte-Align--center {
+  text-align: center !important;
+}
+
+/*text alignments end*/
+
+/*text color*/
+.inte__text--light {
+  color: var(--inte-G450) !important;
+}
+
+.inte__text--dark {
+  color: var(--inte-G800) !important;
+}
+
+.inte__text--positive {
+  color: var(--inte-GR350) !important;
+}
+
+.inte__text--negative {
+  color: var(--inte-R350) !important;
+}
+
+.inte__text--primary {
+  color: var(--inte-P800) !important;
+}
+
+/*text color*/
+
+/*Font weight*/
+.inte__font--light {
+  font-weight: var(--weight-light) !important;
+}
+
+.inte__font--normal {
+  font-weight: var(--weight-normal) !important;
+}
+
+.inte__font--bold {
+  font-weight: var(--weight-bold) !important;
+}
+
+.inte__font--extraBold {
+  font-weight: var(--weight-bolder) !important;
+}
+
+.inte__font--extraBolder {
+  font-weight: var(--weight-extrabolder) !important;
+}
+
+/*Font weight*/
+.inte__text {
+  color: var(--inte-G450);
+  font-size: 1.6rem;
+  line-height: 1.6;
+  font-weight: var(--weight-light);
+  margin: 0;
+}
+
+.inte__pageHeading {
+  font-size: 2.8rem;
+  font-weight: var(--weight-bold);
+  color: var(--inte-G500);
+  line-height: 3.6rem;
+}
+
+.inte__Heading {
+  font-size: 2.6rem;
+  font-weight: var(--weight-bolder);
+  line-height: 1.2;
+}
+
+.inte__Heading,
+.inte__Heading--Medium {
+  line-height: 1.2;
+}
+
+.inte__Heading--Medium {
+  font-size: 2.4rem;
+  font-weight: var(--weight-bolder);
+  line-height: 1.2;
+}
+
+.inte__Subheading {
+  font-size: 2rem;
+  font-weight: var(--weight-normal);
+  color: var(--dark-color);
+  line-height: 1.2;
+}
+
+.inte__text--medium {
+  font-size: 1.8rem;
+  font-weight: var(--weight-bold);
+  line-height: 1.6;
+}
+
+.inte__text--neutral {
+  font-size: 1.6rem;
+  font-weight: var(--weight-normal);
+  line-height: 1.6;
+}
+
+.inte__text--small {
+  font-size: 1.3rem;
+  line-height: 1.6;
+}
+
+.inte__text--extraSmall {
+  font-size: 1.2rem;
+  line-height: 1.6;
+}
+
+.inte__text--uppercase {
+  text-transform: uppercase;
+}
+
+.inte--semibold {
+  font-weight: 600 !important;
+}
+
+.inte--bold {
+  font-weight: 700 !important;
+}
+
+.inte--extrabold {
+  font-weight: 800 !important;
+}
+
+/* Typography  */
+/* heading */
+.inte__Heading-font--xxl {
+  font-size: 2.8rem;
+}
+
+.inte__Heading-font--xl {
+  font-size: 2.7rem;
+}
+
+/* Sub heading */
+.inte__SubHeading-font--large {
+  font-size: 2.5rem;
+}
+
+.inte__SubHeading-font--medium {
+  font-size: 2.2rem;
+}
+
+.inte__SubHeading-font--small {
+  font-size: 1.8rem;
+}
+
+.inte__SubHeading-font--extraSmall {
+  font-size: 1.6rem !important;
+}
+
+/* Paragraph */
+.inte__Paragraph--font--large {
+  font-size: 1.5rem;
+}
+
+.inte__Paragraph--font--medium {
+  font-size: 1.4rem;
+}
+
+.inte__Paragraph--font--small {
+  font-size: 1.3rem;
+}
+
+.inte__Paragraph--font--extraSmall {
+  font-size: 1.2rem;
+}
+
+/* display */
+.inte__Display--font--extraLarge {
+  font-size: 4.3rem;
+}
+
+.inte__Display-font--large {
+  font-size: 3.8rem;
+}
+
+.inte__Display-font--medium {
+  font-size: 3.6rem;
+}
+
+.inte__Display-font--small {
+  font-size: 3.4rem;
+}
+
+.inte__Display-font--extraSmall {
+  font-size: 3.2rem;
+}
+
+/* line Height */
+.inte__LineHeight--0-5 {
+  line-height: 1.4rem;
+}
+
+.inte__LineHeight--1 {
+  line-height: 1.6rem;
+}
+
+.inte__LineHeight--2 {
+  line-height: 2rem;
+}
+
+.inte__LineHeight--3 {
+  line-height: 2.4rem;
+}
+
+.inte__LineHeight--4 {
+  line-height: 2.8rem;
+}
+
+.inte__LineHeight--5 {
+  line-height: 3.2rem;
+}
+
+.inte__LineHeight--6 {
+  line-height: 3.6rem;
+}
+
+.inte__LineHeight--7 {
+  line-height: 4rem;
+}
+
+.inte__LineHeight--8 {
+  line-height: 4.4rem;
+}
+
+.inte__LineHeight--9 {
+  line-height: 4.8rem;
+}
+
+@media screen and (max-width: 768px) {
+
+  /*Font Updates and Spacing*/
+  .inte__pageHeading {
+    font-size: 2.6rem;
+  }
+
+  .inte__Heading {
+    font-size: 2.4rem;
+  }
+}
+
+@media screen and (max-width: 640px) {
+
+  .inte__text--medium,
+  .inte__Heading--Medium {
+    font-size: 1.8rem;
+  }
+
+  .inte__Subheading {
+    font-size: 1.6rem;
+  }
+}

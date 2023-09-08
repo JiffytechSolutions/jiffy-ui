@@ -1,0 +1,152 @@
+/*Badges*/
+.inte-badge,
+.inte-badge__dot {
+  --inte-badgePrimary-color: var(--inte-P900);
+  --inte-badgeSecondary-color: var(--inte-G800);
+  --inte-badgeSucess-color: var(--inte-GR200);
+  --inte-badgeSucessAccent-color: var(--inte-GR300);
+  --inte-badgeError-color: var(--inte-R400);
+  --inte-badgeWarning-color: var(--inte-Y300);
+}
+
+.inte-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--inte-Spacing0-4);
+  text-align: center;
+  border-radius: 1.6rem;
+  font-weight: var(--weight-normal);
+  color: var(--inte-G0);
+  transition: 300ms all linear;
+}
+
+.inte-badge__dot {
+  border-radius: 100%;
+}
+
+/* badge Filled Types */
+.inte-badge--primary {
+  background-color: var(--inte-badgePrimary-color);
+}
+
+.inte-badge--seconadary {
+  background-color: var(--inte-badgeSecondary-color);
+}
+
+.inte-badge--success {
+  background-color: var(--inte-badgeSucess-color);
+}
+
+.inte-badge--error {
+  background-color: var(--inte-badgeError-color);
+}
+
+.inte-badge--warning {
+  background-color: var(--inte-badgeWarning-color);
+  color: var(--inte-G800);
+}
+
+/* badge Accent Types */
+
+.inte-accentBadge--primary {
+  color: var(--inte-badgePrimary-color);
+  background-color: var(--inte-P30);
+}
+
+.inte-accentBadge--seconadary {
+  color: var(--inte-badgeSecondary-color);
+  background-color: var(--inte-G20);
+}
+
+.inte-accentBadge--success {
+  color: var(--inte-badgeSucessAccent-color);
+  background-color: var(--inte-GR50);
+}
+
+.inte-accentBadge--error {
+  color: var(--inte-badgeError-color);
+  background-color: var(--inte-R40);
+}
+
+.inte-accentBadge--warning {
+  color: var(--inte-Y800);
+  background-color: var(--inte-Y50);
+}
+
+/* badge Size */
+.inte-badge--large {
+  padding: 0.4rem 1.6rem;
+  font-size: var(--inte-FS1-6);
+  line-height: var(--inte-LH2-0);
+}
+
+.inte-badge--medium {
+  padding: 0.2rem 1rem;
+  font-size: var(--inte-FS1-4);
+  line-height: var(--inte-LH2-0);
+}
+
+.inte-badge--small {
+  padding: 0.2rem 0.8rem;
+  font-size: var(--inte-FS1-3);
+  line-height: 1.6rem;
+}
+
+/* badge Dot Size */
+.inte-badgeDot--large {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.inte-badgeDot--medium {
+  width: 1rem;
+  height: 1rem;
+}
+
+.inte-badgeDot--small {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+
+/* badge  Icon */
+
+.inte-badge__icon {
+  display: flex;
+}
+
+.inte-badge__content {
+  font-weight: 400;
+  display: inline-block;
+  position: relative;
+  white-space: pre;
+}
+
+/* only icon */
+.inte-badge--onlyIcon.inte-badge--large {
+  height: 2.8rem !important;
+  width: 2.8rem !important;
+  padding: 0px;
+}
+
+.inte-badge--onlyIcon.inte-badge--medium {
+  height: 2.6rem !important;
+  width: 2.6rem !important;
+  padding: 0px;
+}
+
+.inte-badge--onlyIcon.inte-badge--small {
+  height: 2rem !important;
+  width: 2rem !important;
+  padding: 0px;
+}
+
+/* badge with helptext */
+.inte-badge--hasHelp .inte-badge__content .inte-toolTip span:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  border-bottom: 0.1rem dotted;
+  bottom: -1px;
+}

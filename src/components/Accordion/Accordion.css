@@ -1,0 +1,79 @@
+/*Collapsible*/
+.inte-accordion {
+  border-bottom: 0.1rem solid var(--inte-G40);
+  background-color: var(--inte-G0);
+}
+.inte-accordion:last-child {
+  border-bottom: unset;
+}
+.inte-accordion:hover {
+  background-color: var(--inte-G15);
+}
+.inte-accordion--active {
+  background-color: var(--inte-G15);
+}
+.inte-accordion__header {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.6rem;
+  cursor: pointer;
+  gap: 0.8rem;
+  user-select: none;
+}
+.inte-accordion__headerContentWrapper--hasIcon {
+  display: flex;
+  gap: 0.8rem;
+}
+.inte-accordion__headerContentWrapper--hasIcon svg {
+  min-width: 2rem;
+}
+.inte-accordion__headerContentWrapper--hasSubTitle
+  .inte-accordion__headerContent {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.inte-accordion__headerContentWithBadge {
+  display: flex;
+  gap: 0.8rem;
+  align-items: baseline;
+}
+.inte-accordion__subTitle {
+  font-size: 1.6rem;
+  font-weight: var(--weight-normal);
+  line-height: 2.2rem;
+  color: var(--inte-G450);
+}
+.inte-accordion__title {
+  display: block;
+  font-size: 1.6rem;
+  font-weight: var(--weight-bolder);
+  line-height: 2.2rem;
+  color: var(--inte-G800);
+}
+.inte-accordion__expandIcon svg {
+  transform: rotate(0deg);
+  transition: 200ms all linear;
+  transform-origin: center;
+  display: flex;
+}
+.inte-accordion--active .inte-accordion__expandIcon svg {
+  transform: rotate(180deg);
+}
+.inte-accordion__body {
+  max-height: 0;
+  transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+  overflow: hidden;
+}
+.inte-accordion__bodyInner {
+  padding: 0 1.6rem 1.6rem 1.6rem;
+}
+.inte-accordion--active .inte-accordion__body {
+  transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+  height: auto;
+  max-height: 9999px;
+}
+.inte-accordion__body > * {
+  word-break: break-word;
+}
+/*Collapsible end*/

@@ -1,0 +1,23 @@
+.inte-sideBar__store {
+  display: flex;
+  padding: 1.2rem 1.6rem;
+  justify-content: space-between;
+  border: 0.1rem solid var(--inte-G40);
+  border-radius: 0.8rem;
+  align-items: center;
+}
+
+.inte-sideBar__storeName {
+  color: var(--inte-G800);
+}
+
+.inte-sideBar__storeId {
+  font-weight: var(--weight-normal);
+  font-size: var(--inte-FS1-3);
+  line-height: var(--inte-LH2-0);
+  color: var(--inte-G300);
+}
+
+.wrapper-white {
+  background-color: white;
+}

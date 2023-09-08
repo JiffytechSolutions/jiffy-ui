@@ -1,0 +1,25 @@
+.inte-marquee__container {
+    overflow: hidden;
+    display: flex;
+  }
+  
+  .inte-marquee {
+    white-space: nowrap;
+    display: inline-block;
+  }
+  
+  .inte-marquee--child {
+    margin-left: 1rem;
+  }
+
+  .inte-marquee--hasFullView .inte-marquee {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .inte-marquee--hasFullView .inte-marquee:hover {
+    /* white-space: unset; */
+    overflow: unset;
+    text-overflow: unset;
+  }

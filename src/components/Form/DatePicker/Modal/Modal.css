@@ -1,0 +1,49 @@
+.inte-timePicker__modal {
+    position: absolute;
+    inset: 0;
+    z-index:1000000;
+    height: 28.3rem;
+    top:calc(50% - 13.25rem);
+    margin: 0 2rem;
+    border-radius: 0.6rem;
+    background-color: var(--inte-G0);
+}
+
+.inte-timePicker__modal .inte-timePicker__header {
+    border-top-left-radius: 0.6rem;
+    border-top-right-radius: 0.6rem;
+}
+
+.inte-timePicker__modal .inte-timePicker__lists {
+    padding: 1.6rem;
+}
+
+.inte-timePicker__modal .inte-timePicker__lists > ul {
+    max-height: 12rem;
+    flex-grow: 1;
+    overflow: hidden auto;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    scrollbar-width: none;  /* Firefox */
+}
+
+.inte-timePicker__modal .inte-timePicker__lists > ul::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.inte-timePicker__modal .inte-timePicker__item  {
+    width: unset;
+    height: 4rem;
+}
+
+.inte-timePicker__modal .inte-timePicker__lists > ul::after , 
+.inte-timePicker__modal .inte-timePicker__lists > ul::before {
+    height: 4rem;
+}
+
+.inte-timePicker__modal__backdrop {
+    backdrop-filter: blur(1px);
+    background: var(--inte-overlay);
+    position: fixed;
+    inset: 0 0 0 0;
+    z-index: var(--inte-Z-8);
+}

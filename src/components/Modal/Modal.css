@@ -1,0 +1,295 @@
+.inte-modal__container {
+  position: fixed;
+  z-index: var(--inte-Z-9);
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.inte-modal__dialog {
+  position: relative;
+  width: 100%;
+  max-height: calc(100% - 6rem);
+  background: var(--inte-G0);
+  box-shadow: 0px 20px 25px -5px rgba(16, 24, 40, 0.1),
+    0px 8px 10px -6px rgba(16, 24, 40, 0.1);
+  z-index: var(--inte-Z-8);
+  border: 0.1rem solid var(--inte-G40);
+  border-radius: var(--radius-rounded-6);
+  margin: 0 auto;
+}
+.inte-modal__dialog--small {
+  max-width: 45rem;
+}
+.inte-modal__dialog--medium {
+  max-width: 60rem;
+}
+.inte-modal__dialog--large {
+  max-width: 90rem;
+}
+.inte-modal__dialog--extraLarge {
+  max-width: 120rem;
+}
+.inte-modal--in .inte-modal__noMobileDevice .inte-modal__dialog {
+  -webkit-animation: ModalAnimationIn 100ms linear forwards;
+  animation: ModalAnimationIn 100ms linear forwards;
+}
+.inte-modal--out .inte-modal__noMobileDevice .inte-modal__dialog {
+  -webkit-animation: ModalAnimationOut 100ms linear forwards;
+  animation: ModalAnimationOut 100ms linear forwards;
+}
+.inte-modal__header {
+  display: flex;
+  align-items: center;
+  padding: 1.6rem;
+  border-bottom: 0.1rem solid var(--inte-G40);
+  position: relative;
+  z-index: 1;
+}
+.inte-modal__headerTitle,
+.inte-modal__headerTitle span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.inte-modal__headerTitle {
+  flex: 1 1;
+}
+.inte-modal__headerTitle--hasIcon {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.inte-modal .inte-svgIcon {
+  min-width: 2rem;
+}
+.inte-modal__headerIcon {
+  display: flex;
+}
+.inte-modal__headerTitle span {
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+  font-weight: var(--weight-bolder);
+  color: var(--inte-G800);
+}
+.inte-modal__header button {
+  background-color: var(--inte-transparent);
+}
+.inte-modal__header button:hover {
+  background-color: var(--inte-G30);
+}
+.inte-modal__header button:active {
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.inte-modal__body {
+  padding: 1.8rem 1.6rem;
+  overflow: auto;
+}
+.inte-modal__footer {
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+  width: 100%;
+  padding: 1.6rem;
+  border-top: 0.1rem solid var(--inte-G40);
+  position: relative;
+  z-index: 1;
+}
+.inte-modal__footerContent {
+  width: 100%;
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+.inte-modal__footerContentActions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: space-between;
+}
+.inte-modal__footerContent--fill {
+  justify-content: space-between;
+}
+.inte-modal__footerContent--end {
+  justify-content: flex-end;
+}
+.inte-modal--in .inte-modal__noMobileDevice + .inte-modal__backDrop {
+  animation: ModalAnimationBackdropIn 100ms linear forwards;
+}
+.inte-modal--out .inte-modal__noMobileDevice + .inte-modal__backDrop {
+  animation: ModalAnimationBackdropOut 100ms linear forwards;
+}
+.inte-modal__noMobileDevice + .inte-modal__backDrop {
+  position: fixed;
+  z-index: var(--inte-Z-8);
+  backdrop-filter: blur(0.1rem);
+  inset: 0 0 0 0;
+  background-color: var(--p-backdrop, rgba(33, 43, 54, 0.4));
+}
+.inte-modal--hasOtpFooter .inte-formElement__textField {
+  width: 4.6rem;
+}
+/* Mobile device css */
+.inte-modal__container.inte-modal__mobileDevice {
+  justify-content: end;
+}
+.inte-modal__mobileDevice .inte-modal__dialog .inte-modal__header {
+  padding: 1.8rem 2.4rem;
+}
+.inte-modal__mobileDevice .inte-modal__dialog .inte-modal__body {
+  padding: 2.4rem;
+  max-height: calc(100vh - 15rem);
+}
+.inte-modal__handleBar {
+  position: absolute;
+  top: -1.5rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 7.8rem;
+  background-color: var(--inte-G40);
+  height: 0.4rem;
+  border-radius: 2.2rem;
+}
+.inte-modal__mobileDevice .inte-modal__footerContentActions {
+  width: 100%;
+}
+/* mobile device css end */
+/*Modal end*/
+@keyframes ModalAnimationIn {
+  100% {
+    margin-top: 0;
+    -webkit-transform: scale(1, 1);
+    transform: scale(1);
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
+  0% {
+    margin-top: -1rem;
+    -webkit-transform: scale(0.9, 0.9);
+    transform: scale(0.9);
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes ModalAnimationIn {
+  100% {
+    margin-top: 0;
+    -webkit-transform: scale(1, 1);
+    transform: scale(1);
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
+  0% {
+    margin-top: -1rem;
+    -webkit-transform: scale(0.9, 0.9);
+    transform: scale(0.9);
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes ModalAnimationOut {
+  100% {
+    margin-top: -1rem;
+    -webkit-transform: scale(0.9, 0.9);
+    transform: scale(0.9);
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+  0% {
+    margin-top: 0;
+    -webkit-transform: scale(1, 1);
+    transform: scale(1);
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes ModalAnimationOut {
+  100% {
+    margin-top: -1rem;
+    -webkit-transform: scale(0.9, 0.9);
+    transform: scale(0.9);
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+  0% {
+    margin-top: 0;
+    -webkit-transform: scale(1, 1);
+    transform: scale(1);
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
+}
+
+@keyframes ModalAnimationBackdropIn {
+  100% {
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
+  0% {
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes ModalAnimationBackdropIn {
+  100% {
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
+  0% {
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes ModalAnimationBackdropOut {
+  100% {
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+  0% {
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
+}
+
+@-webkit-keyframes ModalAnimationBackdropOut {
+  100% {
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+  0% {
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
+}
+/* Animation On Mobile */
+@keyframes ModalAnimationInY {
+  0% {
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes ModalAnimationOutY {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+/* optional  */
+.inte-modal__mobileDevice + .inte-modal__backDrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: #00000054;
+}

@@ -1,0 +1,27 @@
+.inte-sortable {
+  padding: 1.6rem;
+  max-height: 40rem;
+  overflow: auto;
+}
+
+.inte-sortable__wrapper {
+  margin: 0;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
+}
+.inte-sortable__item {
+  border: 1px dashed transparent;
+  cursor: pointer;
+}
+.inte-sortable--horizontal {
+  display: flex;
+  flex-direction: row;
+  overflow: auto;
+}
+.inte-sortable__item--active {
+  box-shadow: 0 15px 30px rgb(0 0 0 / 20%);
+  border: 1px dashed var(--inte-P1000);
+  cursor: move;
+  opacity: 0.8;
+}

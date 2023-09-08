@@ -1,0 +1,240 @@
+input:placeholder-shown {
+  text-overflow: ellipsis;
+}
+
+.inte-formElement__control {
+  height: auto;
+  border: 0.1rem solid var(--inte-G40);
+  background-color: var(--inte-G0);
+  border-radius: var(--radius-rounded-6);
+  padding: 1rem 1.2rem;
+  width: 100%;
+  position: relative;
+  font-size: 1.6rem;
+  font-weight: var(--weight-normal);
+  color: var(--inte-G800);
+  outline: unset;
+  line-height: 1.429;
+  transition: 100ms box-shadow linear, 100ms border linear;
+  -webkit-transition: 100ms box-shadow linear, 100ms border linear;
+  -moz-transition: 100ms box-shadow linear, 100ms border linear;
+  user-select: none;
+}
+
+.inte-formElement__control:hover {
+  border-color: var(--inte-G50);
+}
+
+.inte-formElement__inner {
+  position: relative;
+}
+
+.inte-formElementtextField--focus .inte-formElement__control {
+  box-shadow: 0 0 0 3px var(--inte-P30);
+  border-color: var(--inte-P900);
+  background-color: var(--inte-P20);
+}
+
+/* Helper text */
+.inte-formElement__itemHelp {
+  font-size: 1.6rem;
+  color: var(--inte-G300);
+  margin-top: 0.8rem;
+  display: block;
+  line-height: 2.2rem;
+}
+
+.inte-formElement__itemHelp--hasHelpIcon {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+}
+
+/* Helper Text End */
+
+/* Loading State */
+.inte-formElement--loading .inte-formElement--loading {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.inte-formElement--loading .inte-formElement--clear {
+  display: none !important;
+}
+
+/* Loading state end */
+
+/* Clear Button Case */
+.inte-formElement__inner .inte-formElement--clear {
+  position: absolute;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Clear Button Case end */
+
+/* Error case */
+
+.inte-formElement--error .inte-formElement__control {
+  border: 1px solid var(--inte-R300) !important;
+}
+
+.inte-formElement--error .inte-formElement__control:focus {
+  box-shadow: 0px 0px 0px 3px var(--inte-R50);
+  background-color: var(--inte-R30);
+}
+
+.inte-formElement--error .inte-formElement__itemHelp--hasHelpIcon svg {
+  stroke: var(--inte-R400);
+}
+
+.inte-formElement--error .inte-formElement__itemHelp {
+  color: var(--inte-R400);
+  animation: movehelp 0.5s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* Error case end */
+
+/* Warning case */
+.inte-formElement--warning .inte-formElement__control {
+  border: 1px solid var(--inte-Y300) !important;
+}
+
+.inte-formElement--warning .inte-formElement__control:focus {
+  box-shadow: 0px 0px 0px 4px var(--inte-Y50);
+  background-color: var(--inte-Y45);
+}
+
+.inte-formElement--warning .inte-formElement__itemHelp {
+  color: var(--inte-Y300) !important;
+}
+
+/* Warning case end */
+
+/* Success case */
+
+.inte-formElement--success .inte-formElement__control {
+  border: 1px solid var(--inte-GR300) !important;
+}
+
+.inte-formElement--success .inte-formElement__control:focus {
+  box-shadow: 0px 0px 0px 3px var(--inte-GR50);
+  background-color: var(--inte-GR40);
+}
+
+.inte-formElement--success .inte-formElement__itemHelp {
+  color: var(--inte-GR300);
+}
+
+/* Success case end */
+
+.inte-formElement .inte-form__label {
+  line-height: 2rem;
+  margin-bottom: 0.8rem !important;
+  font-size: 1.6rem !important;
+  font-weight: var(--weight-normal) !important;
+  color: var(--inte-G800) !important;
+  display: inline-block;
+  word-break: break-word;
+}
+
+.inte--required:after {
+  content: "*";
+  margin-left: 0.5rem;
+  color: var(--inte-R200);
+}
+
+.inte-formElement--disabled .inte-formElement__inner {
+  pointer-events: none;
+}
+
+.inte-formElement--disabled .inte-formElement__inner .inte-formElement__control {
+  border-color: var(--inte-G40);
+  color: var(--inte-G50);
+}
+
+.inte-formElement--disabled .inte-formElement__inner .inte-formElement__innericPrefix,
+.inte-formElement--disabled .inte-formElement__inner .inte-formElement__innericSuffix {
+  color: var(--inte-G50);
+}
+
+.inte-formElement--disabled .inte-formElement__inner .inte-formElement--clear svg rect {
+  fill: var(--inte-G30);
+}
+
+.inte-formElement--disabled .inte-formElement__inner .inte-formElement--clear svg path {
+  fill: var(--inte-G30);
+}
+
+.inte-formElement--disabled .inte-formElement__inner .inte-formElement__innericPrefix,
+.inte-formElement--disabled .inte-formElement__inner .inte-formElement__innericSuffix {
+  color: var(--inte-G50);
+}
+
+.inte-formElement--disabled .inte-formElement__inner .inte-formElement--clear svg rect {
+  fill: var(--inte-G50);
+}
+
+.inte-formElement__inner:focus,
+.inte-formElement__inner:active {
+  outline: none;
+}
+
+/* Animations */
+@keyframes movehelp {
+
+  10%,
+  90% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-6px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(6px, 0, 0);
+  }
+}
+
+@-webkit-keyframes movehelp {
+
+  10%,
+  90% {
+    transform: translate3d(-2px, 0, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: translate3d(-6px, 0, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate3d(6px, 0, 0);
+  }
+}
+
+/* 
+use case document + test case + prd + brd
+*/

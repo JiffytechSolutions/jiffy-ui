@@ -1,0 +1,21 @@
+.inte-buttonGroup {
+    display: inline-flex;
+    gap: 1.2rem;
+}
+
+.inte-buttonGroup--segmented {
+    gap: 0;
+}
+
+.inte-buttonGroup--segmented>.inte-btn:not(:last-child),
+.inte-buttonGroup--segmented>.inte-actionList:not(:last-child) .inte-btn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.inte-buttonGroup--segmented>.inte-btn:not(:first-child),
+.inte-buttonGroup--segmented>.inte-actionList:not(:first-child) .inte-btn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    margin-left: -1px;
+}

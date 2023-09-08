@@ -1,0 +1,10 @@
+/* Action Items Css */
+.inte-ActionIon * {
+  transition: 200ms all linear;
+}
+.inte-ActionIon:hover rect {
+  fill: var(--inte-G50);
+}
+.inte-ActionIon:active rect {
+  fill: var(--inte-G70);
+}

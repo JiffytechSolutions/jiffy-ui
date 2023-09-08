@@ -1,0 +1,47 @@
+.inte-avatarGroup {
+    display: flex;
+    align-items: center;
+}
+
+.inte-avatarGroup__item,
+.inte-avatarGroup__itemWrapper {
+    display: flex;
+}
+
+.inte-avatarGroup__item .inte--avatar {
+    border: 0.2rem solid var(--inte-G0);
+}
+
+/* avatar group sizes  */
+
+.inte-avtarGroup--large .inte-avatarGroup__item {
+    margin-left: -1.6rem;
+}
+
+.inte-avtarGroup--medium .inte-avatarGroup__item {
+    margin-left: -1.0rem;
+}
+
+.inte-avtarGroup--small .inte-avatarGroup__item {
+    margin-left: -0.8rem;
+}
+
+.inte-avtarGroup--small .inte-avatar {
+    width: 2.4rem !important;
+    height: 2.4rem !important;
+
+}
+
+.inte-avtarGroup--medium .inte-avatar {
+    width: 3.2rem !important;
+    height: 3.2rem !important;
+}
+
+.inte-avtarGroup--large .inte-avatar {
+    width: 4.8rem!important;
+    height: 4.8rem!important;
+}
+
+.inte-avatarGroup__item .inte-popover--wrapper {
+    cursor: pointer;
+}

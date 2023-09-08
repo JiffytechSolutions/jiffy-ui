@@ -1,0 +1,41 @@
+.inte-thumbnail__wrapper {
+  --inte-thumbnailExtraLarge: 8.0rem;
+  --inte-thumbnailLarge: 6.4rem;
+  --inte-thumbnailMedium: 4.8rem;
+  --inte-thumbnailSmall: 3.2rem;
+  --inte-thumbnailExtraSmall: 2.4rem;
+  display: inline-flex;
+  border: 0.1rem solid var(--inte-G40);
+  overflow: hidden;
+}
+
+/* thumnail Sizes */
+.inte-thumbnail--medium {
+  height: var(--inte-thumbnailMedium);
+  width: var(--inte-thumbnailMedium);
+  border-radius: var(--radius-rounded-6);
+}
+
+.inte-thumbnail--small {
+  height: var(--inte-thumbnailSmall);
+  width: var(--inte-thumbnailSmall);
+  border-radius: var(--radius-rounded-4);
+}
+
+.inte-thumbnail--large {
+  height: var(--inte-thumbnailLarge);
+  width: var(--inte-thumbnailLarge);
+  border-radius: var(--radius-rounded-6);
+}
+
+.inte-thumbnail--extraLarge {
+  height: var(--inte-thumbnailExtraLarge);
+  width: var(--inte-thumbnailExtraLarge);
+  border-radius: var(--radius-rounded-8);
+}
+
+.inte-thumbnail--extraSmall {
+  height: var(--inte-thumbnailExtraSmall);
+  width: var(--inte-thumbnailExtraSmall);
+  border-radius: var(--radius-rounded-2);
+}

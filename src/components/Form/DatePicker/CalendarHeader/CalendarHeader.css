@@ -1,0 +1,83 @@
+.inte-calendarHeader {
+    border-bottom: 0.1rem solid var(--inte-G40);
+}
+
+.inte-popover__mobileDevice .inte-calendarHeader {
+    border-top: 0;
+}
+
+.inte-calendarHeader__date {
+    cursor: pointer;
+}
+
+.inte-calendarHeader__selectedDates {
+    display: flex;
+    align-items: center;
+    padding: 2rem 2rem 0.8rem;
+    gap:0.8rem;
+    font-weight: var(--weight-bolder);
+    color:var(--inte-G400);
+    line-height: var(--inte-LH2-4);
+}
+
+.inte-calendarHeader__selectedDates > span {
+    font-size:  var(--inte-FS2-6);
+}
+
+.inte-calendarHeader__date--active {
+    color: var(--inte-G800);
+}
+
+.inte-calendarHeader__controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem;
+}
+
+.inte-calendarHeader__prevControls , 
+.inte-calendarHeader__showDetail , 
+.inte-calendarHeader__nextControls {
+    display: flex;
+    gap:0.4rem;
+}
+
+.inte-calendarHeader__showDetail {
+    justify-content: center;
+    gap: 1.6rem;
+}
+
+.inte-calendarHeader__nextControls {
+   justify-content: flex-end;
+}
+
+.inte-calendarHeader__prevControls {
+    justify-content: flex-start;
+}
+
+.inte-calendarHeader__currDetails {
+    display: flex;
+    align-items: center;
+}
+
+.inte-calendarHeader__firstCalanderDetails ,
+.inte-calendarHeader__secondCalanderDetails {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.inte-calendarHeader__showDetail:has(.inte-calendarHeader__firstCalanderDetails) {
+    flex-grow: 1;
+    position: relative;
+}
+
+.inte-calendarHeader__showDetail:has(.inte-calendarHeader__secondCalanderDetails){
+    justify-content: space-between;
+    padding: 0 8rem;
+}
+
+.inte-calendarHeader__currDetails--noBack {
+    justify-content: space-between;
+    width: 100%;
+}

@@ -1,0 +1,27 @@
+.inte-breadCrumb > ul {
+  display: flex;
+  gap: 0.4rem;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 0;
+}
+.inte-breadCrumb__item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+.inte-breadCrumb__item.inte-breadCrumb__item--active span {
+  color: var(--inte-G200);
+}
+.inte-breadCrumb__item > span {
+  font-size: 1.4rem;
+  line-height: 1.6rem;
+  font-weight: var(--weight-normal);
+  color: var(--inte-G800);
+  max-width: 15rem;
+  text-overflow: ellipsis;
+}
+.inte-breadCrumb :not(:last-child) span:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}

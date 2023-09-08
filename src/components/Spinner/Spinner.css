@@ -1,0 +1,59 @@
+.inte-spinner {
+  -moz-animation: rotation 1s infinite linear;
+  -o-animation: rotation 1s infinite linear;
+  -webkit-animation: rotation 0.75s linear infinite;
+  animation: rotation 0.75s linear infinite;
+  border-radius: 50%;
+  border-left: 0.3rem solid var(--inte-G40);
+  border-width: 0.3rem;
+  border-style: solid;
+}
+.inte-spinner--large {
+  height: 4.8rem;
+  width: 4.8rem;
+}
+.inte-spinner--medium,
+.inte-spinner--small {
+  height: 2rem;
+  width: 2rem;
+  border-width: 0.1rem !important;
+}
+.inte-spinner--small {
+  height: 1.6rem;
+  width: 1.6rem;
+}
+.inte-spinner--default {
+  border-top-color: var(--inte-G800);
+  border-right-color: var(--inte-G800);
+  border-bottom-color: var(--inte-G800);
+}
+.inte-spinner--danger {
+  border-top-color: var(--inte-R200);
+  border-right-color: var(--inte-R200);
+  border-bottom-color: var(--inte-R200);
+}
+.inte-spinner--info {
+  border-top-color: var(--inte-B80);
+  border-right-color: var(--inte-B80);
+  border-bottom-color: var(--inte-B80);
+}
+.inte-spinner--primary {
+  border-top-color: var(--inte-P900);
+  border-right-color: var(--inte-P900);
+  border-bottom-color: var(--inte-P900);
+}
+@keyframes rotation {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes rotation {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes rotation {
+  to {
+    transform: rotate(360deg);
+  }
+}

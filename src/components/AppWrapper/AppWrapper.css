@@ -1,0 +1,128 @@
+.inte-appWrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.inte-sideBar--active .inte-main {
+  left: 10rem;
+}
+
+.inte-appWrapper .inte-dataTable__fixHeader--handler ,
+.inte-appWrapper .inte-tabs--hasScrollSpy .inte-tabsList {
+  top: calc(
+    var(--anouncementBarHeight) + var(--appBarHeight) + var(--pageHeaderHeight)
+  );
+}
+
+.inte-appWrapper .inte-appBar--stickyTop {
+  top: var(--anouncementBarHeight);
+}
+
+.inte-appWrapper .inte-sideBar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  transform: translateX(-28rem);
+}
+
+.inte-appWrapper.inte-sideBar--active .inte-sideBar {
+  transform: translateX(0);
+}
+
+.inte-appWrapper.inte-sideBar--active:before {
+  position: fixed;
+  content: "";
+  inset: 0 0 0 0;
+  background-color: var(--p-backdrop, rgba(33, 43, 54, 0.4));
+  z-index: var(--inte-Z-8);
+  backdrop-filter: blur(0.1rem);
+  top: 0;
+}
+
+.inte-appWrapper .inte-pageHeader {
+  top: calc(var(--anouncementBarHeight) + var(--appBarHeight));
+}
+
+.inte-appWrapper.inte-sideBar--active:not(.inte-appWrapper--embeddedView)
+  .inte-main {
+  margin-top: var(--anouncementBarHeight);
+}
+
+.inte-appWrapper.inte-sideBar--active .inte-sideBar__closeButton {
+  transform: translateX(0);
+  top : calc(var(--anouncementBarHeight) + 1rem);
+  z-index: 9999;
+}
+
+.inte-main {
+  margin-top: var(--anouncementBarHeight);
+  transition: all 0.3s ease-in-out;
+  padding:3.2rem;
+  margin-bottom: var(--pageBottomAction);
+}
+
+.inte-appWrapper .inte-pageFooter {
+  margin-top: auto;
+  position: relative;
+  bottom: var(--pageBottomAction);
+}
+
+body:has(.inte-sheet__backdrop) .inte-sideBar {
+  z-index: 0;
+}
+
+@media screen and (min-width: 992px) {
+  .inte-appWrapper.inte-sideBar--active:not(
+      .inte-appWrapper--embeddedView
+    )::before {
+    content: none;
+  }
+
+  .inte-appWrapper.inte-sideBar--active:not(.inte-appWrapper--embeddedView)
+    .inte-pageFooter,
+  .inte-appWrapper.inte-sideBar--active:not(.inte-appWrapper--embeddedView)
+    .inte-main {
+    margin-left: 28rem;
+  }
+
+  .inte-appWrapper.inte-sideBar--active:not(.inte-appWrapper--embeddedView)
+    .inte-appBar--container {
+    margin-left: 28rem;
+    width: calc(100% - 28rem);
+  }
+
+  .inte-sideBar--active:not(.inte-appWrapper--embeddedView) .inte-main {
+    transform: none;
+  }
+
+  .inte-appWrapper:not(.inte-appWrapper--embeddedView) .inte-sideBar ,
+  .inte-appWrapper.inte-sideBar--active:not(.inte-appWrapper--embeddedView)::after {
+    top:var(--anouncementBarHeight)
+  }
+
+}
+
+@media screen and (max-width: 991px) {
+  .inte-main {
+    padding: 3.2rem 2rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .inte-main {
+    padding: 1.6rem 1.6rem;
+  }
+
+  .inte-appWrapper .inte-appBar--container {
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .inte-main {
+    margin-top: var(--anouncementBarHeight);
+  }
+}

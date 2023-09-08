@@ -1,0 +1,254 @@
+.inte-sideBar {
+  border-right: 0.1rem solid var(--inte-G40);
+  width: 28rem;
+  padding: 2.4rem 1.6rem 0 1.6rem;
+  color: var(--inte-G450);
+  background-color: var(--inte-G0);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+  z-index: var(--inte-Z-8);
+  /* min-height: 100vh; */
+}
+
+.inte-sideBar__logo {
+  margin-bottom: 3.6rem;
+}
+
+.inte-sideBar__connectTop {
+  margin-bottom: 2rem;
+}
+
+.inte-sideBar__sectionList {
+  position: relative;
+  padding-bottom: var(--footerHeight);
+  flex-grow: 1;
+}
+.inte-sideBar__title {
+  padding: 0.8rem 1.6rem;
+  font-size: var(--inte-FS1-4);
+  font-weight: var(--weight-normal);
+  line-height: var(--inte-LH2-0);
+}
+.inte-sideBar__list > .inte-sideBar__listItem {
+  padding-left: 0.8rem;
+}
+
+.inte-sideBar__itemBody {
+  border-radius: 0.6rem;
+}
+
+.inte-sideBar__list > .inte-sideBar__listItem > .inte-sideBar__itemBody {
+  padding: 1.2rem 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  cursor: pointer;
+}
+
+.inte-sideBar__Icon {
+  min-width: 2rem;
+  min-height: 2rem;
+}
+
+.inte-sideBar__label {
+  font-weight: var(--weight-bolder);
+  font-size: var(--inte-FS1-6);
+  line-height: var(--inte-LH2-2);
+}
+
+.inte-sideBar__linkBody,
+.inte-sideBar__Icon,
+.inte-sideBar__badge,
+.inte-sideBar__label {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.inte-sideBar__Icon svg {
+  stroke: var(--inte-G450);
+  color: var(--inte-G450);
+}
+
+.inte-sideBar__list,
+.inte-sideBar__childList {
+  margin-bottom: 0;
+}
+
+.inte-sideBar__childList {
+  max-height: 0;
+  transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+  overflow: hidden;
+}
+
+.inte-sideBar__listItem--expandable--active .inte-sideBar__childList {
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+  height: auto;
+  max-height: 9999px;
+}
+
+.inte-sideBar__itemBody:hover {
+  background-color: var(--inte-P20);
+}
+
+.inte-sideBar__childList .inte-sideBar__itemBody:hover {
+  background-color: unset;
+}
+
+.inte-sideBar__childList .inte-sideBar__label {
+  color: var(--inte-G300);
+}
+
+.inte-sideBar__childList .inte-sideBar__itemBody:hover .inte-sideBar__label {
+  color: var(--inte-G450);
+}
+
+.inte-sideBar__childList .inte-sideBar__itemBody:hover::before {
+  background-color: var(--inte-G450);
+}
+
+.inte-sideBar__list
+  > .inte-sideBar__listItem--active
+  > .inte-sideBar__itemBody {
+  background-color: var(--inte-P25);
+  position: relative;
+}
+
+.inte-sideBar__list
+  > .inte-sideBar__listItem--active
+  > .inte-sideBar__itemBody::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 0.4rem;
+  left: -0.8rem;
+  top: 0;
+  border-radius: 0 0.6rem 0.6rem 0;
+  background-color: var(--inte-P900);
+}
+
+.inte-sideBar__list
+  > .inte-sideBar__listItem--active
+  > .inte-sideBar__itemBody
+  .inte-sideBar__label {
+  color: var(--inte-P900);
+}
+
+.inte-sideBar__list
+  > .inte-sideBar__listItem--active
+  > .inte-sideBar__itemBody
+  .inte-sideBar__Icon
+  svg {
+  stroke: var(--inte-P900);
+  color: var(--inte-P900);
+}
+
+.inte-sideBar__childList .inte-sideBar__listItem--active .inte-sideBar__label {
+  color: var(--inte-P900) !important;
+}
+
+.inte-sideBar__childList
+  .inte-sideBar__listItem--active
+  .inte-sideBar__itemBody::before,
+.inte-sideBar__listItem--active .inte-sideBar__expandIcon svg:first-child,
+.inte-sideBar__listItem--active .inte-sideBar__expandIcon svg:last-child {
+  background-color: var(--inte-P900) !important;
+}
+
+.inte-sideBar__expandIcon {
+  position: relative;
+  width: 2rem;
+  height: 2rem;
+}
+.inte-sideBar__expandIcon svg:first-child,
+.inte-sideBar__expandIcon svg:last-child {
+  content: "";
+  position: absolute;
+  width: 0.2rem;
+  height: 1.2rem;
+  background-color: var(--inte-G450);
+  left: 0.9rem;
+  transition: all 0.3s ease-in;
+  top: calc(50% - 0.6rem);
+}
+
+.inte-sideBar__expandIcon svg:first-child {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+.inte-sideBar__expandIcon.inte-sideBar__expandIcon--active svg:last-child {
+  transform: rotate(90deg);
+  transition: all 0.3s ease-in-out;
+  background-color: var(--inte-G800);
+}
+.inte-sideBar__expandIcon.inte-sideBar__expandIcon--active svg:first-child {
+  opacity: 0;
+  transform: rotate(270deg);
+  transition: all 0.3s ease-in-out;
+}
+
+.inte-sideBar__listItem--expandable--active
+  > .inte-sideBar__itemBody
+  .inte-sideBar__label {
+  color: var(--inte-G800);
+}
+
+.inte-sideBar__listItem--expandable--active
+  > .inte-sideBar__itemBody
+  .inte-sideBar__Icon
+  svg {
+  stroke: var(--inte-G800);
+  color: var(--inte-G800);
+}
+
+.inte-sideBar__childList .inte-sideBar__itemBody {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  position: relative;
+  padding: 1rem 1.6rem;
+  cursor: pointer;
+}
+
+.inte-sideBar__childList .inte-sideBar__itemBody .inte-sideBar__linkBody {
+  margin-left: 3.6rem;
+}
+.inte-sideBar__childList .inte-sideBar__itemBody::before {
+  content: "";
+  position: absolute;
+  width: 0.4rem;
+  height: 0.4rem;
+  background-color: var(--inte-G60);
+  border-radius: 50%;
+  top: calc(50% - 0.2rem);
+  left: 2.4rem;
+}
+
+.inte-sideBar__section--footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-top: 1.6rem;
+  padding-bottom: 2.4rem;
+  border-top: 1px solid var(--inte-G40);
+}
+
+.inte-sideBar__section:not(.inte-sideBar__section--footer) {
+  padding-bottom: 1.6rem;
+}
+
+.inte-sideBar__section
+  + .inte-sideBar__section:not(.inte-sideBar__section--footer) {
+  padding-top: 1.6rem;
+  border-top: 0.1rem solid var(--inte-G40);
+}
+
+.inte-sideBar__closeButton {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  transform: translateX(10rem);
+  transition: transform 0.3s ease-in-out;
+}

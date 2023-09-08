@@ -1,0 +1,177 @@
+import React, { useState } from "react";
+import AnnouncementBar from "../AnnouncementBar";
+import "./story.css";
+import AnnouncementBarDoc from "../Doument/AnnouncementBarDoc";
+import Carousel from "../../Carousel/Carousel";
+import Marquee from "../../Marquee/Marquee";
+
+export default {
+  title: "Components/Feedback/AnnouncementBar",
+  component: AnnouncementBar,
+  argTypes: {
+    children: {
+      description: "This is announcement bar children",
+      control: {
+        type: "text",
+      },
+      defaultValue:
+        "Update available, click on download button to get the best out of our app",
+    },
+    bgImage: {
+      description: "This is announcement bar children",
+      control: {
+        type: "text",
+      },
+      defaultValue: "https://i.imgur.com/zpGUiXt.png",
+    },
+    type: {
+      description:
+        "This is type of Announcement Bar which changes Backgroud color",
+      control: {
+        type: "radio",
+        options: ["warning", "success", "danger", "primary", "neutral"],
+      },
+      defaultValue: "warning",
+    },
+    onClose: {
+      description: "Manage onClose Function",
+      control: {
+        type: "function",
+      },
+    },
+    active: {
+      description: "Show and hide Announcement",
+      control: {
+        type: "boolean",
+      },
+      defaultValue: true,
+    },
+    destroy: {
+      description: "Show and hide cross button ",
+      control: {
+        type: "boolean",
+      },
+      defaultValue: true,
+    },
+  },
+};
+const types = ["primary", "danger", "success", "warning", "neutral"];
+const Template = ({ ...rest }) => {
+  const [active, setActive] = useState(true);
+
+  const destroyf = () => {
+    active ? setActive(false) : setActive(true);
+    alert("Cross Button Clicked");
+  };
+  return (
+    <AnnouncementBar
+      type={rest.type}
+      active={rest.active && active}
+      destroy={rest.destroy}
+      onClose={destroyf}
+      children={rest.children}
+      bgImage={rest.bgImage}
+    />
+  );
+};
+
+export const Primary = Template.bind({});
+
+export const announcementbar_types: any = Template.bind({});
+announcementbar_types.decorators = [
+  () => (
+    <div className="story-announcement">
+      {types.map((item: any, index) => (
+        <AnnouncementBar key={index} type={item}>
+          Update available, click on download button to get the best out of our
+          app!
+        </AnnouncementBar>
+      ))}
+    </div>
+  ),
+];
+
+export const announcmentbar_with_Action: any = Template.bind({});
+announcmentbar_with_Action.decorators = [
+  () => (
+    <div className="story-announcement">
+      {types.map((item: any, index) => (
+        <AnnouncementBar
+          destroy={true}
+          key={index}
+          type={item}
+          action={{ content: "Button" }}
+        >
+          Update available, click on download button to get the best out of our
+          app!
+        </AnnouncementBar>
+      ))}
+    </div>
+  ),
+];
+
+export const announcmentbar_with_All: any = Template.bind({});
+announcmentbar_with_All.decorators = [
+  () => (
+    <div className="story-announcement">
+      {types.map((item: any, index) => (
+        <AnnouncementBar
+          destroy={true}
+          key={index}
+          type={item}
+          action={{ content: "Button" }}
+          bgImage="https://i.imgur.com/zpGUiXt.png"
+        >
+          Update available, click on download button to get the best out of our
+          app!
+        </AnnouncementBar>
+      ))}
+    </div>
+  ),
+];
+
+export const announcmentbar_with_slider: any = Template.bind({});
+announcmentbar_with_slider.decorators = [
+  () => (
+    <AnnouncementBar type="primary" destroy={false}>
+      <Carousel
+        slidesToShow={1}
+        isAutoplay
+        isEndless
+        autoplaySpeed={1500}
+        showArrows={false}
+        showDots={false}
+      >
+        <div>
+          Update available, click on download button to get the best out of our
+          app!
+        </div>
+        <div>
+          Update available, click on download button to get the best out of our
+          app!
+        </div>
+        <div>
+          Update available, click on download button to get the best out of our
+          app!
+        </div>
+      </Carousel>
+    </AnnouncementBar>
+  ),
+];
+
+export const announcmentbar_with_marquee: any = Template.bind({});
+announcmentbar_with_marquee.decorators = [
+  () => (
+    <AnnouncementBar type="primary" destroy={false}>
+      <Marquee
+        content="
+    Update available, click on download button to get the best out of our
+    app!"
+      />
+    </AnnouncementBar>
+  ),
+];
+
+export function Documentation() {
+  return <AnnouncementBarDoc />;
+}

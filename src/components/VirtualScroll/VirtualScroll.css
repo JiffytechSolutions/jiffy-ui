@@ -1,0 +1,7 @@
+.inte-virtualScroll {
+  position: relative;
+  background-color: var(--inte-G0);
+  border-radius: var(--radius-rounded-6);
+  border: 0.1rem solid var(--inte-G40);
+  overflow: auto;
+}

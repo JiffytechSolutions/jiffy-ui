@@ -1,0 +1,19 @@
+/*Page Footer*/
+.inte-pageFooter {
+  position: absolute;
+  bottom: 0;
+  padding: 2rem;
+  right: 0;
+  left: 0;
+  font-size: 1.6rem;
+  font-weight: var(--weight-normal);
+  line-height: 2.2rem;
+  color: var(--inte-G300);
+  border-top: 0.1rem solid var(--inte-G40);
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  background-color: var(--inte-G0);
+}

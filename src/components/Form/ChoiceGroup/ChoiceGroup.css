@@ -1,0 +1,37 @@
+.inte-checkboxGroup,
+.inte-radioGroup,
+.inte-toggleGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.inte-checkboxGroup .inte-formElement__itemHelp,
+.inte-radioGroup .inte-formElement__itemHelp,
+.inte-toggleGroup .inte-formElement__itemHelp {
+  margin-top: 0;
+}
+
+.inte-checkboxGroup__list,
+.inte-radioGroup__list,
+.inte-toggleGroup__list {
+  margin-bottom: 0;
+  display: flex;
+  gap: 1.2rem 1.6rem;
+}
+
+.inte-checkboxGroup__list--vertical,
+.inte-radioGroup__list--vertical,
+.inte-toggleGroup__list--vertical {
+  flex-direction: column;
+}
+
+.inte-choiceList__wrapper:focus {
+  outline: none;
+}
+
+.inte-checkboxGroup__listitem--clickable,
+.inte-radioGroup__listitem--clickable,
+.inte-toggleGroup__listitem--clickable {
+  cursor: pointer;
+}

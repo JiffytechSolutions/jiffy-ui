@@ -1,0 +1,429 @@
+.inte-btn__container {
+  position: relative;
+  display: inline-block;
+}
+
+.inte-btn__container--fullWidth {
+  display: block;
+}
+
+.inte-btn {
+  --inte-button-primary: var(--inte-P900);
+  border: 0;
+  border-radius: var(--radius-rounded-6);
+  cursor: pointer;
+  position: relative;
+  transition: 300ms all linear;
+  outline: 0;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+}
+
+.inte-btn .inte-btn__text {
+  font-weight: var(--weight-bolder);
+  font-size: 1.6rem;
+  line-height: 2rem;
+  color: inherit;
+  white-space: pre;
+}
+.inte-btn:focus-visible {
+  z-index: 1;
+  box-shadow: 0 0 0 0.1rem var(--inte-G0), 0 0 0 0.3rem var(--inte-B80);
+  -webkit-box-shadow: 0px 0px 0px 0.1rem var(--inte-G0),
+    0 0 0 0.3rem var(--inte-B80);
+  -moz-box-shadow: 0px 0px 0px 0.1rem var(--inte-G0),
+    0 0 0 0.3rem var(--inte-B80);
+  -o-box-shadow: 0px 0px 0px 0.1rem var(--inte-G0), 0 0 0 0.3rem var(--inte-B80);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Button Disabled */
+.inte-btn--disable {
+  cursor: not-allowed;
+}
+
+/* Button Disabled End */
+
+/* Button Alignemtn */
+.inte-btn--fullWidth {
+  width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+}
+
+.inte-btn.inte-btn--distributionEqualSpacing {
+  justify-content: space-evenly !important;
+}
+
+.inte-btn.inte-btn--distributionEnd {
+  justify-content: flex-end !important;
+}
+
+.inte-btn--distributionStart {
+  justify-content: start !important;
+}
+
+.inte-btn--distributionBetween {
+  justify-content: space-between !important;
+}
+
+.inte-btn--distributionCenter {
+  justify-content: center !important;
+}
+
+/* Button Alignment End */
+
+/* Button Size */
+.inte-btn--large {
+  padding: 1rem 2rem !important;
+  height: 4.4rem;
+}
+
+.inte-btn--narrow {
+  padding: 0.7rem 1.6rem;
+  border-radius: var(--radius-rounded-6);
+  height: 3.8rem;
+}
+
+.inte-btn--extraNarrow {
+  padding: 0.2rem 1.2rem !important;
+  height: 3.2rem;
+  border-radius: var(--radius-rounded-5);
+}
+
+.inte-btn--extraNarrow .inte-btn__text {
+  font-size: 1.4rem !important;
+  line-height: 1.4rem !important;
+  font-weight: var(--weight-normal) !important;
+}
+
+/* Button Size End */
+
+/* Primary color Declarations */
+.inte-btn--primary {
+  background-color: var(--inte-button-primary);
+  border: 0.1rem solid var(--inte-transparet);
+  color: var(--inte-G0);
+}
+
+.inte-btn--primary.inte-btn--loading {
+  background-color: var(--inte-P40) !important;
+}
+
+.inte-btn--primary:disabled {
+  background-color: var(--inte-P40) !important;
+  border: 0.1rem solid var(--inte-transparet) !important;
+}
+
+.inte-btn--primary:hover {
+  background-color: var(--inte-P1000);
+}
+
+.inte-btn--primary:active {
+  background-color: var(--inte-P1100);
+}
+
+/* Primary color Declarations End */
+
+/* Danger color Declarations */
+.inte-btn--danger {
+  background-color: var(--inte-R200);
+  border: 0.1rem solid var(--inte-transparet);
+  color: var(--inte-G0);
+}
+
+.inte-btn--danger:disabled {
+  background-color: var(--inte-R55) !important;
+  border: 0.1rem solid var(--inte-transparet) !important;
+}
+
+.inte-btn--danger.inte-btn--loading {
+  background-color: var(--inte-R55) !important;
+}
+
+.inte-btn--danger:hover {
+  background-color: var(--inte-R350);
+}
+
+.inte-btn--danger:active {
+  background-color: var(--inte-R400);
+}
+
+/* Danger color Declarations End */
+
+/* Danger Outlined color Declarations */
+.inte-btn--dangerOutlined {
+  background-color: var(--inte-G0);
+  color: var(--inte-R200);
+  border: 0.1rem solid var(--inte-R200);
+}
+
+.inte-btn--dangerOutlined:disabled {
+  background-color: var(--inte-G0) !important;
+  border: 0.1rem solid var(--inte-R55) !important;
+  color: var(--inte-R55);
+}
+
+.inte-btn--dangerOutlined.inte-btn--loading {
+  border-color: var(--inte-R55) !important;
+  background-color: var(--inte-G0) !important;
+}
+
+.inte-btn--dangerOutlined:hover {
+  background-color: var(--inte-R30);
+}
+
+.inte-btn--dangerOutlined:active {
+  background-color: var(--inte-R40);
+  border-color: var(--inte-R400);
+}
+
+/* Danger Outlined color Declarations End */
+
+/* Danger plain color Declarations */
+.inte-btn--dangerPlain {
+  color: var(--inte-R200);
+  background-color: var(--inte-transparet);
+  height: 2.4rem !important;
+  padding: 0.2rem 0.4rem !important;
+  border-radius: var(--radius-rounded-5) !important;
+}
+
+.inte-btn--dangerPlain.inte-btn--narrow {
+  height: 2rem !important;
+}
+
+.inte-btn--dangerPlain:disabled {
+  background-color: var(--inte-G0) !important;
+  color: var(--inte-R55) !important;
+  border: 1px solid var(--inte-transparet) !important;
+  text-decoration: unset !important;
+}
+
+.inte-btn--dangerPlain:hover {
+  color: var(--inte-R350);
+  text-decoration: underline;
+}
+
+.inte-btn--dangerPlain:focus {
+  text-decoration: underline;
+}
+
+.inte-btn--dangerPlain:active {
+  color: var(--inte-R400);
+}
+
+/* Danger plain color Declarations End */
+
+/* Secondary Button color Declarations */
+.inte-btn--secondary {
+  background-color: var(--inte-G40);
+  color: var(--inte-G800);
+  border: 0.1rem solid var(--inte-transparet);
+}
+
+.inte-btn--secondary:disabled {
+  background-color: var(--inte-G30) !important;
+  border: 0.1rem solid var(--inte-transparet) !important;
+  color: var(--inte-G50);
+}
+
+.inte-btn--secondary.inte-btn--loading {
+  background-color: var(--inte-G30) !important;
+}
+
+.inte-btn--secondary:hover {
+  background-color: var(--inte-G55);
+}
+
+.inte-btn--secondary:active {
+  background-color: var(--inte-G70);
+}
+
+/* Secondary Button color Declarations End*/
+
+/* Outlined Button declarations */
+.inte-btn--outlined {
+  background-color: var(--inte-transparet);
+  color: var(--inte-G800);
+  border: 0.1rem solid var(--inte-G50);
+}
+
+.inte-btn--outlined:disabled {
+  background-color: var(--inte-transparet) !important;
+  border: 0.1rem solid var(--inte-G40) !important;
+  color: var(--inte-G40) !important;
+}
+
+.inte-btn--outlined.inte-btn--loading {
+  border-color: var(--inte-G40) !important;
+  background-color: var(--inte-transparet) !important;
+}
+
+.inte-btn--outlined:hover {
+  background-color: var(--inte-G30);
+}
+
+.inte-btn--outlined:active {
+  background-color: var(--inte-G40);
+  border-color: var(--inte-G50);
+}
+
+/* Outlined Button declarations End */
+
+/* Text Buttonr color Declarations */
+.inte-btn--textButton.inte-btn {
+  padding: 0.2rem 0.4rem !important;
+  color: var(--inte-G450);
+  background-color: var(--inte-transparet);
+  height: 2.4rem;
+  border-radius: var(--radius-rounded-5) !important;
+}
+
+.inte-btn--textButton.inte-btn--disable {
+  color: var(--inte-G50) !important;
+  text-decoration: unset !important;
+}
+
+.inte-btn--textButton:hover,
+.inte-btn--textButton:focus {
+  color: var(--inte-P1000);
+  text-decoration: underline;
+}
+
+.inte-btn--textButton:active {
+  color: var(--inte-P1100);
+}
+
+.inte-btn.inte-btn--textButton.inte-btn--narrow {
+  height: 2rem !important;
+  padding: 0 0.2rem !important;
+}
+
+/* Text Buttonr color Declarations End */
+
+/* Button Loading */
+.inte-btn--loading {
+  display: flex;
+  align-items: center;
+  cursor: not-allowed;
+  box-shadow: unset !important;
+}
+
+.inte-btn--loading .inte-btn__text {
+  display: flex;
+}
+
+.inte-btn--loading .inte-spinner {
+  position: absolute;
+  left: calc(50% - 9px);
+}
+
+.inte-btn--loading .inte-btn__text,
+.inte-btn--loading.inte-btn--hasIcon .inte-btn__icon,
+.inte-btn--loading .inte-btn__disclosure {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Button Loading End */
+
+/* Button With Only icon */
+.inte-btn.inte-btn--onlyIcon {
+  justify-content: center !important;
+}
+
+.inte-btn--onlyIcon.inte-btn--large {
+  height: 4.4rem !important;
+  width: 4.4rem !important;
+}
+
+.inte-btn.inte-btn--onlyIcon.inte-btn--narrow {
+  height: 3.8rem !important;
+  width: 3.8rem !important;
+}
+
+.inte-btn--onlyIcon.inte-btn--extraNarrow {
+  height: 3.2rem !important;
+  width: 3.2rem !important;
+}
+
+/* Button With Only icon End */
+
+/* Button With Icon Decoration and Disclosure */
+.inte-btn.inte-btn--hasIcon,
+.inte-btn--hasDisclosure {
+  gap: 0.8rem;
+}
+
+.inte-btn--dangerPlain.inte-btn.inte-btn--hasIcon,
+.inte-btn--textButton.inte-btn.inte-btn--hasIcon {
+  gap: 0.6rem;
+}
+
+.inte-btn__icon {
+  display: flex;
+  min-width: 2rem;
+}
+
+.inte-btn--extraNarrow.inte-btn--onlyIcon .inte-btn__icon svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.inte-btn__disclosure {
+  display: flex;
+  transition: 100ms all linear;
+}
+
+.inte-btn--fullWidth .inte-btn__disclosure {
+  margin-left: auto;
+}
+
+[aria-expanded="true"] .inte-btn__disclosure {
+  transform: rotate(-180deg);
+}
+
+/* button status  */
+.inte-btn__container .inte-badge__dot {
+  position: absolute;
+  top: 0;
+  right: -0.44rem;
+  z-index: 1;
+}
+
+.inte-btn--extraNarrow .inte-btn__icon {
+  height: 1.6rem;
+  min-width: 1.6rem;
+}
+
+/* Button With Icon Decoration and Disclosure End */
+
+/* to make ripple effect on click */
+.ripple-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.ripple {
+  position: absolute;
+  background-color: rgb(0, 0, 0);
+  opacity: 25%;
+  transform: scale(0);
+  animation: ripple 600ms linear;
+  border-radius: 50%;
+}
+
+@keyframes ripple {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}

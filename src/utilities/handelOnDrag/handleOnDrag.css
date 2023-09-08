@@ -1,0 +1,71 @@
+[class*="inte-mobileDevice--"]:not(.inte-filter--popover--animating) {
+  border-radius: unset;
+  border-top-left-radius: 2.4rem !important;
+  border-top-right-radius: 2.4rem !important;
+  border-bottom-left-radius: unset !important;
+  border-bottom-right-radius: unset !important;
+  max-height: calc(100vh - 6rem) !important;
+}
+
+.inte-mobileDevice--in {
+  animation: DragINY 200ms linear forwards !important;
+}
+
+.inte-mobileDevice--out {
+  animation: DragOutY 200ms linear forwards !important;
+}
+
+.inte-mobileDevice--in + div,
+.inte-mobileDevice--out + div {
+  backdrop-filter: blur(1px);
+  background: var(--inte-overlay);
+  position: fixed;
+  inset: 0 0 0 0;
+  z-index: var(--inte-Z-7);
+}
+
+.inte-mobileDevice--in + div {
+  animation: OverlayIN 200ms linear forwards;
+}
+.inte-mobileDevice--out + div {
+  animation: OverlayOut 200ms linear forwards;
+}
+.inte-mobileDevice__scrollTop {
+  transition: 100ms bottom linear;
+}
+
+@keyframes DragINY {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes DragOutY {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes OverlayIN {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes OverlayOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}

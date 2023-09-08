@@ -1,0 +1,79 @@
+/*Tags and Swatches*/
+.inte-tag {
+  text-align: center;
+  font-weight: var(--weight-normal);
+  display: inline-flex;
+  transition: 300ms all linear;
+  background-color: var(--inte-G20);
+  color: var(--inte-G800);
+  align-items: center;
+}
+.inte-tag--small {
+  padding: 0.2rem 0.8rem;
+  border-radius: var(--radius-rounded-4);
+}
+.inte-tag--large {
+  padding: 0.8rem 1.2rem;
+  height: 3.6rem;
+  border-radius: var(--radius-rounded-6);
+}
+.inte-tag--hasPopover {
+  cursor: pointer;
+}
+.inte-tag--activePopover {
+  background-color: var(--inte-G42);
+}
+.inte-tag--disabled {
+  user-select: none;
+  cursor: not-allowed;
+  color: var(--inte-G80);
+}
+.inte-tag__body {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+.inte-tag--disabled .inte-tag__body .inte-tag__clear svg {
+  background-color: var(--inte-G30);
+  cursor: not-allowed;
+}
+.inte-tag__clear {
+  border: 0;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0.2rem;
+  background: transparent;
+}
+.inte-tag__clear svg {
+  background: var(--inte-G40);
+  border-radius: 50%;
+}
+.inte-tag__clear svg:hover {
+  background-color: var(--inte-G50);
+  transition: 300ms all linear;
+}
+.inte-tag--small .inte-tag__content span {
+  font-size: 1.4rem;
+}
+.inte-tag--large .inte-tag__content span {
+  font-size: 1.6rem;
+}
+.inte-tag__content *,
+.inte-tag__content {
+  display: flex;
+  line-height: 2rem;
+  word-break: break-all;
+  text-align: left;
+}
+.inte-tag__popover {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+/*Tags and Swatches end*/
+
+/* DARK MODE */
+[data-theme="dark"] .inte-tag {
+  opacity: 0.7;
+}

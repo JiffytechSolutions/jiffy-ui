@@ -1,0 +1,10 @@
+.inte-feature {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.inte-feature > :first-child {
+  flex-grow: 1;
+}

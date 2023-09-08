@@ -1,0 +1,100 @@
+.inte-textLink {
+    display: inline-block;
+    cursor: pointer;
+}
+
+.inte-textLink__label {
+    font-size: 1.6rem;
+    transition: 0.3s all;
+    color: var(--inte-B90);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem
+}
+
+.inte-textLink__label svg {
+    min-width: 16px;
+    display: inline-block;
+    vertical-align: baseline;
+    align-items: center;
+}
+
+.inte-textLink__label:hover {
+    color: var(--inte-B100);
+    text-decoration: underline;
+}
+
+.inte-textLink__label:active {
+    color: var(--inte-P1100) !important;
+    text-decoration: underline;
+}
+
+/* Danger TextLink */
+.inte-textLink--danger .inte-textLink__label {
+    color: var(--inte-R200);
+    text-decoration: underline;
+}
+
+.inte-textLink--danger .inte-textLink__label:hover {
+    color: var(--inte-R400);
+    text-decoration: unset;
+}
+
+.inte-textLink--danger .inte-textLink__label:active {
+    color: var(--inte-R400) !important;
+    text-decoration: unset;
+}
+
+.inte--textLink--disabled.inte-textLink--danger .inte-textLink__label,
+.inte--textLink--disabled.inte-textLink--danger .inte-textLink__label:hover,
+.inte--textLink--disabled.inte-textLink--danger .inte-textLink__label:active {
+    color: var(--inte-R55) !important;
+    text-decoration: unset;
+}
+
+/* Danger TextLink End */
+/* Warning TextLink */
+.inte-textLink--warning .inte-textLink__label {
+    color: var(--inte-Y700);
+    text-decoration: underline;
+}
+
+.inte-textLink--warning .inte-textLink__label:hover {
+    color: var(--inte-Y800);
+    text-decoration: unset;
+}
+
+.inte-textLink--warning .inte-textLink__label:active {
+    color: var(--inte-Y900) !important;
+    text-decoration: unset;
+}
+
+.inte--textLink--disabled.inte-textLink--warning .inte-textLink__label,
+.inte--textLink--disabled.inte-textLink--warning .inte-textLink__label:hover,
+.inte--textLink--disabled.inte-textLink--warning .inte-textLink__label:active {
+    color: var(--inte-Y75) !important;
+    text-decoration: unset;
+}
+
+/* Warning TextLink End */
+.inte--textLink--disabled .inte-textLink__label,
+.inte--textLink--disabled .inte-textLink__label:hover,
+.inte--textLink--disabled .inte-textLink__label:active {
+    text-decoration: none;
+    color: var(--inte-B60) !important;
+}
+
+.inte-textLink.inte--textLink--disabled {
+    position: relative
+}
+
+.inte-textLink.inte--textLink--disabled::after {
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    cursor: not-allowed;
+}

@@ -1,0 +1,53 @@
+/* modal css */
+.inte-shadow__top .inte-modal__header {
+  box-shadow: 0 -4px 17px 0px var(--inte-G80);
+  transition: 100ms box-shadow linear;
+}
+.inte-shadow__bottom .inte-modal__footer {
+  box-shadow: 0 4px 17px 0px var(--inte-G80);
+  transition: 100ms box-shadow linear;
+}
+/*  sheet css*/
+.inte-shadow__top .inte-sheet__heading__wrapper {
+  box-shadow: 0 -4px 17px 0px var(--inte-G80);
+  transition: 100ms box-shadow linear;
+}
+.inte-shadow__bottom .inte-sheet__footer {
+  box-shadow: 0 4px 17px 0px var(--inte-G80);
+  transition: 100ms box-shadow linear;
+}
+/* Action List css*/
+.inte-shadow__top .inte-actionList__mobileHeading__wrapper {
+  box-shadow: 0 -4px 17px 0px var(--inte-G80);
+  transition: 100ms box-shadow linear;
+}
+.inte-shadow__bottom .inte-actionList__footer {
+  box-shadow: 0 4px 17px 0px var(--inte-G80);
+  transition: 100ms box-shadow linear;
+}
+/* Scrollable  css*/
+.inte-shadow__top .inte-scrollable {
+  box-shadow: inset 0px 6px 5px -5px #00000087;
+}
+.inte-shadow__bottom .inte-scrollable {
+  box-shadow: rgba(0, 0, 0, 0.3) 0px -25px 20px -25px inset;
+}
+.inte-shadow__top.inte-shadow__bottom .inte-scrollable {
+  box-shadow: inset rgba(0, 0, 0, 0.3) 0 5px 10px 0px,
+    rgba(0, 0, 0, 0.3) 0px -25px 20px -25px inset;
+}
+/* select  css*/
+.inte-shadow__top .inte-select__mobileHeader__wrapper {
+  box-shadow: 0 -4px 17px 0px var(--inte-G80);
+  transition: 100ms box-shadow linear;
+}
+/* switcher css */
+.inte-shadow__top .inte-switcher__labelWrapper {
+  box-shadow: 0 -4px 17px 0px var(--inte-G80);
+  transition: 100ms box-shadow linear;
+}
+/* popover  css*/
+.inte-shadow__top .inte-popover__mobileHeading__wrapper {
+  box-shadow: 0 -4px 17px 0px var(--inte-G80);
+  transition: 100ms box-shadow linear;
+}
