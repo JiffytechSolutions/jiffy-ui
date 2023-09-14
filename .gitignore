@@ -10,6 +10,7 @@ dist
 # binaries
 bin/
 lib/
+/storybook-static
 
 #files
 .npmrc
