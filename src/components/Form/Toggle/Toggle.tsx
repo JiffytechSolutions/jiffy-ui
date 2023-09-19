@@ -11,7 +11,7 @@ export default function Toggle({
   },
   label,
   description,
-  isDisable = false,
+  isDisabled = false,
   required,
   customClass = "",
   value,
@@ -20,10 +20,10 @@ export default function Toggle({
   helpText,
   ...props
 }: ToggleI): JSX.Element {
-  const rId = useId()
+  const rId = useId();
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && onChange) {
-      onChange(!checked, value)
+      onChange(!checked, value);
     }
   };
   return (
@@ -31,18 +31,16 @@ export default function Toggle({
       className={getClassNames({
         "inte-toggle__wrapper": true,
         "inte-toggle--required": required,
-        "inte-toggle--disabled": isDisable,
+        "inte-toggle--disabled": isDisabled,
         "inte-toggle--hasHelp": helpText,
-        [customClass]: customClass
+        [customClass]: customClass,
       })}
     >
-      <label htmlFor={
-        id ? id : `inte-toggle-${rId}`
-      } >
+      <label htmlFor={id || `inte-toggle-${rId}`}>
         <input
-          id={id ? id : `inte-toggle-${rId}`}
-          disabled={isDisable}
-          aria-label={id ? id : `inte-toggle-${rId}`}
+          id={id || `inte-toggle-${rId}`}
+          disabled={isDisabled}
+          aria-label={id || `inte-toggle-${rId}`}
           type="checkbox"
           className="inte-toggle"
           checked={checked}
@@ -50,17 +48,20 @@ export default function Toggle({
           onChange={() => onChange(!checked, value)}
           onKeyDown={handleKeyDown}
         ></input>
-        {label && <span className="inte-toggle__text">
-          {(!helpText || isDisable) ? (
-            `${label}`
-          ) : (
-            <ToolTip
-              isOpen={false}
-              direction={helpPosition}
-              helpText={helpText}
-              activator={<span>{label}</span>}
-            />
-          )}</span>}
+        {label && (
+          <span className="inte-toggle__text">
+            {!helpText || isDisabled ? (
+              `${label}`
+            ) : (
+              <ToolTip
+                isOpen={false}
+                direction={helpPosition}
+                helpText={helpText}
+                activator={<span>{label}</span>}
+              />
+            )}
+          </span>
+        )}
       </label>
       {description && (
         <div className="inte-toggle__description">{description}</div>
@@ -75,9 +76,9 @@ export interface ToggleI {
   onChange?: (newState: boolean, value: any) => void;
   label?: React.ReactNode;
   description?: React.ReactNode;
-  isDisable?: boolean;
+  isDisabled?: boolean;
   value?: any;
-  id?: any
+  id?: any;
   helpText?: string | React.ReactNode;
   helpPosition?: "left" | "right" | "top" | "bottom";
 }

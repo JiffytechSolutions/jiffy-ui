@@ -21,7 +21,7 @@ export default {
   },
   argTypes: {
     options: {
-      description: `<div><strong>Simple or Multidimensional array:-</strong></div><i>Accepted key value pairs in items data:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>title</td><td>string</td></tr><tr><td>items</td><td><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>content<span style="color:red">*</span></td><td>string</td></tr><tr><td>destructive</td><td>boolean</td></tr><tr><td>disabled</td><td>boolean</td></tr><tr><td>description</td><td>string</td></tr><tr><td>onClick<span style="color:red">*</span></td><td>function</td></tr><tr><td>prefixIcon</td><td>React.ReactNode</td></tr><tr><td>suffixIcon</td><td>React.ReactNode</td></tr></tbody></table></td></tr></tbody></table>`,
+      description: `<div><strong>Simple or Multidimensional array:-</strong></div><i>Accepted key value pairs in items data:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>title</td><td>string</td></tr><tr><td>items</td><td><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>content<span style="color:red">*</span></td><td>string</td></tr><tr><td>destructive</td><td>boolean</td></tr><tr><td>isDisabled</td><td>boolean</td></tr><tr><td>description</td><td>string</td></tr><tr><td>onClick<span style="color:red">*</span></td><td>function</td></tr><tr><td>prefixIcon</td><td>React.ReactNode</td></tr><tr><td>suffixIcon</td><td>React.ReactNode</td></tr></tbody></table></td></tr></tbody></table>`,
       control: {
         type: "array",
       },
@@ -132,7 +132,6 @@ export default {
               destructive: true,
               content: "Action List content",
               onClick: () => alert("Hello 1"),
-              // prefixIcon: <UserX color="#c4281c" />,
             },
           ],
         },
@@ -273,11 +272,11 @@ ActionList_with_Action_Only.decorators = [
                 },
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 2"),
                 },
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 3"),
                 },
               ],
             },
@@ -317,12 +316,12 @@ ActionList_with_Disabled.decorators = [
                 },
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
-                  disabled: true,
+                  onClick: () => alert("Hello 2"),
+                  isDisabled: true,
                 },
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 3"),
                 },
               ],
             },
@@ -363,11 +362,11 @@ ActionList_with_Action_and_title.decorators = [
                 },
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 2"),
                 },
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 3"),
                 },
               ],
             },
@@ -412,12 +411,12 @@ ActionList_with_Action_title_and_prefix_icon.decorators = [
                 {
                   content: "Action 1",
                   prefixIcon: Upload,
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 2"),
                 },
                 {
                   content: "Action 1",
                   prefixIcon: Activity,
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 3"),
                 },
               ],
             },
@@ -462,12 +461,12 @@ ActionList_with_Action_title_and_suffix_icon.decorators = [
                 {
                   content: "Action 1",
                   suffixIcon: Activity,
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 2"),
                 },
                 {
                   content: "Action 1",
                   suffixIcon: Activity,
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 3"),
                 },
               ],
             },
@@ -512,12 +511,12 @@ ActionList_with_Action_title_and_description.decorators = [
                 {
                   content: "Action 1",
                   description: "Description text",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 2"),
                 },
                 {
                   content: "Action 1",
                   description: "Description text",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 3"),
                 },
               ],
             },
@@ -563,13 +562,13 @@ ActionList_with_Action_title_description_and_prefixIcon.decorators = [
                   content: "Action 1",
                   description: "Description text",
                   prefixIcon: Activity,
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 2"),
                 },
                 {
                   content: "Action 1",
                   description: "Description text",
                   prefixIcon: Activity,
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 3"),
                 },
               ],
             },
@@ -610,11 +609,11 @@ ActionList_with_Section.decorators = [
                 },
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 2"),
                 },
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 3"),
                 },
               ],
             },
@@ -622,15 +621,15 @@ ActionList_with_Section.decorators = [
               items: [
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 4"),
                 },
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 5"),
                 },
                 {
                   content: "Action 1",
-                  onClick: () => alert("Hello 1"),
+                  onClick: () => alert("Hello 6"),
                 },
               ],
             },

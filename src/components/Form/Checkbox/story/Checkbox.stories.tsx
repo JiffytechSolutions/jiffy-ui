@@ -25,9 +25,9 @@ export default {
       defaultValue: false,
     },
     id: {
-      description: 'Id for Raio',
+      description: "Id for Raio",
       control: {
-        type: 'text',
+        type: "text",
       },
       defaultValue: "radio-id",
     },
@@ -80,7 +80,7 @@ export default {
       },
       defaultValue: false,
     },
-    isDisable: {
+    isDisabled: {
       description: "Check box disabled description",
       control: {
         type: "boolean",
@@ -98,22 +98,18 @@ export default {
 };
 
 const Template = ({ ...rest }) => {
-  const [checked , setChecked] = useState<boolean | 'indeterminate'>(false)
-  const toggleChange = (currState:boolean | 'indeterminate') => {
+  const [checked, setChecked] = useState<boolean | "indeterminate">(false);
+  const toggleChange = (currState: boolean | "indeterminate") => {
     setChecked(currState);
     // setChecked()
-  }
-  useEffect(()=>{
-    setChecked(rest.checked)
-  },[rest.checked])
+  };
+  useEffect(() => {
+    setChecked(rest.checked);
+  }, [rest.checked]);
 
   return (
     <Card title={"Checkbox"}>
-      <Checkbox
-        {...rest}
-        checked={checked}
-        onChange={toggleChange}
-      />
+      <Checkbox {...rest} checked={checked} onChange={toggleChange} />
     </Card>
   );
 };
@@ -155,10 +151,9 @@ IndeterminateCheckbox.decorators = [
 export const DisableCheckbox: any = Template.bind({});
 DisableCheckbox.decorators = [
   () => {
-    const [check, toggleChecked] = useState(false);
     return (
       <Card title={"Disable Checkbox"}>
-        <Checkbox label={"Checkbox"} isDisable />
+        <Checkbox label={"Checkbox"} isDisabled />
       </Card>
     );
   },

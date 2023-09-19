@@ -2,13 +2,13 @@ import React, { useId } from "react";
 import getClassNames from "../../../../utilities/getClassnames";
 import Radio from "../../Radio/Radio";
 import Text from "../../../Text/Text";
-import '../ChoiceGroup.css'
+import "../ChoiceGroup.css";
 export interface OptionsI {
   label?: string | React.ReactNode;
   description?: string | React.ReactNode;
   value: any;
-  customClass?: string
-  isDisable?: boolean
+  customClass?: string;
+  isDisabled?: boolean;
 }
 export interface RadioGroupI {
   title?: string | React.ReactNode;
@@ -22,7 +22,7 @@ export interface RadioGroupI {
   helpIcon?: React.ReactNode;
   controlStates?: "success" | "warning" | "error";
   customClass?: string;
-  isClickableFullItem?:boolean
+  isClickableFullItem?: boolean;
 }
 
 const RadioGroup = ({
@@ -39,7 +39,7 @@ const RadioGroup = ({
   isClickableFullItem = false,
   ...props
 }: RadioGroupI) => {
-  const rName = useId()
+  const rName = useId();
   const getcontrolStates: { [key: string]: string } = {
     success: "inte-formElement--success",
     warning: "inte-formElement--warning",
@@ -52,13 +52,13 @@ const RadioGroup = ({
       className={getClassNames({
         "inte-radioGroup": true,
         [controlStatesVal as string]: controlStatesVal,
-        [customClass as string]: customClass
+        [customClass as string]: customClass,
       })}
     >
       {title && (
         <Text
           type="T-7"
-          as='h2'
+          as="h2"
           customClass={
             required ? "inte--required inte-form__label" : "inte-form__label"
           }
@@ -75,14 +75,16 @@ const RadioGroup = ({
               key={index}
               className={getClassNames({
                 "inte-radioGroup__listItem": true,
-                "inte-radioGroup__listitem--clickable" : isClickableFullItem,
-                [item.customClass as string]: item.customClass
+                "inte-radioGroup__listitem--clickable": isClickableFullItem,
+                [item.customClass as string]: item.customClass,
               })}
-              onClick={() => onChange && isClickableFullItem && onChange(item.value)}
+              onClick={() =>
+                onChange && isClickableFullItem && onChange(item.value)
+              }
             >
               <Radio
                 description={item.description}
-                isDisable={item.isDisable}
+                isDisabled={item.isDisabled}
                 label={item.label}
                 value={item.value}
                 checked={value === item.value}
@@ -97,7 +99,7 @@ const RadioGroup = ({
         <span
           className={getClassNames({
             "inte-formElement__itemHelp": true,
-            "inte-formElement__itemHelp--hasHelpIcon": helpIcon
+            "inte-formElement__itemHelp--hasHelpIcon": helpIcon,
           })}
         >
           {helpIcon && <span style={{ display: "flex" }}>{helpIcon}</span>}

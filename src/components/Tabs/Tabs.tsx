@@ -11,13 +11,13 @@ export interface TabsI {
   isFitted?: boolean;
   customClass?: string;
   spacing?:
-  | "none"
-  | "tight"
-  | "mediumTight"
-  | "extraTight"
-  | "loose"
-  | "mediumLoose"
-  | "extraLoose";
+    | "none"
+    | "tight"
+    | "mediumTight"
+    | "extraTight"
+    | "loose"
+    | "mediumLoose"
+    | "extraLoose";
 }
 
 export interface TabI {
@@ -25,7 +25,7 @@ export interface TabI {
   badge?: React.ReactNode;
   label: string;
   key: string;
-  isDisable?: boolean;
+  isDisabled?: boolean;
 }
 
 const Tabs = ({
@@ -35,11 +35,13 @@ const Tabs = ({
   direction = "horizontal",
   children,
   isFitted = false,
-  customClass = '',
-  spacing = 'loose'
+  customClass = "",
+  spacing = "loose",
 }: TabsI) => {
   const [key, setKey] = useState(0); //to remount when window is resize
-  const isVertical = (window.innerWidth >= 768 && direction === "vertical") || customClass === "inte-filter-sheet";
+  const isVertical =
+    (window.innerWidth >= 768 && direction === "vertical") ||
+    customClass === "inte-filter-sheet";
   const activeTabRef = useRef<HTMLLIElement>(null);
 
   const getClassForSpacing: { [key: string]: string } = {
@@ -49,7 +51,7 @@ const Tabs = ({
     loose: "inte-tabs--spacingLoose",
     mediumLoose: "inte-tabs--spacingMediumLoose",
     extraLoose: "inte-tabs--spacingExtraLoose",
-    none: ""
+    none: "",
   };
 
   const keyEventMap: KeyEventMap = {
@@ -66,15 +68,17 @@ const Tabs = ({
   const handleTabHeaderKeyDown = (
     event: React.KeyboardEvent<HTMLLIElement>
   ) => {
-    if(isVertical && (event.key === 'ArrowRight' || event.key === 'ArrowLeft')) return
-    if(!isVertical && (event.key === 'ArrowDown' || event.key === 'ArrowUp')) return
+    if (isVertical && (event.key === "ArrowRight" || event.key === "ArrowLeft"))
+      return;
+    if (!isVertical && (event.key === "ArrowDown" || event.key === "ArrowUp"))
+      return;
     event.preventDefault();
     const activeTabIndex = tabs.findIndex((item) => item.key === value);
     const operation = keyEventMap?.[event.key];
     if (operation) {
       const nextTabIndex = () => {
         let t = operation(activeTabIndex);
-        while (tabs[t].isDisable) {
+        while (tabs[t].isDisabled) {
           t = operation(t);
         }
         return t;
@@ -93,40 +97,48 @@ const Tabs = ({
     };
   }, []);
 
-  const scrollTheTab = (ele:HTMLLIElement) => {
+  const scrollTheTab = (ele: HTMLLIElement) => {
     const parent = ele.parentElement;
-    if(!parent) return
-    const parentDimension = parent.getBoundingClientRect()
-    const childDimension = ele.getBoundingClientRect()
-    const x =(childDimension.left + (childDimension.width/2)) - ((parentDimension.left + (parentDimension.width/2))) + parent.scrollLeft
-    const y = (childDimension.top + (childDimension.height/2) ) - ( (parentDimension.top) + (parentDimension.height/2) )+ parent.scrollTop
+    if (!parent) return;
+    const parentDimension = parent.getBoundingClientRect();
+    const childDimension = ele.getBoundingClientRect();
+    const x =
+      childDimension.left +
+      childDimension.width / 2 -
+      (parentDimension.left + parentDimension.width / 2) +
+      parent.scrollLeft;
+    const y =
+      childDimension.top +
+      childDimension.height / 2 -
+      (parentDimension.top + parentDimension.height / 2) +
+      parent.scrollTop;
     parent.scrollTo({
-      top : y,
-      left : x,
-      behavior:"smooth"
-    })
-  }
+      top: y,
+      left: x,
+      behavior: "smooth",
+    });
+  };
 
   useEffect(() => {
     if (activeTabRef.current) {
-      scrollTheTab(activeTabRef.current)
+      scrollTheTab(activeTabRef.current);
     }
   }, [activeTabRef.current]);
 
   return (
     <div
       className={getClassNames({
-        "inte-tabs--wrapper" : true,
-        "inte-tabs--vertical" : isVertical,
-        [getClassForSpacing[spacing]] : spacing,
-        [customClass] : customClass
+        "inte-tabs--wrapper": true,
+        "inte-tabs--vertical": isVertical,
+        [getClassForSpacing[spacing]]: spacing,
+        [customClass]: customClass,
       })}
     >
       <ul
         role="tablist"
         className={getClassNames({
-          'inte-tabs' : true,
-          "inte-tabs--fitted" : isFitted
+          "inte-tabs": true,
+          "inte-tabs--fitted": isFitted,
         })}
       >
         {tabs.map((item, ind) => {
@@ -138,11 +150,11 @@ const Tabs = ({
               aria-selected={value === item.key}
               key={ind}
               className={getClassNames({
-                "inte-tabs__item" : true,
-                "inte-tabs__item--active" : value === item.key,
-                "inte-tabs__item--disable" : item.isDisable
+                "inte-tabs__item": true,
+                "inte-tabs__item--active": value === item.key,
+                "inte-tabs__item--disable": item.isDisabled,
               })}
-              onClick={() => !item.isDisable && onChange(item.key)}
+              onClick={() => !item.isDisabled && onChange(item.key)}
               onKeyDown={handleTabHeaderKeyDown}
               tabIndex={0}
             >

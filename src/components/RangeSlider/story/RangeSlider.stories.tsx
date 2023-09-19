@@ -50,7 +50,7 @@ export default {
       },
       defaultValue: false,
     },
-    isDisable: {
+    isDisabled: {
       description: "Add Label in Range Slider",
       control: {
         type: "boolean",
@@ -118,7 +118,7 @@ const Template = ({ ...rest }) => {
           <RangeSlider
             toolTip={rest.toolTip}
             isRange={rest.isRange}
-            isDisable={rest.isDisable}
+            isDisabled={rest.isDisabled}
             min={rest.min}
             max={rest.max}
             step={rest.step}
@@ -137,7 +137,7 @@ const Template = ({ ...rest }) => {
           <RangeSlider
             isRange={rest.isRange}
             toolTip={rest.toolTip}
-            isDisable={rest.isDisable}
+            isDisabled={rest.isDisabled}
             min={rest.min}
             max={rest.max}
             label={rest.label}
@@ -164,7 +164,7 @@ Single_Range_Slider.decorators = [
       <Card cardType="bordered">
         <RangeSlider
           label="Label"
-          isDisable={false}
+          isDisabled={false}
           value={singleVal}
           min={1}
           max={200}
@@ -190,7 +190,7 @@ Double_Range_Slider.decorators = [
         <RangeSlider
           label="Label"
           isRange={true}
-          isDisable={false}
+          isDisabled={false}
           min={1}
           max={100}
           step={1}
@@ -222,7 +222,7 @@ Decimal_Range_Slider_Value.decorators = [
         >
           <RangeSlider
             label="Label"
-            isDisable={false}
+            isDisabled={false}
             value={singleVal}
             min={1}
             max={50000.9867}
@@ -238,7 +238,7 @@ Decimal_Range_Slider_Value.decorators = [
           <RangeSlider
             label="Label"
             isRange={true}
-            isDisable={false}
+            isDisabled={false}
             min={1}
             max={50000.9867}
             step={1}
@@ -263,7 +263,7 @@ Single_Range_Slider_Disabled.decorators = [
       <Card cardType="bordered">
         <RangeSlider
           label="Label"
-          isDisable={true}
+          isDisabled={true}
           value={singleVal}
           min={1}
           max={200}
@@ -289,7 +289,7 @@ Double_Range_Slider_Disabled.decorators = [
         <RangeSlider
           label="Label"
           isRange={true}
-          isDisable={true}
+          isDisabled={true}
           min={1}
           max={100}
           step={1}
@@ -377,7 +377,7 @@ Range_Slider_With__Tooltip.decorators = [
           <RangeSlider
             toolTip={true}
             label="Label"
-            isDisable={false}
+            isDisabled={false}
             value={singleVal}
             min={1}
             max={100}
@@ -394,7 +394,7 @@ Range_Slider_With__Tooltip.decorators = [
             label="Label"
             toolTip={true}
             isRange={true}
-            isDisable={false}
+            isDisabled={false}
             min={1}
             max={100}
             step={1}

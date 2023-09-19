@@ -7,7 +7,7 @@ const Checkbox: React.FC<CheckboxI> = ({
   onChange,
   value,
   checked = false,
-  isDisable = false,
+  isDisabled = false,
   ...props
 }: CheckboxI) => {
   const rId = useId();
@@ -15,34 +15,32 @@ const Checkbox: React.FC<CheckboxI> = ({
   const CheckboxChangeHandler = (e: any) => {
     e.stopPropagation();
     if (checked === "indeterminate") e.target.indeterminate = "true";
-    if (!onChange || isDisable) return;
+    if (!onChange || isDisabled) return;
     onChange(!checked, value);
   };
 
-  const handleKeyDown = (event:React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && onChange) {
-     onChange(!checked , value)
+      onChange(!checked, value);
     }
   };
 
   return (
     <div
       className={getClassNames({
-        "inte-checkbox" : true,
-        "inte-checkbox--disabled" : isDisable,
-        [props.customClass as string] : props.customClass,
+        "inte-checkbox": true,
+        "inte-checkbox--disabled": isDisabled,
+        [props.customClass as string]: props.customClass,
       })}
     >
-      <label
-        htmlFor={
-          props.id ? props.id : `inte-checkbox-${rId}`
-        }
-      >
+      <label htmlFor={props.id ? props.id : `inte-checkbox-${rId}`}>
         <input
-          disabled={isDisable}
-          aria-describedby={`inte-checkbox__description-${props.id ? props.id : rId}`}
+          disabled={isDisabled}
+          aria-describedby={`inte-checkbox__description-${
+            props.id ? props.id : rId
+          }`}
           aria-label={props.id ? props.id : `inte-checkbox-${rId}`}
-          aria-checked={checked === 'indeterminate' ? "mixed" : checked}
+          aria-checked={checked === "indeterminate" ? "mixed" : checked}
           id={props.id ? props.id : `inte-checkbox-${rId}`}
           type="checkbox"
           name={props.name}
@@ -51,25 +49,23 @@ const Checkbox: React.FC<CheckboxI> = ({
             if (checked === "indeterminate") ele.indeterminate = true;
             else ele.indeterminate = false;
           }}
-          
           onChange={CheckboxChangeHandler}
           value={value}
           onClick={CheckboxChangeHandler}
           checked={!checked ? false : true}
           className={getClassNames({
-            "inte-checkbox--fake" : true,
-            "inte-checkbox--error" : props.error,
+            "inte-checkbox--fake": true,
+            "inte-checkbox--error": props.error,
           })}
           onKeyDown={handleKeyDown}
         />
         <span className={"inte-checkboxWrap"}>
-          <span
-            className={"inte__checkboxEle--fake"}
-          />
+          <span className={"inte__checkboxEle--fake"} />
           {props.label && (
             <span
-              className={`inte-checkbox__label ${props.required ? "inte--required" : ""
-                }`.trim()}
+              className={`inte-checkbox__label ${
+                props.required ? "inte--required" : ""
+              }`.trim()}
             >
               {props.label}
             </span>
@@ -77,7 +73,12 @@ const Checkbox: React.FC<CheckboxI> = ({
         </span>
       </label>
       {props.description ? (
-        <div id={`inte-checkbox__description-${props.id ? props.id : rId}`} className="inte-checkbox__description">{props.description}</div>
+        <div
+          id={`inte-checkbox__description-${props.id ? props.id : rId}`}
+          className="inte-checkbox__description"
+        >
+          {props.description}
+        </div>
       ) : (
         ""
       )}
@@ -92,7 +93,7 @@ export interface CheckboxI {
   id?: string;
   name?: string;
   required?: boolean;
-  isDisable?: boolean;
+  isDisabled?: boolean;
   description?: string | React.ReactNode;
   error?: boolean;
   value?: any;

@@ -7,10 +7,9 @@ import CalendarHeader from "../CalendarHeader/CalendarHeader";
 import Modal from "../Modal/Modal";
 import TextField from "../TextField/TextField";
 import TimePicker, { TimeI, formatTimeObj } from "../TimePicker/TimePicker";
-import "./DatePicker.css";
 import { Plus, X } from "../../../../storybook/Foundation/Icons/Icons";
 import Text from "../../../Text/Text";
-
+import "./DatePicker.css";
 export interface DatePickerI {
   defaultOpenDate?: Date;
   selectedDate?: Date;
@@ -25,7 +24,7 @@ export interface DatePickerI {
   onTimeChange?: (newTime?: TimeI) => void;
   isOnlyIcon?: boolean;
   hasError?: boolean;
-  isDisable?: boolean;
+  isDisabled?: boolean;
   label?: string | React.ReactNode;
   helpText?: string | React.ReactNode;
   onTextFieldClear?: () => void;
@@ -48,7 +47,7 @@ const DatePicker = ({
   selectedTime,
   onTimeChange = () => {},
   hasError = false,
-  isDisable = false,
+  isDisabled = false,
   isOnlyIcon = false,
   label,
   helpText,
@@ -168,7 +167,7 @@ const DatePicker = ({
       isTime={showTime}
       isOnlyIcon={isOnlyIcon}
       hasError={hasError}
-      isDisable={isDisable}
+      isDisabled={isDisabled}
       onStartClear={onTextFieldClear}
     />
   );
