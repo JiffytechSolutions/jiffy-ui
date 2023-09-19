@@ -419,7 +419,7 @@
 }
 
 @media screen and (max-width: 768px) {
-  .inte-flex {
+  .inte-flex--horizontal {
     flex-wrap: wrap;
   }
   /* Valign Items Mobile */
