@@ -9,7 +9,7 @@ export interface RangeSliderI {
   step?: number;
   isRange?: boolean;
   label: string;
-  isDisable?: boolean;
+  isDisabled?: boolean;
   toolTip?: boolean;
   id?: string | number;
   customClass?: string;
@@ -24,7 +24,7 @@ const RangeSlider: FC<RangeSliderI> = ({
   step = 1,
   isRange = false,
   label = "label",
-  isDisable = false,
+  isDisabled = false,
   id,
   onChange,
   customClass = "",
@@ -171,7 +171,7 @@ const RangeSlider: FC<RangeSliderI> = ({
     document.addEventListener("mousemove", handleSliderMouseMove);
     document.addEventListener("mouseup", handleSliderMouseUp);
     const trackElement = doubleRangeRef?.current;
-    if (trackElement && !isDisable) {
+    if (trackElement && !isDisabled) {
       trackElement.addEventListener("touchstart", handleSliderMouseDown, {
         passive: false,
       });
@@ -185,7 +185,7 @@ const RangeSlider: FC<RangeSliderI> = ({
     return () => {
       document.removeEventListener("mousemove", handleSliderMouseMove);
       document.removeEventListener("mouseup", handleSliderMouseUp);
-      if (trackElement && !isDisable) {
+      if (trackElement && !isDisabled) {
         trackElement.removeEventListener("touchstart", handleSliderMouseDown);
         trackElement.removeEventListener("touchmove", handleSliderMouseMove);
         trackElement.removeEventListener("touchend", handleSliderMouseUp);
@@ -216,7 +216,7 @@ const RangeSlider: FC<RangeSliderI> = ({
     <div
       className={getClassNames({
         "inte-rangeSlider": true,
-        "inte-rangeSlider--disable": isDisable,
+        "inte-rangeSlider--disable": isDisabled,
         [customClass]: customClass,
       })}
     >
@@ -243,7 +243,7 @@ const RangeSlider: FC<RangeSliderI> = ({
             : value.toLocaleString()}
         </div>
       </div>
-      {toolTip && !isDisable && (
+      {toolTip && !isDisabled && (
         <div
           className="inte-rangeSlider__tooltip"
           role="tooltip"
@@ -276,7 +276,7 @@ const RangeSlider: FC<RangeSliderI> = ({
         <div
           className="inte-doubleRange"
           ref={doubleRangeRef}
-          onMouseDown={(e) => !isDisable && handleSliderMouseDown(e)}
+          onMouseDown={(e) => !isDisabled && handleSliderMouseDown(e)}
         >
           <div
             className="inte-doubleRange__fill"
@@ -299,7 +299,7 @@ const RangeSlider: FC<RangeSliderI> = ({
             className={getClassNames({
               "inte-doubleRange__thumb inte-doubleRange__leftThumb": true,
               "inte-range__thumb--active":
-                draggedThumb === "leftThumb" && !isDisable,
+                draggedThumb === "leftThumb" && !isDisabled,
             })}
             style={{
               left: `${Math.floor(((leftValue - min) / (max - min)) * 100)}%`,
@@ -311,7 +311,7 @@ const RangeSlider: FC<RangeSliderI> = ({
             aria-valuemax={max}
             aria-valuenow={value[0]}
             aria-valuetext={value[0]}
-            aria-disabled={isDisable}
+            aria-disabled={isDisabled}
           />
           <div
             onMouseEnter={() =>
@@ -326,7 +326,7 @@ const RangeSlider: FC<RangeSliderI> = ({
             className={getClassNames({
               "inte-doubleRange__thumb inte-doubleRange__rightThumb": true,
               "inte-range__thumb--active":
-                draggedThumb === "rightThumb" && !isDisable,
+                draggedThumb === "rightThumb" && !isDisabled,
             })}
             style={{
               left: `${Math.floor(((rightValue - min) / (max - min)) * 100)}%`,
@@ -338,15 +338,15 @@ const RangeSlider: FC<RangeSliderI> = ({
             aria-valuemax={max}
             aria-valuenow={value[1]}
             aria-valuetext={value[1]}
-            aria-disabled={isDisable}
+            aria-disabled={isDisabled}
           />
         </div>
       ) : (
         <div
           className="inte-singleRange"
-          onMouseDown={(e) => !isDisable && handleMouseDown(e)}
-          onTouchStart={(e) => !isDisable && handleTouchStart(e)}
-          onTouchEnd={() => !isDisable && handleTouchEnd()}
+          onMouseDown={(e) => !isDisabled && handleMouseDown(e)}
+          onTouchStart={(e) => !isDisabled && handleTouchStart(e)}
+          onTouchEnd={() => !isDisabled && handleTouchEnd()}
           ref={singleRangeRef}
           role="slider"
           aria-orientation="horizontal"
@@ -354,7 +354,7 @@ const RangeSlider: FC<RangeSliderI> = ({
           aria-valuemin={min}
           aria-valuemax={max}
           aria-valuenow={value}
-          aria-disabled={isDisable}
+          aria-disabled={isDisabled}
         >
           <div
             className="inte-singleRange__fill"
@@ -373,7 +373,7 @@ const RangeSlider: FC<RangeSliderI> = ({
               })
             }
             className={`inte-singleRange__thumb ${
-              isTouchActive && !isDisable ? "inte-range__thumb--active" : ""
+              isTouchActive && !isDisabled ? "inte-range__thumb--active" : ""
             }`}
             style={{
               left: `${Math.ceil(

@@ -10,38 +10,37 @@ const Radio: React.FC<RadioI> = ({
   onChange, // This function working on the Radio button and set the value true of false
   value = 1,
   id,
-  isDisable,
+  isDisabled,
   hasError,
   ...props
 }: RadioI) => {
-
-  const rId = useId()
+  const rId = useId();
 
   const radioChangeHandler = () => {
     if (onChange) onChange(value);
   };
 
-  const handleKeyDown = (event:React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" && onChange) {
-     onChange(value)
+      onChange(value);
     }
   };
 
   return (
     <div
       className={getClassNames({
-        "inte-radio" : true,
-        "inte-radio--disabled" : isDisable,
-        [props.customClass as string] : props.customClass
+        "inte-radio": true,
+        "inte-radio--disabled": isDisabled,
+        [props.customClass as string]: props.customClass,
       })}
     >
-      <label htmlFor={id ? id : `inte-radio-${rId}`}>
+      <label htmlFor={id || `inte-radio-${rId}`}>
         <input
-          aria-describedby={`inte-radio__description-${id ? id : rId}`}
+          aria-describedby={`inte-radio__description-${id || rId}`}
           aria-checked={checked}
-          aria-label={id ? id : `inte-radio-${rId}`}
-          disabled={isDisable}
-          id={id ? id : `inte-radio-${rId}`}
+          aria-label={id || `inte-radio-${rId}`}
+          disabled={isDisabled}
+          id={id || `inte-radio-${rId}`}
           value={value}
           type="radio"
           name={name}
@@ -49,8 +48,8 @@ const Radio: React.FC<RadioI> = ({
           checked={checked}
           onKeyDown={handleKeyDown}
           className={getClassNames({
-            "inte-radio--fake" : true,
-            "inte-radio--error" : hasError,
+            "inte-radio--fake": true,
+            "inte-radio--error": hasError,
           })}
         />
         <span className={"inte-radioWrap"}>
@@ -59,7 +58,12 @@ const Radio: React.FC<RadioI> = ({
         </span>
       </label>
       {props.description ? (
-        <div id={`inte-radio__description-${id ? id : rId}`} className="inte-radio__description">{props.description}</div>
+        <div
+          id={`inte-radio__description-${id ? id : rId}`}
+          className="inte-radio__description"
+        >
+          {props.description}
+        </div>
       ) : (
         ""
       )}
@@ -73,7 +77,7 @@ export interface RadioI {
   value?: any;
   id?: string;
   checked?: boolean;
-  isDisable?: boolean;
+  isDisabled?: boolean;
   description?: string | React.ReactNode;
   hasError?: boolean;
   customClass?: string;

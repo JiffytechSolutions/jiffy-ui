@@ -45,7 +45,7 @@ export default {
           <td>The unique identifier for the tab</td>
         </tr>
         <tr>
-          <td><code>isDisable</code></td>
+          <td><code>isDisabled</code></td>
           <td><code>boolean</code></td>
           <td>If true, disables the tab</td>
         </tr>
@@ -53,7 +53,7 @@ export default {
     </table>`,
       control: {
         type: "object",
-        disable: true
+        disable: true,
       },
     },
     value: {
@@ -79,7 +79,8 @@ export default {
       defaultValue: "horizontal",
     },
     spacing: {
-      description: "Manages the spacing between Tabs Nav and Content <table><thead><tr><th>Props</th><th>Value</th></tr></thead><tbody><tr><td><strong>none</strong></td><td>0</td></tr><tr><td><strong>extraTight</strong></td><td>4px</td></tr><tr><td><strong>mediumTight</strong></td><td>8px</td></tr><tr><td><strong>tight</strong></td><td>12px</td></tr><tr><td><strong>loose (Default)</strong></td><td>16px</td></tr><tr><td><strong>mediumLoose</strong></td><td>20px</td></tr><tr><td><strong>extraLoose</strong></td><td>24px</td></tr><tbody></table>",
+      description:
+        "Manages the spacing between Tabs Nav and Content <table><thead><tr><th>Props</th><th>Value</th></tr></thead><tbody><tr><td><strong>none</strong></td><td>0</td></tr><tr><td><strong>extraTight</strong></td><td>4px</td></tr><tr><td><strong>mediumTight</strong></td><td>8px</td></tr><tr><td><strong>tight</strong></td><td>12px</td></tr><tr><td><strong>loose (Default)</strong></td><td>16px</td></tr><tr><td><strong>mediumLoose</strong></td><td>20px</td></tr><tr><td><strong>extraLoose</strong></td><td>24px</td></tr><tbody></table>",
       control: {
         type: "radio",
         options: [
@@ -115,12 +116,11 @@ export default {
       defaultValue: "custom_class",
     },
   },
-
 };
 
 const Template = ({ ...rest }) => {
-  const [selectedTab, setSelectedTab] = useState('All');
-  const [tabArr, setTabArr] = useState(tabs2)
+  const [selectedTab, setSelectedTab] = useState("All");
+  const [tabArr, setTabArr] = useState(tabs2);
 
   return (
     <Card>
@@ -144,7 +144,7 @@ export const Primary = Template.bind({});
 export const verticalTabs: any = Template.bind({});
 verticalTabs.decorators = [
   () => {
-    const [selectedTab, setSelectedTab] = useState('All');
+    const [selectedTab, setSelectedTab] = useState("All");
     return (
       <Card>
         <Tabs
@@ -158,14 +158,14 @@ verticalTabs.decorators = [
           </Card>
         </Tabs>
       </Card>
-    )
-  }
-]
+    );
+  },
+];
 
 export const TabsWithBadge: any = Template.bind({});
 TabsWithBadge.decorators = [
   () => {
-    const [selectedTab, setSelectedTab] = useState('All');
+    const [selectedTab, setSelectedTab] = useState("All");
     return (
       <Card>
         <Tabs
@@ -178,14 +178,14 @@ TabsWithBadge.decorators = [
           </Card>
         </Tabs>
       </Card>
-    )
-  }
-]
+    );
+  },
+];
 
 export const TabsWithSpacing: any = Template.bind({});
 TabsWithSpacing.decorators = [
   () => {
-    const [selectedTab, setSelectedTab] = useState('All');
+    const [selectedTab, setSelectedTab] = useState("All");
     return (
       <FlexLayout spacing="loose" direction="vertical">
         <Card title="Loose 16px">
@@ -272,14 +272,14 @@ TabsWithSpacing.decorators = [
           </Tabs>
         </Card>
       </FlexLayout>
-    )
-  }
-]
+    );
+  },
+];
 
 export const TabsWithIcon: any = Template.bind({});
 TabsWithIcon.decorators = [
   () => {
-    const [selectedTab, setSelectedTab] = useState('All');
+    const [selectedTab, setSelectedTab] = useState("All");
     return (
       <Card>
         <Tabs
@@ -292,11 +292,9 @@ TabsWithIcon.decorators = [
           </Card>
         </Tabs>
       </Card>
-    )
-  }
-]
+    );
+  },
+];
 export function Documentation() {
-  return (
-    <TabDoc />
-  );
+  return <TabDoc />;
 }

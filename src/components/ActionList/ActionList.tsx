@@ -43,7 +43,7 @@ export interface ActionListItemsI {
   onClick?: () => void;
   prefixIcon?: React.ReactNode;
   suffixIcon?: React.ReactNode;
-  disabled?: boolean;
+  isDisabled?: boolean;
 }
 
 const ActionList: FC<ActionListI> = ({
@@ -135,7 +135,12 @@ const ActionList: FC<ActionListI> = ({
         currentGroupInd = options.length - 1;
         currentInd = options[currentGroupInd].items.length - 1;
       } else if (currentInd > 0) {
-        currentInd -= 1;
+        const nextIndex = getNextEnabledOptionIndex(
+          selectedIndex,
+          "up",
+          groupItems
+        );
+        currentInd = nextIndex;
       } else {
         currentGroupInd =
           (currentGroupInd - 1 + options.length) % options.length;
@@ -149,12 +154,18 @@ const ActionList: FC<ActionListI> = ({
         currentGroupInd =
           currentGroupInd === options.length - 1 ? 0 : currentGroupInd + 1;
       } else {
-        currentInd += 1;
+        const nextIndex = getNextEnabledOptionIndex(
+          selectedIndex,
+          "down",
+          groupItems
+        );
+        currentInd = nextIndex;
       }
       setSelectedIndex(currentInd);
       setSelectedGroupIndex(currentGroupInd);
     } else if (key === "Enter") {
       const item = groupItems?.[currentInd];
+      if (item?.isDisabled) return;
       if (item?.onClick) {
         item.onClick();
       }
@@ -169,7 +180,24 @@ const ActionList: FC<ActionListI> = ({
       });
     }
   };
-
+  const getNextEnabledOptionIndex = (
+    currentIndex: number,
+    direction: "up" | "down",
+    options: any[]
+  ) => {
+    const step = direction === "up" ? -1 : 1;
+    let nextIndex = currentIndex + step;
+    while (
+      nextIndex >= 0 &&
+      nextIndex < options.length &&
+      options[nextIndex].isDisabled
+    ) {
+      nextIndex += step;
+    }
+    return nextIndex >= 0 && nextIndex < options.length
+      ? nextIndex
+      : currentIndex;
+  };
   const { handleTouchStart, handleTouchMove, handleTouchEnd } = handleOnDrag(
     popoverRef,
     scrollRef,
@@ -260,10 +288,10 @@ const ActionList: FC<ActionListI> = ({
                                 "inte-actionList__item": true,
                                 "inte-actionList__item--destrctive":
                                   item.destructive,
-                                "inte-actionList--disabled": item.disabled,
+                                "inte-actionList--disabled": item.isDisabled,
                               })}
                               onClick={() => {
-                                if (item.disabled) return;
+                                if (item.isDisabled) return;
                                 item.onClick();
                                 handleClose();
                               }}

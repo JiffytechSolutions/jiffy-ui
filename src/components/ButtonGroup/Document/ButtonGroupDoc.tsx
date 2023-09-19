@@ -1,5 +1,10 @@
 import React from "react";
-import { AlertOctagon, Download, Gitlab, X } from '../../../storybook/Foundation/Icons/Icons';
+import {
+  AlertOctagon,
+  Download,
+  Gitlab,
+  X,
+} from "../../../storybook/Foundation/Icons/Icons";
 import StoryBookFooter from "../../../StorybookFooter/StoryBookFooter";
 import Accordion from "../../Accordion/Accordion";
 import Button from "../../Button/Button";
@@ -384,7 +389,7 @@ export const ButtonGroupDoc = () => {
                       <Card cardType="shadowed" title={"Disabled"}>
                         <div className="button--group-disabledState">
                           <ButtonGroup segmented>
-                            <Button type="outlined" isDisable>
+                            <Button type="outlined" isDisabled>
                               Button
                             </Button>
                             <Button type="outlined">Button</Button>

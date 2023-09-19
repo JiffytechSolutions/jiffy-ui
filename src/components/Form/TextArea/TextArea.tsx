@@ -1,9 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useId } from "react";
-import { useState } from "react";
-import Badge from "../../Badge/Badge";
-import { FlexLayout } from "../../FlexLayout";
-import TextStyles from "../../TextStyles/TextStyles";
 import "../Form.css";
 import "./TextArea.css";
 
@@ -26,25 +22,33 @@ const TextArea = ({
   readOnly = false,
   ...props
 }: TextfieldI): JSX.Element => {
-  const rId = useId()
+  const rId = useId();
   const errorCss = error ? "inte-formElement--error" : "";
 
   return (
-    <div className={`inte-formElement inte-textArea ${customClass} ${errorCss}`.replace(/\s\s+/g, " ")
-      .trim()}>
+    <div
+      className={`inte-formElement inte-textArea ${customClass} ${errorCss}`
+        .replace(/\s\s+/g, " ")
+        .trim()}
+    >
       {label ? (
         <label
           htmlFor={
             props.id ? `${props.id}`.trim() : `inte-textArea-${rId}`.trim()
           }
           id={`inte-textArea__label-${rId}`}
-          className={`inte-form__label ${required ? "inte--required" : ""}`.replace(/\s\s+/g, " ")
-            .trim()}>{label}</label>
+          className={`inte-form__label ${required ? "inte--required" : ""}`
+            .replace(/\s\s+/g, " ")
+            .trim()}
+        >
+          {label}
+        </label>
       ) : null}
 
       <textarea
         id={props.id ? props.id : `inte-textArea-${rId}`}
-        className={`inte-formElement__control inte-formElement__textArea `.replace(/\s\s+/g, " ")
+        className={`inte-formElement__control inte-formElement__textArea `
+          .replace(/\s\s+/g, " ")
           .trim()}
         style={{
           opacity: readOnly ? "0.6" : "1",
@@ -58,14 +62,19 @@ const TextArea = ({
           onChange(e.target.value);
         }}
         placeholder={placeHolder}
-        aria-describedby={`inte-textArea__description-${props.id ? props.id : rId}`}
+        aria-describedby={`inte-textArea__description-${
+          props.id ? props.id : rId
+        }`}
         aria-labelledby={`inte-textArea__label-${rId}`}
         {...(required ? { "aria-required": "true" } : {})}
       />
       {helpText ? (
         <span
           id={`inte-textArea__description-${props.id ? props.id : rId}`}
-          className={"inte-formElement__itemHelp"}>{helpText}</span>
+          className={"inte-formElement__itemHelp"}
+        >
+          {helpText}
+        </span>
       ) : (
         ""
       )}

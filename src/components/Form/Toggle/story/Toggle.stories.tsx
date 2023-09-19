@@ -43,7 +43,7 @@ export default {
       },
       defaultValue: "",
     },
-    isDisable: {
+    isDisabled: {
       description: "You can disabled toggle from here",
       control: {
         type: "boolean",
@@ -62,29 +62,29 @@ export default {
       control: {
         type: "text",
       },
-      defaultValue: ''
+      defaultValue: "",
     },
     value: {
       description: "Set value of toggle",
       control: {
         type: "text",
       },
-      defaultValue: ''
+      defaultValue: "",
     },
     helpText: {
       description: "Set helpText (For tooltip in label) ",
       control: {
         type: "text",
       },
-      defaultValue: ''
+      defaultValue: "",
     },
     helpPosition: {
       description: "Set the direction of tooltip in label",
       control: {
         type: "radio",
         options: ["left", "right", "top", "bottom"],
-      }
-    }
+      },
+    },
   },
 };
 
@@ -99,7 +99,7 @@ const Template = ({ ...rest }) => {
       <Toggle
         {...rest}
         onChange={(newState) => setCheck(newState)}
-        isDisable={rest.isDisable}
+        isDisabled={rest.isDisabled}
         label={rest.label}
         description={rest.description}
         checked={check}
@@ -121,7 +121,7 @@ Disabled.decorators = [
       <Card>
         <Toggle
           onChange={() => setCheck(!check)}
-          isDisable={true}
+          isDisabled={true}
           label={"Toggle"}
           checked={check}
         />
@@ -210,7 +210,7 @@ With_tooltip.decorators = [
           <Toggle
             label="Toggle"
             description="Toggle Description"
-            isDisable
+            isDisabled
             helpText="HelpText goes here"
             helpPosition="right"
           />

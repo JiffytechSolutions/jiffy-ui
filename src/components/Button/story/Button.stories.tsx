@@ -124,7 +124,7 @@ export default {
       },
       defaultValue: false,
     },
-    isDisable: {
+    isDisabled: {
       description: "Disables the button, disallowing user interaction",
       control: {
         type: "boolean",
@@ -235,7 +235,7 @@ const Template = (rest: NewI) => {
   // retrieves the appropriate icon passes it as a component prop
 
   return (
-    <Card cardType='borderLess' title={"Button"}>
+    <Card cardType="borderLess" title={"Button"}>
       <Button
         {...rest}
         isHaptic={rest.isHaptic}
@@ -255,25 +255,25 @@ const Template = (rest: NewI) => {
               ? "var(--inte-G0)"
               : rest.type == "danger"
               ? "var(--inte-G0)"
-              : rest.type == "dangerOutlined" && !rest.isDisable
+              : rest.type == "dangerOutlined" && !rest.isDisabled
               ? "var(--inte-R200)"
-              : rest.type == "dangerOutlined" && rest.isDisable
+              : rest.type == "dangerOutlined" && rest.isDisabled
               ? "var(--inte-R55)"
-              : rest.type == "secondary" && !rest.isDisable
+              : rest.type == "secondary" && !rest.isDisabled
               ? "var(--inte-G800)"
-              : rest.type == "secondary" && rest.isDisable
+              : rest.type == "secondary" && rest.isDisabled
               ? "var(--inte-G50)"
-              : rest.type == "outlined" && !rest.isDisable
+              : rest.type == "outlined" && !rest.isDisabled
               ? "var(--inte-G800)"
-              : rest.type == "outlined" && rest.isDisable
+              : rest.type == "outlined" && rest.isDisabled
               ? "var(--inte-G40)"
-              : rest.type == "dangerPlain" && !rest.isDisable
+              : rest.type == "dangerPlain" && !rest.isDisabled
               ? "var(--inte-R200)"
-              : rest.type == "dangerPlain" && rest.isDisable
+              : rest.type == "dangerPlain" && rest.isDisabled
               ? "var(--inte-R55)"
-              : rest.type == "textButton" && !rest.isDisable
+              : rest.type == "textButton" && !rest.isDisabled
               ? "var(--inte-G200)"
-              : rest.type == "textButton" && rest.isDisable
+              : rest.type == "textButton" && rest.isDisabled
               ? "var(--inte-G50)"
               : "var(--inte-G0)"
           }`,
@@ -309,7 +309,7 @@ Types.story = {
 };
 Types.decorators = [
   () => (
-    <Card cardType='borderLess' title={"Button Type Options"}>
+    <Card cardType="borderLess" title={"Button Type Options"}>
       <FlexLayout spacing="loose" valign="center" wrap="wrap">
         {types.map((variant: any) => (
           <Button size="large" type={variant}>
@@ -349,7 +349,7 @@ size.decorators = [
     <Card title={"Button size Options"}>
       <FlexLayout direction="vertical" spacing="loose">
         <Card title={"Large"}>
-          <FlexLayout spacing="tight" valign="center"  wrap="wrap">
+          <FlexLayout spacing="tight" valign="center" wrap="wrap">
             {types.map((variant: any) => (
               <Button type={variant} size="large">
                 {variant}
@@ -358,7 +358,7 @@ size.decorators = [
           </FlexLayout>
         </Card>
         <Card title={"Thin"}>
-          <FlexLayout spacing="tight" valign="center"  wrap="wrap">
+          <FlexLayout spacing="tight" valign="center" wrap="wrap">
             {types.map((variant: any) => (
               <Button type={variant} size="thin">
                 {variant}
@@ -367,9 +367,9 @@ size.decorators = [
           </FlexLayout>
         </Card>
         <Card title={"ExtraThin"}>
-          <FlexLayout spacing="tight" valign="center"  wrap="wrap">
-            {types.map((variant: any) => (
-              <Button type={variant} size="extraThin">
+          <FlexLayout spacing="tight" valign="center" wrap="wrap">
+            {types.map((variant: any, index: number) => (
+              <Button key={index} type={variant} size="extraThin">
                 {variant}
               </Button>
             ))}
@@ -390,8 +390,9 @@ Halign.decorators = [
       title={"Icon Alignment in Button"}
     >
       <FlexLayout spacing="extraLoose" direction="vertical">
-        {halign.map((variant: any) => (
+        {halign.map((variant: any, index: number) => (
           <Button
+            key={index}
             size="large"
             icon={<Home size={20} color="#ffffff" />}
             isFullWidth={true}
@@ -412,8 +413,9 @@ Icon_Align.decorators = [
   () => (
     <Card title={"Icon Alignment Option"}>
       <FlexLayout spacing="extraLoose">
-        {iconAlign.map((variant: any) => (
+        {iconAlign.map((variant: any, index) => (
           <Button
+            key={index}
             size="large"
             iconAlign={variant}
             icon={<Home color="#ffffff" size={20} />}
@@ -433,8 +435,8 @@ Disable.decorators = [
   () => (
     <Card title={"Disabled Button Options"}>
       <FlexLayout spacing="loose" valign="center" wrap="wrap">
-        {types.map((variant: any) => (
-          <Button size="large" type={variant} isDisable={true}>
+        {types.map((variant: any, index) => (
+          <Button key={index} size="large" type={variant} isDisabled={true}>
             Disabled button
           </Button>
         ))}
@@ -449,8 +451,9 @@ Loading.decorators = [
   () => (
     <Card title={"Loading States of Button"}>
       <FlexLayout spacing="loose" valign="center" wrap="wrap">
-        {types.map((variant: any) => (
+        {types.map((variant: any, index) => (
           <Button
+            key={index}
             size="large"
             accessibilityLabel={variant}
             type={variant}
@@ -471,9 +474,10 @@ Only_Icon.decorators = [
     <Card title={"Icon Only Options"}>
       <FlexLayout direction="vertical">
         <Card title={"size Large"}>
-          <FlexLayout spacing="loose" valign="center"  wrap="wrap">
-            {types.map((variant: any) => (
+          <FlexLayout spacing="loose" valign="center" wrap="wrap">
+            {types.map((variant: any, index: number) => (
               <Button
+                key={index}
                 accessibilityLabel="Icon Only Button"
                 size="large"
                 type={variant}
@@ -500,8 +504,9 @@ Only_Icon.decorators = [
         </Card>
         <Card title={"size Thin"}>
           <FlexLayout spacing="loose" valign="center">
-            {types.map((variant: any) => (
+            {types.map((variant: any, index) => (
               <Button
+                key={index}
                 accessibilityLabel="Icon Only Button"
                 size="thin"
                 type={variant}
@@ -528,8 +533,9 @@ Only_Icon.decorators = [
         </Card>
         <Card title={"size ExtraThin"}>
           <FlexLayout spacing="loose" valign="center">
-            {types.map((variant: any) => (
+            {types.map((variant: any, index) => (
               <Button
+                key={index}
                 accessibilityLabel="Icon Only Button"
                 size="extraThin"
                 type={variant}
@@ -566,8 +572,9 @@ Button_Status.decorators = [
   () => (
     <Card title="size Large">
       <FlexLayout spacing="loose" valign="center">
-        {statusType.map((variant: any) => (
+        {statusType.map((variant: any, index: number) => (
           <Button
+            key={index}
             status={variant}
             accessibilityLabel="Icon Only Button"
             type="outlined"
