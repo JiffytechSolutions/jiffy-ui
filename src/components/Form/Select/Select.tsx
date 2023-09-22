@@ -891,6 +891,7 @@ const Select = ({
         tabIndex={tabIndex ?? 0}
         onFocus={() => {
           if (isDisabled) return;
+          setisSelectFocused(false);
           setIsFocused(true);
         }}
         onBlur={() => {
