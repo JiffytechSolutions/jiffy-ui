@@ -30,7 +30,7 @@ const Carousel = forwardRef(
       isVerticalSlider = false,
       pauseOnHover = false,
       pauseOnDotsHover = false,
-      isPersistSlideOnRefresh = false,
+      persistSlideOnRefresh = false,
       syncWith,
       breakpoints,
       spaceBetweenSlides,
@@ -150,13 +150,13 @@ const Carousel = forwardRef(
       if (isEndless && !showFadeEffect) {
         setSlideWidth(width);
         setTranslateWidth(width * numOfItems + translatingWidthEndless);
-        isPersistSlideOnRefresh &&
+        persistSlideOnRefresh &&
           handleSlideOnPageRefresh(
             0,
             width * numOfSlidesToShow + translatingWidthEndless
           );
       } else {
-        isPersistSlideOnRefresh && handleSlideOnPageRefresh(0, 0);
+        persistSlideOnRefresh && handleSlideOnPageRefresh(0, 0);
         setSlideWidth(
           showFadeEffect ? carouselWrapperRef.current.offsetWidth : width
         );
@@ -164,8 +164,9 @@ const Carousel = forwardRef(
     };
     // Getting required width of wrapper and list
     useEffect(() => {
-      const stringifiedObj: any = sessionStorage.getItem("indexActive");
-      if (isPersistSlideOnRefresh && !!stringifiedObj) {
+      const stringifiedObj: any =
+        persistSlideOnRefresh && sessionStorage.getItem("indexActive");
+      if (stringifiedObj) {
         onComponentRender();
         const obj = JSON.parse(stringifiedObj);
         setActiveIndex(obj.index);
@@ -184,7 +185,7 @@ const Carousel = forwardRef(
     }, [numOfSlidesToShow]);
     // start autoplay
     useEffect(() => {
-      if (isPersistSlideOnRefresh && activeIndex !== 0) {
+      if (persistSlideOnRefresh) {
         handleSlideOnPageRefresh(activeIndex, translateWidth);
       }
       if (
@@ -194,11 +195,11 @@ const Carousel = forwardRef(
       ) {
         handleAutoplay();
       }
-      if (!isEndless && activeIndex === 0) {
+      if (!isEndless && activeIndex === 0 && !persistSlideOnRefresh) {
         setTranslateWidth(0);
       }
       return () => clearInterval(timerRef.current);
-    }, [activeIndex, isPaused]);
+    }, [activeIndex, isPaused,translateWidth]);
     // Handle autoplay
     const handleAutoplay = () => {
       timerRef.current = setInterval(
@@ -282,17 +283,21 @@ const Carousel = forwardRef(
     };
     // handle slide changes using previous/next button
     const handleActiveSlide = (type: "prev" | "next") => {
-      !showFadeEffect && handleTranslatewidth(type);
+      if (!showFadeEffect) {
+        handleTranslatewidth(type);
+      }
       setActiveIndex((activeIndex) => {
         const indexOffset = type === "prev" ? -1 : 1;
         const nextIndex =
           (activeIndex + indexOffset + carouselChildren.length) %
           carouselChildren.length;
-        return isEndless
-          ? nextIndex
-          : nextIndex + Math.floor(numOfSlidesToShow) <= carouselChildren.length
-          ? nextIndex
-          : activeIndex;
+        if (
+          isEndless ||
+          nextIndex + Math.floor(numOfSlidesToShow) <= carouselChildren.length
+        ) {
+          return nextIndex;
+        }
+        return activeIndex;
       });
     };
     // Handle slide by clicking on the slide
