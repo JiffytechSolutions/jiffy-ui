@@ -19,15 +19,12 @@ const useMobileDevice = () => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 991) {
-        setIsMobile(() => {
-          return mobileDevicePatterns.some((device) => {
-            return navigator.userAgent.match(device);
-          });
-        });
-      } else {
-        setIsMobile(false);
-      }
+      const isMobile =
+        window.innerWidth < 991 &&
+        mobileDevicePatterns.some((device) =>
+          navigator.userAgent.match(device)
+        );
+      setIsMobile(isMobile);
     };
     handleResize();
     window.addEventListener("resize", handleResize);
@@ -35,7 +32,6 @@ const useMobileDevice = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
   return isMobile;
 };
 export default useMobileDevice;
