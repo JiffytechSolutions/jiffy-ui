@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const mobileDevicePatterns = [
   /Android/i,
@@ -11,20 +11,25 @@ const mobileDevicePatterns = [
   /Kindle/i,
   /Silk/i,
   /Opera Mini/i,
-  /Mobile/i, // Additional pattern for general mobile devices
+  /Mobile/i,
 ];
 
 const useMobileDevice = () => {
   const [isMobile, setIsMobile] = useState(false);
+
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(() => {
-        return mobileDevicePatterns.some((device) => {
-          return navigator.userAgent.match(device);
+      if (window.innerWidth < 991) {
+        setIsMobile(() => {
+          return mobileDevicePatterns.some((device) => {
+            return navigator.userAgent.match(device);
+          });
         });
-      });
+      } else {
+        setIsMobile(false);
+      }
     };
-    handleResize()
+    handleResize();
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
@@ -33,11 +38,10 @@ const useMobileDevice = () => {
 
   return isMobile;
 };
+export default useMobileDevice;
 
 export const isMobileDevice = () => {
   return mobileDevicePatterns.some((device) => {
     return navigator.userAgent.match(device);
   });
-}
-
-export default useMobileDevice;
+};
