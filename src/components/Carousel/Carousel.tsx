@@ -199,7 +199,7 @@ const Carousel = forwardRef(
         setTranslateWidth(0);
       }
       return () => clearInterval(timerRef.current);
-    }, [activeIndex, isPaused,translateWidth]);
+    }, [activeIndex, isPaused, translateWidth]);
     // Handle autoplay
     const handleAutoplay = () => {
       timerRef.current = setInterval(
@@ -400,9 +400,16 @@ const Carousel = forwardRef(
         autoplaySpeed
       );
     };
+    // Stop button from clicking
+    const stopButtonClick = () => {
+      setIsSliding(true);
+      setTimeout(() => setIsSliding(false), 250);
+    };
     // handle slide using mouse
     const handleMouseDown = (e: any) => {
       e.preventDefault();
+      if (isSliding) return;
+      stopButtonClick();
       startX = e.clientX;
       startY = e.clientY;
       const attachEvent = carouselContainerRef.current;
@@ -515,11 +522,6 @@ const Carousel = forwardRef(
           {child}
         </div>
       );
-    };
-    // Stop button from clicking
-    const stopButtonClick = () => {
-      setIsSliding(true);
-      setTimeout(() => setIsSliding(false), 250);
     };
 
     const handleNextClick = () => {
