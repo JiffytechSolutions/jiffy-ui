@@ -52,6 +52,7 @@
   color: var(--inte-G800);
 }
 .inte-accordion__expandIcon svg {
+  min-width: 2rem;
   transform: rotate(0deg);
   transition: 200ms all linear;
   transform-origin: center;
