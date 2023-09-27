@@ -1,0 +1,8 @@
+.inte-magnifier:not(.inte-magnifier--outside) {
+    overflow: hidden;
+}
+
+.inte-magnifier--outside div:last-child  {
+    top : 0;
+    right:0;
+}
