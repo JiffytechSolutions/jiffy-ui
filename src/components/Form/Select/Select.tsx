@@ -687,7 +687,7 @@ const Select = ({
             : {})}
           {...(isMobile && {
             style: {
-              height:
+              maxHeight:
                 selectedValues.length === 0
                   ? "calc(100vh - 19.2rem)"
                   : "calc(100vh - 23.4rem)",
