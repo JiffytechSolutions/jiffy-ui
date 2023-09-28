@@ -39,14 +39,14 @@ export default {
       control: {
         type: "number"
       },
-      defaultValue: 50,
+      defaultValue: 100,
     },
     magnifierWidth: {
       description: "Set the width of Magnifier",
       control: {
         type: "number"
       },
-      defaultValue: 50,
+      defaultValue: 100,
     },
     zoomLevel: {
       description: "Set the zoom level of Magnifier",
@@ -55,13 +55,24 @@ export default {
       },
       defaultValue: 5,
     },
+    customClass: {
+      description: "Give the custom class to this component",
+      control: {
+        type: "text"
+      },
+      defaultValue: ""
+    },
   }
 }
 
 const Template = ({ ...rest }) => {
   return <Card>
     <ImageMagnifier
-      width={0} height={0} inside={false} {...rest} />
+      width={0}
+      height={0}
+      inside={false}
+      position="auto"
+      {...rest}    />
   </Card>
 }
 

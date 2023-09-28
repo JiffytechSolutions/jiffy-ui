@@ -1,8 +1,11 @@
-.inte-magnifier:not(.inte-magnifier--outside) {
-    overflow: hidden;
+.inte-magnifier {
+  overflow: hidden;
+  position: relative;
 }
 
-.inte-magnifier--outside div:last-child  {
-    top : 0;
-    right:0;
+.inte-magnifier__focusObserver {
+  position: absolute;
+  pointer-events: none;
+  border: 1px solid lightgray;
+  background-color: transparent;
 }
