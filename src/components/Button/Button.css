@@ -189,7 +189,7 @@
   color: var(--inte-R200);
   background-color: var(--inte-transparet);
   height: 2.4rem !important;
-  padding: 0.2rem 0.4rem !important;
+  padding: 0 !important;
   border-radius: var(--radius-rounded-5) !important;
 }
 
@@ -277,7 +277,7 @@
 
 /* Text Buttonr color Declarations */
 .inte-btn--textButton.inte-btn {
-  padding: 0.2rem 0.4rem !important;
+  padding: 0 !important;
   color: var(--inte-G450);
   background-color: var(--inte-transparet);
   height: 2.4rem;
@@ -427,3 +427,4 @@
     opacity: 0;
   }
 }
+
