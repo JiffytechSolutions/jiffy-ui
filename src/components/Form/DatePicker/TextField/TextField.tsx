@@ -1,10 +1,9 @@
 import React, { useEffect, useRef } from "react";
 import { ClearIcon } from "../../../../assets/icon/ActionIcons";
 import { Calender } from "../../../../storybook/Foundation/Icons/Icons";
-import "./TextField.css";
 import getClassNames from "../../../../utilities/getClassnames";
 import useMobileDevice from "../../../../utilities/useMobileDevice";
-
+import "./TextField.css";
 interface TextFieldI {
   onFocus?: (e: any) => void;
   id?: string | number;
@@ -19,7 +18,7 @@ interface TextFieldI {
   isTime: boolean;
   isOnlyIcon?: boolean;
   hasError?: boolean;
-  isDisable?: boolean;
+  isDisabled?: boolean;
   onStartClear: () => void;
   onEndClear?: () => void;
 }
@@ -37,7 +36,7 @@ const TextField = ({
   isTime,
   isOnlyIcon,
   hasError,
-  isDisable,
+  isDisabled,
   onStartClear,
   onEndClear,
 }: TextFieldI) => {
@@ -82,13 +81,13 @@ const TextField = ({
         "inte-textField__inputContainer--hasTime": isTime,
         "inte-textField__inputContainer--onlyIcon": isOnlyIcon,
         "inte-textField__inputContainer--hasError": hasError,
-        "inte-textField__inputContainer--disabled": isDisable,
+        "inte-textField__inputContainer--disabled": isDisabled,
       })}
     >
       <div
         className="inte-dateInput__container"
         onClick={
-          !isDisable
+          !isDisabled
             ? isOnlyIcon
               ? onFocus
               : handleStartInputClick
@@ -97,7 +96,7 @@ const TextField = ({
       >
         <Calender
           size="20"
-          color={isDisable ? "var(--inte-G40)" : "var(--inte-G90)"}
+          color={isDisabled ? "var(--inte-G40)" : "var(--inte-G90)"}
         />
         {!isOnlyIcon && (
           <>
@@ -108,7 +107,7 @@ const TextField = ({
                 if (isMobile) e.target.blur();
                 onFocus(e);
               }}
-              disabled={isDisable}
+              disabled={isDisabled}
               type="text"
               autoComplete="off"
               value={value[0] ?? ""}
@@ -134,7 +133,7 @@ const TextField = ({
             className="inte-dateInput__container"
             ref={textFieldRef}
             onClick={
-              !isDisable
+              !isDisabled
                 ? isOnlyIcon
                   ? onFocus
                   : handleEndInputClick
@@ -143,7 +142,7 @@ const TextField = ({
           >
             <Calender
               size="20"
-              color={isDisable ? "var(--inte-G40)" : "var(--inte-G90)"}
+              color={isDisabled ? "var(--inte-G40)" : "var(--inte-G90)"}
             />
             {!isOnlyIcon && (
               <>
@@ -154,7 +153,7 @@ const TextField = ({
                     if (isMobile) e.target.blur();
                     onFocus(e);
                   }}
-                  disabled={isDisable}
+                  disabled={isDisabled}
                   autoComplete="off"
                   value={value[1] ?? ""}
                   onChange={handelSecondInputValueChange}

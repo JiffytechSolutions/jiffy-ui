@@ -109,6 +109,7 @@ export type { DatePickerI } from "./Form/DatePicker/DatePicker/DatePicker"
 export { default as RangePicker } from "./Form/DatePicker/RangePicker/RangePicker"
 export type { RangePickerI } from "./Form/DatePicker/RangePicker/RangePicker"
 export { default as VirtualScroll } from "./VirtualScroll/VirtualScroll";
+export {default as VirtualSelect} from "./Form/VirtualSelect/VirtualSelect"
 export { default as AnimatingIllustration  } from "./AnimationingIllustration/Illustration";
 export { default as useMobileDevice } from "../utilities/useMobileDevice";
 export { default as useWindowResize } from "../utilities/useWindowResize";

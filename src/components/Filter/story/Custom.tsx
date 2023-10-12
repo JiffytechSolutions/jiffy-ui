@@ -160,7 +160,7 @@ const Custom = ({ ...rest }) => {
         halign: "center",
         isFullWidth: true,
         onClick: () => alert("Apply button clicked"),
-        isDisable: true,
+        isDisabled: true,
       }}
     />
   );

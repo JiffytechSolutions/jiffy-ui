@@ -166,7 +166,7 @@ import {
   Apps,
   Wallet,
   ReturnProduct,
-  List1,
+  List,
   Money,
   Rupee,
   Yen,
@@ -1868,9 +1868,9 @@ export const IconsData = ({ ...rest }) => {
       data: ["returnproduct"],
     },
     {
-      icon: <List1 {...rest} />,
-      name: "List1",
-      data: ["list1"],
+      icon: <List {...rest} />,
+      name: "List",
+      data: ["list"],
     },
     {
       icon: <Money {...rest} />,

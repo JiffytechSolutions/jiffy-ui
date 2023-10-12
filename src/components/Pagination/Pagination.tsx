@@ -130,7 +130,7 @@ const Pagination: React.FC<PaginationI> = ({
               onChange={(e: any) => {
                 onCountChange(e);
               }}
-              value={countPerPage.toString()}
+              value={countPerPage}
               customClass="inte-pagination__selectItem"
             />
           </div>
@@ -142,14 +142,14 @@ const Pagination: React.FC<PaginationI> = ({
                   ? 0
                   : countPerPage * 1 + 1 - countPerPage
                 : totalitem === 0
-                  ? 0
-                  : countPerPage * pageReplica + 1 - countPerPage}{" "}
+                ? 0
+                : countPerPage * pageReplica + 1 - countPerPage}{" "}
               -{" "}
               {pageReplica * countPerPage >= totalitem
                 ? totalitem
                 : pageReplica == 0
-                  ? 1 * countPerPage
-                  : pageReplica * countPerPage}{" "}
+                ? 1 * countPerPage
+                : pageReplica * countPerPage}{" "}
               of {totalitem}
             </div>
           )}
@@ -165,11 +165,12 @@ const Pagination: React.FC<PaginationI> = ({
             icon={
               <ChevronLeft
                 size="20"
-                color={`${currentPage === 1 || totalitem === 0 ? "#E0E1E3" : "#1C2433"
-                  }`}
+                color={`${
+                  currentPage === 1 || totalitem === 0 ? "#E0E1E3" : "#1C2433"
+                }`}
               />
             }
-            isDisable={!!(currentPage === 1 || totalitem === 0)}
+            isDisabled={!!(currentPage === 1 || totalitem === 0)}
             onClick={onPrevious}
           />
 
@@ -212,13 +213,14 @@ const Pagination: React.FC<PaginationI> = ({
             icon={
               <ChevronRight
                 size="20"
-                color={`${currentPage === lastPage || totalitem === 0
-                  ? "#E0E1E3"
-                  : "#1C2433"
-                  }`}
+                color={`${
+                  currentPage === lastPage || totalitem === 0
+                    ? "#E0E1E3"
+                    : "#1C2433"
+                }`}
               />
             }
-            isDisable={currentPage === lastPage || totalitem === 0}
+            isDisabled={currentPage === lastPage || totalitem === 0}
             onClick={onNext}
           />
         </div>
@@ -264,9 +266,7 @@ const Pagination: React.FC<PaginationI> = ({
                   setValue("");
                 }
               }}
-              isDisable={
-                !!(TextValue == "" || typeof TextValue === "string")
-              }
+              isDisabled={!!(TextValue == "" || typeof TextValue === "string")}
             />
           </div>
         )}

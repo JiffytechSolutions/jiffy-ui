@@ -30,7 +30,7 @@
 
 .inte-actionList__groupSection:last-child,
 .inte-actionList__noTitle {
-  padding-bottom: 1.2rem;
+  padding-bottom: 0;
 }
 
 .inte-actionList__groupSection + .inte-actionList__noTitle {
@@ -79,6 +79,7 @@
 }
 
 .inte-actionList__icon > svg {
+  min-width: 2rem;
   height: 2rem;
   width: 2rem;
   display: block;
@@ -156,7 +157,7 @@
   .inte-actionList__sectionContainer
   .inte-actionList__groupSection:not(:last-child) {
   border-bottom: 1px solid var(--inte-G40);
-  margin-bottom: 1.8rem;
+  margin-bottom:0;
 }
 .inte-actionList--mobileDevice
   .inte-actionList__sectionContainer

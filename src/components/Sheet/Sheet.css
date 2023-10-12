@@ -12,6 +12,8 @@
 }
 .inte-sheet.inte-sheet__noMobile {
   height: 100%;
+  width: 48rem;
+  transform: translateX(calc(100% + 2rem));
 }
 
 .inte-sheet__heading__wrapper {
@@ -105,15 +107,10 @@
   backdrop-filter: blur(1px);
   background: var(--inte-overlay);
   position: fixed;
-  z-index: var(--inte-Z-7);
   inset: 0 0 0 0;
   z-index: var(--inte-Z-7);
 }
 
-.inte-sheet.inte-sheet__noMobile {
-  width: 48rem;
-  transform: translateX(calc(100% + 2rem));
-}
 .inte-sheet--activeIn.inte-sheet__noMobile {
   animation: SheetIN 200ms linear forwards;
 }

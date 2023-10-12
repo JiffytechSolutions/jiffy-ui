@@ -229,7 +229,7 @@ function PageHeader({
           )}
           {description &&
             (typeof description === "string" ? (
-              <h3 className="inte-pageHeader__description">{description}</h3>
+              <h2 className="inte-pageHeader__description">{description}</h2>
             ) : (
               description
             ))}

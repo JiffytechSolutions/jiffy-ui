@@ -239,7 +239,7 @@ Disable_Primary_Secondary_Action.decorators = [
           type: "primary",
           halign: "center",
           isFullWidth: false,
-          isDisable: true,
+          isDisabled: true,
           onClick: () => {
             alert("Apply button clicked");
             setOpen(false);
@@ -250,7 +250,7 @@ Disable_Primary_Secondary_Action.decorators = [
           isFullWidth: true,
           halign: "center",
           content: "Clear All",
-          isDisable: true,
+          isDisabled: true,
           onClick: () => {
             alert("Clear All button clicked");
             setOpen(false);

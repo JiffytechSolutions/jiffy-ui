@@ -40,7 +40,7 @@ export default {
         disable: true,
       },
     },
-    isDisable: {
+    isDisabled: {
       description: "Set disabled True or false",
       control: {
         type: "boolean",
@@ -117,7 +117,7 @@ DisableRadio.decorators = [
           onChange={() => setvalue(!value)}
           name={""}
           description={"Radio Description"}
-          isDisable
+          isDisabled
         />
       </Card>
     );

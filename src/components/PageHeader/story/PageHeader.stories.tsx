@@ -226,6 +226,7 @@ const secondaryActionWithIcon = [
 
 const tertiaryActionWithIcon = {
   content: "Refund",
+  type:"outlined",
   onClick: () => {
     alert("Refund Intiated:)");
   },

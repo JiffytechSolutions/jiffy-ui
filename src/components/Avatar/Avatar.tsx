@@ -20,9 +20,7 @@ const Avatar: FC<AvatarI> = ({
     if ((inputValue && inputValue < 0) || (inputValue && inputValue > 19))
       return;
     const newDashArray =
-      inputValue === 0
-        ? `${values[0]} 0`
-        : `${values[inputValue ? inputValue : 0]} 10`;
+      inputValue === 0 ? `${values[0]} 0` : `${values[inputValue || 0]} 10`;
     setDashArray(newDashArray);
   }, [animateLines]);
   //Avatar size code
@@ -31,8 +29,6 @@ const Avatar: FC<AvatarI> = ({
     medium: "inte-avatar--medium",
     small: "inte-avatar--small",
   };
-
-
 
   //Avatar types code
   const checkColor: { [key: string]: string } = {
@@ -59,10 +55,10 @@ const Avatar: FC<AvatarI> = ({
           className={getClassNames({
             "inte-avatar inte-avatar__image": true,
             "inte-avatar--pointer": onClick,
-            "inte-avatar--animate": animateLines && (animateLines !== 0),
+            "inte-avatar--animate": animateLines && animateLines !== 0,
             [avtarType]: avtarType,
             [customClass]: customClass,
-            [avtarSize]: avtarSize
+            [avtarSize]: avtarSize,
           })}
           onClick={(e: any) => onClick && onClick(e)}
         >
@@ -96,14 +92,15 @@ const Avatar: FC<AvatarI> = ({
             <Badge
               type="success"
               dot
-              size={`${size === "small"
-                ? "small"
-                : size === "large"
+              size={`${
+                size === "small"
+                  ? "small"
+                  : size === "large"
                   ? "large"
                   : size === "medium"
-                    ? "medium"
-                    : "small"
-                }`}
+                  ? "medium"
+                  : "small"
+              }`}
             ></Badge>
           )}
         </div>
@@ -112,10 +109,10 @@ const Avatar: FC<AvatarI> = ({
           className={getClassNames({
             "inte-avatar inte-avatar__text": true,
             "inte-avatar--pointer": onClick,
-            "inte-avatar--animate": animateLines && (animateLines !== 0),
+            "inte-avatar--animate": animateLines && animateLines !== 0,
             [avtarType]: avtarType,
             [customClass]: customClass,
-            [avtarSize]: avtarSize
+            [avtarSize]: avtarSize,
           })}
           onClick={(e: any) => onClick && onClick(e)}
         >
@@ -152,14 +149,15 @@ const Avatar: FC<AvatarI> = ({
             <Badge
               type="success"
               dot
-              size={`${size === "small"
-                ? "small"
-                : size === "large"
+              size={`${
+                size === "small"
+                  ? "small"
+                  : size === "large"
                   ? "large"
                   : size === "medium"
-                    ? "medium"
-                    : "small"
-                }`}
+                  ? "medium"
+                  : "small"
+              }`}
             ></Badge>
           )}
         </div>

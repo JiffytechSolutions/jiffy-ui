@@ -17,7 +17,7 @@ export interface carouselI {
   showArrows?: boolean;
   pauseOnHover?: boolean;
   pauseOnDotsHover?: boolean;
-  isPersistSlideOnRefresh?: boolean;
+  persistSlideOnRefresh?: boolean;
   dotsPosition?:
     | "topLeft"
     | "topCenter"

@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { Modal, Select, Text, TextLink } from "../..";
 import Button, { ButtonI } from "../../Button/Button";
-import { useState } from "react";
 import { Card } from "../../Card";
 import { FlexLayout } from "../../FlexLayout";
 import { FormElement, TextField } from "../../Form";

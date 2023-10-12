@@ -45,8 +45,13 @@ const TextField = React.forwardRef(
   ): JSX.Element => {
     const [color, setColor] = useState("");
     const [per, setPer] = useState<number>(0);
+    const [innerIconWidth, SetInnericonWidth] = useState(0);
+    const [innerIconWidthSuf, SetInnericonWidthSuff] = useState(0);
     const rId = useId();
+    const myRef = useRef<any>();
     const inputRef: any = useRef(null);
+    const innerPreref: any = useRef(null);
+    const innerSufrefWidth: any = useRef(null);
 
     const stepperColor: { [key: string]: string } = {
       Poor: "inte-formElement__strength--poor",
@@ -72,35 +77,33 @@ const TextField = React.forwardRef(
       const weakPassword = weakRegExp.test(passwordValue);
       const strongPassword = strongRegExp.test(passwordValue);
       const space = /^\S*$/.test(passwordValue);
-      if (passwordValue === "") {
-      } else {
-        // to check poor password
-        if (poorPassword || All || weakPassword || strongPassword || !space) {
-          setColor("Poor");
-          setPer(15);
-        }
-        // to check weak password
-        if ((poorPassword || All) && (weakPassword || strongPassword)) {
-          setColor("weak");
-          setPer(50);
-        }
-        // to check strong Password
-        if (
-          (passwordLength >= 8 &&
-            poorPassword &&
-            All &&
-            weakPassword &&
-            strongPassword) ||
-          (passwordLength >= 8 &&
-            poorPassword &&
-            All &&
-            weakPassword &&
-            strongPassword &&
-            space)
-        ) {
-          setColor("Strong");
-          setPer(100);
-        }
+      if (passwordValue === "") return;
+      // to check poor password
+      if (poorPassword || All || weakPassword || strongPassword || !space) {
+        setColor("Poor");
+        setPer(15);
+      }
+      // to check weak password
+      if ((poorPassword || All) && (weakPassword || strongPassword)) {
+        setColor("weak");
+        setPer(50);
+      }
+      // to check strong Password
+      if (
+        (passwordLength >= 8 &&
+          poorPassword &&
+          All &&
+          weakPassword &&
+          strongPassword) ||
+        (passwordLength >= 8 &&
+          poorPassword &&
+          All &&
+          weakPassword &&
+          strongPassword &&
+          space)
+      ) {
+        setColor("Strong");
+        setPer(100);
       }
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -116,7 +119,6 @@ const TextField = React.forwardRef(
         props.onKeyUp();
       }
     };
-
     const callBlur = () => {
       if (props.onBlur) {
         props.onBlur();
@@ -127,16 +129,12 @@ const TextField = React.forwardRef(
     const innerSufIconClass = suffix ? "inte-formElement--hasInnerIconSuf" : "";
 
     // Manage padding space of Inner Prefix icon from left
-    const innerPreref: any = useRef(null);
-    const [innerIconWidth, SetInnericonWidth] = useState(0);
     useLayoutEffect(() => {
       prefix && SetInnericonWidth(innerPreref.current.offsetWidth);
     }, [innerPreref, prefix]);
     const innerPreIConWidth = prefix ? innerIconWidth + 26 : 12;
 
     // Manage padding  of Inner Prefix icon from right
-    const innerSufrefWidth: any = useRef(null);
-    const [innerIconWidthSuf, SetInnericonWidthSuff] = useState(0);
     useLayoutEffect(() => {
       suffix && SetInnericonWidthSuff(innerSufrefWidth.current?.offsetWidth);
     }, [innerSufrefWidth, suffix]);
@@ -308,7 +306,6 @@ const TextField = React.forwardRef(
         {props.connectLeft && (
           <div className="inte-form--connectLeft">{props.connectLeft}</div>
         )}
-
         <div className="inte-formElement__inner">
           {getInput()}
           {innerSufIconClass != "" ? (
@@ -326,7 +323,6 @@ const TextField = React.forwardRef(
       </div>
     );
 
-    const myRef = useRef<any>();
     useEffect(() => {
       const handleFocus = (e: any) => {
         if (!myRef.current) return;
@@ -352,7 +348,6 @@ const TextField = React.forwardRef(
 
     const handleRef = (ele: any) => {
       if (ref) ref.current = ele;
-
       if (ele) {
         myRef.current = ele;
       }

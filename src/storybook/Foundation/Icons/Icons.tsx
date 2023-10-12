@@ -7465,7 +7465,7 @@ export const Payment = (props: IconI) => (
   </svg>
 );
 // List Repeat
-export const List1 = (props: IconI) => (
+export const List = (props: IconI) => (
   <svg
     onClick={(e) => props.onClick && props.onClick(e)}
     className={getClassNames({
@@ -7490,14 +7490,14 @@ export const List1 = (props: IconI) => (
       strokeWidth={props.strokeWidth ?? "2"}
       strokeLinecap="round"
     />
-    <circle cx="8" cy="12" r="1" fill="#1C2433" />
+    <circle cx="8" cy="12" r="1" fill={props.color ?? "currentColor"} />
     <path
       d="M12 12H16"
       stroke={props.color ?? "currentColor"}
       strokeWidth={props.strokeWidth ?? "2"}
       strokeLinecap="round"
     />
-    <circle cx="8" cy="16" r="1" fill="#1C2433" />
+    <circle cx="8" cy="16" r="1" fill={props.color ?? "currentColor"} />
     <path
       d="M12 16H16"
       stroke={props.color ?? "currentColor"}
@@ -8172,8 +8172,14 @@ export const Exchange = (props: IconI) => (
       strokeWidth={props.strokeWidth ?? "2"}
       strokeLinecap="round"
     />
-    <circle cx="20" cy="4" r="2" fill="#1C2433" />
-    <circle cx="4" cy="20" r="2" transform="rotate(-180 4 20)" fill="#1C2433" />
+    <circle cx="20" cy="4" r="2" fill={props.color ?? "currentColor"} />
+    <circle
+      cx="4"
+      cy="20"
+      r="2"
+      transform="rotate(-180 4 20)"
+      fill={props.color ?? "currentColor"}
+    />
   </svg>
 );
 export const Inventory = (props: IconI) => (

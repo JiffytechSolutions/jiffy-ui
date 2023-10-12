@@ -2,8 +2,8 @@ import React, { useId } from "react";
 import { ChevronDown } from "../../storybook/Foundation/Icons/Icons";
 import Badge from "../Badge/Badge";
 import Spinner from "../Spinner/Spinner";
-import "./Button.css";
 import getClassNames from "../../utilities/getClassnames";
+import "./Button.css";
 
 const Button = ({
   type = "primary",
@@ -12,7 +12,7 @@ const Button = ({
   halign,
   isLoading = false,
   disclosure = false,
-  isDisable = false,
+  isDisabled = false,
   isHaptic = false,
   icon,
   id,
@@ -48,6 +48,17 @@ const Button = ({
     center: "inte-btn--distributionCenter",
   };
 
+  const colorMapping: any = {
+    primary: "primary",
+    danger: "danger",
+    dangerOutlined: "danger",
+    dangerPlain: "danger",
+    outlined: "default",
+    secondary: "default",
+    textButton: "info",
+    default: "default",
+  };
+
   const bType = type && checkType[type];
   const sizeCss = size && getSize[size];
   const halignCss = halign && checkForForHAlign[halign];
@@ -72,16 +83,15 @@ const Button = ({
       button.removeChild(ripple);
     }, 600);
   };
-
   const renderButton = (
     <button
       id={id}
-      disabled={isDisable}
+      disabled={isDisabled}
       onClick={(e) => {
-        if (!isLoading && !isDisable) {
+        if (!isLoading && !isDisabled) {
           makeRippleAnimation(e);
         }
-        if (!isLoading && !isDisable && props.onClick) {
+        if (!isLoading && !isDisabled && props.onClick) {
           props.onClick();
           isHaptic &&
             setTimeout(() => {
@@ -90,15 +100,15 @@ const Button = ({
         }
       }}
       onMouseEnter={() => {
-        if (!isLoading && !isDisable && props.onMouseEnter)
+        if (!isLoading && !isDisabled && props.onMouseEnter)
           props.onMouseEnter();
       }}
       onBlur={() => {
-        if (!isLoading && !isDisable && props.onBlur) props.onBlur();
+        if (!isLoading && !isDisabled && props.onBlur) props.onBlur();
       }}
       className={getClassNames({
         "inte-btn": true,
-        "inte-btn--disable": isDisable,
+        "inte-btn--disable": isDisabled,
         "inte-btn--hasDisclosure": true,
         [bType]: bType,
         "inte-btn--hasIcon": true,
@@ -112,41 +122,24 @@ const Button = ({
           props.children == "",
         [customClass]: customClass,
       })}
-      {...(isLoading || isDisable ? { "aria-disabled": "true" } : {})}
+      {...(isLoading || isDisabled ? { "aria-disabled": "true" } : {})}
       {...(props.accessibilityLabel
         ? { "aria-label": props.accessibilityLabel }
         : !props.children
-          ? { "arai-label": `Button ${rId && rId}` }
-          : {})}
+        ? { "arai-label": `Button ${rId && rId}` }
+        : {})}
       aria-describedby={props.ariaDescribedBy}
       aria-expanded={props.ariaExpanded}
       aria-controls={props.ariaControls}
       aria-owns={props.ariaOwns}
       {...(isLoading ? { "aria-busy": "true" } : {})}
     >
-      {/* {ripples} */}
-      {isLoading ? (
+      {isLoading && (
         <Spinner
           size="medium"
-          color={
-            type == "primary"
-              ? "primary"
-              : type == "danger"
-                ? "danger"
-                : type == "dangerOutlined"
-                  ? "danger"
-                  : type == "dangerPlain"
-                    ? "danger"
-                    : type == "outlined"
-                      ? "default"
-                      : type == "secondary"
-                        ? "default"
-                        : type == "textButton"
-                          ? "info"
-                          : "default"
-          }
+          color={colorMapping[type] || "default"}
         ></Spinner>
-      ) : null}
+      )}
       {iconAlign == "left" && icon && btnIcon}
       {props.children ? (
         <span className={"inte-btn__text"}>{content}</span>
@@ -166,8 +159,9 @@ const Button = ({
     <>
       {status ? (
         <div
-          className={`inte-btn__container ${isFullWidth ? "inte-btn__container--fullWidth" : ""
-            }`}
+          className={`inte-btn__container ${
+            isFullWidth ? "inte-btn__container--fullWidth" : ""
+          }`}
         >
           {renderButton}
           {status && type !== "textButton" && type !== "dangerPlain" && (
@@ -183,13 +177,13 @@ const Button = ({
 
 export interface ButtonI {
   type?:
-  | "primary"
-  | "danger"
-  | "dangerOutlined"
-  | "secondary"
-  | "outlined"
-  | "dangerPlain"
-  | "textButton";
+    | "primary"
+    | "danger"
+    | "dangerOutlined"
+    | "secondary"
+    | "outlined"
+    | "dangerPlain"
+    | "textButton";
   status?: "primary" | "secondary" | "success" | "error" | "warning";
   size?: "extraThin" | "thin" | "large";
   iconAlign?: "left" | "right";
@@ -200,7 +194,7 @@ export interface ButtonI {
   isHaptic?: boolean;
   hapticTimeout?: number;
   navigatorPattern?: number[];
-  isDisable?: boolean;
+  isDisabled?: boolean;
   ariaExpanded?: boolean;
   icon?: React.ReactNode;
   accessibilityLabel?: string;

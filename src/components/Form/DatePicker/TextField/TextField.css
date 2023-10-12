@@ -6,19 +6,15 @@
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
+    font-size: var(--inte-FS1-6);
+    font-weight: var(--weight-normal);
+    line-height: var(--inte-LH2-2);
+    color: var(--inte-G800);
 }
 
 .inte-dateInput__container svg {
     width: 20px;
     max-width: unset;
-}
-
-.inte-textField--forDatePicker {
-    font-size: var(--inte-FS1-6);
-    font-weight: var(--weight-normal);
-    line-height: var(--inte-LH2-2);
-    color: var(--inte-G800);
-    font-family: 'Averta';
 }
 
 .inte-textField__inputContainer {
@@ -66,7 +62,6 @@
 
 .inte-dateInput {
     color: var(--inte-G800);
-    font-family: 'Averta';
     font-weight: var(--weight-normal);
     font-size: var(--inte-FS1-6);
     line-height: var(--inte-LH2-2);
