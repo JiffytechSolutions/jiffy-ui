@@ -56,7 +56,6 @@ const Select = ({
   const [inputValue, setInputValue] = useState<string>("");
   const [dropdownActive, setDropdownActive] = useState<boolean>(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [selectedOptions, setSelectedOptions] = useState<any>([]);
   const [selectedValues, setSelectedValues] = useState<any>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [selectedGroupIndex, setSelectedGroupIndex] = useState(0);
@@ -112,6 +111,18 @@ const Select = ({
     };
   }, [isDisabled]);
   useEffect(() => {
+    const addOptions = (opt: any) => {
+      if (isCreatable) {
+        const nonMatchingValues: any = (Array.isArray(value) ? value : [value])
+          .filter(
+            (option: any) => !opt.some((item: any) => item.value === option)
+          )
+          .map((option) => ({ label: option, value: option }));
+        setSelectedValues([...opt, ...nonMatchingValues]);
+      } else {
+        setSelectedValues(opt);
+      }
+    };
     if (options.length === 0) return;
     if ("group" in options[0]) {
       const matchingLabels = (options as GroupedObjI[]).reduce(
@@ -131,25 +142,33 @@ const Select = ({
         },
         []
       );
-      setSelectedValues(matchingLabels);
+      if (isCreatable) {
+        if (!value) return;
+        const nonMatchingValues: any = (Array.isArray(value) ? value : [value])
+          .filter(
+            (option: any) =>
+              !matchingLabels.some((item: any) => item.value === option)
+          )
+          .map((option) => ({ label: option, value: option }));
+        setSelectedValues([...matchingLabels, ...nonMatchingValues]);
+      } else {
+        setSelectedValues(matchingLabels);
+      }
     } else {
       if (isMultiSelect) {
         const opt = (options as SimpleObjI[]).filter((ele) => {
           return Array.isArray(value) && value.some((val) => val === ele.value);
         });
-        setSelectedValues(opt);
+        if (!value) return;
+        addOptions(opt);
       } else {
         const opt = (options as SimpleObjI[]).filter(
           (ele: any) => String(ele.value) == String(value)
         );
-        setSelectedValues(opt);
+        if (!value) return;
+        addOptions(opt);
       }
     }
-  }, []);
-  useEffect(() => {
-    typeof value === "string"
-      ? value !== "" && setSelectedOptions([value])
-      : setSelectedOptions(value);
   }, [value]);
   useEffect(() => {
     // Calling resize input function
@@ -202,8 +221,28 @@ const Select = ({
   // setting position
   useEffect(() => {
     changePosition(selectBoxRef, dropdownListRef, { width: true })();
-  }, [dropdownActive, selectedOptions, inputValue, optionsToShow]);
-
+  }, [dropdownActive, inputValue, selectedValues, optionsToShow]);
+  // Clicking on dropdown list items
+  const dropdownItemClickHandler = (item: any) => {
+    if (isMultiSelect) {
+      let newSelectedValues = [...selectedValues];
+      const ind = selectedValues.findIndex(
+        (ele: any) => ele.value === item.value
+      );
+      if (ind !== -1) {
+        newSelectedValues.splice(ind, 1);
+      } else {
+        newSelectedValues.push(item);
+      }
+      onChange(newSelectedValues.map((ele) => ele.value));
+    } else {
+      onChange(item.value);
+    }
+    !isMultiSelect && setDropdownActive(false);
+    selectBoxRef.current?.focus();
+    !isMobile && isSearchable && inputBoxRef.current?.focus();
+    setInputValue("");
+  };
   const inputBoxHandler = () => {
     return (
       <input
@@ -243,7 +282,7 @@ const Select = ({
     }
   };
   // Selected items in form of tags in case of multiSelect
-  const SelectedItemsInMultiSelect = () => {
+  const selectedItemsInMultiSelect = () => {
     return selectedValues.map((item: any, index: number) => (
       <Tag
         key={index}
@@ -476,9 +515,9 @@ const Select = ({
   // Group Options
   const handleGroupOptions = (group: SimpleObjI[], index: any) => {
     return group.map((opt, groupIndex: any) => {
-      const isSelectedOption = Array.isArray(selectedOptions)
-        ? selectedOptions.some((i) => i === opt?.value)
-        : selectedOptions === opt?.value;
+      const isSelectedOption = Array.isArray(selectedValues)
+        ? selectedValues.some((i) => i.value === opt?.value)
+        : selectedValues.value === opt?.value;
       return (
         <li
           role={"option"}
@@ -559,9 +598,9 @@ const Select = ({
   };
   // Render simple data like label,value
   const renderSimpleData = (item: SimpleObjI | any, index: any) => {
-    const isSelectedOption = Array.isArray(selectedOptions)
-      ? selectedOptions.some((option) => option === item?.value)
-      : selectedOptions === item?.value;
+    const isSelectedOption = Array.isArray(selectedValues)
+      ? selectedValues.some((option) => option.value === item?.value)
+      : selectedValues.value === item?.value;
     return (
       <li
         role={"option"}
@@ -670,7 +709,7 @@ const Select = ({
         )}
         {isMobile && isMultiSelect && selectedValues.length !== 0 && (
           <div className="inte-select__dropdown-selectedItems">
-            <SelectedItemsInMultiSelect />
+            {selectedItemsInMultiSelect()}
           </div>
         )}
         <ul
@@ -687,7 +726,7 @@ const Select = ({
             : {})}
           {...(isMobile && {
             style: {
-              height:
+              maxHeight:
                 selectedValues.length === 0
                   ? "calc(100vh - 19.2rem)"
                   : "calc(100vh - 23.4rem)",
@@ -735,40 +774,10 @@ const Select = ({
       )}
     </>
   );
-  // Clicking on dropdown list items
-  const dropdownItemClickHandler = (item: any) => {
-    if (isMultiSelect) {
-      let newSelectedValues = [...selectedOptions];
-      let newSelectedOpt = [...selectedValues];
-      const index = selectedOptions.findIndex((ele: any) => ele === item.value);
-      const optIndex = selectedValues.findIndex(
-        (ele: any) => ele.value === item.value
-      );
-      if (optIndex !== -1) {
-        newSelectedOpt.splice(index, 1);
-      } else {
-        newSelectedOpt.push(item);
-      }
-      if (index !== -1) {
-        newSelectedValues.splice(index, 1);
-      } else {
-        newSelectedValues.push(item.value);
-      }
-      setSelectedValues(newSelectedOpt);
-      onChange(newSelectedValues);
-    } else {
-      setSelectedValues([item]);
-      onChange(item.value);
-    }
-    !isMultiSelect && setDropdownActive(false);
-    selectBoxRef.current?.focus();
-    !isMobile && isSearchable && inputBoxRef.current?.focus();
-    setInputValue("");
-  };
   /* Clicking on select box block ends*/
   // Checking if backspace key is pressed by user
   const inputKeyPressHandler = (e: any) => {
-    if (e.key === "Backspace" && inputValue === "" && selectedOptions.length) {
+    if (e.key === "Backspace" && inputValue === "" && selectedValues.length) {
       dropdownItemClickHandler(selectedValues[selectedValues.length - 1]);
     }
   };
@@ -848,7 +857,7 @@ const Select = ({
   // Display placeholder and selected option in case of single select
   const displayPlaceHolderAndSelectedOption = () => {
     if (inputValue === "") {
-      if (selectedOptions.length === 0) {
+      if (selectedValues.length === 0) {
         return getPlaceholder();
       }
       return selectedValues[0]?.label;
@@ -857,6 +866,7 @@ const Select = ({
       return selectedValues[0]?.label;
     }
   };
+
   return (
     <div
       className={getClassNames({
@@ -891,6 +901,7 @@ const Select = ({
         tabIndex={tabIndex ?? 0}
         onFocus={() => {
           if (isDisabled) return;
+          setisSelectFocused(false);
           setIsFocused(true);
         }}
         onBlur={() => {
@@ -919,7 +930,7 @@ const Select = ({
               </div>
             ) : (
               <div className={`inte-formElement__selectedTags`}>
-                <SelectedItemsInMultiSelect />
+                {selectedItemsInMultiSelect()}
                 {(isSearchable || selectedValues.length === 0) && (
                   <div className="inte-formElement__inputWrap">
                     {isSearchable && !isMobile && inputBoxHandler()}
@@ -937,12 +948,11 @@ const Select = ({
               </div>
             )}
             {isClearable &&
-              (selectedOptions.length !== 0 || inputValue.length !== 0) && (
+              (selectedValues.length !== 0 || inputValue.length !== 0) && (
                 <div
                   onClick={() => {
                     if (!isDisabled) {
                       onChange([]);
-                      setSelectedValues([]);
                       setInputValue("");
                     }
                   }}

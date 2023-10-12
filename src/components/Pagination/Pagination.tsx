@@ -130,7 +130,7 @@ const Pagination: React.FC<PaginationI> = ({
               onChange={(e: any) => {
                 onCountChange(e);
               }}
-              value={countPerPage.toString()}
+              value={countPerPage}
               customClass="inte-pagination__selectItem"
             />
           </div>

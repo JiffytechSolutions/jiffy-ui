@@ -21,6 +21,7 @@
 
 .inte-stepWizard--vertical .inte-stepWizard__step {
   flex-direction: row;
+  min-height: 10rem;
 }
 
 .inte-stepWizard__icon {
@@ -51,12 +52,18 @@
 }
 
 .inte-stepWizard__icon--finish {
+  border-color: var(--inte-GR200);
+  box-shadow: 0 0 0 0.3rem var(--inte-GR65);
+  border-style: solid;
+  background-color: var(--inte-GR200);
   color: var(--inte-G0);
 }
 
 .inte-stepWizard__step--finish .inte-stepWizard__icon {
   background-color: var(--inte-GR200);
   color: var(--inte-G0);
+  border-color: var(--inte-GR200);
+  box-shadow: 0 0 0 0.3rem var(--inte-GR65);
 }
 
 .inte-stepWizard__step--wait .inte-stepWizard__icon svg {
@@ -90,12 +97,6 @@
   background-color: var(--inte-G0);
   border-color: var(--inte-G50);
   color: var(--inte-G50);
-  /* box-shadow: 0 0 0 0.3rem var(--inte-G20); */
-}
-
-.inte-stepWizard__step--finish .inte-stepWizard__icon {
-  border-color: var(--inte-GR200);
-  box-shadow: 0 0 0 0.3rem var(--inte-GR65);
 }
 
 /* Step Wizard Lines */
@@ -144,11 +145,6 @@
 }
 
 /* direction for vertical*/
-
-.inte-stepWizard--vertical .inte-stepWizard__step {
-  min-height: 10rem;
-}
-
 .inte-stepWizard--vertical .inte-stepWizard__step:not(:last-child):after,
 .inte-stepWizard--vertical .inte-stepWizard__step:not(:first-child):before {
   height: 50%;
@@ -217,19 +213,6 @@
   width: 3.2rem;
   height: 3.2rem;
 }
-
-.inte-stepWizard__icon--finish {
-  border-color: var(--inte-GR200);
-  box-shadow: 0 0 0 0.3rem var(--inte-GR65);
-  border-style: solid;
-  background-color: var(--inte-GR200);
-}
-
-/* .inte-stepWizard__activeStep .inte-stepWizard__icon svg {
-  fill:var(--inte-P900);
-  width: 1.2rem;
-  height: 1.2rem;
-} */
 
 .inte-stepWizard__activeStep .inte-stepWizard__body {
   gap: var(--inte-Spacing0-2);

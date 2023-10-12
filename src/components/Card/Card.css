@@ -46,15 +46,6 @@
 .inte-card--loose .inte-card__footer {
   padding: 2rem;
 }
-
-.inte-card__header {
-  padding-bottom: 0 !important;
-}
-
-.inte-card__footer {
-  padding-top: 0 !important;
-}
-
 /* spacing end*/
 
 /* Card Header */
@@ -63,6 +54,7 @@
   justify-content: space-between;
   align-items: center;
   gap: 1.2rem;
+  padding-bottom: 0 !important;
 }
 
 .inte-card__headerLeft--hasAvatar {
@@ -121,4 +113,5 @@
   justify-content: flex-end;
   gap: 1.6rem;
   margin-top: auto;
+  padding-top: 0 !important;
 }
