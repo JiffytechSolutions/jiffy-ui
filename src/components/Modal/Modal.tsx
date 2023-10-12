@@ -27,7 +27,7 @@ const Modal: React.FC<ModalI> = ({
   const rID = useId();
   const isMobile = useMobileDevice();
   const animateData = useDelayUnmount(isOpen, 100);
-  useBodyLock(isOpen);
+  useBodyLock(animateData);
   const checkModalWidth = {
     small: "inte-modal__dialog--small",
     medium: "inte-modal__dialog--medium",

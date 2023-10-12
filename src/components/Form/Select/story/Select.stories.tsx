@@ -140,7 +140,8 @@ export default {
       defaultValue: false,
     },
     isCreatable: {
-      description: "Select with creatable options",
+      description:
+        "Select with creatable options , (works only if isSearchable is true)",
       control: {
         type: "boolean",
       },

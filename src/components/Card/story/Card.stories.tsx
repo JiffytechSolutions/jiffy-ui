@@ -4,9 +4,12 @@ import { Card, Button, TextField, Text, TextLink, FlexChild } from "../..";
 import { CardI } from "../Card";
 import { FormElement } from "../../Form";
 import FlexLayout from "../../FlexLayout/FlexLayout";
-import { ArrowRight, MoreVertical } from "../../../storybook/Foundation/Icons/Icons";
+import {
+  ArrowRight,
+  MoreVertical,
+} from "../../../storybook/Foundation/Icons/Icons";
 import { logo } from "./log";
-import video_guide from '../component/video_guide.png'
+import video_guide from "../component/video_guide.png";
 import CardDoc from "../Document/CardDoc";
 
 export default {
@@ -28,7 +31,8 @@ export default {
       defaultValue: "bordered",
     },
     spacing: {
-      description: "Set card spacing as per your need. <strong> Tight has 16px of space and loose has 20px of space </strong>",
+      description:
+        "Set card spacing as per your need. <strong> Tight has 16px of space and loose has 20px of space </strong>",
       control: {
         type: "radio",
         options: ["loose", "tight"],
@@ -75,10 +79,6 @@ export default {
       <u><strong>Note<span style="color: red;">*</span></strong></u>
           Give Primary Action like this:-
           <pre>
-<<<<<<< HEAD
-
-=======
->>>>>>> 804daa813dd12e48c4afb18ea47c182aedb74fed
             <code>
               { 
                 content:"Primary",
@@ -122,7 +122,6 @@ export default {
           </code>
         </pre> `,
       control: {
-
         disable: true,
       },
     },
@@ -150,7 +149,7 @@ const Template: Story<CardI> = (args) => (
   <Card
     cardType={args.cardType}
     avatar={{
-      text: "jade Pixel"
+      text: "jade Pixel",
     }}
     title={args.title}
     subTitle={args.subTitle}
@@ -160,8 +159,13 @@ const Template: Story<CardI> = (args) => (
     primaryAction={{ content: "Primary", type: "primary" }}
     secondaryAction={{ content: "Secondary", type: "outlined" }}
   >
-    <Text type="T-7" fontweight="bolder" textcolor="default">Title placeholder</Text>
-    <Text textcolor="secondary" as="p" type="T-8">Placeholder for card text. Enter text into this container to describe the card feature.</Text>
+    <Text type="T-7" fontweight="bolder" textcolor="default">
+      Title placeholder
+    </Text>
+    <Text textcolor="secondary" as="p" type="T-8">
+      Placeholder for card text. Enter text into this container to describe the
+      card feature.
+    </Text>
   </Card>
 );
 
@@ -180,12 +184,8 @@ Card_Type.decorators = [
         wrap="wrap"
         mobileWidth="100"
       >
-        {cardType.map((variant: any,index:any) => (
-          <Card
-          key={index}
-            cardType={variant}
-            title={variant + " Card"}
-          >
+        {cardType.map((variant: any, index: any) => (
+          <Card key={index} cardType={variant} title={variant + " Card"}>
             <FormElement>
               <BodyFun />
               <BodyFun />
@@ -202,12 +202,15 @@ Card_Type.decorators = [
 export const Card_with_Header_and_header_action: any = Template.bind({});
 Card_with_Header_and_header_action.decorators = [
   () => (
-    <Card cardType={"bordered"} title="Name"
+    <Card
+      cardType={"bordered"}
+      title="Name"
       subTitle={"Subtitle"}
       avatar={{
-        text: "jade pixel"
+        text: "jade pixel",
       }}
-      action={<TextLink label="link here" />}>
+      action={<TextLink label="link here" />}
+    >
       <FormElement>
         <BodyFun />
         <BodyFun />
@@ -243,7 +246,7 @@ Card_with_media.decorators = [
       title="Name"
       subTitle={"Subtitle"}
       avatar={{
-        text: "jade pixel"
+        text: "jade pixel",
       }}
       action={<TextLink label="link here" />}
       cardType={"bordered"}
@@ -251,7 +254,7 @@ Card_with_media.decorators = [
       primaryAction={{ content: "Button" }}
       secondaryAction={{
         content: "Button",
-        type: "outlined"
+        type: "outlined",
       }}
     >
       <FormElement>
@@ -262,7 +265,6 @@ Card_with_media.decorators = [
     </Card>
   ),
 ];
-
 
 // Card with diffrent spacing
 const cardSpacingArr = ["loose", "tight"];
@@ -277,8 +279,9 @@ cardSpacing.decorators = [
         mobileWidth="100"
         wrap="wrap"
       >
-        {cardSpacingArr.map((variant: any) => (
+        {cardSpacingArr.map((variant: any, index: number) => (
           <Card
+            key={index}
             cardType={"bordered"}
             spacing={variant}
             title={variant + " Card"}
@@ -306,26 +309,33 @@ InterativeCard.decorators = [
         mobileWidth="100"
         wrap="wrap"
       >
-        {cardSpacingArr.map((variant: any) => (
+        {cardSpacingArr.map((variant: any, index: number) => (
           <Card
-            onClick={() => { }}
+            key={index}
+            onClick={() => {}}
             cardType={"bordered"}
             spacing={variant}
           >
             <FlexLayout direction="vertical" spacing="mediumLoose">
               <FlexChild>
                 <FlexLayout halign="fill" valign="center">
-                  <Text fontweight="bolder" type="T-7">Total Revenue</Text>
+                  <Text fontweight="bolder" type="T-7">
+                    Total Revenue
+                  </Text>
                   <Button type="textButton" icon={<ArrowRight />} />
                 </FlexLayout>
               </FlexChild>
               <FlexChild>
-                <Text type="T-1" fontweight="bolder">$12250.00</Text>
+                <Text type="T-1" fontweight="bolder">
+                  $12250.00
+                </Text>
               </FlexChild>
               <FlexChild>
                 <FlexLayout halign="fill" valign="center">
                   {logo}
-                  <Text textcolor="success" type="T-8" >+9.09%</Text>
+                  <Text textcolor="success" type="T-8">
+                    +9.09%
+                  </Text>
                 </FlexLayout>
               </FlexChild>
             </FlexLayout>
@@ -336,7 +346,5 @@ InterativeCard.decorators = [
   ),
 ];
 export function Documentation() {
-  return (
-    <CardDoc />
-  );
+  return <CardDoc />;
 }

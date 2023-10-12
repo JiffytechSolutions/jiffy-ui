@@ -67,8 +67,9 @@ export default {
       },
       defaultValue: true,
     },
-    isPersistSlideOnRefresh: {
-      description: "Persist slide on refresh",
+    persistSlideOnRefresh: {
+      description:
+        "When you refresh the page, the initial slide appears, but when this prop is set to true and you refresh the page, you will stay on the same slide",
       control: {
         type: "boolean",
       },
@@ -311,7 +312,7 @@ const Template = ({ ...rest }) => {
         afterSlideChange={rest.afterSlideChange}
         pauseOnHover={rest.pauseOnHover}
         pauseOnDotsHover={rest.pauseOnDotsHover}
-        isPersistSlideOnRefresh={rest.isPersistSlideOnRefresh}
+        persistSlideOnRefresh={rest.persistSlideOnRefresh}
         customClass={rest.customClass}
       >
         {renderSlidesWithImg()}
@@ -782,7 +783,6 @@ CarouselWithPauseOnHover.decorators = [
   },
 ];
 // Persist slide on refresh
-// Pause on hover
 export const CarouselWithPersistSlideOnRefresh: any = Template.bind({});
 CarouselWithPersistSlideOnRefresh.decorators = [
   () => {
@@ -791,7 +791,7 @@ CarouselWithPersistSlideOnRefresh.decorators = [
         <Carousel
           slidesToShow={3}
           isEndless={true}
-          isPersistSlideOnRefresh={true}
+          persistSlideOnRefresh={true}
         >
           {renderSlidesWithoutImages()}
         </Carousel>

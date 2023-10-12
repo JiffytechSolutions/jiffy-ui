@@ -31,7 +31,6 @@
 
 .inte-dataTable__cell {
   background-color: var(--inte-G0);
-  font-family: "Averta-CY";
   font-size: var(--inte-FS1-6);
   line-height: var(--inte-LH2-2);
   padding: 1.4rem 1.6rem;
@@ -91,15 +90,12 @@
 }
 
 .shadowedRight::after {
-  box-shadow: inset -10px 0 8px -8px  rgba(16, 24, 40, 0.10);;
+  left: 0;
+  box-shadow: inset -10px 0 8px -8px  rgba(16, 24, 40, 0.10);
 }
 
 .shadowedLeft::after {
   right: 0;
-}
-
-.shadowedRight::after {
-  left: 0;
 }
 
 .inte-dataTable__cell--expand,
@@ -148,10 +144,6 @@
   stroke: var(--inte-G90);
 }
 
-.inte-dataTable__row--Fixed {
-  margin: 0 -0.1rem;
-}
-
 .inte-dataTable__row--expandActive > .inte-dataTable__cell--expand > svg {
   transform: rotate(0deg);
 }
@@ -168,6 +160,7 @@
 }
 
 .inte-dataTable__row--Fixed {
+  margin: 0 -0.1rem;
   padding: 1.6rem;
   background-color: var(--inte-P20);
 }

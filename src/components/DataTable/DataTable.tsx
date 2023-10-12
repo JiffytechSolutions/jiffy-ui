@@ -793,9 +793,9 @@ const DataTable = ({
           </tbody>
         </table>
       </div>
-      {(pagination && dataSource.length) && (
+      {(pagination && dataSource.length) ? (
         <div className="inte-dataTable__pagination">{pagination}</div>
-      )}
+      ):null}
     </div>
   );
 };

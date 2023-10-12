@@ -9,7 +9,7 @@
 }
 
 .inte-appWrapper .inte-dataTable__fixHeader--handler ,
-.inte-appWrapper .inte-tabs--hasScrollSpy .inte-tabsList {
+.inte-appWrapper .inte-tabs--hasScrollSpy .inte-tabs {
   top: calc(
     var(--anouncementBarHeight) + var(--appBarHeight) + var(--pageHeaderHeight)
   );

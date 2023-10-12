@@ -164,17 +164,8 @@ input:placeholder-shown {
   color: var(--inte-G50);
 }
 
-.inte-formElement--disabled .inte-formElement__inner .inte-formElement--clear svg rect {
-  fill: var(--inte-G30);
-}
-
 .inte-formElement--disabled .inte-formElement__inner .inte-formElement--clear svg path {
   fill: var(--inte-G30);
-}
-
-.inte-formElement--disabled .inte-formElement__inner .inte-formElement__innericPrefix,
-.inte-formElement--disabled .inte-formElement__inner .inte-formElement__innericSuffix {
-  color: var(--inte-G50);
 }
 
 .inte-formElement--disabled .inte-formElement__inner .inte-formElement--clear svg rect {

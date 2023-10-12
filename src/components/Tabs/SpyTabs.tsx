@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import getClassNames from "../../utilities/getClassnames";
 import "./Tabs.css";
 
@@ -45,16 +45,6 @@ const getClassForSpacing: { [key: string]: string } = {
   none: "",
 };
 
-const getPxForSpacing: { [key: string]: number } = {
-  extraTight: 4,
-  mediumTight: 8,
-  tight: 12,
-  loose: 16,
-  mediumLoose: 20,
-  extraLoose: 24,
-  none: 0,
-};
-
 const SpyTabs = ({
   tabs,
   direction = "horizontal",
@@ -66,8 +56,7 @@ const SpyTabs = ({
   const [activeTab, setActiveTab] = useState<string>();
   const [isScrolling, setIsScrolling] = useState(false);
   const isVertical =
-    (window.innerWidth >= 768 && direction === "vertical") ||
-    customClass === "inte-filter-sheet";
+    (window.innerWidth >= 768 && direction === "vertical") || customClass === "inte-filter-sheet";
   const activeTabRef = useRef<HTMLLIElement>(null);
   const tabListRef = useRef<HTMLUListElement>(null);
   const tabContentBoxRef = useRef<HTMLDivElement>(null);
@@ -289,12 +278,15 @@ const SpyTabs = ({
         role="tabpanel"
         ref={tabContentBoxRef}
       >
-        {tabs.map((item) => (
-          <section id={item.key} key={item.key} className="inte-tabsSection">
+        {tabs.map((item, ind) => (
+          <section key={item.key} className="inte-tabsSection">
             {
-              !(spacing === "none" || !spacing) && <div className="inte-tabsSection__item--spacing"></div>
+              !(spacing === "none" || !spacing || isVertical) && <div className="inte-tabsSection__item--spacing"></div>
             }
             {item.content}
+            {
+              !(spacing === "none" || !spacing || !isVertical || ind === (tabs.length - 1)) && <div className="inte-tabsSection__item--spacing"></div>
+            }
           </section>
         ))}
       </div>

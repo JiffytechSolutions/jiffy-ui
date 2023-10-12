@@ -69,7 +69,7 @@ const Sheet: FC<SheetI> = ({
       {activator}
       {animateData && (
         <PortalComponent>
-          <div id={id ? id : `inte-sheet-${rID}`}>
+          <div id={id || `inte-sheet-${rID}`}>
             <div
               className={getClassNames({
                 "inte-sheet": true,
@@ -79,7 +79,6 @@ const Sheet: FC<SheetI> = ({
                 "inte-mobileDevice--out": isMobileDevice && !isOpen,
                 "inte-sheet__withFooter": primaryAction || secondaryAction,
                 "inte-sheet__withoutFooter": !primaryAction && !secondaryAction,
-
                 "inte-sheet--activeIn": isOpen,
                 "inte-sheet--activeOut": !isOpen,
                 [customClass]: customClass,

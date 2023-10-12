@@ -18,16 +18,11 @@
 }
 
 /* Inner Prefix and Suffix */
-
 .inte-formElement--hasInnerIconPre .inte-formElement__innericPrefix,
 .inte-formElement--hasInnerIconSuf .inte-formElement__innericSuffix {
   position: absolute;
   left: 1.2rem;
   z-index: 1;
-}
-
-.inte-formElement--hasInnerIconPre .inte-formElement__innericPrefix,
-.inte-formElement--hasInnerIconSuf .inte-formElement__innericSuffix {
   top: 50%;
   transform: translateY(-50%);
   max-width: 8rem;
