@@ -15,7 +15,7 @@ export type { AnnouncementBarI } from "./AnnouncementBar/AnnouncementBar";
 export { default as Badge } from "./Badge/Badge";
 export type { BadgeI } from "./Badge/Badge";
 export { default as Tag } from "./Tag/Tag";
-export type { TagI } from "./Tag/Tag"
+export type { TagI } from "./Tag/Tag";
 export { default as TextStyles } from "./TextStyles/TextStyles"; // Depricated for new usage
 export { default as Text } from "./Text/Text";
 export type { TextI } from "./Text/Text";
@@ -103,17 +103,19 @@ export { default as AspectRatio } from "./AspectRatio/AspectRatio";
 export type { AspectRatioI } from "./AspectRatio/AspectRatio";
 export { default as Marquee } from "./Marquee/Marquee";
 export type { MarqueeI } from "./Marquee/Marquee";
-export { default as Carousel } from "./Carousel/Carousel"
-export { default as DatePicker } from "./Form/DatePicker/DatePicker/DatePicker"
-export type { DatePickerI } from "./Form/DatePicker/DatePicker/DatePicker"
-export { default as RangePicker } from "./Form/DatePicker/RangePicker/RangePicker"
-export type { RangePickerI } from "./Form/DatePicker/RangePicker/RangePicker"
+export { default as Carousel } from "./Carousel/Carousel";
+export { default as DatePicker } from "./Form/DatePicker/DatePicker/DatePicker";
+export type { DatePickerI } from "./Form/DatePicker/DatePicker/DatePicker";
+export { default as RangePicker } from "./Form/DatePicker/RangePicker/RangePicker";
+export type { RangePickerI } from "./Form/DatePicker/RangePicker/RangePicker";
 export { default as VirtualScroll } from "./VirtualScroll/VirtualScroll";
-export {default as VirtualSelect} from "./Form/VirtualSelect/VirtualSelect"
-export { default as AnimatingIllustration  } from "./AnimationingIllustration/Illustration";
+export { default as VirtualSelect } from "./Form/VirtualSelect/VirtualSelect";
+export { default as AnimatingIllustration } from "./AnimationingIllustration/Illustration";
 export { default as useMobileDevice } from "../utilities/useMobileDevice";
 export { default as useWindowResize } from "../utilities/useWindowResize";
-export { default as isTouchDevice } from "../utilities/isTouchDevice"
+export { default as isTouchDevice } from "../utilities/isTouchDevice";
+export { default as Image } from "./Image/Image";
+export { default as ImageMagnifier } from "./ImageMagnifier/ImageMagnifier";
 export * from "./Card";
 export * from "./FlexLayout";
 export * from "./Form";
