@@ -113,6 +113,7 @@
 
 .inte-badge__icon {
   display: flex;
+  min-width: 1.6rem
 }
 
 .inte-badge__content {

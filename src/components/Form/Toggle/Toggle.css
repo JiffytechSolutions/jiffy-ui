@@ -13,6 +13,7 @@
   transition: all 0.3s ease;
   background-color: var(--inte-G90);
   overflow: hidden;
+  margin:0;
 }
 
 .inte-toggle__wrapper>label {
@@ -41,7 +42,7 @@
   color: var(--inte-G300);
   font-size: 1.6rem;
   line-height: 2.2rem;
-  margin-left: 5.8rem;
+  margin-left: 5rem;
   margin-top: .4rem;
 }
 
