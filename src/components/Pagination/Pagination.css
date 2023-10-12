@@ -78,10 +78,6 @@
   justify-content: center;
   padding: 0;
 }
-.inte-pagination__dotItems {
-  height: 3.8rem !important;
-  width: 3.8rem !important;
-}
 .inte-pagination__items .inte-btn--primary {
   color: var(--inte-G10) !important;
   height: 3.8rem;
@@ -100,6 +96,8 @@
 
 /* dots  */
 .inte-pagination__dotItems {
+  height: 3.8rem !important;
+  width: 3.8rem !important;
   font-size: 1.6rem;
   font-weight: 400;
   display: flex;

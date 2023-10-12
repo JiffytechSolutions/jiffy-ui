@@ -20,7 +20,6 @@
 }
 
 .inte-calendar__cell {
-  font-family: Averta;
   font-weight: var(--weight-normal);
   font-size: var(--inte-FS1-4);
   line-height: var(--inte-LH1-6);

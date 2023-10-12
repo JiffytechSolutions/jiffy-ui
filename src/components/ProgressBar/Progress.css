@@ -135,7 +135,6 @@
   transform: translateX(-50%);
   bottom: -5.3rem;
   transition: 300ms all ease-in-out;
-  transform: translateX(-50%);
   background-color: var(--inte-G800);
   color: var(--inte-G0);
   border-radius: 0.6rem;
