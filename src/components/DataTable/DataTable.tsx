@@ -429,7 +429,8 @@ const DataTable = ({
               className={getClassNames({
                 "inte-dataTable__cell": true,
                 [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]: item.fixed,
-                "inte-dataTable__cell--sortable": item.sortable
+                "inte-dataTable__cell--sortable": item.sortable,
+                "inte-dataTable__cell--lastCell": ind === columns.length - 1
               })}
               onClick={() => handelSort(item, ind, rowNum)}
             >
@@ -486,21 +487,21 @@ const DataTable = ({
         })}
         {(scrollY ?? 0) > 0 &&
           (GridWrapperRef.current?.scrollHeight ?? 0) >
-          (GridWrapperRef.current?.clientHeight ?? 0) && (
-            <th
-              className="inte-dataTable__spacedCellScrollBar"
-              ref={(cell) =>
-                makeCellRefsArray(
-                  0,
-                  columns.length +
-                  (expandable ? 1 : 0) +
-                  (rowSelection ? 1 : 0) +
-                  1,
-                  cell
-                )
-              }
-            ></th>
-          )}
+          (GridWrapperRef.current?.clientHeight ?? 0) && hasFixedHeader ? (
+          <th
+            className="inte-dataTable__spacedCellScrollBar"
+            ref={(cell) =>
+              makeCellRefsArray(
+                0,
+                columns.length +
+                (expandable ? 1 : 0) +
+                (rowSelection ? 1 : 0) +
+                1,
+                cell
+              )
+            }
+          ></th>
+        ) : null}
       </tr>
     );
   };
@@ -519,7 +520,8 @@ const DataTable = ({
             "inte-dataTable__row": true,
             "inte-dataTable__row--selected": isRowSelected,
             "inte-dataTable__row--expandable": expandable && isRowExpandable,
-            "inte-dataTable__row--expandActive": expandedRows.includes(item.key)
+            "inte-dataTable__row--expandActive": expandedRows.includes(item.key),
+            "inte-dataTable__row--lastChild": index === dataSource.length - 1
           })}
         >
           {expandable ? (
@@ -598,7 +600,7 @@ const DataTable = ({
                 {...span}
                 key={ind}
                 style={{
-                  
+
                   textAlign: i.align ? i.align : "left",
                 }}
                 ref={(cell) => makeCellRefsArray(rowNum, columnNum++, cell)}
@@ -625,9 +627,9 @@ const DataTable = ({
                 style={{
                   position: "sticky",
                   left: "0",
-                  width: GridWrapperRef.current
-                    ? GridWrapperRef.current.offsetWidth / 10 + "rem"
-                    : "0",
+                  width: (GridWrapperRef.current && scrollY)
+                    ? ((GridWrapperRef.current.offsetWidth / 10) - 0.5) + "rem"
+                    : "100%",
                 }}
               >
                 {expandable?.expandedRowRender
@@ -687,13 +689,19 @@ const DataTable = ({
       if (
         tableCellRefs.current[1][ind]?.classList.contains('inte-dataTable__cell--expand') ||
         tableCellRefs.current[1][ind]?.classList.contains('inte-dataTable__checkbox')) i.style.width = 5.2 + "rem";
-      else i.style.minWidth = Math.max(thWidth, tdWidth) + "px";
+      else {
+        let givenWidth = columns[ind - (expandable ? 1 : 0) - (rowSelection ? 1 : 0)]?.width
+        i.style.width = givenWidth ? givenWidth / 10 + "rem" : ""
+      }
       if (hasHeader) {
         if (
           tableCellRefs.current[1][ind]?.classList.contains('inte-dataTable__cell--expand') ||
           tableCellRefs.current[1][ind]?.classList.contains('inte-dataTable__checkbox')
-        ) colList1[ind].style.minWidth = 5.2 + "rem";
-        else colList1[ind].style.minWidth = Math.max(thWidth, tdWidth) + "px";
+        ) colList1[ind].style.width = 5.2 + "rem";
+        else {
+          let givenWidth = columns[ind - (expandable ? 1 : 0) - (rowSelection ? 1 : 0)]?.width
+          colList1[ind].style.width = givenWidth ? givenWidth / 10 + "rem" : ""
+        }
       }
     });
   };
@@ -710,6 +718,8 @@ const DataTable = ({
     tableCellRefs.current,
     data
   ]);
+
+  const scrollBarWidth = (GridWrapperRef.current?.offsetWidth ?? 0) - (GridWrapperRef.current?.clientWidth ?? 0) + "px"
 
   return (
     <div
@@ -730,21 +740,18 @@ const DataTable = ({
                 .fill(0)
                 .map((i, ind) => {
                   const currIndex = ind - (expandable ? 1 : 0) - (rowSelection ? 1 : 0)
-                  let columnWidth = "auto"
-                  if(currIndex > -1 && columns[currIndex].width) {
-                    columnWidth = `${columns && columns[currIndex]?.width ? `${(columns[currIndex].width ?? 0) / 10}rem` : 'auto'}`
-                  } 
-                  return <col style={{minWidth : columnWidth}} key={ind}></col>
+                  let columnWidth = ""
+                  if (currIndex > -1 && columns[currIndex].width) {
+                    columnWidth = `${columns && columns[currIndex]?.width ? `${(columns[currIndex].width ?? 0) / 10}rem` : ''}`
+                  }
+                  return <col style={{ width: columnWidth }} key={ind}></col>
                 })}
               {(scrollY ?? 0) > 0 &&
                 (GridWrapperRef.current?.scrollHeight ?? 0) >
                 (GridWrapperRef.current?.clientHeight ?? 0) && (
                   <col
                     style={{
-                      minWidth:
-                        (GridWrapperRef.current?.offsetWidth ?? 0) -
-                        (GridWrapperRef.current?.clientWidth ?? 0) +
-                        "px",
+                      width:scrollBarWidth
                     }}
                   ></col>
                 )}
@@ -762,7 +769,11 @@ const DataTable = ({
         ref={GridWrapperRef}
         onScroll={handelGridScroll}
       >
-        <table className={`inte-dataTable`}>
+        <table className={`inte-dataTable`} 
+          style={{
+            maxWidth : (hasFixedHeader && hasHeader && scrollY) ? `calc(100% - ${scrollBarWidth})` : ""
+          }}
+        >
           <colgroup ref={tableColRef}>
             {Array(
               columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
@@ -770,11 +781,11 @@ const DataTable = ({
               .fill(0)
               .map((i, ind) => {
                 const currIndex = ind - (expandable ? 1 : 0) - (rowSelection ? 1 : 0)
-                let columnWidth = "auto"
-                if(currIndex > -1 && columns[currIndex].width) {
-                  columnWidth = `${columns && columns[currIndex]?.width ? `${(columns[currIndex].width ?? 0) / 10}rem` : 'auto'}`
-                } 
-                return <col style={{minWidth : columnWidth}} key={ind}></col>
+                let columnWidth = ((ind === 0 && (expandable || rowSelection)) || (ind === 1 && expandable && rowSelection)) ? "5.2rem" : ""
+                if (currIndex > -1 && columns[currIndex].width) {
+                  columnWidth = `${columns && columns[currIndex]?.width ? `${(columns[currIndex].width ?? 0) / 10}rem` : ''}`
+                }
+                return <col style={{ width: columnWidth }} key={ind}></col>
               })}
           </colgroup>
           {(!hasFixedHeader && hasHeader) && (
@@ -795,7 +806,7 @@ const DataTable = ({
       </div>
       {(pagination && dataSource.length) ? (
         <div className="inte-dataTable__pagination">{pagination}</div>
-      ):null}
+      ) : null}
     </div>
   );
 };

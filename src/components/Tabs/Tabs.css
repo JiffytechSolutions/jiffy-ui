@@ -12,6 +12,7 @@
 .inte-tabs--hasScrollSpy .inte-tabs {
   position: sticky;
   top: 0;
+  z-index: var(--inte-Z-4);
 }
 
 .inte-tabs {

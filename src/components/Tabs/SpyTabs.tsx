@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import getClassNames from "../../utilities/getClassnames";
 import "./Tabs.css";
 
-export interface TabsI {
+export interface SpyTabsI {
   tabs: TabI[];
   direction?: "horizontal" | "vertical";
   isFitted?: boolean;
@@ -51,7 +51,7 @@ const SpyTabs = ({
   isFitted = false,
   customClass = "",
   spacing = "none",
-}: TabsI) => {
+}: SpyTabsI) => {
   const [key, setKey] = useState(0); //to remount when window is resize
   const [activeTab, setActiveTab] = useState<string>();
   const [isScrolling, setIsScrolling] = useState(false);
