@@ -45,7 +45,6 @@ const VirtualSelect = ({
   customClass = "",
   onChange = () => null,
   onInputChange = () => null,
-  customRef,
   value,
   ...props
 }: VirtualSelectI): JSX.Element => {
@@ -755,7 +754,6 @@ const VirtualSelect = ({
             "inte-formElement__multiSelect": isMultiSelect,
             "inte-formElement__singleSelect": !isMultiSelect,
           })}
-          ref={customRef}
         >
           <>
             {!isMultiSelect ? (

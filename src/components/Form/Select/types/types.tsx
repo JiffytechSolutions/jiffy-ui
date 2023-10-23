@@ -15,13 +15,10 @@ export type SelectI = {
   isSearchable?: boolean;
   isClearable?: boolean;
   isCreatable?: boolean;
-  isDataLoading?: boolean;
+  isVirtualSelect?: boolean;
   accessibilityLabel?: string;
   controlStates?: "success" | "warning" | "error";
-  onScrollToBottom?: () => void;
-  tabIndex?: number;
   customClass?: string;
-  customRef?: React.RefObject<HTMLDivElement>;
 };
 export interface SimpleObjI {
   label: string;

@@ -340,19 +340,3 @@
   gap: 0.8rem;
   white-space: nowrap;
 }
-/* Lazy loading */
-.inte-select__item--loading {
-  position: absolute;
-  bottom: 1px;
-  left: 1px;
-  height: 4.2rem;
-  right: 1px;
-  background: linear-gradient(
-    0deg,
-    rgba(255, 255, 255, 0.7847514005602241) 36%,
-    rgba(255, 255, 255, 0.3701855742296919) 91%
-  );
-}
-.inte-select__item--loading .inte-spinner {
-  margin: 0 auto;
-}

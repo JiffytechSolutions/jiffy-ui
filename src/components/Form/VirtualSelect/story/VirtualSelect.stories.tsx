@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Meta } from "@storybook/react/types-6-0";
 import { Card } from "../../../Card";
 import * as Icon from "../../../../storybook/Foundation/Icons/Icons";
@@ -172,32 +172,17 @@ export default {
       },
       defaultValue: "",
     },
-    tabIndex: {
-      description: "Add custom tab-index",
-      control: {
-        type: "number",
-      },
-      defaultValue: 0,
-    },
     customClass: {
       description: "Add any desired custom class on dropdown",
       control: {
         type: "text",
       },
       defaultValue: "",
-    },
-    customRef: {
-      description: "This is a ref which is used for doing any functionality",
-      control: {
-        type: "text",
-      },
-      defaultValue: "CustomRef",
-    },
+    }
   },
 } as Meta;
 
 const Template = ({ ...rest }) => {
-  const customUserRef = useRef<HTMLDivElement>(null);
   const [value1, setValue1] = useState([]);
   const onSelectChange = useCallback((val: React.SetStateAction<never[]>) => {
     setValue1(val);
@@ -233,24 +218,23 @@ const Template = ({ ...rest }) => {
         controlStates={rest.controlStates}
         helpIcon={allIcons[rest.helpIcon]({
           size: 20,
-          color: `${rest.controlStates == "error"
+          color: `${
+            rest.controlStates == "error"
               ? "#C4281C"
               : rest.controlStates === "success"
-                ? "var(--inte-GR300)"
-                : rest.controlStates === "warning"
-                  ? "var(--inte-Y300)"
-                  : "#616771"
-            }`,
+              ? "var(--inte-GR300)"
+              : rest.controlStates === "warning"
+              ? "var(--inte-Y300)"
+              : "#616771"
+          }`,
         })}
         isDisabled={rest.isDisabled}
         placeholder={rest.placeholder}
         isLoading={rest.isLoading}
         onChange={onSelectChange}
-        onInputChange={(e: any) => { }}
-        customRef={customUserRef}
+        onInputChange={(e: any) => {}}
         customClass={rest.customClass}
         accessibilityLabel={rest.accessibilityLabel}
-        tabIndex={rest.tabIndex}
       />
     </Card>
   );

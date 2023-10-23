@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Meta } from "@storybook/react/types-6-0";
 import { Card } from "../../../Card";
-import Select from "../Select";
 import * as Icon from "../../../../storybook/Foundation/Icons/Icons";
 import { GroupedObjI, SimpleObjI } from "../types/types";
+import Select from "../Select";
 const allIcons: any = { ...Icon };
 export default {
   title: "Components/Form/Select",
@@ -83,28 +83,12 @@ export default {
         options: ["success", "warning", "error", "none"],
       },
     },
-    isDataLoading: {
-      description:
-        "Works only with onscrollbottom function , use it for lazy loading, when your data is loading to show spinner in that case",
-      control: {
-        type: "boolean",
-      },
-      defaultValue: false,
-    },
     isDisabled: {
       description: "Disable select",
       control: {
         type: "boolean",
       },
       defaultValue: false,
-    },
-    onScrollToBottom: {
-      description:
-        "Callback function when user reached to bottom by scrolling , Use it for implementing lazy loading",
-      control: {
-        type: "function",
-        disable: true,
-      },
     },
     onChange: {
       description: "Called when selecting  a option",
@@ -190,12 +174,13 @@ export default {
       },
       defaultValue: "",
     },
-    tabIndex: {
-      description: "Add custom tab-index",
+    isVirtualSelect: {
+      description:
+        "Disable virtual scroll when set to false , use this feature when you large data (If isvirtualSelect is true then you can pass large data like 10 thousand at a time)",
       control: {
-        type: "number",
+        type: "boolean",
       },
-      defaultValue: 0,
+      defaultValue: false,
     },
     customClass: {
       description: "Add any desired custom class on dropdown",
@@ -203,13 +188,6 @@ export default {
         type: "text",
       },
       defaultValue: "",
-    },
-    customRef: {
-      description: "This is a ref which is used for doing any functionality",
-      control: {
-        type: "text",
-      },
-      defaultValue: "CustomRef",
     },
   },
 } as Meta;
@@ -286,7 +264,6 @@ const groupOptions: GroupedObjI[] = [
 ];
 
 const Template = ({ ...rest }) => {
-  const customUserRef = useRef<HTMLDivElement>(null);
   const [value1, setValue1] = useState([]);
   const onSelectChange = (val: React.SetStateAction<never[]>) => {
     setValue1(val);
@@ -316,16 +293,14 @@ const Template = ({ ...rest }) => {
               : "#616771"
           }`,
         })}
+        isVirtualSelect={rest.isVirtualSelect}
         isDisabled={rest.isDisabled}
         placeholder={rest.placeholder}
         isLoading={rest.isLoading}
         onChange={onSelectChange}
         onInputChange={(e: any) => {}}
-        customRef={customUserRef}
         customClass={rest.customClass}
         accessibilityLabel={rest.accessibilityLabel}
-        tabIndex={rest.tabIndex}
-        isDataLoading={rest.isDataLoading}
         isCreatable={rest.isCreatable}
       />
     </Card>
