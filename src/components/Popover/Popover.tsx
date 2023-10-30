@@ -42,7 +42,7 @@ const Popover = ({
   const scrollRef = useRef<any>(null);
   const showDiv = useDelayUnmount(isOpen, 100);
   const isMobileDevice = useMobileDevice();
-  handleShadowOnScroll(scrollRef, showDiv);
+  // handleShadowOnScroll(scrollRef, showDiv);
 
   const handelPopoverRefEle = (ele: HTMLDivElement | null) => {
     if (!ele) return;

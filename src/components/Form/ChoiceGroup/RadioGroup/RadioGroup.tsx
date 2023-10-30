@@ -78,9 +78,6 @@ const RadioGroup = ({
                 "inte-radioGroup__listitem--clickable": isClickableFullItem,
                 [item.customClass as string]: item.customClass,
               })}
-              onClick={() =>
-                onChange && isClickableFullItem && onChange(item.value)
-              }
             >
               <Radio
                 description={item.description}

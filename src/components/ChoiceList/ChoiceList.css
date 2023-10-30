@@ -14,10 +14,10 @@
   cursor: pointer;
 }
 
-.inte-choiceList .inte-checkboxGroup__listItem,
-.inte-choiceList .inte-radioGroup__listItem {
-  display: grid;
-  place-items: center;
+.inte-choiceList .inte-checkboxGroup__listItem label,
+.inte-choiceList .inte-radioGroup__listItem label{
+  /* display: grid;
+  place-items: center; */
   padding: 1rem 1.6rem;
 }
 
