@@ -21,7 +21,6 @@
   border-radius: 0.8rem;
   position: relative;
   border-collapse: separate;
-  table-layout: fixed;
 }
 
 .sortedIcon-title {

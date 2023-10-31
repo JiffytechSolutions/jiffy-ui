@@ -732,7 +732,7 @@ const DataTable = ({
     >
       {hasFixedHeader && hasHeader && (
         <div className="inte-dataTable__fixHeader--handler">
-          <table className="inte-dataTable">
+          <table className="inte-dataTable" style={{tableLayout : "fixed"}}>
             <colgroup ref={fixHeaderRef}>
               {Array(
                 columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
@@ -771,7 +771,8 @@ const DataTable = ({
       >
         <table className={`inte-dataTable`} 
           style={{
-            maxWidth : (hasFixedHeader && hasHeader && scrollY) ? `calc(100% - ${scrollBarWidth})` : ""
+            maxWidth : (hasFixedHeader && hasHeader && scrollY) ? `calc(100% - ${scrollBarWidth})` : "",
+            tableLayout : hasFixedHeader ? "fixed" : "auto"
           }}
         >
           <colgroup ref={tableColRef}>
