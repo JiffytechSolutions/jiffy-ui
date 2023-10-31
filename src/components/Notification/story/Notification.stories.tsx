@@ -123,7 +123,5 @@ NotificationWithDate.decorators = [
 ];
 
 export function Documentation() {
-  return (
-    <NotificationDoc />
-  );
+  return <NotificationDoc />;
 }

@@ -1,0 +1,14 @@
+.inte-copyClipboard {
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+.inte-copyClip__center {
+  justify-content: center;
+}
+.inte-copyClip__end {
+  justify-content: end;
+}
+.inte-copyClip__fill {
+  justify-content: space-between;
+}
