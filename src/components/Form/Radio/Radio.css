@@ -84,7 +84,7 @@
 
 /* Error State */
 .inte-radio--error + span .inte-radioEle--fake {
-  border-color: var(--inte-R200);
+  border-color: var(--inte-R200) !important;
 }
 /* Error State End */
 
