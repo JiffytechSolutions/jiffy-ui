@@ -12,6 +12,7 @@
 .inte-tabs--hasScrollSpy .inte-tabs {
   position: sticky;
   top: 0;
+  z-index: var(--inte-Z-4);
 }
 
 .inte-tabs {
@@ -141,6 +142,7 @@
 
 .inte-tabs__item--disable {
   opacity: 0.3;
+  user-select: none;
 }
 
 .inte-tabs--spacingExtraTight:not(.inte-tabs--hasScrollSpy) {

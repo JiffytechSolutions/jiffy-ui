@@ -11,6 +11,7 @@ import Popover from "../Popover/Popover";
 import getClassNames from "../../utilities/getClassnames";
 import getModulus from "../../utilities/getModulus";
 import "./ChoiceList.css";
+import useMobileDevice from "../../utilities/useMobileDevice";
 export interface OptionsI {
   label: string | React.ReactNode;
   description?: string | React.ReactNode;
@@ -49,6 +50,7 @@ const ChoiceList = ({
   const [checkClass, setCheckClass] = useState(false);
   const [curr, setCurr] = useState(0);
   const parentRef = useRef<any>(null);
+  const isMobileDevice = useMobileDevice()
 
   const handleRadioGroupChange = useCallback((val: string | number) => {
     onChange(val);
@@ -133,7 +135,7 @@ const ChoiceList = ({
     <div
       className="inte-choicelist__mainWrapper"
       ref={parentRef}
-      onKeyDown={(e) => handleFocus(e)}
+      onKeyDown={isMobileDevice ? (e) => handleFocus(e) : undefined}
     >
       <Popover
         heading={heading}
@@ -144,14 +146,14 @@ const ChoiceList = ({
           [customClass as string]: customClass,
         })}
         onClose={onClose}
-        customRef={handelPopoverRef}
+        customRef={!isMobileDevice ? handelPopoverRef : undefined}
         isCloseOnEsc={isCloseOnEsc}
       >
         <div
           className="inte-choiceList__wrapper"
-          onKeyDown={handelKeyDown}
+          onKeyDown={!isMobileDevice ? handelKeyDown : undefined}
           onMouseMove={handelMouseMove}
-          onBlur={handleFocusOut}
+          onBlur={!isMobileDevice ? handleFocusOut : undefined}
         >
           {!isMulti ? (
             <RadioGroup

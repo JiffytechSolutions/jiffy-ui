@@ -116,6 +116,8 @@ export { default as useWindowResize } from "../utilities/useWindowResize";
 export { default as isTouchDevice } from "../utilities/isTouchDevice";
 export { default as Image } from "./Image/Image";
 export { default as ImageMagnifier } from "./ImageMagnifier/ImageMagnifier";
+export { default as SpyTabs } from "./Tabs/SpyTabs"
+export type {SpyTabsI} from './Tabs/SpyTabs'
 export * from "./Card";
 export * from "./FlexLayout";
 export * from "./Form";
