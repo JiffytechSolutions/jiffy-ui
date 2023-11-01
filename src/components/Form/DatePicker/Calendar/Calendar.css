@@ -7,7 +7,6 @@
 }
 .inte-calender > table {
   border-spacing: 0;
-  width: 100%;
 }
 
 .inte-popover__mobileDevice .inte-calender > table {
@@ -107,6 +106,7 @@ th.inte-calendar__cell {
 .inte-calendar__month ,
 .inte-calendar__year {
   min-height: 28rem;
+  width: 35rem;
 }
 
 .inte-popover__mobileDevice .inte-calendar__month ,

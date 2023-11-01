@@ -5,15 +5,6 @@
   max-height: unset;
 }
 
-.inte-rangePicker--popover:has(.inte-calendar__month , .inte-calendar__year) {
-  width: 35rem;
-}
-
-.inte-rangePicker--popover:has(.inte-calendar__month , .inte-calendar__year) .inte-rangePicker {
-  width: 100%;
-}
-
-
 .inte-rangePicker__calanderContainer {
   display: flex;
   gap: 2rem;

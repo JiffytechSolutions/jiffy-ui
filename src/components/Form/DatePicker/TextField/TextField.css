@@ -29,7 +29,7 @@
     width: min-content;
 }
 
-.inte-textField--forDatePicker:has(.inte-textField__inputContainer--onlyIcon) {
+.inte-textField--forDatePicker--hasOnlyIcon {
     width: max-content;
 }
 

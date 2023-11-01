@@ -48,12 +48,12 @@
     margin-left: 3.66562rem;
 }
 
-.inte-timePicker__hour:has(.inte-timePicker__item--selected)::after , 
-.inte-timePicker__min:has(.inte-timePicker__item--selected)::after ,
-.inte-timePicker__meridian:has(.inte-timePicker__item--selected)::after ,
-.inte-timePicker__hour:has(.inte-timePicker__item--selected)::before , 
-.inte-timePicker__min:has(.inte-timePicker__item--selected)::before ,
-.inte-timePicker__meridian:has(.inte-timePicker__item--selected)::before {
+.inte-timePicker__lists--hasSelectedTime .inte-timePicker__hour::after , 
+.inte-timePicker__lists--hasSelectedTime .inte-timePicker__min::after ,
+.inte-timePicker__lists--hasSelectedTime .inte-timePicker__meridian::after ,
+.inte-timePicker__lists--hasSelectedTime .inte-timePicker__hour::before , 
+.inte-timePicker__lists--hasSelectedTime .inte-timePicker__min::before ,
+.inte-timePicker__lists--hasSelectedTime .inte-timePicker__meridian::before {
     content: "";
     display: block;
     width: auto;

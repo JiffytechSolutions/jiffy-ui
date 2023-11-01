@@ -49,8 +49,10 @@ const Sheet: FC<SheetI> = ({
       if (event.key === "Escape") onClose();
     };
     if (closeOnEsc) window.addEventListener("keydown", keyEscHandler);
+    if(isOpen) document.body.classList.add("inte-bodyHasSheetBackdrop")
     return () => {
       window.removeEventListener("keydown", keyEscHandler);
+      document.body.classList.remove("inte-bodyHasSheetBackdrop")
     };
   }, [isOpen]);
 
