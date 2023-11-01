@@ -91,13 +91,6 @@ const CheckboxGroup = ({
                 "inte-checkboxGroup__listitem--clickable": isClickableFullItem,
                 [item.customClass as string]: item.customClass,
               })}
-              onClick={() =>
-                isClickableFullItem &&
-                handleCheckboxGroupChange(
-                  !value.includes(item.value),
-                  item.value
-                )
-              }
             >
               <Checkbox
                 description={item.description}

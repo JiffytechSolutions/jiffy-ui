@@ -1,4 +1,4 @@
-import {isMobileDevice} from "./useMobileDevice";
+import { isMobileDevice } from "./useMobileDevice";
 
 interface Position {
   top: number;
@@ -17,27 +17,20 @@ const getPositionOfFixedElement = (
     window.innerWidth - parentDimension.left >= childEle.offsetWidth;
   let isRightHaveSpace = parentDimension.right >= childEle.offsetWidth;
 
-  if (direction === "right") {
-    isLeftHaveSpace = true;
-    isRightHaveSpace = false;
-  }
-  if (direction === "left") {
-    isLeftHaveSpace = false;
-    isRightHaveSpace = true;
-  }
-
   if (isBottomHaveSpace) childEle.style.transformOrigin = "top center";
   else childEle.style.transformOrigin = "bottom center";
+
+
 
   return {
     top: isBottomHaveSpace
       ? parentDimension.bottom + 4
       : parentDimension.top - childEle.offsetHeight - 4,
-    left: isRightHaveSpace
+    left: (direction === "left" && isLeftHaveSpace) ? parentDimension.left : isRightHaveSpace
       ? parentDimension.right - childEle.offsetWidth
       : isLeftHaveSpace
-      ? parentDimension.left
-      : parentDimension.left -
+        ? parentDimension.left
+        : parentDimension.left -
         (childEle.offsetWidth - parentEle.offsetWidth) / 2,
   };
 };
@@ -60,7 +53,7 @@ const changePosition = (
       popoverRef.current.style.width =
         parentRef.current.getBoundingClientRect().width + "px";
     }
-    if(isMobileDevice()){
+    if (isMobileDevice()) {
       popoverRef.current.style.bottom = "0"
       popoverRef.current.style.minWidth = window.innerWidth + 'px'
       return

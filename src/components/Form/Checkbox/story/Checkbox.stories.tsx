@@ -73,7 +73,7 @@ export default {
       },
       defaultValue: "radio-value",
     },
-    error: {
+    hasError: {
       description: "Define Checkbox Error ",
       control: {
         type: "boolean",

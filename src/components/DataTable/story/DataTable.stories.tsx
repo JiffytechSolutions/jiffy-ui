@@ -7,6 +7,8 @@ import TemplateColumns from "./TemplateColumns";
 import { StoryContext } from '@storybook/react';
 import DataTableDoc from "../Document/DataTableDoc";
 import Text from "../../Text/Text";
+import { RadioGroup, Select } from "../../Form";
+import { FlexLayout } from "../../FlexLayout";
 
 export default {
   title: "Components/DataTable And List/DataTable",
@@ -242,7 +244,7 @@ const primaryColumns: columnI[] = [
     dataIndex: "id",
     key: "id",
     fixed: "left",
-    width: 100,
+    // width: 100,
     sortable: {
       // comparator: (a: any, b: any, order: any) => {
       //   return order === "asec" ? a - b : b - a;
@@ -259,6 +261,7 @@ const primaryColumns: columnI[] = [
     render: (item: any) => {
       return <Text>{item}</Text>;
     },
+    width:200,
     sortable: {
       comparator: (a: any, b: any, order: any) => {
         a = a.toLowerCase();
@@ -271,7 +274,7 @@ const primaryColumns: columnI[] = [
     title: "Email",
     dataIndex: "email",
     key: "email",
-    width: 300,
+    // width: 300,
     render: (item: any) => {
       return <Text>{item}</Text>;
     },
@@ -280,6 +283,7 @@ const primaryColumns: columnI[] = [
     title: "Phone",
     dataIndex: "phone",
     key: "phone",
+    width: 200,
     render: (item: any) => {
       return <Text>{item}</Text>;
     },
@@ -401,15 +405,14 @@ const Template = ({ ...rest }) => {
   };
 
   return (
-    <DataTable
+    <Card>
+      <DataTable
       {...rest}
       isLoading={(loading || rest.loading)}
       dataSource={dataSourceT}
-      columns={primaryColumns}
+      columns={primaryColumns.slice(0,3)}
       scrollX={rest.scrollX}
-      scrollY={rest.scrollY}
-      hasHeader={rest.hasHeader}
-      hasFixedHeader={false}
+      scrollY={500}
       rowSelection={{
         multi: true,
         selectedRowKeys: selKeysObj(selectedRowKeys),
@@ -455,6 +458,7 @@ const Template = ({ ...rest }) => {
         />
       }
     />
+    </Card>
   );
 };
 
@@ -646,12 +650,33 @@ const TemplateDataTableStory = ({ ...rest }) => {
     return res
   }, [selectedRowKey, currentPage, itemPerPage])
 
+  const [selectValue, setSelectValue] = useState<{ [key: string]: string }>({})
+
+  const handelSelectChangeN = (ind: number, value: any) => {
+    setSelectValue(prev => ({ ...prev, [ind]: value }))
+  }
+
   const TemplateColumnsT = [{
     title: "Sr No",
     key: "key",
     dataIndex: 'key',
     fixed: 'left',
-    render: (data: any) => data + 1
+    width: 200,
+    render: (data: any) => <>
+      <FlexLayout spacing="mediumLoose" direction="vertical">
+        <Select
+          options={[{ label: "1", value: "1" }, { label: "2", value: "2" }, { label: "3", value: "3" }]}
+          value={selectValue[data]}
+          onChange={(e) => handelSelectChangeN(data, e)}
+        />
+        <RadioGroup
+          options={[{ label: "1", value: "1" }, { label: "2", value: "2" }, { label: "3", value: "3" }]}
+          value={selectValue[data]}
+          onChange={(e) => handelSelectChangeN(data, e)}
+          direction="horizontal"
+        />
+      </FlexLayout>
+    </>
   }, ...TemplateColumns]
 
   return (

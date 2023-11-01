@@ -79,7 +79,7 @@ export default {
           "extraLoose",
         ],
       },
-      defaultValue: "none",
+      defaultValue: "mediumLoose",
     },
     isFitted: {
       description: "Whether the tabs should be fitted to their content.",
@@ -165,10 +165,18 @@ const Template = ({ ...rest }) => {
   console.log(tabArr);
 
   return (
-    <Card>
-      <SpyTabs {...rest} spacing="mediumLoose" tabs={tabArr} />
-    </Card>
+      <SpyTabs spacing="mediumLoose" {...rest}  tabs={tabArr} />
   );
 };
 
 export const Primary = Template.bind({});
+
+export const SpyTabsVertical =  ({ ...rest }) => {
+  const [tabArr, setTabArr] = useState(data);
+
+  console.log(tabArr);
+
+  return (
+      <SpyTabs spacing="mediumLoose" {...rest} direction="vertical" tabs={tabArr} />
+  );
+};

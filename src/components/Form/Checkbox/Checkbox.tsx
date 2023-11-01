@@ -55,7 +55,7 @@ const Checkbox: React.FC<CheckboxI> = ({
           checked={!checked ? false : true}
           className={getClassNames({
             "inte-checkbox--fake": true,
-            "inte-checkbox--error": props.error,
+            "inte-checkbox--error": props.hasError,
           })}
           onKeyDown={handleKeyDown}
         />
@@ -95,7 +95,7 @@ export interface CheckboxI {
   required?: boolean;
   isDisabled?: boolean;
   description?: string | React.ReactNode;
-  error?: boolean;
+  hasError?: boolean;
   value?: any;
   customClass?: string;
 }
