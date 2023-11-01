@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Card } from "../../Card";
 import StepWizardDoc from "../Document/StepWizardDoc";
 import StepWizard from "../StepWizard";
+import { StoryContext } from "@storybook/react";
 
 export default {
   title: 'Components/Navigation/StepWizard',
@@ -118,6 +119,47 @@ const Template = ({ ...rest }) => {
 }
 
 export const Primary: any = Template.bind({})
+
+export const StepWizardwithIcon:any = ({...rest}) => {
+  const [currStep , setCurrStep] = useState(5)
+
+  useEffect(()=>{
+    setCurrStep(rest.currentStep)
+  },[rest.currentStep])
+
+  return (
+    <Card>
+      <StepWizard
+        {...rest}
+        currentStep={currStep}
+        onChange={(newStep)=> setCurrStep(newStep)}
+        steps={steps}
+        type="icon"
+      />
+    </Card>
+  )
+}
+
+export const VerticalStepWizard:any = ({...rest}) => {
+  const [currStep , setCurrStep] = useState(5)
+
+  useEffect(()=>{
+    setCurrStep(rest.currentStep)
+  },[rest.currentStep])
+
+  return (
+    <Card>
+      <StepWizard
+        {...rest}
+        currentStep={currStep}
+        onChange={(newStep)=> setCurrStep(newStep)}
+        steps={steps}
+        direction="vertical"
+      />
+    </Card>
+  )
+}
+
 export function Documentation() {
   return <StepWizardDoc />;
 }
