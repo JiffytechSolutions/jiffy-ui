@@ -189,12 +189,12 @@ div[id$="--documentation"] .css-11xgcgt {
 .story-colorCodeWrapper .inte-copyClipboard {
   height: 5.2rem;
 }
-.story-colorCodeWrapper .inte-copyClipboard .inte-btn {
+/* .story-colorCodeWrapper .inte-copyClipboard .inte-btn {
   display: none;
 }
 .story-colorCodeWrapper .inte-copyClipboard:hover .inte-btn {
-  display: block;
-}
+  display: flex;
+} */
 
 .story-colorCodeWrapper > div:hover {
   background-color: var(--inte-P20);
@@ -210,6 +210,28 @@ div[id$="--documentation"] .css-11xgcgt {
   opacity: 1;
   visibility: visible;
 }
+/* Change btn design  */
+.story-colorCodeWrapper .inte-copyClipboard {
+  position: relative;
+}
+.story-colorCodeWrapper .inte-copyClipboard .inte-text--T8.inte-text--default {
+  position: absolute;
+  left: 1rem;
+}
+.story-colorCodeWrapper .inte-copyClipboard .inte-btn {
+  position: absolute;
+  width: 100% !important;
+  height: 52px !important;
+  border: unset;
+  background: unset;
+  left: 0;
+}
+
+.story-colorCodeWrapper .inte-copyClipboard .inte-btn .inte-btn__icon {
+  margin-left: auto;
+}
+
+/* Change btn design  */
 
 .story-color-box {
   position: relative;
