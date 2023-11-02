@@ -67,12 +67,12 @@
     gap: 0.4rem;
 }
 
-.inte-calendarHeader__showDetail:has(.inte-calendarHeader__firstCalanderDetails) {
+.inte-calendarHeader__showDetail.inte-calendarHeader__showDetail--range {
     flex-grow: 1;
     position: relative;
 }
 
-.inte-calendarHeader__showDetail:has(.inte-calendarHeader__secondCalanderDetails){
+.inte-calendarHeader__showDetail.inte-calendarHeader__showDetail--hasSecondCalendar{
     justify-content: space-between;
     padding: 0 8rem;
 }

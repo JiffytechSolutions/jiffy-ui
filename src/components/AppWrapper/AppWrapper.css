@@ -69,7 +69,7 @@
   bottom: var(--pageBottomAction);
 }
 
-body:has(.inte-sheet__backdrop) .inte-sideBar {
+.inte-bodyHasSheetBackdrop .inte-sideBar {
   z-index: 0;
 }
 

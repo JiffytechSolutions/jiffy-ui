@@ -724,7 +724,8 @@ const DataTable = ({
   return (
     <div
       className={getClassNames({
-        "inte-dataTable--container": true,
+        "inte-dataTable__container": true,
+        "inte-dataTable__container--hasFixedHeader" : hasFixedHeader,
         [customClass as string]: customClass
       })}
       key={data.length}
