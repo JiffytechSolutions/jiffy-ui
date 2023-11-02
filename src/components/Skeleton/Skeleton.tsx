@@ -7,6 +7,7 @@ const Skeleton: React.FC<SkeletonI> = ({
   type = "line",
   width = "50px",
   height = "50px",
+  customClass,
 }: SkeletonI) => {
   function renderTypeWise() {
     switch (type) {
@@ -32,7 +33,7 @@ const Skeleton: React.FC<SkeletonI> = ({
     }
   }
 
-  return <div className={"inte__skeletonWrapper"}>{renderTypeWise()}</div>;
+  return <div className={`inte__skeletonWrapper ${customClass}`}>{renderTypeWise()}</div>;
 };
 export interface SkeletonI {
   type?: "line"  | "custom";
@@ -40,6 +41,7 @@ export interface SkeletonI {
   height?: string;
   line?: number;
   rounded?: boolean;
+  customClass?:string;
 }
 
 export default Skeleton;

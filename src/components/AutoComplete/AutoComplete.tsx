@@ -347,10 +347,10 @@ function AutoComplete({
           onFocus();
           setOpensheet(true);
         }}
-        onBlur={() => {
-          setShowList(false);
-          setShowList1(false);
-        }}
+        // onBlur={() => {
+        //   setShowList(false);
+        //   setShowList1(false);
+        // }}
         ariaOwns={`inte-autoCompletePopover${rId}`}
       />
     );
