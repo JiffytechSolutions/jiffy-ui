@@ -2,10 +2,9 @@
 import React from "react";
 import Avatar, { AvatarI } from "../../Avatar/Avatar";
 
-
 export interface CardHeaderI {
-  title?: string;
-  subTitle?: string;
+  title?: string|React.ReactNode;
+  subTitle?: string|React.ReactNode;
   action?: React.ReactNode;
   avatar?: AvatarI
 }

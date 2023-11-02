@@ -42,6 +42,8 @@
 /* Button Disabled */
 .inte-btn--disable {
   cursor: not-allowed;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Button Disabled End */

@@ -2,11 +2,13 @@
 import React, { ReactNode } from "react";
 import { error, info, neutral, success, warning } from "./story/icon";
 import "./Notification.css";
+import Badge, { BadgeI } from "../Badge/Badge";
 const Notification: React.FC<NotificationI> = ({
   type,
   desciption,
   title,
   date,
+  badge,
   customClass
 }: NotificationI) => {
   const checkNotificationType: { [key: string]: React.ReactNode } = {
@@ -24,9 +26,14 @@ const Notification: React.FC<NotificationI> = ({
       <div className={`inte-notification__content inte-notification__hasCircleIcon `} >
         <div className="inte-notification__circleIcon">{typeNotify}</div>
         <div className={"inte-notification__text"}>
-        {title&&<div className="inte-notification__title" style={{
+        {title&&<div className="inte-notificationtitle_wrapper">
+          <div className="inte-notification__title" style={{
               fontWeight: !desciption ? 'normal':""
-            }}>{title}</div>}
+            }}>{title}</div>
+           {badge && <Badge {...badge} />}
+          </div>
+            
+            }
           {desciption &&
             <div className="inte-notification__description" 
             >
@@ -49,6 +56,7 @@ export interface NotificationI {
   desciption?: string | ReactNode;
   title?: string;
   date?: string;
+  badge?: BadgeI;
   customClass?: string
 }
 

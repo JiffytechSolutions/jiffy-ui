@@ -9,6 +9,14 @@
   border: 0;
   padding-bottom: 0;
 }
+.inte-notification:first-of-type {
+  padding-top: 0;
+}
+.inte-notificationtitle_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
 /* .inte-notification:first-child {
   padding: 0;
@@ -34,7 +42,7 @@
   font-weight: var(--weight-bolder);
   line-height: var(--inte-LH2-2);
   color: var(--inte-G800);
-  margin-bottom: .4rem;
+ 
 }
 
 .inte-notification__description {
@@ -42,7 +50,8 @@
   line-height: var(--inte-LH2-2);
   font-size: var(--inte-FS1-6);
   font-weight: var(--weight-normal);
-  margin-bottom: .8rem;
+  margin-top: .4rem;
+ 
 }
 
 .inte-notification__date {
@@ -50,6 +59,7 @@
   font-size: var(--inte-FS1-4);
   line-height: var(--inte-LH2-0);
   color: var(--inte-G300);
+  margin-top: .8rem;
 }
 
 /*Notifications End*/
