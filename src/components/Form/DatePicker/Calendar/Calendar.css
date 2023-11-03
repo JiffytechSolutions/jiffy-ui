@@ -1,8 +1,9 @@
 .inte-calender {
-  padding: 0.8rem;
+  padding: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 35rem;
   width: 100%;
 }
 .inte-calender > table {
@@ -73,6 +74,7 @@ th.inte-calendar__cell {
 
 .inte-calendar__cell--disabled {
   cursor: not-allowed;
+  user-select: none;
 }
 
 .inte-calendar__cell--disabled .inte-calendar__cell__inner {
@@ -127,6 +129,7 @@ th.inte-calendar__cell {
 
 .inte-calendar__cell:not([class*="inte-calendar__cell--s" ] , [class*="inte-calendar__cell--inS" ] , .inte-calendar__cell--disabled):hover .inte-calendar__cell__inner{
   background-color: var(--inte-P20);
+  border-radius: 0.6rem;
 }
 
 @keyframes slideIn {

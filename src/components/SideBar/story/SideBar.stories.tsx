@@ -129,14 +129,14 @@ const menu = [
     id: 'home',
     label: 'Home',
     path: '/',
-    icon: <Home size="20" color="#1c2433" />,
+    icon: <Home size="20" />,
     badge: <Badge type='success' variant='accent' size='small'>New</Badge>
   },
   {
     id: 'proList',
     label: 'Product List',
     path: '/productList',
-    icon: <ShoppingBag size="20" color="#1c2433" />,
+    icon: <ShoppingBag size="20" />,
     children: [
       {
         id: 'pro1',
@@ -160,19 +160,19 @@ const menu = [
     id: 'setting',
     label: 'Setting',
     path: '/setting',
-    icon: <Settings size="20" color="#1c2433" />
+    icon: <Settings size="20" />
   },
   {
     id: 'help',
     label: 'Help',
     path: '/help',
-    icon: <HelpCircle size="20" color="#1c2433" />
+    icon: <HelpCircle size="20" />
   },
   {
     id: 'faq',
     label: 'FAQ',
     path: '/faq',
-    icon: <AlertCircle size="20" color="#1c2433" />
+    icon: <AlertCircle size="20" />
   }
 ]
 
@@ -181,7 +181,7 @@ const menu2 = [
     id: 'get',
     label: 'Get In Touch',
     path: '/getInTouch',
-    icon: <Home size="20" color="#1c2433" />,
+    icon: <Home size="20" />,
     badge: <Badge type='success' size='small'>5</Badge>,
     children: [
       {
@@ -206,7 +206,7 @@ const menu2 = [
     id: 'mobile',
     label: 'Contact Us',
     path: '/contactUs',
-    icon: <Phone size="20" color="#1c2433" />,
+    icon: <Phone size="20" />,
   }
 ]
 

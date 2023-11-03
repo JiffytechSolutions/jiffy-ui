@@ -1,7 +1,5 @@
 import React from 'react'
-import { Button, FlexChild, FlexLayout, TextLink } from '../..'
 import { Card } from '../../Card'
-import { ThumbsDown, ThumbsUp } from '../../../storybook/Foundation/Icons/Icons'
 import Announcement from '../Announcement'
 
 export default {

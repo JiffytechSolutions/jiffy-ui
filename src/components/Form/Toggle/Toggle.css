@@ -75,10 +75,14 @@
 .inte-toggle[disabled] {
   cursor: not-allowed;
   background: var(--inte-G70) !important;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .inte-toggle:checked[disabled] {
   background: var(--inte-P40) !important;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 
@@ -86,10 +90,14 @@
 .inte-toggle--disabled .inte-toggle__description {
   color: var(--inte-G70);
   cursor: not-allowed;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .inte-toggle[disabled]:after {
   box-shadow: unset !important;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 .inte-toggle:checked {

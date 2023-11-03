@@ -77,3 +77,61 @@ const Template = ({ ...rest }) => {
 }
 
 export const Primary = Template.bind({})
+export const inside: any = Template.bind({});
+inside.decorators = [
+  () => {
+   return(
+    <Card>
+    <ImageMagnifier
+      width={500}
+      height={500}
+      inside={true}
+      position="auto"
+      src="https://wallpapers.com/images/featured/hd-a5u9zq0a0ymy2dug.jpg"
+          />
+  </Card>
+   )
+   },
+];
+
+export const Without_inside: any = Template.bind({});
+Without_inside.decorators = [
+  () => {
+   return(
+    <Card>
+    <ImageMagnifier
+      width={500}
+      height={500}
+      inside={false}
+      position="auto"
+      src="https://wallpapers.com/images/featured/hd-a5u9zq0a0ymy2dug.jpg"
+          />
+  </Card>
+   )
+   },
+]
+
+export const positionOfMaginifiImage: any = Template.bind({});
+positionOfMaginifiImage.decorators = [
+  () => {
+   return(
+    <Card>
+   {
+    ["left","right","top","bottom"].map((items:any)=>{
+      return(
+        <Card title={items}>
+          <ImageMagnifier
+        width={500}
+        height={500}
+        inside={false}
+        position={items}
+        src="https://wallpapers.com/images/featured/hd-a5u9zq0a0ymy2dug.jpg"
+            />
+          </Card>
+      )
+    })
+   }
+  </Card>
+   )
+   },
+]

@@ -29,7 +29,7 @@
     width: min-content;
 }
 
-.inte-textField--forDatePicker:has(.inte-textField__inputContainer--onlyIcon) {
+.inte-textField--forDatePicker--hasOnlyIcon {
     width: max-content;
 }
 
@@ -138,5 +138,5 @@
     font-weight: var(--weight-normal);
     line-height: var(--inte-LH2-0);
     font-size: var(--inte-FS1-4);
-    margin-top: 0.8rem!important;
+    margin-top: 0.4rem!important;
 }

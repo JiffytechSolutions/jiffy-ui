@@ -3,6 +3,7 @@ import useMobileDevice from '../../../../utilities/useMobileDevice'
 import './TimePicker.css'
 import Button from '../../../Button/Button'
 import { ChevronLeft, X } from '../../../../storybook/Foundation/Icons/Icons'
+import getClassNames from '../../../../utilities/getClassnames'
 
 interface TimePickerI {
   selectedTime?: TimeI
@@ -172,8 +173,11 @@ const TimePicker = ({ onChange, selectedTime, heading, onClose, hasFooter = fals
           isMobile && <Button type='textButton' onClick={onClose} icon={<X size={20} />} />
         }
       </div>
-      <div className="inte-timePicker__lists" ref={timePickerRef}>
-        <ul className="inte-timePicker__hour" onScroll={handelHourListScroll}>
+      <div className={getClassNames({
+        "inte-timePicker__lists" : true,
+        "inte-timePicker__lists--hasSelectedTime" : selectedTime
+      })} ref={timePickerRef}>
+        <ul className={"inte-timePicker__hour"} onScroll={handelHourListScroll}>
           {
             Array(12).fill(0).map((item: number, ind: number) => {
               const selectedHour = time?.hh
