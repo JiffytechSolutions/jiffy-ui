@@ -107,6 +107,7 @@ const Template = ({ ...rest }: any) => {
       </div>
     ));
   });
+  console.log(data);
   return (
     <>
       <TextField
@@ -120,7 +121,9 @@ const Template = ({ ...rest }: any) => {
           searchIcons("");
         }}
         isClearable
+        helpText={"Showing number of icons is " + "  " + data.length}
       />
+
       <Card>
         <div className="inte-icons__wrapper">
           {data.length !== 0 ? (
@@ -132,7 +135,9 @@ const Template = ({ ...rest }: any) => {
               {dataItemsIcons}
             </VirtualScroll>
           ) : (
-            <div className="inte__icons-notFound">No icon found</div>
+            <div className="inte__icons-notFound">
+              No icon found for &ldquo;{input}&rdquo;
+            </div>
           )}
         </div>
       </Card>

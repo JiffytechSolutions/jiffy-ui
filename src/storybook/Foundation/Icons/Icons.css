@@ -7,7 +7,7 @@
   top: 0;
 }
 .inte-icons__wrapper {
-  margin-top: 7rem;
+  margin-top: 10rem;
 }
 .inte-icons__wrapper > div {
   border: unset;
@@ -16,10 +16,14 @@
   display: flex;
 }
 .inte__icons-notFound {
-  font-size: 1.8rem;
+  font-size: 2rem;
   line-height: 2.4rem;
   font-weight: bold;
-  color: #888a85;
+  color: #2f363d;
+  height: calc(100vh - 13.4rem);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .inte-card.inte-card--bordered.inte-icon-inner.inte-card--tight {
   width: 100%;

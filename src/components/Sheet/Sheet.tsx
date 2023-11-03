@@ -62,7 +62,7 @@ const Sheet: FC<SheetI> = ({
     isOpen,
     onClose
   );
-  useBodyLock(isOpen);
+  useBodyLock(animateData);
 
   return (
     <>
