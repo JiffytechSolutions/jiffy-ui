@@ -54,7 +54,7 @@
 .inte-accordion__expandIcon svg {
   min-width: 2rem;
   transform: rotate(0deg);
-  transition: 200ms all linear;
+  transition: 0.4s all linear;
   transform-origin: center;
   display: flex;
 }
@@ -63,14 +63,14 @@
 }
 .inte-accordion__body {
   max-height: 0;
-  transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+  transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
   overflow: hidden;
 }
 .inte-accordion__bodyInner {
   padding: 0 1.6rem 1.6rem 1.6rem;
 }
 .inte-accordion--active .inte-accordion__body {
-  transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+  transition: max-height 0.5s cubic-bezier(1, 0, 1, 0);
   height: auto;
   max-height: 9999px;
 }

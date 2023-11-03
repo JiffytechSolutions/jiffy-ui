@@ -192,12 +192,26 @@
   padding: 1.8rem 2.4rem;
   overflow: auto;
 }
+
 .inte-virtualSelect__mobileHeader__wrapper {
   display: flex;
   justify-content: space-between;
   padding: 1.8rem 2.4rem 1.6rem 2.4rem;
   align-items: center;
   border-bottom: 1px solid var(--inte-G40);
+}
+.inte-virtualSelect__mobileHeader__wrapper
+  .inte-virtualSelect__closeBtn
+  .inte-btn__icon {
+  height: unset;
+  min-width: unset;
+}
+.inte-virtualSelect__mobileHeader__wrapper
+  .inte-virtualSelect__closeBtn
+  .inte-btn__icon
+  svg {
+  width: 2rem;
+  height: 2rem;
 }
 .inte-virtualSelect__slide {
   position: absolute;
