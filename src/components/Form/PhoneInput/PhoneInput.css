@@ -78,13 +78,8 @@
   padding: 0;
   border-right: 0.1rem solid var(--inte-G40);
 }
-.inte-phoneInput--searchable
-  .inte-phoneInput__countryList
-  .inte-phoneInput__country:nth-child(2) {
-  padding-top: 0.2rem;
-}
 .inte-phoneInput .inte-phoneInput__countryList .inte-phoneInput__country {
-  padding: 0.7rem 0.9rem;
+  padding: 1.2rem 0.9rem;
   cursor: pointer;
 }
 .inte-phoneInput .inte-phoneInput__countryList .inte-phoneInput__flag {
