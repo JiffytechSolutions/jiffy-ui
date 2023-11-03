@@ -25,6 +25,7 @@ import TextField from "../../TextField/TextField";
 import useBodyLock from "../../../../utilities/UseBodyLock";
 import "./Select.css";
 import "../../Form.css";
+
 const SimpleSelect = ({
   id,
   helpText,
@@ -45,6 +46,7 @@ const SimpleSelect = ({
   onChange = () => null,
   onInputChange = () => null,
   value,
+  heading,
 }: SelectI): JSX.Element => {
   const isMobile: boolean = useMobileDevice();
   const rID = useId();
@@ -652,18 +654,17 @@ const SimpleSelect = ({
         onTouchEnd={handleTouchEnd}
       >
         {isMobile && (
-          <div className="inte-select__mobileHeader__wrapper">
-            <div className="inte-select__slide"></div>
-            <h3 className="inte-select__mobile--heading">Select an Option</h3>
+          <div className="inte-popover__mobileHeading__wrapper">
+            <div className="inte-popover__handelBar" />
+            <h3 className="inte-popover__mobileHeading">{heading}</h3>
             <Button
-              icon={<X color="#1C2433" size={20} />}
+              icon={<X color="#1C2433" />}
               type="textButton"
               onClick={onClose}
-              size="extraThin"
-              customClass="inte-select__closeBtn"
             />
           </div>
         )}
+
         {isMobile && isSearchable && (
           <div className="inte-select__dropdown-textField">
             <TextField

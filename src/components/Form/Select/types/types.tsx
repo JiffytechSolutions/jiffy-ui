@@ -18,6 +18,7 @@ export type SelectI = {
   isVirtualSelect?: boolean;
   accessibilityLabel?: string;
   controlStates?: "success" | "warning" | "error";
+  heading?: string;
   customClass?: string;
 };
 export interface SimpleObjI {
@@ -28,5 +29,6 @@ export interface SimpleObjI {
 }
 export interface GroupedObjI {
   label: string;
+
   group: SimpleObjI[];
 }
