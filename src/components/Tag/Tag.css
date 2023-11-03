@@ -37,6 +37,9 @@
   background-color: var(--inte-G30);
   cursor: not-allowed;
 }
+.inte-tag--disabled .inte-tag__clear {
+  cursor: not-allowed;
+}
 .inte-tag__clear {
   border: 0;
   display: flex;

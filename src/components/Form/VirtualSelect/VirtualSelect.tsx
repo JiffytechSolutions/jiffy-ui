@@ -451,6 +451,7 @@ const VirtualSelect = ({
                 type="textButton"
                 onClick={onClose}
                 size="extraThin"
+                customClass="inte-virtualSelect__closeBtn"
               />
             </div>
           </>

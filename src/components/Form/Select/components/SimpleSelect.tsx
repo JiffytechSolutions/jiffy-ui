@@ -24,7 +24,7 @@ import useDelayUnmount from "../../../../utilities/useDelayTimeout";
 import TextField from "../../TextField/TextField";
 import useBodyLock from "../../../../utilities/UseBodyLock";
 import "./Select.css";
-import '../../Form.css'
+import "../../Form.css";
 const SimpleSelect = ({
   id,
   helpText,
@@ -509,7 +509,9 @@ const SimpleSelect = ({
           }}
           style={{
             background:
-              index === selectedGroupIndex && groupIndex === selectedIndex
+              !isMobile &&
+              index === selectedGroupIndex &&
+              groupIndex === selectedIndex
                 ? "var(--inte-G20)"
                 : "var(--inte-G0)",
           }}
@@ -589,7 +591,9 @@ const SimpleSelect = ({
         }}
         style={{
           backgroundColor:
-            selectedIndex === index ? "var(--inte-G20)" : "var(--inte-G0)",
+            !isMobile && selectedIndex === index
+              ? "var(--inte-G20)"
+              : "var(--inte-G0)",
         }}
         onMouseMove={() => {
           if (!item.isDisabled) {
@@ -648,18 +652,17 @@ const SimpleSelect = ({
         onTouchEnd={handleTouchEnd}
       >
         {isMobile && (
-          <>
-            <div className="inte-select__mobileHeader__wrapper">
-              <div className="inte-select__slide"></div>
-              <h3 className="inte-select__mobile--heading">Select an Option</h3>
-              <Button
-                icon={<X color="#1C2433" size={20} />}
-                type="textButton"
-                onClick={onClose}
-                size="extraThin"
-              />
-            </div>
-          </>
+          <div className="inte-select__mobileHeader__wrapper">
+            <div className="inte-select__slide"></div>
+            <h3 className="inte-select__mobile--heading">Select an Option</h3>
+            <Button
+              icon={<X color="#1C2433" size={20} />}
+              type="textButton"
+              onClick={onClose}
+              size="extraThin"
+              customClass="inte-select__closeBtn"
+            />
+          </div>
         )}
         {isMobile && isSearchable && (
           <div className="inte-select__dropdown-textField">
@@ -884,7 +887,7 @@ const SimpleSelect = ({
             "inte-formElement__singleSelect": !isMultiSelect,
           })}
         >
-          <>
+          <React.Fragment>
             {!isMultiSelect ? (
               <div className="inte-formElement__value inte-select__value">
                 {isSearchable && !isMobile && inputBoxHandler()}
@@ -937,7 +940,7 @@ const SimpleSelect = ({
             {(isMobile ? showDiv : dropdownActive) && (
               <PortalComponent>{portalDropDownList}</PortalComponent>
             )}
-          </>
+          </React.Fragment>
         </div>
       </div>
       {helpText && (
