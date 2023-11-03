@@ -182,6 +182,13 @@ export default {
       },
       defaultValue: false,
     },
+    heading: {
+      description: "This heading props is working on only mobile device",
+      control: {
+        type: "text",
+      },
+      defaultValue: "Enter proper heading name",
+    },
     customClass: {
       description: "Add any desired custom class on dropdown",
       control: {
@@ -302,6 +309,7 @@ const Template = ({ ...rest }) => {
         customClass={rest.customClass}
         accessibilityLabel={rest.accessibilityLabel}
         isCreatable={rest.isCreatable}
+        heading={rest.heading}
       />
     </Card>
   );

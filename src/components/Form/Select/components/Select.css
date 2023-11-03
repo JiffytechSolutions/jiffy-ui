@@ -145,7 +145,7 @@
 /* Select DropDown */
 .inte-select__dropdown,
 .inte-select__dropdown--onMobile {
-  z-index: var(--inte-Z-8);
+  z-index: var(--inte-Z-9);
   position: fixed;
 }
 .inte-select__dropdown > ul {
@@ -280,6 +280,10 @@
 .inte-modal + .inte-select__dropdown--onMobile + .inte-select__overlay {
   z-index: var(--inte-Z-9) !important;
 }
+.inte-mobileDevice--in + .inte-select__overlay,
+.inte-mobileDevice--out + .inte-select__overlay {
+  z-index: var(--inte-Z-8) !important;
+}
 /* Fix and Patches End */
 /* mobile device */
 .inte-select__mobileDevice {
@@ -298,40 +302,7 @@
   margin: 0;
   overflow: auto;
 }
-.inte-select__mobileHeader__wrapper {
-  display: flex;
-  justify-content: space-between;
-  padding: 1.8rem 2.4rem 1.6rem 2.4rem;
-  align-items: center;
-  border-bottom: 1px solid var(--inte-G50);
-}
-.inte-select__slide {
-  position: absolute;
-  top: -1.5rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-  width: 7.8rem;
-  background-color: var(--inte-G40);
-  height: 0.4rem;
-  border-radius: 2.2rem;
-}
-.inte-select__mobile--heading {
-  font-size: 1.8rem;
-  line-height: 2.4rem;
-  font-weight: 600;
-  width: calc(100% - 4.4rem);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.inte-select__mobileHeader__wrapper .inte-select__closeBtn .inte-btn__icon {
-  height: unset;
-  min-width: unset;
-}
-.inte-select__mobileHeader__wrapper .inte-select__closeBtn .inte-btn__icon svg {
-  width: 2rem;
-  height: 2rem;
-}
+
 .inte-select__dropdown-textField {
   padding: 1.8rem 2.4rem 0rem 2.4rem;
 }

@@ -121,7 +121,11 @@ const Template = ({ ...rest }: any) => {
           searchIcons("");
         }}
         isClearable
-        helpText={"Showing number of icons is " + "  " + data.length}
+        helpText={
+          data.length > 0
+            ? "Showing number of icons is " + "  " + data.length
+            : ""
+        }
       />
 
       <Card>
@@ -136,7 +140,7 @@ const Template = ({ ...rest }: any) => {
             </VirtualScroll>
           ) : (
             <div className="inte__icons-notFound">
-              No icon found for &ldquo;{input}&rdquo;
+              Sorry, no icon found for &ldquo;{input}&rdquo;
             </div>
           )}
         </div>

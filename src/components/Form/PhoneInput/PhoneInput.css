@@ -1,5 +1,5 @@
 .inte-phoneInput {
-  padding: 9px 0 8px 0;
+  padding: 1.2rem 1.2rem 1.2rem 0;
   position: relative;
   border: 0.1rem solid var(--inte-G40);
   border-radius: var(--radius-rounded-6);
@@ -25,7 +25,7 @@
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   color: var(--inte-G800);
-  padding-left: 4.8rem;
+  padding-left: 6rem;
   margin-left: 0;
   line-height: 2.5rem;
   width: 100%;
@@ -40,7 +40,7 @@
   z-index: 1;
   list-style: none;
   position: absolute;
-  padding: 0;
+  padding: 1.2rem;
   background-color: var(--inte-G0);
   border-radius: var(--radius-rounded-6);
   border: 0.1rem solid var(--inte-G40);
@@ -75,11 +75,11 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  padding: 0;
+  padding-right: 1rem;
   border-right: 0.1rem solid var(--inte-G40);
 }
 .inte-phoneInput .inte-phoneInput__countryList .inte-phoneInput__country {
-  padding: 1.2rem 0.9rem;
+  padding: 1rem 1.2rem;
   cursor: pointer;
 }
 .inte-phoneInput .inte-phoneInput__countryList .inte-phoneInput__flag {
@@ -94,7 +94,7 @@
   position: relative;
   width: 3.8rem;
   height: 100%;
-  padding: 0 0 0 0.8rem;
+  padding: 1.2rem 1.2rem 1.2rem 1.2rem;
   cursor: pointer;
 }
 .inte-phoneInput
