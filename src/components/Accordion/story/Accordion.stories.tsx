@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Accordion from "../Accordion";
-import { ComponentStory, ComponentMeta } from "@storybook/react";
+import { ComponentMeta } from "@storybook/react";
 import { Card } from "../../Card";
 import { Badge, Text } from "../..";
 import { Github, Home, User } from "../../../storybook/Foundation/Icons/Icons";
 import Thumbnail from "../../Thumbnail/Thumbnail";
 import AccordionDoc from "../Document/AccordionDoc";
+import * as Icon from "../../../storybook/Foundation/Icons/Icons";
+const allIcons: any = { ...Icon };
 
 export default {
   title: "Components/Behaviour/Accordion",
@@ -32,20 +34,24 @@ export default {
     title: {
       description: "Accordion Title",
       control: {
-        disable: true,
+        type: "text",
       },
+      defaultValue: "Accordion Title",
     },
     subTitle: {
       description: "Accordion sub-title",
       control: {
-        disable: true,
+        type: "text",
       },
+      defaultValue: "Accordion Sub-title",
     },
     icon: {
       description: "Provide icon that is to be set before title",
       control: {
-        disable: true,
+        type: "select",
+        options: Object.keys(allIcons),
       },
+      defaultValue: "Home",
     },
     badge: {
       description: "Provide badge that is to be set next to title",
@@ -109,7 +115,50 @@ const accordionArr = [
   },
 ];
 
-const Template: ComponentStory<typeof Accordion> = (args) => {
+const Template = ({ ...args }) => {
+  const accordionData = [
+    {
+      title: args.title,
+      subTitle: args.subTitle,
+      icon: allIcons[args.icon]({
+        size: 20,
+      }),
+      badge: (
+        <Badge variant="accent" type="success" children="Active" size="small" />
+      ),
+      answer:
+        "1 Tenetur ullam rerum ad iusto possimus sequi mollitia dolore sunt quam praesentium. Tenetur ullam rerum ad iusto possimus sequi mollitia dolore sunt quam praesentium.Tenetur ullam rerum ad iusto possimus sequi mollitia dolore sunt quam praesentium.",
+    },
+    {
+      title: args.title,
+      subTitle: args.subTitle,
+      icon: allIcons[args.icon]({
+        size: 20,
+      }),
+      badge: (
+        <Badge variant="accent" type="error" children="Error" size="small" />
+      ),
+      answer:
+        "2 Tenetur ullam rerum ad iusto possimus sequi mollitia dolore sunt quam praesentium. Tenetur ullam rerum ad iusto possimus sequi mollitia dolore sunt quam praesentium.Tenetur ullam rerum ad iusto possimus sequi mollitia dolore sunt quam praesentium.",
+    },
+    {
+      title: args.title,
+      subTitle: args.subTitle,
+      icon: allIcons[args.icon]({
+        size: 20,
+      }),
+      badge: (
+        <Badge
+          variant="accent"
+          type="warning"
+          children="Warning"
+          size="small"
+        />
+      ),
+      answer:
+        "3 Tenetur ullam rerum ad iusto possimus sequi mollitia dolore sunt quam praesentium. Tenetur ullam rerum ad iusto possimus sequi mollitia dolore sunt quam praesentium.Tenetur ullam rerum ad iusto possimus sequi mollitia dolore sunt quam praesentium.",
+    },
+  ];
   const [clicked, setClicked] = useState<number>(-1);
   const handleToggle = (index: number) => {
     if (clicked === index) {
@@ -118,25 +167,24 @@ const Template: ComponentStory<typeof Accordion> = (args) => {
       setClicked(index);
     }
   };
-
   return (
-    <>
-      <Card>
-        {accordionArr.map((items, index: number) => {
-          return (
-            <Accordion
-              title={items.title}
-              key={index}
-              isActive={clicked == index}
-              onClick={() => handleToggle(index)}
-              customClass={args.customClass}
-            >
-              <Text textcolor="secondary">{items.answer}</Text>
-            </Accordion>
-          );
-        })}
-      </Card>
-    </>
+    <Card>
+      {accordionData.map((items, index: number) => {
+        return (
+          <Accordion
+            title={items.title}
+            subTitle={items.subTitle}
+            icon={items.icon}
+            key={index}
+            isActive={clicked == index}
+            onClick={() => handleToggle(index)}
+            customClass={args.customClass}
+          >
+            <Text textcolor="secondary">{items.answer}</Text>
+          </Accordion>
+        );
+      })}
+    </Card>
   );
 };
 export const Primary = Template.bind({});
@@ -337,6 +385,7 @@ Accordion_with_all_features.decorators = [
     );
   },
 ];
+
 export function Documentation() {
   return <AccordionDoc />;
 }
