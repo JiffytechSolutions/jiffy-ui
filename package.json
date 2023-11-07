@@ -1,6 +1,6 @@
 {
     "name": "@cedcommerce-integration/ounce",
-    "version": "3.0.0",
+    "version": "3.0.1",
     "description": "Cedcommerce Ounce UI",
     "author": "Anshuman Singh",
     "license": "MIT",
@@ -18,7 +18,8 @@
         "eject": "react-scripts eject",
         "storybook": "start-storybook -p 6006",
         "build-storybook": "build-storybook",
-        "changelog": "cat CHANGELOG.md"
+        "changelog": "cat CHANGELOG.md",
+        "release": "standard-version"
     },
     "devDependencies": {
         "@babel/cli": "^7.12.10",
