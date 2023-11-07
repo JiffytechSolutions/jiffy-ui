@@ -338,6 +338,7 @@
 /* Button With Only icon */
 .inte-btn.inte-btn--onlyIcon {
   justify-content: center !important;
+  min-width: auto;
 }
 
 .inte-btn--onlyIcon.inte-btn--large {
