@@ -144,7 +144,11 @@ const CalendarHeader = ({
                   onClick={() => onPrevMonth(calendarDate)}
                 />
               </div>
-              <div className='inte-calendarHeader__showDetail'>
+              <div className={getClassNames({
+                'inte-calendarHeader__showDetail' : true,
+                'inte-calendarHeader__showDetail--range' : isRange,
+                "inte-calendarHeader__showDetail--hasSecondCalendar" : isRange && !isMobile
+              })}>
                 {
                   !isRange ? (
                     <>

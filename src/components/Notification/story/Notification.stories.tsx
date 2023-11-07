@@ -41,6 +41,12 @@ export default {
       defaultValue:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut.",
     },
+    badge: {
+      description: "Set the Badge ",
+      control: {
+          disable: true
+      },
+  },
     date: {
       description: "Set the Timeline",
       control: {
@@ -61,7 +67,13 @@ export default {
 const Template = ({ ...rest }: any) => {
   return (
     <Card title="Notification">
-      <Notification {...rest} />
+      <Notification {...rest} 
+      badge={{
+        children: "New",
+        type: "success",
+        variant: 'accent'
+    }}
+      />
     </Card>
   );
 };
@@ -123,7 +135,5 @@ NotificationWithDate.decorators = [
 ];
 
 export function Documentation() {
-  return (
-    <NotificationDoc />
-  );
+  return <NotificationDoc />;
 }

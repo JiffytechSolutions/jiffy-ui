@@ -185,6 +185,7 @@ const Switcher: React.FC<SwitcherI> = ({
           setIsFocused(true);
         }}
         onBlur={() => {
+          if (isMobile) return;
           setIsFocused(false);
           setIsOpen(false);
         }}

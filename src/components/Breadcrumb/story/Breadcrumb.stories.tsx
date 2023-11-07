@@ -1,7 +1,6 @@
 import React from "react";
-import Breadcrumb from "../Breadcrumb";
+import Breadcrumb,{ObjI} from "../Breadcrumb";
 import { Card } from "../..";
-import { ObjI } from "../Breadcrumb";
 import BreadcrumbDoc from "../Document/BreadcrumbDoc";
 export default {
   title: "Components/Actions/Breadcrumb",

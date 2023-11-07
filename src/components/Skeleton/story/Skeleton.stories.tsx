@@ -43,6 +43,13 @@ export default {
       },
       defaultValue: "50px",
     },
+    customClass: {
+      description: "set customClass ",
+      control: {
+        type: "text",
+      },
+      defaultValue:"",
+    },
     rounded: {
       description: "Set It rounded (Works With Custom Type Only width equal height and Width for proper circle)",
       control: {
@@ -62,6 +69,7 @@ const Template = ({ ...rest }) => {
         width={rest.width}
         type={rest.type}
         rounded={rest.rounded}
+        customClass={rest.customClass}
       />
     </Card>
   );
