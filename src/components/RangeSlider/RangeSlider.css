@@ -96,6 +96,9 @@
 .inte-rangeSlider--disable,
 .inte-rangeSlider.inte-rangeSlider--disable {
   cursor: not-allowed;
+  -webkit-user-select: none; /* Safari */
+  -ms-user-select: none; /* IE 10 and IE 11 */
+  user-select: none; /* Standard syntax */
 }
 .inte-rangeSlider--disable .inte-doubleRange__thumb,
 .inte-rangeSlider--disable .inte-singleRange__thumb {

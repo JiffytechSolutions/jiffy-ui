@@ -30,6 +30,7 @@ const RangeSlider: FC<RangeSliderI> = ({
   customClass = "",
   toolTip = false,
 }) => {
+  const [stepValue, setStepValue] = useState(step);
   const [singleRangeValue, setSingleRangeValue] = useState(value);
   const [isTouchActive, setIsTouchActive] = useState(false);
   const singleRangeRef = useRef<HTMLDivElement>(null);
@@ -38,9 +39,8 @@ const RangeSlider: FC<RangeSliderI> = ({
   const [rightValue, setRightValue] = useState(value[1]);
   const [isDragging, setIsDragging] = useState(false);
   const isMobile = useMobileDevice();
-  const [draggedThumb, setDraggedThumb] = useState<
-    "leftThumb" | "rightThumb" | null
-  >(null);
+  const [draggedThumb, setDraggedThumb] =
+    useState<"leftThumb" | "rightThumb" | null>(null);
   const [tooltip, setTooltip] = useState({ dir: "", display: "" });
   const rId = useId();
 
@@ -51,7 +51,8 @@ const RangeSlider: FC<RangeSliderI> = ({
       clientX - (singleRangeRef.current?.getBoundingClientRect().left || 0);
     const percentage = clickPosition / sliderWidth;
     const range = max - min;
-    let newValue = min + Math.round((percentage * range) / step) * step;
+    let newValue =
+      min + Math.round((percentage * range) / stepValue) * stepValue;
     newValue = Math.min(Math.max(newValue, min), max); // Clamp the value between min and max
     setSingleRangeValue(newValue);
     onChange(newValue);
@@ -143,9 +144,10 @@ const RangeSlider: FC<RangeSliderI> = ({
       let value =
         min +
         Math.round(
-          (((currentPosition - minPosition) / sliderWidth) * (max - min)) / step
+          (((currentPosition - minPosition) / sliderWidth) * (max - min)) /
+            stepValue
         ) *
-          step;
+          stepValue;
       value = value < min ? min : value > max ? max : value;
 
       if (draggedThumb === "leftThumb") {
@@ -211,6 +213,10 @@ const RangeSlider: FC<RangeSliderI> = ({
       leftValue > rightValue ? rightPercentage : leftPercentage;
     return [calculatedWidth, calculatedLeft];
   }, [leftValue, rightValue, min, max]);
+
+  useEffect(() => {
+    step > 0 ? setStepValue(step) : setStepValue(1);
+  }, [step]);
 
   return (
     <div
