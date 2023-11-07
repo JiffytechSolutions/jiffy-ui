@@ -10,6 +10,7 @@ import TimePicker, { TimeI, formatTimeObj } from "../TimePicker/TimePicker";
 import { Plus, X } from "../../../../storybook/Foundation/Icons/Icons";
 import Text from "../../../Text/Text";
 import "./DatePicker.css";
+import getClassNames from "../../../../utilities/getClassnames";
 export interface DatePickerI {
   defaultOpenDate?: Date;
   selectedDate?: Date;
@@ -187,7 +188,10 @@ const DatePicker = ({
   }, [selectedTime, isOpen]);
 
   return (
-    <div className="inte-textField--forDatePicker">
+    <div className={getClassNames({
+      "inte-textField--forDatePicker" : true,
+      "inte-textField--forDatePicker--hasOnlyIcon" : isOnlyIcon
+    })}>
       {label &&
         (typeof label === "string" ? (
           <Text as="label" type="T-7" customClass="inte-datePicker__label">

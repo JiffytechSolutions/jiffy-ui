@@ -259,7 +259,6 @@ Card_with_media.decorators = [
     >
       <FormElement>
         <BodyFun />
-
         <BodyFun />
       </FormElement>
     </Card>

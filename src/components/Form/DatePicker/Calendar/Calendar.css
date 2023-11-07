@@ -1,8 +1,9 @@
 .inte-calender {
-  padding: 0.8rem;
+  padding: 1.2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  min-width: 35rem;
   width: 100%;
 }
 .inte-calender > table {

@@ -1,11 +1,11 @@
-.inte-dataTable--container {
+.inte-dataTable__container {
   border: 0.1rem solid var(--inte-G40);
   border-radius: 0.8rem;
   background-color: var(--inte-G0);
   overflow: hidden;
 }
 
-.inte-dataTable--container:has(.inte-dataTable__fixHeader--handler) {
+.inte-dataTable__container--hasFixedHeader {
   overflow: unset;
 }
 
@@ -165,7 +165,7 @@
   padding: 1.6rem;
   background-color: var(--inte-P20);
 }
-.inte-dataTable__row--Fixed .inte-dataTable--container {
+.inte-dataTable__row--Fixed .inte-dataTable__container {
   border: none;
 }
 

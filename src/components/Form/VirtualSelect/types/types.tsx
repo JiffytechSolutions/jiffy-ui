@@ -19,7 +19,5 @@ export type VirtualSelectI = {
   isCreatable?: boolean;
   accessibilityLabel?: string;
   controlStates?: "success" | "warning" | "error";
-  tabIndex?: number;
   customClass?: string;
-  customRef?: React.RefObject<HTMLDivElement>;
 };

@@ -13,6 +13,7 @@ import {
   Plus,
   X,
 } from "../../../../storybook/Foundation/Icons/Icons";
+import getClassNames from "../../../../utilities/getClassnames";
 
 export interface RangePickerI {
   selectedDates?: (Date | undefined)[];
@@ -353,7 +354,10 @@ const RangePicker = ({
   );
 
   return (
-    <div className="inte-textField--forDatePicker">
+    <div className={getClassNames({
+      "inte-textField--forDatePicker":true,
+      "inte-textField--forDatePicker--hasOnlyIcon" : isOnlyIcon
+    })}>
       {label && <div>{label}</div>}
       <Popover
         heading={

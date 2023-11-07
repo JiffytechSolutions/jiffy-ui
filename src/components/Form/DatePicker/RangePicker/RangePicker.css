@@ -5,15 +5,6 @@
   max-height: unset;
 }
 
-.inte-rangePicker--popover:has(.inte-calendar__month , .inte-calendar__year) {
-  width: 35rem;
-}
-
-.inte-rangePicker--popover:has(.inte-calendar__month , .inte-calendar__year) .inte-rangePicker {
-  width: 100%;
-}
-
-
 .inte-rangePicker__calanderContainer {
   display: flex;
   gap: 2rem;
@@ -41,12 +32,14 @@
   .inte-calendar__cell--inHoverRange:not(.inte-calendar__cell--inSelectedRange , .inte-calendar__cell--selected--end , .inte-calendar__cell--selected--start):hover
   .inte-calendar__cell__inner {
   border-right: 0.1rem dashed var(--inte-P900);
+  border-radius: unset;
 }
 
 .inte-rangePicker--control-start
   .inte-calendar__cell--inHoverRange:not(.inte-calendar__cell--inSelectedRange , .inte-calendar__cell--selected--end , .inte-calendar__cell--selected--start):hover
   .inte-calendar__cell__inner {
   border-left: 0.1rem dashed var(--inte-P900);
+  border-radius: unset;
 }
 
 .inte-rangePicker__dateShow {

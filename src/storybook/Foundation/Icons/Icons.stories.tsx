@@ -107,10 +107,11 @@ const Template = ({ ...rest }: any) => {
       </div>
     ));
   });
+  console.log(data);
   return (
     <>
       <TextField
-        placeHolder={`Search from ${icons.length} icons`}
+        placeHolder={`Search by icon name`}
         customClass="inte-icon-search-bar"
         prefix={<Search size="20" color="rgb(195, 197, 201)" />}
         value={input}
@@ -120,7 +121,13 @@ const Template = ({ ...rest }: any) => {
           searchIcons("");
         }}
         isClearable
+        helpText={
+          data.length > 0
+            ? "Showing number of icons is " + "  " + data.length
+            : ""
+        }
       />
+
       <Card>
         <div className="inte-icons__wrapper">
           {data.length !== 0 ? (
@@ -132,7 +139,9 @@ const Template = ({ ...rest }: any) => {
               {dataItemsIcons}
             </VirtualScroll>
           ) : (
-            <div className="inte__icons-notFound">No icon found</div>
+            <div className="inte__icons-notFound">
+              Sorry, no icon found for &ldquo;{input}&rdquo;
+            </div>
           )}
         </div>
       </Card>

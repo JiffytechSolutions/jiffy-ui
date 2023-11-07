@@ -2,9 +2,19 @@ import React from "react";
 import { Card, CopyClipboard, Text } from "../../../components";
 import { Colors } from "./Colors";
 import "../../../storybook.css";
+import useToast from "../../../components/Toast/useToast";
+import AppProvider from "../../../utilities/context/AppContext";
 
 export default {
   title: "Foundation/Colors",
+
+  decorators: [
+    (Story: any) => (
+      <AppProvider>
+        <Story />
+      </AppProvider>
+    ),
+  ],
   component: Colors,
   parameters: {
     docs: {},
@@ -16,10 +26,12 @@ export default {
   },
 };
 
-const Template = ({ }) => {
+const Template = ({}) => {
+  const useToasts = useToast();
+
   return (
     <Card>
-      {Object.keys(Colors)?.map((color: any, index: number) => {
+      {Object.keys(Colors)?.map((colors: any, index: number) => {
         return (
           <div key={index} className="story-color-documentation">
             <Text
@@ -28,21 +40,20 @@ const Template = ({ }) => {
               fontweight="bolder"
               customClass="story-color-name"
             >
-              {color}
+              {colors}
             </Text>
-            {Colors[color]?.map((color: any, index: number) => {
+
+            {Colors[colors]?.map((color: any, index: number) => {
               return (
                 <div key={index} className="story-color-items">
                   <div className="story-color-box">
                     <div
-                      className={`story-color-aria ${"story-color-" + color.colorName
-                        }`}
+                      className={`story-color-aria ${
+                        "story-color-" + color.colorName
+                      }`}
                       style={{ backgroundColor: color.colorHex }}
                     ></div>
-                    <Text
-                      customClass="story-color-Name"
-                      fontweight="bolder"
-                    >
+                    <Text customClass="story-color-Name" fontweight="bolder">
                       {color.colorName}
                     </Text>
                   </div>
@@ -51,21 +62,42 @@ const Template = ({ }) => {
                       timeout={1000}
                       label={color.colorHex}
                       value={color.colorHex}
-                      align={"fill"}
+                      align="fill"
+                      onClick={() =>
+                        useToasts({
+                          message: "Copied" + "  " + color.colorHex,
+                          type: "success",
+                          timeout: 2000,
+                        })
+                      }
                     />
 
                     <CopyClipboard
                       timeout={1000}
                       label={color.colorRgba}
                       value={color.colorRgba}
-                      align={"fill"}
+                      align="fill"
+                      onClick={() =>
+                        useToasts({
+                          message: "Copied" + "  " + color.colorRgba,
+                          type: "success",
+                          timeout: 2000,
+                        })
+                      }
                     />
 
                     <CopyClipboard
                       timeout={1000}
                       label={color.colorHsl}
                       value={color.colorHsl}
-                      align={"fill"}
+                      align="fill"
+                      onClick={() =>
+                        useToasts({
+                          message: "Copied" + "  " + color.colorHsl,
+                          type: "success",
+                          timeout: 2000,
+                        })
+                      }
                     />
                   </div>
                 </div>
