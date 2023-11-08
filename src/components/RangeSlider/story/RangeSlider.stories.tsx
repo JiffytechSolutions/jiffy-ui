@@ -36,7 +36,7 @@ export default {
     },
     step: {
       description:
-        "The slider can step through values. Must greater than 0, and be divided by (max - min) . When marks no null, step can be null",
+        "The slider can step through values. Must greater than 0 . In case pass a value 0 then return default value 1, and be divided by (max - min) . When marks no null, step can be null",
       control: {
         type: "number",
       },

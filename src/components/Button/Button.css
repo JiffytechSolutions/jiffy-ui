@@ -18,6 +18,7 @@
   display: flex;
   overflow: hidden;
   align-items: center;
+  min-width: fit-content;
 }
 
 .inte-btn .inte-btn__text {
@@ -337,6 +338,7 @@
 /* Button With Only icon */
 .inte-btn.inte-btn--onlyIcon {
   justify-content: center !important;
+  min-width: auto;
 }
 
 .inte-btn--onlyIcon.inte-btn--large {
