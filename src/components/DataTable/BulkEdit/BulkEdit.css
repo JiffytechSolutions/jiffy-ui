@@ -1,0 +1,30 @@
+.inte-dataTable--bulkEdit .inte-dataTable__checkbox .inte-checkbox {
+    display: flex;
+    align-items: center;
+} 
+
+.inte-dataTable--bulkEdit .inte-dataTable__cell {
+    padding: 0.5rem 1rem;
+    font-size: 1.4rem;
+    line-height: 2rem;
+    color: #1C2433;
+}
+
+.inte-dataTable--bulkEdit .inte-dataTable__cell:not(:first-child) {
+    border-left: 0.1rem solid var(--inte-G40);
+}
+
+.inte-dataTable--bulkEdit .inte-dataTable__cell input ,
+.inte-dataTable--bulkEdit .inte-formElement__control{
+    border:none
+}
+
+.inte-dataTable--bulkEdit .inte-dataTable__cell input:focus ,
+.inte-dataTable--bulkEdit .inte-formElement--select-focused  .inte-formElement__control{
+    border:0.1rem solid var(--inte-P900);
+    border-radius: 0;
+}
+
+.inte-dataTable--bulkEdit th.inte-dataTable__cell::before {
+    content: unset !important;
+}
