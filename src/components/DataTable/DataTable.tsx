@@ -18,7 +18,7 @@ export interface columnI {
   | "center"
   | "justify"
   | "match-parent";
-  fixed?: string;
+  fixed?: "left" | 'right';
   sortable?: {
     onSort?: (clickedColumn: columnI, order: 'asec' | 'desc') => void;
     comparator?: (a: any, b: any, order: any) => number;
@@ -65,6 +65,7 @@ export interface bulkEditRowI {
   editior?: React.ReactNode;
   colSpan?: number;
   key : string
+  fixed?: "left" | 'right';
 }
 
 const getCellByClassName = (arr: any, className: string) => {
@@ -267,6 +268,7 @@ const DataTable = ({
       }
     }
   };
+  
   const createFixedCells = (
     cells: (HTMLTableCellElement | null)[],
     pos: "left" | "right",
@@ -391,7 +393,8 @@ const DataTable = ({
 
   const makeDataTableHeaderRows = (columns: columnI[]) => {
     let columnNum = 0,
-      rowNum = 0;
+      rowNum = 0,
+      bulkEditColNum = 0
     return (
       <>
         <tr
@@ -514,13 +517,12 @@ const DataTable = ({
             ></th>
           ) : null}
         </tr>
-
         {
           !!bulkEditRow && (
             <tr className="inte-dataTable__bulkEditRow">
               {expandable && (
                 <th
-                  ref={(cell) => makeCellRefsArray(rowNum+1, columnNum++, cell)}
+                  ref={(cell) => makeCellRefsArray(rowNum+1, bulkEditColNum++, cell)}
                   className={getClassNames({
                     "inte-dataTable__cell": true,
                     "inte-dataTable__cell--expand": true,
@@ -531,7 +533,7 @@ const DataTable = ({
               )}
               {rowSelection && (
                 <th
-                  ref={(cell) => makeCellRefsArray(rowNum+1, columnNum++, cell)}
+                  ref={(cell) => makeCellRefsArray(rowNum+1, bulkEditColNum++, cell)}
                   className={getClassNames({
                     "inte-dataTable__checkbox": true,
                     "inte-dataTable__cell": true,
@@ -549,9 +551,13 @@ const DataTable = ({
               {
                 bulkEditRow.map(item => (
                   <th
-                    ref={(cell) => makeCellRefsArray(rowNum+1, columnNum++, cell)}
+                    ref={(cell) => makeCellRefsArray(rowNum+1, bulkEditColNum++, cell)}
                     key={item.key}
-                    className="inte-dataTable__cell inte-dataTable__cell--bulkEditCell"
+                    className={getClassNames({
+                      "inte-dataTable__cell inte-dataTable__cell--bulkEditCell" : true,
+                      [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]: item.fixed,
+
+                    })}
                     colSpan={item.colSpan ?? 1}
                   >
                     {
@@ -560,6 +566,14 @@ const DataTable = ({
                   </th>
                 ))
               }
+              {
+                Array(columns.length - bulkEditRow.length).fill(0).map(item => 
+                <th 
+                  colSpan={0}
+                  ref={(cell) => makeCellRefsArray(rowNum+1, bulkEditColNum++, cell)}
+                ></th>)
+              }
+
             </tr>
           )
         }

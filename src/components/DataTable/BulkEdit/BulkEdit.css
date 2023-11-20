@@ -28,3 +28,8 @@
 .inte-dataTable--bulkEdit th.inte-dataTable__cell::before {
     content: unset !important;
 }
+
+.inte-dataTable__bulkEditRow th {
+    background-color: #F6F6F7;
+    padding: 1rem 1rem!important;
+}

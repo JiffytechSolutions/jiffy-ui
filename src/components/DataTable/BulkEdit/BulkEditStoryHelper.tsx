@@ -349,6 +349,7 @@ const BulkEditStoryHelper = ({...rest}) => {
     ]
 
     const handelSelectChange = (newValue: selectedRowKey) => {
+        console.log(newValue)
         setSelectedRowKey(newValue)
     }
 
@@ -364,7 +365,8 @@ const BulkEditStoryHelper = ({...rest}) => {
         {
             // colSpan : 2,
             editior : "Edit this row to update selected products",
-            key : "Product"
+            key : "Product",
+            fixed : 'left'
         },
         {
             colSpan : 18,

@@ -656,7 +656,7 @@ const TemplateDataTableStory = ({ ...rest }) => {
     setSelectValue(prev => ({ ...prev, [ind]: value }))
   }
 
-  const TemplateColumnsT = [{
+  const TemplateColumnsT : columnI[] = [{
     title: "Sr No",
     key: "key",
     dataIndex: 'key',
