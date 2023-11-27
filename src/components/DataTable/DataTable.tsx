@@ -437,7 +437,7 @@ const DataTable = ({
                 ref={(cell) => makeCellRefsArray(rowNum, columnNum++, cell)}
                 key={ind}
                 style={{
-                  width: item.width ? item.width / 10 + "rem" : "auto",
+                  // width: item.width ? item.width / 10 + "rem" : "auto",
                   textAlign: item.align ? item.align : "left",
                 }}
                 className={getClassNames({
@@ -804,11 +804,10 @@ const DataTable = ({
         [customClass as string]: customClass
       })}
       key={data.length}
-      style={{ width: scrollX ? scrollX / 10 + "rem" : "auto" }}
     >
       {hasFixedHeader && hasHeader && (
         <div className="inte-dataTable__fixHeader--handler">
-          <table className="inte-dataTable" style={{ tableLayout: tableLayout ? tableLayout : "fixed" }}>
+          <table className="inte-dataTable" style={{ tableLayout: tableLayout ? tableLayout : "fixed" ,  width : scrollX ? scrollX / 10 + "rem" : "auto" }}>
             <colgroup ref={fixHeaderRef}>
               {Array(
                 columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
@@ -847,8 +846,9 @@ const DataTable = ({
       >
         <table className={`inte-dataTable`}
           style={{
-            maxWidth: (hasFixedHeader && hasHeader && scrollY) ? `calc(100% - ${scrollBarWidth})` : "",
-            tableLayout: tableLayout ? tableLayout : hasFixedHeader ? "fixed" : "auto"
+            // maxWidth: (hasFixedHeader && hasHeader && scrollY) ? `calc(100% - ${scrollBarWidth})` : "",
+            tableLayout: tableLayout ? tableLayout : hasFixedHeader ? "fixed" : "auto",
+            width : scrollX ? scrollX / 10 + "rem" : "auto" 
           }}
         >
           <colgroup ref={tableColRef}>

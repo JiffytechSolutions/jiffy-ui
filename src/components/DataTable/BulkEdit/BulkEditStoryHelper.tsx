@@ -4,7 +4,7 @@ import { Card } from '../../Card';
 import DataTable, { bulkEditRowI, columnI } from '../DataTable';
 import Button from '../../Button/Button';
 import './BulkEdit.css'
-import data from './Data';
+import data, { DataI } from './Data';
 import { FlexChild, FlexLayout } from '../../FlexLayout';
 import productImage from "./asset/Image.png"
 import AspectRatio from '../../AspectRatio/AspectRatio';
@@ -202,9 +202,62 @@ type selectedRowKey = {
     [key : string] : boolean | "indeterminate"
 }
 
+type simpleObj = { [key : string]:  string }
+
 const BulkEditStoryHelper = ({...rest}) => {
 
     const [selectedRowKey , setSelectedRowKey] = useState<selectedRowKey>({})
+
+    const [currData , setCurrData] = useState(data)
+
+    const [bulkEditorValue , setBulkEditorValue] = useState<simpleObj>({
+      "Handling Time" : "",
+      "Country Of Origin" : "",
+    })
+
+    const originCountries = [
+      {
+        label : "Japan",
+        value : "Japan"
+      },
+      {
+        label : "USA",
+        value : "USA"
+      },
+      {
+        label : "South Korea",
+        value : "South Korea"
+      },
+      {
+        label : "Taiwan",
+        value : "Taiwan"
+      },
+      {
+        label : "China",
+        value : "China"
+      }
+    ]
+
+    const changePairValue = (item : DataI , index:string , value : string) => {
+      item[index as keyof DataI] = value
+      return item
+    }
+
+    const handelDataChange = (value:string , key : string , index : string) => {
+      setCurrData(prev => prev.map(item => item.key === key ? changePairValue(item , index , value) : item))
+    }
+
+    const handelBulkEditChange = (value : string , index : string) => {
+      setCurrData(prev => prev.map(item => {
+        // if(selectedRowKey[item.key])  
+        item[index as keyof DataI] = value
+        return item
+      }))
+      setBulkEditorValue(prev => {
+        prev[index as string] = value
+        return prev
+      })
+    }
 
     const columns : columnI[] = [
         {
@@ -235,18 +288,21 @@ const BulkEditStoryHelper = ({...rest}) => {
           },
           {
             key: "4",
-            width : 200,
+            width : 150,
             // align : "center",
             dataIndex: "Description",
             title: "Description",
-            render : (item : string) => <Button halign='center' isFullWidth type='textButton'>View Description</Button>
+            render : (item : string) => <Button halign='center' isFullWidth type='textButton'>View</Button>
           },
           {
             key: "5",
             width : 200,
             // align : "center",
-            dataIndex: "Handling Time",
+            // dataIndex: "Handling Time",
             title: "Handling Time",
+            render : ((item : DataI) => 
+              <TextField min={1} value={item['Handling Time']} onChange={(newValue) => handelDataChange(newValue , item.key , "Handling Time")}/>
+            )
           },
           {
             key: "6",
@@ -280,8 +336,9 @@ const BulkEditStoryHelper = ({...rest}) => {
             key: "10",
             width : 200,
             // align : "center",
-            dataIndex: "Country Of Origin",
+            // dataIndex: "Country Of Origin",
             title: "Country Of Origin",
+            render :(item:DataI) => <Select options={originCountries} value={item['Country Of Origin']} onChange={(newValue:string) => handelDataChange(newValue ,item.key , "Country Of Origin" )} />,
           },
           {
             key: "11",
@@ -369,23 +426,52 @@ const BulkEditStoryHelper = ({...rest}) => {
             fixed : 'left'
         },
         {
-            colSpan : 18,
-            key : "Product2",
-            editior : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi distinctio doloremque voluptate, natus cumque deleniti eius nihil explicabo asperiores voluptatem?"
-        }
+          colSpan : 2,
+          editior : "",
+          key : "Product1",
+        },
+        {
+          editior : <Button type='outlined' halign='center' isFullWidth>Edit</Button>,
+          key : "Product2",
+        },
+        {
+          editior : <TextField value={bulkEditorValue['Handling Time']} onChange={((newValue) => handelBulkEditChange(newValue , "Handling Time"))} />,
+          key : "Product3",
+        },
+        {
+          // colSpan : 2,
+          editior : "",
+          key : "Product4",
+        },
+        {
+          colSpan : 3,
+          editior : "",
+          key : "Product5",
+        },
+        {
+          // colSpan : 2,
+          editior : <Select options={originCountries} value={bulkEditorValue["Origin Of Country"]}  onChange={(newValue) => handelBulkEditChange(newValue , "Country Of Origin")}/>,
+          key : "Product1",
+        },
+        // {
+        //     colSpan : 18,
+        //     key : "Product2",
+        //     editior : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi distinctio doloremque voluptate, natus cumque deleniti eius nihil explicabo asperiores voluptatem?"
+        // }
     ]
 
 
     return <DataTable 
         hasFixedHeader
         bulkEditRow={bulkEditRow}
-        rowSelection={{
-            selectedRowKeys : selectedRowKey,
-            onSelectChange : handelSelectChange
-        }}
+        // rowSelection={{
+        //     selectedRowKeys : selectedRowKey,
+        //     onSelectChange : handelSelectChange
+        // }}
         customClass='inte-dataTable--bulkEdit'
         columns={columns}
-        dataSource={data}
+        dataSource={currData}
+
     />
 }
 
