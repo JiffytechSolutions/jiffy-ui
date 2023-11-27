@@ -18,7 +18,7 @@ export interface columnI {
   | "center"
   | "justify"
   | "match-parent";
-  fixed?: string;
+  fixed?: "left" | 'right';
   sortable?: {
     onSort?: (clickedColumn: columnI, order: 'asec' | 'desc') => void;
     comparator?: (a: any, b: any, order: any) => number;
@@ -46,6 +46,8 @@ export interface DataTableI {
   isResizable?: boolean;
   emptyTableUi?: React.ReactNode;
   customClass?: string;
+  tableLayout?: "fixed" | "auto"
+  bulkEditRow?: bulkEditRowI[];
 }
 
 export interface expandableI {
@@ -55,8 +57,15 @@ export interface expandableI {
 
 export interface rowSelectionI {
   multi?: boolean;
-  onSelectChange?: (newSelectedRow: any) => void;
+  onSelectChange?: (newSelectedRow: { [key: string]: boolean | "indeterminate" }) => void;
   selectedRowKeys?: {};
+}
+
+export interface bulkEditRowI {
+  editior?: React.ReactNode;
+  colSpan?: number;
+  key : string
+  fixed?: "left" | 'right';
 }
 
 const getCellByClassName = (arr: any, className: string) => {
@@ -97,6 +106,8 @@ const DataTable = ({
   isResizable = false,
   emptyTableUi,
   customClass,
+  tableLayout,
+  bulkEditRow
 }: DataTableI) => {
   const [dataTableKey, setDataTableKey] = useState(1);
   const [data, setData] = useState(dataSource);
@@ -257,6 +268,7 @@ const DataTable = ({
       }
     }
   };
+  
   const createFixedCells = (
     cells: (HTMLTableCellElement | null)[],
     pos: "left" | "right",
@@ -381,133 +393,196 @@ const DataTable = ({
 
   const makeDataTableHeaderRows = (columns: columnI[]) => {
     let columnNum = 0,
-      rowNum = 0;
+      rowNum = 0,
+      bulkEditColNum = 0
     return (
-      <tr
-        className={getClassNames({
-          "inte-dataTable__headerRow": true,
-          "inte-dataTable__headerRow--scrollY": scrollY
-        })}
-      >
-        {expandable && (
-          <th
-            ref={(cell) => makeCellRefsArray(rowNum, columnNum++, cell)}
-            className={getClassNames({
-              "inte-dataTable__cell": true,
-              "inte-dataTable__cell--expand": true,
-              "inte-dataTable__cell--spaced": true,
-              "inte-dataTable__cell--Fixedleft": columns[0].fixed
-            })}
-          ></th>
-        )}
-        {rowSelection && (
-          <th
-            ref={(cell) => makeCellRefsArray(rowNum, columnNum++, cell)}
-            className={getClassNames({
-              "inte-dataTable__checkbox": true,
-              "inte-dataTable__cell": true,
-              "inte-dataTable__cell--Fixedleft": columns[0].fixed
-            })}
-          >
-            {rowSelection.multi !== false && (
-              <Checkbox
-                onChange={headerCheckboxChangeHandler}
-                checked={giveHeaderCheckboxState(selectedCheckbox)}
-              />
-            )}
-          </th>
-        )}
-        {columns.map((item, ind) => {
-          return (
+      <>
+        <tr
+          className={getClassNames({
+            "inte-dataTable__headerRow": true,
+            "inte-dataTable__headerRow--scrollY": scrollY
+          })}
+        >
+          {expandable && (
             <th
               ref={(cell) => makeCellRefsArray(rowNum, columnNum++, cell)}
-              key={ind}
-              style={{
-                width: item.width ? item.width / 10 + "rem" : "auto",
-                textAlign: item.align ? item.align : "left",
-              }}
               className={getClassNames({
                 "inte-dataTable__cell": true,
-                [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]: item.fixed,
-                "inte-dataTable__cell--sortable": item.sortable,
-                "inte-dataTable__cell--lastCell": ind === columns.length - 1
+                "inte-dataTable__cell--expand": true,
+                "inte-dataTable__cell--spaced": true,
+                "inte-dataTable__cell--Fixedleft": columns[0].fixed
               })}
-              onClick={() => handelSort(item, ind, rowNum)}
+            ></th>
+          )}
+          {rowSelection && (
+            <th
+              ref={(cell) => makeCellRefsArray(rowNum, columnNum++, cell)}
+              className={getClassNames({
+                "inte-dataTable__checkbox": true,
+                "inte-dataTable__cell": true,
+                "inte-dataTable__cell--Fixedleft": columns[0].fixed
+              })}
             >
-              {item.sortable ? (
-                <div className="sortedIcon__th">
-                  <span className="sortedIcon-title">{item.title}</span>
-                  <div className="sortable--icon">
-                    <svg
-                      width="12"
-                      height="8"
-                      viewBox="0 0 12 8"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M11.0007 6.66675L6.00048 1.66651L1.00024 6.66675"
-                        strokeWidth="1.66674"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                    <svg
-                      width="12"
-                      height="8"
-                      viewBox="0 0 12 8"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M1.00024 1.33375L6.00048 6.33398L11.0007 1.33375"
-                        strokeWidth="1.66674"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                </div>
-              ) : (
-                item.title
-              )}
-              {isResizable && (
-                <div
-                  onMouseDown={(e) =>
-                    handelMouseDownResize(
-                      e,
-                      ind + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
-                    )
-                  }
-                  className="inte-DataTable__resizeHandler"
-                ></div>
+              {rowSelection.multi !== false && (
+                <Checkbox
+                  onChange={headerCheckboxChangeHandler}
+                  checked={giveHeaderCheckboxState(selectedCheckbox)}
+                />
               )}
             </th>
-          );
-        })}
-        {(scrollY ?? 0) > 0 &&
-          (GridWrapperRef.current?.scrollHeight ?? 0) >
-          (GridWrapperRef.current?.clientHeight ?? 0) && hasFixedHeader ? (
-          <th
-            className="inte-dataTable__spacedCellScrollBar"
-            ref={(cell) =>
-              makeCellRefsArray(
-                0,
-                columns.length +
-                (expandable ? 1 : 0) +
-                (rowSelection ? 1 : 0) +
-                1,
-                cell
-              )
-            }
-          ></th>
-        ) : null}
-      </tr>
+          )}
+          {columns.map((item, ind) => {
+            return (
+              <th
+                ref={(cell) => makeCellRefsArray(rowNum, columnNum++, cell)}
+                key={ind}
+                style={{
+                  // width: item.width ? item.width / 10 + "rem" : "auto",
+                  textAlign: item.align ? item.align : "left",
+                }}
+                className={getClassNames({
+                  "inte-dataTable__cell": true,
+                  [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]: item.fixed,
+                  "inte-dataTable__cell--sortable": item.sortable,
+                  "inte-dataTable__cell--lastCell": ind === columns.length - 1
+                })}
+                onClick={() => handelSort(item, ind, rowNum)}
+              >
+                {item.sortable ? (
+                  <div className="sortedIcon__th">
+                    <span className="sortedIcon-title">{item.title}</span>
+                    <div className="sortable--icon">
+                      <svg
+                        width="12"
+                        height="8"
+                        viewBox="0 0 12 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M11.0007 6.66675L6.00048 1.66651L1.00024 6.66675"
+                          strokeWidth="1.66674"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      <svg
+                        width="12"
+                        height="8"
+                        viewBox="0 0 12 8"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M1.00024 1.33375L6.00048 6.33398L11.0007 1.33375"
+                          strokeWidth="1.66674"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                ) : (
+                  item.title
+                )}
+                {isResizable && (
+                  <div
+                    onMouseDown={(e) =>
+                      handelMouseDownResize(
+                        e,
+                        ind + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
+                      )
+                    }
+                    className="inte-DataTable__resizeHandler"
+                  ></div>
+                )}
+              </th>
+            );
+          })}
+          {(scrollY ?? 0) > 0 &&
+            (GridWrapperRef.current?.scrollHeight ?? 0) >
+            (GridWrapperRef.current?.clientHeight ?? 0) && hasFixedHeader ? (
+            <th
+              className="inte-dataTable__spacedCellScrollBar"
+              ref={(cell) =>
+                makeCellRefsArray(
+                  0,
+                  columns.length +
+                  (expandable ? 1 : 0) +
+                  (rowSelection ? 1 : 0) +
+                  1,
+                  cell
+                )
+              }
+            ></th>
+          ) : null}
+        </tr>
+        {
+          !!bulkEditRow && (
+            <tr className="inte-dataTable__bulkEditRow">
+              {expandable && (
+                <th
+                  ref={(cell) => makeCellRefsArray(rowNum+1, bulkEditColNum++, cell)}
+                  className={getClassNames({
+                    "inte-dataTable__cell": true,
+                    "inte-dataTable__cell--expand": true,
+                    "inte-dataTable__cell--spaced": true,
+                    "inte-dataTable__cell--Fixedleft": columns[0].fixed
+                  })}
+                ></th>
+              )}
+              {rowSelection && (
+                <th
+                  ref={(cell) => makeCellRefsArray(rowNum+1, bulkEditColNum++, cell)}
+                  className={getClassNames({
+                    "inte-dataTable__checkbox": true,
+                    "inte-dataTable__cell": true,
+                    "inte-dataTable__cell--Fixedleft": columns[0].fixed
+                  })}
+                >
+                  {/* {rowSelection.multi !== false && (
+                    <Checkbox
+                      onChange={headerCheckboxChangeHandler}
+                      checked={giveHeaderCheckboxState(selectedCheckbox)}
+                    />
+                  )} */}
+                </th>
+              )}
+              {
+                bulkEditRow.map(item => (
+                  <th
+                    ref={(cell) => makeCellRefsArray(rowNum+1, bulkEditColNum++, cell)}
+                    key={item.key}
+                    className={getClassNames({
+                      "inte-dataTable__cell inte-dataTable__cell--bulkEditCell" : true,
+                      [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]: item.fixed,
+
+                    })}
+                    colSpan={item.colSpan ?? 1}
+                  >
+                    {
+                      item.editior
+                    }
+                  </th>
+                ))
+              }
+              {
+                Array(columns.length - bulkEditRow.length).fill(0).map(item => 
+                <th 
+                  colSpan={0}
+                  ref={(cell) => makeCellRefsArray(rowNum+1, bulkEditColNum++, cell)}
+                ></th>)
+              }
+
+            </tr>
+          )
+        }
+      </>
     );
   };
 
   const makeDataTableBodyRows = (item: any, index: number) => {
-    let rowNum = index + (hasHeader ? 1 : 0),
+    let rowNum = index + (hasHeader ? 1 + (!!bulkEditRow ? 1 : 0) : 0),
       columnNum = 0;
     const isRowSelected = selectedCheckbox[item.key];
     const isRowExpandable = expandable?.rowExpandable
@@ -725,15 +800,14 @@ const DataTable = ({
     <div
       className={getClassNames({
         "inte-dataTable__container": true,
-        "inte-dataTable__container--hasFixedHeader" : hasFixedHeader,
+        "inte-dataTable__container--hasFixedHeader": hasFixedHeader,
         [customClass as string]: customClass
       })}
       key={data.length}
-      style={{ width: scrollX ? scrollX / 10 + "rem" : "auto" }}
     >
       {hasFixedHeader && hasHeader && (
         <div className="inte-dataTable__fixHeader--handler">
-          <table className="inte-dataTable" style={{tableLayout : "fixed"}}>
+          <table className="inte-dataTable" style={{ tableLayout: tableLayout ? tableLayout : "fixed" ,  width : scrollX ? scrollX / 10 + "rem" : "auto" }}>
             <colgroup ref={fixHeaderRef}>
               {Array(
                 columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
@@ -752,7 +826,7 @@ const DataTable = ({
                 (GridWrapperRef.current?.clientHeight ?? 0) && (
                   <col
                     style={{
-                      width:scrollBarWidth
+                      width: scrollBarWidth
                     }}
                   ></col>
                 )}
@@ -770,10 +844,11 @@ const DataTable = ({
         ref={GridWrapperRef}
         onScroll={handelGridScroll}
       >
-        <table className={`inte-dataTable`} 
+        <table className={`inte-dataTable`}
           style={{
-            maxWidth : (hasFixedHeader && hasHeader && scrollY) ? `calc(100% - ${scrollBarWidth})` : "",
-            tableLayout : hasFixedHeader ? "fixed" : "auto"
+            // maxWidth: (hasFixedHeader && hasHeader && scrollY) ? `calc(100% - ${scrollBarWidth})` : "",
+            tableLayout: tableLayout ? tableLayout : hasFixedHeader ? "fixed" : "auto",
+            width : scrollX ? scrollX / 10 + "rem" : "auto" 
           }}
         >
           <colgroup ref={tableColRef}>

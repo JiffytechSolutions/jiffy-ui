@@ -26,7 +26,7 @@ import {
 import { FlexLayout } from "../../FlexLayout";
 import AppProvider from "../../../utilities/context/AppContext";
 import TemplateColumns from "../../DataTable/story/TemplateColumns";
-import DataTable from "../../DataTable/DataTable";
+import DataTable, { columnI } from "../../DataTable/DataTable";
 import SideBar from "../../SideBar/SideBar";
 import Badge from "../../Badge/Badge";
 import Card from "../../Card/Card";
@@ -469,7 +469,7 @@ const dataTable = () => {
     return res;
   }, [selectedRowKey, currentPage, itemPerPage]);
 
-  const TemplateColumnsT = [
+  const TemplateColumnsT : columnI[] = [
     {
       title: "Sr No",
       key: "key",
