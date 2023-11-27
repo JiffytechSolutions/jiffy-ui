@@ -418,17 +418,27 @@
 
 .ripple {
   position: absolute;
-  background-color: rgb(0, 0, 0);
+  background-color: rgba(0, 0, 0, 0.747);
   opacity: 25%;
   transform: scale(0);
   animation: ripple 600ms linear;
   border-radius: 50%;
 }
-
+/* change ripple effect css */
+.inte-btn--primary .ripple,
+.inte-btn--danger .ripple {
+  background-color: rgb(255, 255, 255);
+}
+.inte-btn--dangerOutlined .ripple {
+  background-color: #ff8277;
+}
+.inte-btn--dangerPlain .ripple,
+.inte-btn--textButton .ripple {
+  background-color: unset;
+}
 @keyframes ripple {
   to {
     transform: scale(4);
     opacity: 0;
   }
 }
-
