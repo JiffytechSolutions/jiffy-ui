@@ -317,8 +317,7 @@ Table_Width_Pagination.decorators = [
     return (
       <Card>
         <DataTable
-          scrollY={450}
-          hasFixedHeader
+          // scrollY={450}
           columns={columns}
           dataSource={currentTableData}
           pagination={

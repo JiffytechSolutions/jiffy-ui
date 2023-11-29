@@ -20,11 +20,12 @@ export default {
     },
   },
   argTypes: {
-    hasFixedHeader: {
+    isFixedHeader: {
+      description: `Make Table Header Sticky to top. <br> Note<span style="color: red;">*</span> when tableHeader is FIxed then scrollX should be set`,
       control: {
         type: "boolean",
       },
-      defaultValue: true,
+      defaultValue: false,
     },
     isLoading: {
       control: {
@@ -33,6 +34,7 @@ export default {
       defaultValue: false
     },
     isResizable: {
+      description: "Make DataTable columns Resizable",
       control: {
         type: 'boolean'
       },
@@ -133,13 +135,7 @@ export default {
       },
     },
     scrollX: {
-      control: {
-        type: "number",
-      },
-      defaultValue: 0
-    },
-
-    scrollY: {
+      description: `Give the minimum width to the table ( in what screen size the table should scroll). <br> Note<span style="color: red;">*</span> when tableHeader is FIxed then scrollX should be set`,
       control: {
         type: "number",
       },
@@ -244,7 +240,7 @@ const primaryColumns: columnI[] = [
     dataIndex: "id",
     key: "id",
     fixed: "left",
-    // width: 100,
+    width: 100,
     sortable: {
       // comparator: (a: any, b: any, order: any) => {
       //   return order === "asec" ? a - b : b - a;
@@ -261,7 +257,6 @@ const primaryColumns: columnI[] = [
     render: (item: any) => {
       return <Text>{item}</Text>;
     },
-    width:200,
     sortable: {
       comparator: (a: any, b: any, order: any) => {
         a = a.toLowerCase();
@@ -353,7 +348,7 @@ const InternalDataTable = ({
   return (
     <DataTable
       isLoading={loading}
-      scrollY={200}
+      // scrollY={200}
       dataSource={dataSource}
       columns={columns}
       rowSelection={{
@@ -411,8 +406,7 @@ const Template = ({ ...rest }) => {
       isLoading={(loading || rest.loading)}
       dataSource={dataSourceT}
       columns={primaryColumns.slice(0,3)}
-      scrollX={rest.scrollX}
-      scrollY={500}
+      scrollX={rest.scrollX || 700}
       rowSelection={{
         multi: true,
         selectedRowKeys: selKeysObj(selectedRowKeys),
@@ -469,10 +463,10 @@ export const DataTableWithFixedHeader: any = ({ ...rest }) => {
     <Card>
       <DataTable
         {...rest}
-        dataSource={dataSource}
+        dataSource={[...dataSource , ...dataSource]}
         columns={primaryColumns}
-        hasFixedHeader={true}
-        scrollY={200}
+        scrollX={900}
+        isFixedHeader={true}
         pagination={
           <Pagination
             currentPage={3}
@@ -500,7 +494,7 @@ export const DataTableWithFixedColumns: any = ({ ...rest }) => {
         {...rest}
         dataSource={dataSource}
         columns={primaryColumns}
-        hasFixedHeader={true}
+        isFixedHeader={true}
         scrollX={960}
       />
     </Card>
@@ -512,6 +506,7 @@ export const DataTableWithRowSelectionMulti: any = ({ ...rest }) => {
     <Card>
       <DataTable
         {...rest}
+        scrollX={1000}
         dataSource={dataSource}
         columns={primaryColumns}
         rowSelection={{}}
@@ -531,6 +526,7 @@ export const DataTableWithRowSelectionSingle: any = ({ ...rest }) => {
         {...rest}
         dataSource={dataSource}
         columns={primaryColumns}
+        scrollX={1000}
         rowSelection={{
           multi: false,
           selectedRowKeys: selectedRowKey,
@@ -560,6 +556,15 @@ export const DataTableWithRowExpandable: any = ({ ...rest }) => {
   );
 }
 
+export const ResizableDataTable : any = ({ ...rest }) => {
+  return <DataTable 
+    isResizable
+    columns={TemplateColumns}
+    scrollX={2500}
+    dataSource={TemplateDataSource()}
+  />
+}
+
 
 const TemplateDataSource = () => {
   let t: any = []
@@ -574,8 +579,8 @@ export const DataTableTemplate: any = ({ ...rest }) => {
     <Card>
       <DataTable
         {...rest}
-        hasFixedHeader
-        scrollY={600}
+        scrollX={2000} 
+        isFixedHeader
         columns={TemplateColumns}
         dataSource={TemplateDataSource()}
         rowSelection={{}}
@@ -661,7 +666,6 @@ const TemplateDataTableStory = ({ ...rest }) => {
     key: "key",
     dataIndex: 'key',
     fixed: 'left',
-    width: 200,
     render: (data: any) => <>
       <FlexLayout spacing="mediumLoose" direction="vertical">
         {data + 1}
@@ -684,8 +688,7 @@ const TemplateDataTableStory = ({ ...rest }) => {
     <Card>
       <DataTable
         {...rest}
-        scrollY={rest.scrollY > 0 ? rest.scrollY : 500}
-        scrollX={1100}
+        scrollX={1300}
         columns={TemplateColumnsT}
         dataSource={currTableData}
         rowSelection={{
@@ -712,22 +715,6 @@ const TemplateDataTableStory = ({ ...rest }) => {
 
 
 export const DataTableWithPaginationTemplate: any = TemplateDataTableStory.bind({})
-DataTableWithPaginationTemplate.decorators = [
-  (Story: any, context: StoryContext) => {
-    const [controls, setControls] = useState({});
-    const updateControl = (name: string, value: any) => {
-      setControls((prevState: any) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    };
-
-    const actions = {
-      updateControl,
-    };
-    return <Story {...context} actions={actions} />
-  }
-]
 
 export const DataTableEmptyBody: any = ({ ...rest }) => {
   return (

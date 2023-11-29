@@ -186,6 +186,11 @@
   background-color: var(--inte-P50);
 }
 
+.inte-DataTable__resizeHandler--active {
+  background-color: var(--inte-P50) !important;
+  border-right: 1px solid black;
+}
+
 .inte-dataTable__fixHeader--handler {
   position: sticky;
   top:0;

@@ -483,7 +483,7 @@ const dataTable = () => {
     <Card>
       <DataTable
         columns={TemplateColumnsT}
-        hasFixedHeader
+        isFixedHeader
         dataSource={currTableData}
         rowSelection={{
           selectedRowKeys: currentSelectedRowKeys,

@@ -462,12 +462,13 @@ const BulkEditStoryHelper = ({...rest}) => {
 
 
     return <DataTable 
-        hasFixedHeader
+        isFixedHeader
         bulkEditRow={bulkEditRow}
         // rowSelection={{
         //     selectedRowKeys : selectedRowKey,
         //     onSelectChange : handelSelectChange
         // }}
+        scrollX={3000}
         customClass='inte-dataTable--bulkEdit'
         columns={columns}
         dataSource={currData}
