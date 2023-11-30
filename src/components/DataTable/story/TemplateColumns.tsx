@@ -100,7 +100,7 @@ const TemplateColumns: columnI[] = [
       return <img src={mainLogo} alt="product image" />;
     },
     fixed: "left",
-    width:120,
+    // width:120,
   },
   {
     title: "Data",
@@ -108,7 +108,7 @@ const TemplateColumns: columnI[] = [
     render: () => {
       return "Data";
     },
-    width:200,
+    // width:200,
     // fixed: "left",
   },
   {
@@ -117,7 +117,7 @@ const TemplateColumns: columnI[] = [
     render: () => {
       return customAvatar;
     },
-    width:200,
+    // width:200,
   },
   {
     title: "Badge",
@@ -129,7 +129,7 @@ const TemplateColumns: columnI[] = [
         </Badge>
       );
     },
-    width:200,
+    // width:200,
   },
   {
     title: (
@@ -147,7 +147,7 @@ const TemplateColumns: columnI[] = [
         activator={<div>Avatar Group</div>}
       />
     ),
-    width: 150,
+    // width: 150,
     key: "avatar",
     render: () => {
       return (
@@ -183,7 +183,7 @@ const TemplateColumns: columnI[] = [
   {
     title: "Button Group",
     key: "btnGrp",
-    width:200,
+    // width:200,
     render: () => {
       return (
         <ButtonGroup segmented>
@@ -210,7 +210,7 @@ const TemplateColumns: columnI[] = [
     render: () => {
       return <Toggle checked={true} />;
     },
-    width:200,
+    // width:200,
   },
   {
     title: "Badge Group",
@@ -227,7 +227,7 @@ const TemplateColumns: columnI[] = [
     render: () => {
       return <Action />;
     },
-    width:200,
+    // width:200,
     fixed: "right",
   },
 ];
