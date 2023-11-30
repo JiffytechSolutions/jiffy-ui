@@ -12,6 +12,7 @@ export interface CopyClipboardI {
   iconAlign?: "left" | "right";
   timeout?: number;
   customClass?: string;
+  onClick?: () => void;
 }
 
 const CopyClipboard: FC<CopyClipboardI> = ({
@@ -20,7 +21,9 @@ const CopyClipboard: FC<CopyClipboardI> = ({
   iconAlign = "right",
   align = "start",
   timeout = 3000,
-
+  onClick = () => {
+    //
+  },
   customClass = "",
 }: CopyClipboardI): JSX.Element => {
   const [status, setstatus] = useState(false);
@@ -44,6 +47,7 @@ const CopyClipboard: FC<CopyClipboardI> = ({
 
         [customClass]: customClass,
       })}
+      onClick={onClick}
     >
       {label && iconAlign == "right" && <Text>{label}</Text>}
       <Button

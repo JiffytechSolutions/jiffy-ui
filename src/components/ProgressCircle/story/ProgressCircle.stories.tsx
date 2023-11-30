@@ -11,7 +11,6 @@ export default {
       type: "figma",
       url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-3.0-(Production)?node-id=5547-256332&t=tb1dL4Z7hEk2Cb1x-0",
     },
-
   },
   argTypes: {
     percentage: {
@@ -19,20 +18,19 @@ export default {
       control: {
         type: "number",
       },
-
+      defaultValue: 20,
     },
     customClass: {
       description: "set CustomClass",
       control: {
         type: "text",
       },
-
     },
     size: {
       description: "Set Type of Skelton",
       control: {
         type: "radio",
-        options: ["large", "small"]
+        options: ["large", "small"],
       },
       defaultValue: "large",
     },
@@ -70,25 +68,21 @@ ProgressCircleSize.decorators = [
   () => {
     return (
       <Card title="Progress Circle Size">
-        {
-          ["large", "small"].map((items: any) => {
-            return (
-              <ProgressCircle size={items} />
-            )
-          })
-        }
+        {["large", "small"].map((items: any) => {
+          return <ProgressCircle size={items} />;
+        })}
       </Card>
-    )
+    );
   },
 ];
 //Progress CircleWithoutPercentage
-export const ProgressCircleWithoutPercentage: any = Template.bind({});
-ProgressCircleWithoutPercentage.decorators = [
+export const ProgressCircleWithPercentage: any = Template.bind({});
+ProgressCircleWithPercentage.decorators = [
   () => {
     return (
       <Card title="Progress Circle without Percentage Symbol">
         <ProgressCircle percentage={11} />
       </Card>
-    )
+    );
   },
 ];

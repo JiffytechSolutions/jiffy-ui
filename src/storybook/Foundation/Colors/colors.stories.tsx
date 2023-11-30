@@ -2,9 +2,19 @@ import React from "react";
 import { Card, CopyClipboard, Text } from "../../../components";
 import { Colors } from "./Colors";
 import "../../../storybook.css";
+import useToast from "../../../components/Toast/useToast";
+import AppProvider from "../../../utilities/context/AppContext";
 
 export default {
   title: "Foundation/Colors",
+
+  decorators: [
+    (Story: any) => (
+      <AppProvider>
+        <Story />
+      </AppProvider>
+    ),
+  ],
   component: Colors,
   parameters: {
     docs: {},
@@ -17,6 +27,8 @@ export default {
 };
 
 const Template = ({}) => {
+  const useToasts = useToast();
+
   return (
     <Card>
       {Object.keys(Colors)?.map((colors: any, index: number) => {
@@ -51,6 +63,13 @@ const Template = ({}) => {
                       label={color.colorHex}
                       value={color.colorHex}
                       align="fill"
+                      onClick={() =>
+                        useToasts({
+                          message: "Copied" + "  " + color.colorHex,
+                          type: "success",
+                          timeout: 2000,
+                        })
+                      }
                     />
 
                     <CopyClipboard
@@ -58,6 +77,13 @@ const Template = ({}) => {
                       label={color.colorRgba}
                       value={color.colorRgba}
                       align="fill"
+                      onClick={() =>
+                        useToasts({
+                          message: "Copied" + "  " + color.colorRgba,
+                          type: "success",
+                          timeout: 2000,
+                        })
+                      }
                     />
 
                     <CopyClipboard
@@ -65,6 +91,13 @@ const Template = ({}) => {
                       label={color.colorHsl}
                       value={color.colorHsl}
                       align="fill"
+                      onClick={() =>
+                        useToasts({
+                          message: "Copied" + "  " + color.colorHsl,
+                          type: "success",
+                          timeout: 2000,
+                        })
+                      }
                     />
                   </div>
                 </div>

@@ -501,7 +501,7 @@ export const DataTableWithFixedColumns: any = ({ ...rest }) => {
         dataSource={dataSource}
         columns={primaryColumns}
         hasFixedHeader={true}
-        scrollX={500}
+        scrollX={960}
       />
     </Card>
   );
@@ -656,7 +656,7 @@ const TemplateDataTableStory = ({ ...rest }) => {
     setSelectValue(prev => ({ ...prev, [ind]: value }))
   }
 
-  const TemplateColumnsT = [{
+  const TemplateColumnsT : columnI[] = [{
     title: "Sr No",
     key: "key",
     dataIndex: 'key',
@@ -664,7 +664,8 @@ const TemplateDataTableStory = ({ ...rest }) => {
     width: 200,
     render: (data: any) => <>
       <FlexLayout spacing="mediumLoose" direction="vertical">
-        <Select
+        {data + 1}
+        {/* <Select
           options={[{ label: "1", value: "1" }, { label: "2", value: "2" }, { label: "3", value: "3" }]}
           value={selectValue[data]}
           onChange={(e) => handelSelectChangeN(data, e)}
@@ -674,7 +675,7 @@ const TemplateDataTableStory = ({ ...rest }) => {
           value={selectValue[data]}
           onChange={(e) => handelSelectChangeN(data, e)}
           direction="horizontal"
-        />
+        /> */}
       </FlexLayout>
     </>
   }, ...TemplateColumns]
@@ -684,6 +685,7 @@ const TemplateDataTableStory = ({ ...rest }) => {
       <DataTable
         {...rest}
         scrollY={rest.scrollY > 0 ? rest.scrollY : 500}
+        scrollX={1100}
         columns={TemplateColumnsT}
         dataSource={currTableData}
         rowSelection={{
@@ -694,7 +696,7 @@ const TemplateDataTableStory = ({ ...rest }) => {
           <Pagination
             type="fullLength"
             currentPage={currentPage}
-            totalitem={5000}
+            totalitem={60}
             onPageChange={onPageChange}
             onEnter={onEnter}
             onPrevious={onPrevious}
