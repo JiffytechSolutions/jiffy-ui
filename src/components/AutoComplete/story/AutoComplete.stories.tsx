@@ -498,7 +498,7 @@ const Template = ({ ...rest }) => {
               value={value}
               onChange={onChangex}
               onEnter={onEnter}
-              onClick={onclicks}
+              onClick={()=>{}}
               setHiglighted={rest.setHiglighted}
               isLoading={rest.isLoading}
               isClearable={rest.isClearable}

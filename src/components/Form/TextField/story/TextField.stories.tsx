@@ -299,7 +299,6 @@ export default {
 };
 const Template = ({ ...rest }) => {
   const [tt, setTT] = useState<any>();
-  console.log(tt,"ko")
   function hello() {
     alert("Enter pressed");
     setTT(<Badge children={tt} />)
