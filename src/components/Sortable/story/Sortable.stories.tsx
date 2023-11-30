@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, TextStyles } from "../../..";
+import { Card, Text } from "../../..";
 import Sortable from "../Sortable";
 import "./SortableStories.css";
 
@@ -80,7 +80,7 @@ const Template = ({ ...rest }) => {
       animationDuration={rest.animationDuration}
       renderItem={(item: any, index: number) => (
         <Card title={`Card ${item[index].title} ${index}`} cardType="filled">
-          <TextStyles>{item[index].description}</TextStyles>
+          <Text>{item[index].description}</Text>
         </Card>
       )}
       direction={rest.direction}
@@ -102,7 +102,7 @@ vertical.decorators = [
           direction="vertical"
           renderItem={(item: any, index: number) => (
             <Card title={`Card ${item[index].title}`} cardType="filled">
-              <TextStyles>{item[index].description}</TextStyles>
+              <Text>{item[index].description}</Text>
             </Card>
           )}
         />
@@ -123,7 +123,7 @@ horizontal.decorators = [
           direction="horizontal"
           renderItem={(item: any, index: number) => (
             <Card title={`Card ${item[index].title}`} cardType="filled">
-              <TextStyles>{item[index].description}</TextStyles>
+              <Text>{item[index].description}</Text>
             </Card>
           )}
         />

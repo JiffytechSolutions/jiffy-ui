@@ -3,8 +3,8 @@ import React from "react";
 import Avatar, { AvatarI } from "../../Avatar/Avatar";
 
 export interface CardHeaderI {
-  title?: string|React.ReactNode;
-  subTitle?: string|React.ReactNode;
+  title?: string | React.ReactNode;
+  subTitle?: string | React.ReactNode;
   action?: React.ReactNode;
   avatar?: AvatarI
 }
@@ -19,7 +19,7 @@ function CardHeader({
     return (
       <>
         {(title || subTitle) && <div className="inte-card__headerContent">
-          {title && <h3 className="inte-card__headerTitle">{title}</h3>}
+          {(title && typeof title === "string") ? <h3 className="inte-card__headerTitle">{title}</h3> : title}
           {subTitle && (
             <h4 className="inte-card__headerSubtitle">
               {subTitle}

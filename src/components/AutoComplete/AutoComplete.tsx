@@ -177,7 +177,6 @@ function AutoComplete({
       if (showList1 && selectedIndex > 0) {
         setSelectedIndex(selectedIndex - 1);
         myReff.current?.children[0].children[selectedIndex - 1].scrollIntoView({
-          behavior: "smooth",
           block: "nearest",
         });
       }
@@ -187,9 +186,9 @@ function AutoComplete({
       if ((showList1 && selectedIndex) < filteredName.length - 1) {
         setSelectedIndex(selectedIndex + 1);
         myReff.current?.children[0].children[selectedIndex + 1].scrollIntoView({
-          behavior: "smooth",
           block: "nearest",
         });
+
       }
     } else {
       if (event.key == "Enter" && filteredName[selectedIndex]?.value) {
@@ -365,10 +364,10 @@ function AutoComplete({
   const renderData = (
     <>
       {renderStatementResult &&
-      !isLoading &&
-      filteredName.length > 0 &&
-      show &&
-      value.trim() ? (
+        !isLoading &&
+        filteredName.length > 0 &&
+        show &&
+        value.trim() ? (
         <PortalComponent>
           <div
             role="listbox"
@@ -421,7 +420,7 @@ function AutoComplete({
         onKeyDown={(e) => {
           if (!showList) return;
           if (e.key === "Enter" && onEnter) {
-            onEnter(value);
+            onEnter(filteredName[selectedIndex].label);
           }
           if (renderStatementResult) {
             handleKeyDown(e);
@@ -468,13 +467,13 @@ function AutoComplete({
                   >
                     {textField(true)}
                     {renderStatementResult &&
-                    filteredName.length > 0 &&
-                    show &&
-                    value.trim()
+                      filteredName.length > 0 &&
+                      show &&
+                      value.trim()
                       ? autoCompletePopover
                       : showList1 && value.length > 0 && value.trim()
-                      ? autoCompleteNodata
-                      : null}
+                        ? autoCompleteNodata
+                        : null}
                   </ul>
                 </div>
 
