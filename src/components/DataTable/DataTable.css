@@ -251,3 +251,15 @@
 .inte-dataTable__expanded-td:empty {
   display: none;
 }
+
+.inte-dataTable__stickyScrollBar--wrapper {
+  overflow: auto;
+  z-index: 1;
+  box-shadow: inset -10px 0 8px -8px rgba(16, 24, 40, 0.10);
+  position: fixed;
+  bottom: 0;
+}
+
+.inte-dataTable__stickyScrollBar {
+  height: 1px;
+}

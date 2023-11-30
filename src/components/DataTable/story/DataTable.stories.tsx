@@ -223,6 +223,13 @@ export default {
         disable: true,
       },
     },
+    stickyScrollBar: {
+      description: 'Make horizontal scrollbar stick to the bottom',
+      control: {
+        type: "boolean",
+      },
+      defaultValue: true,
+    },
     customClass: {
       description: 'Add custom class',
       control: {
@@ -490,15 +497,28 @@ export const DataTableWithFixedHeader: any = ({ ...rest }) => {
 export const DataTableWithFixedColumns: any = ({ ...rest }) => {
   return (
     <Card>
+      {/* <FlexLayout> */}
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A maiores assumenda reiciendis porro expedita. Consectetur labore iste quidem eum modi a voluptate eligendi minus sint. Quasi ipsam dicta temporibus possimus similique dolorem praesentium ratione? Quam incidunt vitae, cum quaerat qui dolores sint iste eius temporibus cupiditate est amet voluptas adipisci suscipit! Vel in aperiam sapiente dolorem facere consequuntur nisi possimus ad architecto earum alias tempora, enim nobis deleniti nesciunt quis placeat. Eos, libero consequatur voluptatum magnam numquam odit dolores. Numquam doloribus deserunt doloremque? Tenetur ullam non nesciunt, aliquid rerum culpa laboriosam quasi et autem magnam pariatur? Facere repellat maxime recusandae? At repellat ipsam deleniti non harum aut iste rerum dignissimos quas laboriosam. Nemo voluptas quasi maxime hic deserunt ex eaque blanditiis ea adipisci. Ratione sed ad recusandae, iusto quidem nulla nemo, quod placeat esse saepe ipsa. Odio, dicta impedit? Blanditiis tempore est recusandae nostrum autem pariatur eligendi nesciunt ab atque amet odio, et rerum delectus maiores quae dignissimos cumque dolorum porro doloribus commodi illo. Repellendus quae, quaerat officia voluptatibus, velit doloremque incidunt numquam ex accusantium ratione consequatur quia eum quidem placeat tempore et autem, explicabo magni? In, dolore facere iusto voluptates, dolorem ducimus hic doloribus rem aperiam iure assumenda laborum debitis ipsum natus ipsam a quae quos modi inventore. Iusto ducimus dolore corrupti illo magni deleniti qui. Modi obcaecati reprehenderit magnam dignissimos vitae iure, veniam molestias asperiores. Animi tempore tempora aliquid accusantium amet sequi sapiente alias eligendi, incidunt fugiat nihil suscipit quod deleniti! Maiores delectus eligendi voluptatem, doloremque itaque temporibus. Iste, similique consectetur dolorum ab veritatis unde cum? Tempore nesciunt debitis officia voluptatibus, maiores fuga natus deleniti enim corporis qui aut architecto, laudantium error perspiciatis, pariatur culpa? Amet quae odit quos non repellendus labore consequuntur enim incidunt, blanditiis, qui deserunt eius iure fugiat. Unde laudantium et nihil ex nostrum itaque excepturi nemo quae ut nobis! Optio totam, facilis corporis quia praesentium dignissimos nulla quod, placeat iusto iste provident ullam, sed minima. Esse dolorem cumque voluptas vel dolores dicta provident soluta placeat saepe fugit porro, numquam quas totam aspernatur eius sapiente rem similique architecto voluptates aliquam, eligendi minus repellendus explicabo eos? Unde nobis velit deserunt dicta! Dicta architecto inventore dignissimos quasi rerum hic eligendi aliquid, alias maiores, exercitationem culpa! Numquam, vero magnam itaque, corrupti ad necessitatibus corporis voluptas perspiciatis, eligendi quam sapiente labore consectetur eveniet quidem vitae aliquid accusamus voluptate facilis esse rem odio non nam officia. Tempora temporibus at sequi unde, obcaecati amet odit quod voluptatem culpa porro impedit dicta, ducimus voluptas aspernatur aliquam molestiae maxime eum officiis esse! Quae atque quibusdam sit, quod accusantium ad distinctio minus. Expedita, optio sit exercitationem nisi blanditiis consequuntur, maxime facere id porro aut eos eaque quasi aspernatur dolor minus alias, assumenda provident reprehenderit perspiciatis? Vel cupiditate voluptates consequuntur. Qui consequuntur non architecto id vel fugit nam sapiente, voluptates, ad, laborum sed ea ducimus aperiam saepe veritatis nemo. Neque sunt ea quaerat enim doloremque molestias blanditiis dolorum voluptatem, consectetur ducimus? Velit, ea culpa. Quo totam repudiandae possimus, maiores numquam vel voluptate illum necessitatibus nihil!</p>
       <DataTable
         {...rest}
-        dataSource={dataSource}
+        dataSource={[...dataSource , ...dataSource]}
         columns={primaryColumns}
         isFixedHeader={true}
         scrollX={960}
       />
+      {/* </FlexLayout> */}
     </Card>
   );
+}
+
+export const DataTableWithScrollBarSitckyAtBottom = ({...rest}) => {
+  return <DataTable 
+      columns={TemplateColumns}
+      isFixedHeader
+      stickyScrollBar
+      scrollX={2000}
+      dataSource={Array(50).fill(0)}
+  />
 }
 
 export const DataTableWithRowSelectionMulti: any = ({ ...rest }) => {
@@ -557,10 +577,11 @@ export const DataTableWithRowExpandable: any = ({ ...rest }) => {
 }
 
 export const ResizableDataTable : any = ({ ...rest }) => {
+
   return <DataTable 
     isResizable
     columns={TemplateColumns}
-    scrollX={2500}
+    scrollX={1000}
     dataSource={TemplateDataSource()}
   />
 }
