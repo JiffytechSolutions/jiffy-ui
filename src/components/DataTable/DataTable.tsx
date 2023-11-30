@@ -47,6 +47,7 @@ export interface DataTableI {
   customClass?: string;
   tableLayout?: "fixed" | "auto"
   bulkEditRow?: bulkEditRowI[];
+  stickyScrollBar?: boolean;
 }
 
 export interface expandableI {
@@ -101,11 +102,12 @@ const DataTable = ({
   pagination,
   hasHeader = true,
   isLoading,
-  isResizable = true,
+  isResizable = false,
   emptyTableUi,
   customClass,
   tableLayout,
-  bulkEditRow
+  bulkEditRow,
+  stickyScrollBar
 }: DataTableI) => {
   const [dataTableKey, setDataTableKey] = useState(1);
   const [data, setData] = useState(dataSource);
@@ -119,6 +121,7 @@ const DataTable = ({
   const [currentResizeCol, setCurrentResizeCol] = useState<any>(null);
   const fixHeaderRef = useRef<HTMLTableColElement>(null);
   const tableColRef = useRef<HTMLTableColElement>(null);
+  const stickyScrollBarRef = useRef<HTMLDivElement>(null);
 
   const handelGridScroll = () => {
     if (!GridWrapperRef.current) return;
@@ -130,6 +133,10 @@ const DataTable = ({
       tableCellRefs.current,
       "inte-dataTable__cell--Fixedleft-last"
     );
+
+    if(stickyScrollBar && stickyScrollBarRef.current) {
+      stickyScrollBarRef.current.scrollLeft = GridWrapperRef.current.scrollLeft;
+    }
 
     if (isFixedHeader) {
       let parent = GridWrapperRef.current.parentElement?.children[0];
@@ -339,7 +346,7 @@ const DataTable = ({
         : [colList2[colNum]],
       start: e.pageX,
       startWidth: colList2[colNum]?.offsetWidth,
-      colNum : colNum
+      colNum: colNum
     });
   };
 
@@ -761,6 +768,36 @@ const DataTable = ({
     );
   };
 
+  const scrollGrid = () => {
+    const scrollLeft = stickyScrollBarRef.current?.scrollLeft
+    if (GridWrapperRef.current && scrollLeft !== undefined) GridWrapperRef.current.scrollLeft = scrollLeft
+  }
+
+  const handelStickyScroll = () => {
+    if (!GridWrapperRef.current || !stickyScrollBarRef.current) return
+    const containerRect = GridWrapperRef.current.getBoundingClientRect();
+    const currentScrollHeight = window.innerHeight;
+    if (
+      containerRect.bottom <= currentScrollHeight ||
+      (GridWrapperRef.current.clientWidth === GridWrapperRef.current?.scrollWidth) ||
+      containerRect.top > currentScrollHeight
+    ) {
+      stickyScrollBarRef.current.style.display = "none"
+    }
+    else {
+      stickyScrollBarRef.current.style.display = "block";
+    }
+  }
+
+  useEffect(() => {
+    if(!stickyScrollBar)  return
+    handelStickyScroll()
+    window.addEventListener('scroll', handelStickyScroll)
+    return () => {
+      window.removeEventListener('scroll', handelStickyScroll)
+    }
+  }, [stickyScrollBarRef.current, GridWrapperRef.current, dataSource, window.innerWidth , stickyScrollBar])
+
   return (
     <div
       className={getClassNames({
@@ -842,6 +879,21 @@ const DataTable = ({
           </tbody>
         </table>
       </div>
+      {
+        stickyScrollBar ? <div
+          className="inte-dataTable__stickyScrollBar--wrapper"
+          style={{
+            width: GridWrapperRef.current?.clientWidth + "px"
+          }}
+          ref={stickyScrollBarRef}
+          onScroll={scrollGrid}
+        >
+          <div
+            className="inte-dataTable__stickyScrollBar"
+            style={{ width: GridWrapperRef.current?.children[0].scrollWidth + "px" }}
+          ></div>
+        </div> : null
+      }
       {(pagination && dataSource.length) ? (
         <div className="inte-dataTable__pagination">{pagination}</div>
       ) : null}
