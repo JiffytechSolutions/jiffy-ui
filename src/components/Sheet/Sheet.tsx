@@ -54,7 +54,7 @@ const Sheet: FC<SheetI> = ({
       window.removeEventListener("keydown", keyEscHandler);
       document.body.classList.remove("inte-bodyHasSheetBackdrop")
     };
-  }, [isOpen]);
+  }, [animateData]);
 
   handleShadowOnScroll(scrollRef, animateData);
 

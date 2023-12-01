@@ -4,11 +4,10 @@ import Pagination from "../../Pagination/Pagination";
 import { dataSource } from "./DataSource";
 import DataTable, { columnI } from "../DataTable";
 import TemplateColumns from "./TemplateColumns";
-import { StoryContext } from '@storybook/react';
 import DataTableDoc from "../Document/DataTableDoc";
 import Text from "../../Text/Text";
-import { RadioGroup, Select } from "../../Form";
 import { FlexLayout } from "../../FlexLayout";
+import { NoProducts } from "../../../illustrations";
 
 export default {
   title: "Components/DataTable And List/DataTable",
@@ -20,11 +19,12 @@ export default {
     },
   },
   argTypes: {
-    hasFixedHeader: {
+    isFixedHeader: {
+      description: `Make Table Header Sticky to top. <br> Note<span style="color: red;">*</span> when tableHeader is FIxed then scrollX should be set`,
       control: {
         type: "boolean",
       },
-      defaultValue: true,
+      defaultValue: false,
     },
     isLoading: {
       control: {
@@ -33,6 +33,7 @@ export default {
       defaultValue: false
     },
     isResizable: {
+      description: "Make DataTable columns Resizable",
       control: {
         type: 'boolean'
       },
@@ -133,13 +134,7 @@ export default {
       },
     },
     scrollX: {
-      control: {
-        type: "number",
-      },
-      defaultValue: 0
-    },
-
-    scrollY: {
+      description: `Give the minimum width to the table ( in what screen size the table should scroll). <br> Note<span style="color: red;">*</span> when tableHeader is FIxed then scrollX should be set`,
       control: {
         type: "number",
       },
@@ -227,6 +222,13 @@ export default {
         disable: true,
       },
     },
+    stickyScrollBar: {
+      description: 'Make horizontal scrollbar stick to the bottom',
+      control: {
+        type: "boolean",
+      },
+      defaultValue: true,
+    },
     customClass: {
       description: 'Add custom class',
       control: {
@@ -244,7 +246,7 @@ const primaryColumns: columnI[] = [
     dataIndex: "id",
     key: "id",
     fixed: "left",
-    // width: 100,
+    width: 100,
     sortable: {
       // comparator: (a: any, b: any, order: any) => {
       //   return order === "asec" ? a - b : b - a;
@@ -261,7 +263,6 @@ const primaryColumns: columnI[] = [
     render: (item: any) => {
       return <Text>{item}</Text>;
     },
-    width:200,
     sortable: {
       comparator: (a: any, b: any, order: any) => {
         a = a.toLowerCase();
@@ -353,7 +354,7 @@ const InternalDataTable = ({
   return (
     <DataTable
       isLoading={loading}
-      scrollY={200}
+      // scrollY={200}
       dataSource={dataSource}
       columns={columns}
       rowSelection={{
@@ -407,57 +408,56 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <DataTable
-      {...rest}
-      isLoading={(loading || rest.loading)}
-      dataSource={dataSourceT}
-      columns={primaryColumns.slice(0,3)}
-      scrollX={rest.scrollX}
-      scrollY={500}
-      rowSelection={{
-        multi: true,
-        selectedRowKeys: selKeysObj(selectedRowKeys),
-        onSelectChange: (item: any) => {
-          Object.keys(item).map((i) => {
-            selectedRowKeys[i].state = item[i];
-            if (selectedRowKeys[i].children && item[i] !== "indeterminate") {
-              Object.keys(selectedRowKeys[i].children).map(
-                (child) => (selectedRowKeys[i].children[child] = item[i])
-              );
-            }
-          });
-          setSelectedRowKeys({ ...selectedRowKeys });
-        },
-      }}
-      expandable={{
-        rowExpandable: (item) => ![5, 8].includes(item.key),
-        expandedRowRender: (props: any) => {
-          return (
-            <InternalDataTable
-              parent={{
-                key: props.key,
-                state: selectedRowKeys[props.key].state,
-              }}
-              selectedRowKey={selectedRowKeys[props.key].children}
-              onSelectChange={(obj: any) => changeChildren(props.key, obj)}
-            />
-          );
-        },
-      }}
-      pagination={
-        <Pagination
-          currentPage={1}
-          totalitem={dataSource.length}
-          onNext={() => {
-            alert("next");
-          }}
-          countPerPage={10}
-          optionPerPage={undefined}
-          onPageChange={function (onPage: number): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-      }
-    />
+        {...rest}
+        isLoading={(loading || rest.loading)}
+        dataSource={dataSourceT}
+        columns={primaryColumns.slice(0, 3)}
+        scrollX={rest.scrollX || 700}
+        rowSelection={{
+          multi: true,
+          selectedRowKeys: selKeysObj(selectedRowKeys),
+          onSelectChange: (item: any) => {
+            Object.keys(item).map((i) => {
+              selectedRowKeys[i].state = item[i];
+              if (selectedRowKeys[i].children && item[i] !== "indeterminate") {
+                Object.keys(selectedRowKeys[i].children).map(
+                  (child) => (selectedRowKeys[i].children[child] = item[i])
+                );
+              }
+            });
+            setSelectedRowKeys({ ...selectedRowKeys });
+          },
+        }}
+        expandable={{
+          rowExpandable: (item) => ![5, 8].includes(item.key),
+          expandedRowRender: (props: any) => {
+            return (
+              <InternalDataTable
+                parent={{
+                  key: props.key,
+                  state: selectedRowKeys[props.key].state,
+                }}
+                selectedRowKey={selectedRowKeys[props.key].children}
+                onSelectChange={(obj: any) => changeChildren(props.key, obj)}
+              />
+            );
+          },
+        }}
+        pagination={
+          <Pagination
+            currentPage={1}
+            totalitem={dataSource.length}
+            onNext={() => {
+              alert("next");
+            }}
+            countPerPage={10}
+            optionPerPage={undefined}
+            onPageChange={function (onPage: number): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
+        }
+      />
     </Card>
   );
 };
@@ -469,10 +469,10 @@ export const DataTableWithFixedHeader: any = ({ ...rest }) => {
     <Card>
       <DataTable
         {...rest}
-        dataSource={dataSource}
+        dataSource={[...dataSource, ...dataSource]}
         columns={primaryColumns}
-        hasFixedHeader={true}
-        scrollY={200}
+        scrollX={900}
+        isFixedHeader={true}
         pagination={
           <Pagination
             currentPage={3}
@@ -496,15 +496,39 @@ export const DataTableWithFixedHeader: any = ({ ...rest }) => {
 export const DataTableWithFixedColumns: any = ({ ...rest }) => {
   return (
     <Card>
+      {/* <FlexLayout> */}
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A maiores assumenda reiciendis porro expedita. Consectetur labore iste quidem eum modi a voluptate eligendi minus sint. Quasi ipsam dicta temporibus possimus similique dolorem praesentium ratione? Quam incidunt vitae, cum quaerat qui dolores sint iste eius temporibus cupiditate est amet voluptas adipisci suscipit! Vel in aperiam sapiente dolorem facere consequuntur nisi possimus ad architecto earum alias tempora, enim nobis deleniti nesciunt quis placeat. Eos, libero consequatur voluptatum magnam numquam odit dolores. Numquam doloribus deserunt doloremque? Tenetur ullam non nesciunt, aliquid rerum culpa laboriosam quasi et autem magnam pariatur? Facere repellat maxime recusandae? At repellat ipsam deleniti non harum aut iste rerum dignissimos quas laboriosam. Nemo voluptas quasi maxime hic deserunt ex eaque blanditiis ea adipisci. Ratione sed ad recusandae, iusto quidem nulla nemo, quod placeat esse saepe ipsa. Odio, dicta impedit? Blanditiis tempore est recusandae nostrum autem pariatur eligendi nesciunt ab atque amet odio, et rerum delectus maiores quae dignissimos cumque dolorum porro doloribus commodi illo. Repellendus quae, quaerat officia voluptatibus, velit doloremque incidunt numquam ex accusantium ratione consequatur quia eum quidem placeat tempore et autem, explicabo magni? In, dolore facere iusto voluptates, dolorem ducimus hic doloribus rem aperiam iure assumenda laborum debitis ipsum natus ipsam a quae quos modi inventore. Iusto ducimus dolore corrupti illo magni deleniti qui. Modi obcaecati reprehenderit magnam dignissimos vitae iure, veniam molestias asperiores. Animi tempore tempora aliquid accusantium amet sequi sapiente alias eligendi, incidunt fugiat nihil suscipit quod deleniti! Maiores delectus eligendi voluptatem, doloremque itaque temporibus. Iste, similique consectetur dolorum ab veritatis unde cum? Tempore nesciunt debitis officia voluptatibus, maiores fuga natus deleniti enim corporis qui aut architecto, laudantium error perspiciatis, pariatur culpa? Amet quae odit quos non repellendus labore consequuntur enim incidunt, blanditiis, qui deserunt eius iure fugiat. Unde laudantium et nihil ex nostrum itaque excepturi nemo quae ut nobis! Optio totam, facilis corporis quia praesentium dignissimos nulla quod, placeat iusto iste provident ullam, sed minima. Esse dolorem cumque voluptas vel dolores dicta provident soluta placeat saepe fugit porro, numquam quas totam aspernatur eius sapiente rem similique architecto voluptates aliquam, eligendi minus repellendus explicabo eos? Unde nobis velit deserunt dicta! Dicta architecto inventore dignissimos quasi rerum hic eligendi aliquid, alias maiores, exercitationem culpa! Numquam, vero magnam itaque, corrupti ad necessitatibus corporis voluptas perspiciatis, eligendi quam sapiente labore consectetur eveniet quidem vitae aliquid accusamus voluptate facilis esse rem odio non nam officia. Tempora temporibus at sequi unde, obcaecati amet odit quod voluptatem culpa porro impedit dicta, ducimus voluptas aspernatur aliquam molestiae maxime eum officiis esse! Quae atque quibusdam sit, quod accusantium ad distinctio minus. Expedita, optio sit exercitationem nisi blanditiis consequuntur, maxime facere id porro aut eos eaque quasi aspernatur dolor minus alias, assumenda provident reprehenderit perspiciatis? Vel cupiditate voluptates consequuntur. Qui consequuntur non architecto id vel fugit nam sapiente, voluptates, ad, laborum sed ea ducimus aperiam saepe veritatis nemo. Neque sunt ea quaerat enim doloremque molestias blanditiis dolorum voluptatem, consectetur ducimus? Velit, ea culpa. Quo totam repudiandae possimus, maiores numquam vel voluptate illum necessitatibus nihil!</p>
       <DataTable
         {...rest}
-        dataSource={dataSource}
+        dataSource={[...dataSource, ...dataSource]}
         columns={primaryColumns}
-        hasFixedHeader={true}
-        scrollX={500}
+        isFixedHeader={true}
+        scrollX={960}
       />
+      {/* </FlexLayout> */}
     </Card>
   );
+}
+
+export const DataTableWithScrollBarSitckyAtBottom = ({ ...rest }) => {
+  return <DataTable
+    columns={TemplateColumns}
+    isFixedHeader
+    stickyScrollBar
+    scrollX={2000}
+    dataSource={Array(50).fill(0)}
+    pagination={<Pagination
+      type="fullLength"
+      currentPage={1}
+      totalitem={50}
+      onPageChange={() => { }}
+      onEnter={() => { }}
+      onPrevious={() => { }}
+      onNext={() => { }}
+      onCountChange={() => { }}
+      countPerPage={50}
+    />}
+  />
 }
 
 export const DataTableWithRowSelectionMulti: any = ({ ...rest }) => {
@@ -512,6 +536,7 @@ export const DataTableWithRowSelectionMulti: any = ({ ...rest }) => {
     <Card>
       <DataTable
         {...rest}
+        scrollX={1000}
         dataSource={dataSource}
         columns={primaryColumns}
         rowSelection={{}}
@@ -531,6 +556,7 @@ export const DataTableWithRowSelectionSingle: any = ({ ...rest }) => {
         {...rest}
         dataSource={dataSource}
         columns={primaryColumns}
+        scrollX={1000}
         rowSelection={{
           multi: false,
           selectedRowKeys: selectedRowKey,
@@ -560,6 +586,16 @@ export const DataTableWithRowExpandable: any = ({ ...rest }) => {
   );
 }
 
+export const ResizableDataTable: any = ({ ...rest }) => {
+
+  return <DataTable
+    isResizable
+    columns={TemplateColumns}
+    scrollX={1000}
+    dataSource={TemplateDataSource()}
+  />
+}
+
 
 const TemplateDataSource = () => {
   let t: any = []
@@ -574,8 +610,8 @@ export const DataTableTemplate: any = ({ ...rest }) => {
     <Card>
       <DataTable
         {...rest}
-        hasFixedHeader
-        scrollY={600}
+        scrollX={2000}
+        isFixedHeader
         columns={TemplateColumns}
         dataSource={TemplateDataSource()}
         rowSelection={{}}
@@ -656,15 +692,15 @@ const TemplateDataTableStory = ({ ...rest }) => {
     setSelectValue(prev => ({ ...prev, [ind]: value }))
   }
 
-  const TemplateColumnsT = [{
+  const TemplateColumnsT: columnI[] = [{
     title: "Sr No",
     key: "key",
     dataIndex: 'key',
     fixed: 'left',
-    width: 200,
     render: (data: any) => <>
       <FlexLayout spacing="mediumLoose" direction="vertical">
-        <Select
+        {data + 1}
+        {/* <Select
           options={[{ label: "1", value: "1" }, { label: "2", value: "2" }, { label: "3", value: "3" }]}
           value={selectValue[data]}
           onChange={(e) => handelSelectChangeN(data, e)}
@@ -674,7 +710,7 @@ const TemplateDataTableStory = ({ ...rest }) => {
           value={selectValue[data]}
           onChange={(e) => handelSelectChangeN(data, e)}
           direction="horizontal"
-        />
+        /> */}
       </FlexLayout>
     </>
   }, ...TemplateColumns]
@@ -683,7 +719,7 @@ const TemplateDataTableStory = ({ ...rest }) => {
     <Card>
       <DataTable
         {...rest}
-        scrollY={rest.scrollY > 0 ? rest.scrollY : 500}
+        scrollX={1300}
         columns={TemplateColumnsT}
         dataSource={currTableData}
         rowSelection={{
@@ -694,7 +730,7 @@ const TemplateDataTableStory = ({ ...rest }) => {
           <Pagination
             type="fullLength"
             currentPage={currentPage}
-            totalitem={5000}
+            totalitem={60}
             onPageChange={onPageChange}
             onEnter={onEnter}
             onPrevious={onPrevious}
@@ -710,22 +746,6 @@ const TemplateDataTableStory = ({ ...rest }) => {
 
 
 export const DataTableWithPaginationTemplate: any = TemplateDataTableStory.bind({})
-DataTableWithPaginationTemplate.decorators = [
-  (Story: any, context: StoryContext) => {
-    const [controls, setControls] = useState({});
-    const updateControl = (name: string, value: any) => {
-      setControls((prevState: any) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    };
-
-    const actions = {
-      updateControl,
-    };
-    return <Story {...context} actions={actions} />
-  }
-]
 
 export const DataTableEmptyBody: any = ({ ...rest }) => {
   return (
@@ -734,8 +754,17 @@ export const DataTableEmptyBody: any = ({ ...rest }) => {
         {...rest}
         dataSource={[]}
         columns={primaryColumns}
-        emptyTableUi={<h1>Fallback Ui from story</h1>}
-      />
+        emptyTableUi={(
+          <div style={{
+            marginBottom : "4rem"
+          }}>
+            <div style={{
+              margin : "4rem auto 2rem auto",
+              width : "fit-content"
+            }}><NoProducts /></div>
+            <Text alignment="center" fontweight="bolder" type="T-4">No Data Found !!</Text>
+          </div>
+        )} />
     </Card>
   );
 }
