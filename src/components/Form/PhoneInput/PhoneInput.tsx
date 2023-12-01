@@ -2,7 +2,7 @@ import React, { useEffect, useId, useRef, useState } from "react";
 import getClassNames from "../../../utilities/getClassnames";
 import TextField from "../TextField/TextField";
 import { defaultCountries } from "./data/CountryData";
-import { Search } from "../../../icons";
+import { ChevronDown, ChevronUp, Search } from "../../../icons";
 import { useAddEventListener } from "../../../utilities/useAddEventListener";
 import { PhoneInputI } from "./types/types";
 import "./PhoneInput.css";
@@ -39,7 +39,7 @@ const PhoneInput = ({
   };
   // Adding event on window resize
   useAddEventListener("resize", () =>
-    setWidth(inputBoxRef.current.offsetWidth)
+    setWidth(inputBoxRef.current.offsetWidth + 25)
   );
   useAddEventListener("click", handleClickOutside, true);
   // Scroll into view
@@ -170,7 +170,7 @@ const PhoneInput = ({
         />
         <div
           className="inte-phoneInput__flagContainer"
-          onClick={()=>{
+          onClick={() => {
             if (isDisabled) return;
             setOpen((open) => !open);
           }}
@@ -190,8 +190,9 @@ const PhoneInput = ({
                 "inte-phoneInput__flag--default": !selectedItem.iso2,
                 [selectedItem.iso2]: selectedItem.iso2,
               })}
-            >
-              <div className="inte-phoneInput__arrow"></div>
+            ></div>
+            <div className="inte-phoneInput__arrow">
+              {open ? <ChevronUp size="20" /> : <ChevronDown size="20" />}
             </div>
           </div>
           {open && (
@@ -201,7 +202,7 @@ const PhoneInput = ({
                 e.stopPropagation();
               }}
               style={{
-                width: width || inputBoxRef?.current?.offsetWidth,
+                width: width || inputBoxRef?.current?.offsetWidth + 25,
               }}
             >
               {isSearchable && (
@@ -210,7 +211,7 @@ const PhoneInput = ({
                     placeHolder="Search by country name"
                     value={searchText}
                     prefix={<Search size={16} />}
-                    customClass="inte-phoneInput__searchField"
+                    // customClass="inte-phoneInput__searchField"
                     onChange={(e) => handleSearch(e)}
                     isClearable
                     onClear={() => {
