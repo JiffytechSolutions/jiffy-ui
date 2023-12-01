@@ -109,7 +109,11 @@ const features = (
   <div className="inte-feature">
     <AutoComplete
       options={[]}
-      placeHolder="Search for Fruits, Vegetables or eating items" value={""} onChange={undefined} onClick={undefined} />
+      placeHolder="Search for Fruits, Vegetables or eating items"
+      value={""}
+      onChange={undefined}
+      onClick={undefined}
+    />
     <Custom
       button={"More Filters"}
       type={"outlined"}
@@ -469,12 +473,12 @@ const dataTable = () => {
     return res;
   }, [selectedRowKey, currentPage, itemPerPage]);
 
-  const TemplateColumnsT : columnI[] = [
+  const TemplateColumnsT: columnI[] = [
     {
       title: "Sr No",
       key: "key",
       dataIndex: "key",
-      fixed:"left",
+      fixed: "left",
     },
     ...TemplateColumns,
   ];
@@ -533,11 +537,11 @@ const Template = ({ ...rest }) => {
       secondaryAction={[
         {
           content: "Sync With MarketPlace",
-          onClick: function noRefCheck() { },
+          onClick: function noRefCheck() {},
         },
         {
           content: "Sync With MarketPlaces",
-          onClick: function noRefCheck() { },
+          onClick: function noRefCheck() {},
         },
         {
           content: "Delete Listing",
@@ -548,12 +552,12 @@ const Template = ({ ...rest }) => {
       ]}
       tertiaryAction={{
         content: "Overview",
-        onClick: function noRefCheck() { },
+        onClick: function noRefCheck() {},
       }}
       primaryAction={{
         content: "Submit",
         icon: <Check color="var(--inte-G0)" size="24" />,
-        onClick: function noRefCheck() { },
+        onClick: function noRefCheck() {},
       }}
     />
   );
@@ -571,7 +575,7 @@ const Template = ({ ...rest }) => {
                 <CustomActionList />
               </FlexLayout>
             }
-          // stickyTop={false}
+            // stickyTop={false}
           />
         }
         sideBar={sideBar()}

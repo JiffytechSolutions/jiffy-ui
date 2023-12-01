@@ -459,7 +459,7 @@ const VirtualSelect = ({
         {isMobile && isSearchable && (
           <div className="inte-virtualSelect__dropdown-textField">
             <TextField
-              placeHolder="Search"
+              placeholder="Search"
               prefix={<Search size={20} />}
               onChange={(e) => {
                 setInputValue(e);

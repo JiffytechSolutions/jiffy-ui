@@ -95,7 +95,8 @@ export default {
       },
     },
     onEnter: {
-      description: "The callback function that is triggered when Enter key is pressed",
+      description:
+        "The callback function that is triggered when Enter key is pressed",
       control: {
         disable: true,
       },
@@ -301,7 +302,7 @@ const Template = ({ ...rest }) => {
   const [tt, setTT] = useState<any>();
   function hello() {
     alert("Enter pressed");
-    setTT(<Badge children={tt} />)
+    setTT(<Badge children={tt} />);
   }
   function clearField() {
     setTT("");
@@ -334,10 +335,10 @@ const Template = ({ ...rest }) => {
           onEnter={() => {
             hello();
           }}
-          onKeyUp={() => { }}
-          onBlur={() => { }}
+          onKeyUp={() => {}}
+          onBlur={() => {}}
           onChange={setTT}
-         onBackspace={() => alert("hello backspace")}
+          onBackspace={() => alert("hello backspace")}
           tabIndex={rest.tabIndex}
           isRequired={rest.isRequired}
           helpText={rest.helpText}
@@ -346,10 +347,11 @@ const Template = ({ ...rest }) => {
           suffix={rest.suffix}
           helpIcon={allIcons[rest.helpIcon]({
             size: 20,
-            color: `${rest.controlStates == "Error"
-              ? "var(--inte-R200)"
-              : "var(--inte-G90)"
-              }`,
+            color: `${
+              rest.controlStates == "Error"
+                ? "var(--inte-R200)"
+                : "var(--inte-G90)"
+            }`,
           })}
         />
       </FormElement>

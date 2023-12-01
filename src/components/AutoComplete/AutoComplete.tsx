@@ -188,7 +188,6 @@ function AutoComplete({
         myReff.current?.children[0].children[selectedIndex + 1].scrollIntoView({
           block: "nearest",
         });
-
       }
     } else {
       if (event.key == "Enter" && filteredName[selectedIndex]?.value) {
@@ -327,7 +326,7 @@ function AutoComplete({
         helpText={helpText}
         label={name}
         prefix={<Search size={20} color={color} />}
-        placeHolder={placeHolder}
+        placeholder={placeHolder}
         isLoading={isLoading}
         autoFocus={autofocus}
         isClearable={isClearable}
@@ -364,10 +363,10 @@ function AutoComplete({
   const renderData = (
     <>
       {renderStatementResult &&
-        !isLoading &&
-        filteredName.length > 0 &&
-        show &&
-        value.trim() ? (
+      !isLoading &&
+      filteredName.length > 0 &&
+      show &&
+      value.trim() ? (
         <PortalComponent>
           <div
             role="listbox"
@@ -467,13 +466,13 @@ function AutoComplete({
                   >
                     {textField(true)}
                     {renderStatementResult &&
-                      filteredName.length > 0 &&
-                      show &&
-                      value.trim()
+                    filteredName.length > 0 &&
+                    show &&
+                    value.trim()
                       ? autoCompletePopover
                       : showList1 && value.length > 0 && value.trim()
-                        ? autoCompleteNodata
-                        : null}
+                      ? autoCompleteNodata
+                      : null}
                   </ul>
                 </div>
 
