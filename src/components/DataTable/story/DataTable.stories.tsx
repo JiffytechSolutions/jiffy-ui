@@ -4,11 +4,10 @@ import Pagination from "../../Pagination/Pagination";
 import { dataSource } from "./DataSource";
 import DataTable, { columnI } from "../DataTable";
 import TemplateColumns from "./TemplateColumns";
-import { StoryContext } from '@storybook/react';
 import DataTableDoc from "../Document/DataTableDoc";
 import Text from "../../Text/Text";
-import { RadioGroup, Select } from "../../Form";
 import { FlexLayout } from "../../FlexLayout";
+import { NoProducts } from "../../../illustrations";
 
 export default {
   title: "Components/DataTable And List/DataTable",
@@ -409,56 +408,56 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <DataTable
-      {...rest}
-      isLoading={(loading || rest.loading)}
-      dataSource={dataSourceT}
-      columns={primaryColumns.slice(0,3)}
-      scrollX={rest.scrollX || 700}
-      rowSelection={{
-        multi: true,
-        selectedRowKeys: selKeysObj(selectedRowKeys),
-        onSelectChange: (item: any) => {
-          Object.keys(item).map((i) => {
-            selectedRowKeys[i].state = item[i];
-            if (selectedRowKeys[i].children && item[i] !== "indeterminate") {
-              Object.keys(selectedRowKeys[i].children).map(
-                (child) => (selectedRowKeys[i].children[child] = item[i])
-              );
-            }
-          });
-          setSelectedRowKeys({ ...selectedRowKeys });
-        },
-      }}
-      expandable={{
-        rowExpandable: (item) => ![5, 8].includes(item.key),
-        expandedRowRender: (props: any) => {
-          return (
-            <InternalDataTable
-              parent={{
-                key: props.key,
-                state: selectedRowKeys[props.key].state,
-              }}
-              selectedRowKey={selectedRowKeys[props.key].children}
-              onSelectChange={(obj: any) => changeChildren(props.key, obj)}
-            />
-          );
-        },
-      }}
-      pagination={
-        <Pagination
-          currentPage={1}
-          totalitem={dataSource.length}
-          onNext={() => {
-            alert("next");
-          }}
-          countPerPage={10}
-          optionPerPage={undefined}
-          onPageChange={function (onPage: number): void {
-            throw new Error("Function not implemented.");
-          }}
-        />
-      }
-    />
+        {...rest}
+        isLoading={(loading || rest.loading)}
+        dataSource={dataSourceT}
+        columns={primaryColumns.slice(0, 3)}
+        scrollX={rest.scrollX || 700}
+        rowSelection={{
+          multi: true,
+          selectedRowKeys: selKeysObj(selectedRowKeys),
+          onSelectChange: (item: any) => {
+            Object.keys(item).map((i) => {
+              selectedRowKeys[i].state = item[i];
+              if (selectedRowKeys[i].children && item[i] !== "indeterminate") {
+                Object.keys(selectedRowKeys[i].children).map(
+                  (child) => (selectedRowKeys[i].children[child] = item[i])
+                );
+              }
+            });
+            setSelectedRowKeys({ ...selectedRowKeys });
+          },
+        }}
+        expandable={{
+          rowExpandable: (item) => ![5, 8].includes(item.key),
+          expandedRowRender: (props: any) => {
+            return (
+              <InternalDataTable
+                parent={{
+                  key: props.key,
+                  state: selectedRowKeys[props.key].state,
+                }}
+                selectedRowKey={selectedRowKeys[props.key].children}
+                onSelectChange={(obj: any) => changeChildren(props.key, obj)}
+              />
+            );
+          },
+        }}
+        pagination={
+          <Pagination
+            currentPage={1}
+            totalitem={dataSource.length}
+            onNext={() => {
+              alert("next");
+            }}
+            countPerPage={10}
+            optionPerPage={undefined}
+            onPageChange={function (onPage: number): void {
+              throw new Error("Function not implemented.");
+            }}
+          />
+        }
+      />
     </Card>
   );
 };
@@ -470,7 +469,7 @@ export const DataTableWithFixedHeader: any = ({ ...rest }) => {
     <Card>
       <DataTable
         {...rest}
-        dataSource={[...dataSource , ...dataSource]}
+        dataSource={[...dataSource, ...dataSource]}
         columns={primaryColumns}
         scrollX={900}
         isFixedHeader={true}
@@ -498,10 +497,10 @@ export const DataTableWithFixedColumns: any = ({ ...rest }) => {
   return (
     <Card>
       {/* <FlexLayout> */}
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A maiores assumenda reiciendis porro expedita. Consectetur labore iste quidem eum modi a voluptate eligendi minus sint. Quasi ipsam dicta temporibus possimus similique dolorem praesentium ratione? Quam incidunt vitae, cum quaerat qui dolores sint iste eius temporibus cupiditate est amet voluptas adipisci suscipit! Vel in aperiam sapiente dolorem facere consequuntur nisi possimus ad architecto earum alias tempora, enim nobis deleniti nesciunt quis placeat. Eos, libero consequatur voluptatum magnam numquam odit dolores. Numquam doloribus deserunt doloremque? Tenetur ullam non nesciunt, aliquid rerum culpa laboriosam quasi et autem magnam pariatur? Facere repellat maxime recusandae? At repellat ipsam deleniti non harum aut iste rerum dignissimos quas laboriosam. Nemo voluptas quasi maxime hic deserunt ex eaque blanditiis ea adipisci. Ratione sed ad recusandae, iusto quidem nulla nemo, quod placeat esse saepe ipsa. Odio, dicta impedit? Blanditiis tempore est recusandae nostrum autem pariatur eligendi nesciunt ab atque amet odio, et rerum delectus maiores quae dignissimos cumque dolorum porro doloribus commodi illo. Repellendus quae, quaerat officia voluptatibus, velit doloremque incidunt numquam ex accusantium ratione consequatur quia eum quidem placeat tempore et autem, explicabo magni? In, dolore facere iusto voluptates, dolorem ducimus hic doloribus rem aperiam iure assumenda laborum debitis ipsum natus ipsam a quae quos modi inventore. Iusto ducimus dolore corrupti illo magni deleniti qui. Modi obcaecati reprehenderit magnam dignissimos vitae iure, veniam molestias asperiores. Animi tempore tempora aliquid accusantium amet sequi sapiente alias eligendi, incidunt fugiat nihil suscipit quod deleniti! Maiores delectus eligendi voluptatem, doloremque itaque temporibus. Iste, similique consectetur dolorum ab veritatis unde cum? Tempore nesciunt debitis officia voluptatibus, maiores fuga natus deleniti enim corporis qui aut architecto, laudantium error perspiciatis, pariatur culpa? Amet quae odit quos non repellendus labore consequuntur enim incidunt, blanditiis, qui deserunt eius iure fugiat. Unde laudantium et nihil ex nostrum itaque excepturi nemo quae ut nobis! Optio totam, facilis corporis quia praesentium dignissimos nulla quod, placeat iusto iste provident ullam, sed minima. Esse dolorem cumque voluptas vel dolores dicta provident soluta placeat saepe fugit porro, numquam quas totam aspernatur eius sapiente rem similique architecto voluptates aliquam, eligendi minus repellendus explicabo eos? Unde nobis velit deserunt dicta! Dicta architecto inventore dignissimos quasi rerum hic eligendi aliquid, alias maiores, exercitationem culpa! Numquam, vero magnam itaque, corrupti ad necessitatibus corporis voluptas perspiciatis, eligendi quam sapiente labore consectetur eveniet quidem vitae aliquid accusamus voluptate facilis esse rem odio non nam officia. Tempora temporibus at sequi unde, obcaecati amet odit quod voluptatem culpa porro impedit dicta, ducimus voluptas aspernatur aliquam molestiae maxime eum officiis esse! Quae atque quibusdam sit, quod accusantium ad distinctio minus. Expedita, optio sit exercitationem nisi blanditiis consequuntur, maxime facere id porro aut eos eaque quasi aspernatur dolor minus alias, assumenda provident reprehenderit perspiciatis? Vel cupiditate voluptates consequuntur. Qui consequuntur non architecto id vel fugit nam sapiente, voluptates, ad, laborum sed ea ducimus aperiam saepe veritatis nemo. Neque sunt ea quaerat enim doloremque molestias blanditiis dolorum voluptatem, consectetur ducimus? Velit, ea culpa. Quo totam repudiandae possimus, maiores numquam vel voluptate illum necessitatibus nihil!</p>
+      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A maiores assumenda reiciendis porro expedita. Consectetur labore iste quidem eum modi a voluptate eligendi minus sint. Quasi ipsam dicta temporibus possimus similique dolorem praesentium ratione? Quam incidunt vitae, cum quaerat qui dolores sint iste eius temporibus cupiditate est amet voluptas adipisci suscipit! Vel in aperiam sapiente dolorem facere consequuntur nisi possimus ad architecto earum alias tempora, enim nobis deleniti nesciunt quis placeat. Eos, libero consequatur voluptatum magnam numquam odit dolores. Numquam doloribus deserunt doloremque? Tenetur ullam non nesciunt, aliquid rerum culpa laboriosam quasi et autem magnam pariatur? Facere repellat maxime recusandae? At repellat ipsam deleniti non harum aut iste rerum dignissimos quas laboriosam. Nemo voluptas quasi maxime hic deserunt ex eaque blanditiis ea adipisci. Ratione sed ad recusandae, iusto quidem nulla nemo, quod placeat esse saepe ipsa. Odio, dicta impedit? Blanditiis tempore est recusandae nostrum autem pariatur eligendi nesciunt ab atque amet odio, et rerum delectus maiores quae dignissimos cumque dolorum porro doloribus commodi illo. Repellendus quae, quaerat officia voluptatibus, velit doloremque incidunt numquam ex accusantium ratione consequatur quia eum quidem placeat tempore et autem, explicabo magni? In, dolore facere iusto voluptates, dolorem ducimus hic doloribus rem aperiam iure assumenda laborum debitis ipsum natus ipsam a quae quos modi inventore. Iusto ducimus dolore corrupti illo magni deleniti qui. Modi obcaecati reprehenderit magnam dignissimos vitae iure, veniam molestias asperiores. Animi tempore tempora aliquid accusantium amet sequi sapiente alias eligendi, incidunt fugiat nihil suscipit quod deleniti! Maiores delectus eligendi voluptatem, doloremque itaque temporibus. Iste, similique consectetur dolorum ab veritatis unde cum? Tempore nesciunt debitis officia voluptatibus, maiores fuga natus deleniti enim corporis qui aut architecto, laudantium error perspiciatis, pariatur culpa? Amet quae odit quos non repellendus labore consequuntur enim incidunt, blanditiis, qui deserunt eius iure fugiat. Unde laudantium et nihil ex nostrum itaque excepturi nemo quae ut nobis! Optio totam, facilis corporis quia praesentium dignissimos nulla quod, placeat iusto iste provident ullam, sed minima. Esse dolorem cumque voluptas vel dolores dicta provident soluta placeat saepe fugit porro, numquam quas totam aspernatur eius sapiente rem similique architecto voluptates aliquam, eligendi minus repellendus explicabo eos? Unde nobis velit deserunt dicta! Dicta architecto inventore dignissimos quasi rerum hic eligendi aliquid, alias maiores, exercitationem culpa! Numquam, vero magnam itaque, corrupti ad necessitatibus corporis voluptas perspiciatis, eligendi quam sapiente labore consectetur eveniet quidem vitae aliquid accusamus voluptate facilis esse rem odio non nam officia. Tempora temporibus at sequi unde, obcaecati amet odit quod voluptatem culpa porro impedit dicta, ducimus voluptas aspernatur aliquam molestiae maxime eum officiis esse! Quae atque quibusdam sit, quod accusantium ad distinctio minus. Expedita, optio sit exercitationem nisi blanditiis consequuntur, maxime facere id porro aut eos eaque quasi aspernatur dolor minus alias, assumenda provident reprehenderit perspiciatis? Vel cupiditate voluptates consequuntur. Qui consequuntur non architecto id vel fugit nam sapiente, voluptates, ad, laborum sed ea ducimus aperiam saepe veritatis nemo. Neque sunt ea quaerat enim doloremque molestias blanditiis dolorum voluptatem, consectetur ducimus? Velit, ea culpa. Quo totam repudiandae possimus, maiores numquam vel voluptate illum necessitatibus nihil!</p>
       <DataTable
         {...rest}
-        dataSource={[...dataSource , ...dataSource]}
+        dataSource={[...dataSource, ...dataSource]}
         columns={primaryColumns}
         isFixedHeader={true}
         scrollX={960}
@@ -511,24 +510,24 @@ export const DataTableWithFixedColumns: any = ({ ...rest }) => {
   );
 }
 
-export const DataTableWithScrollBarSitckyAtBottom = ({...rest}) => {
-  return <DataTable 
-      columns={TemplateColumns}
-      isFixedHeader
-      stickyScrollBar
-      scrollX={2000}
-      dataSource={Array(50).fill(0)}
-      pagination={<Pagination
-        type="fullLength"
-        currentPage={1}
-        totalitem={50}
-        onPageChange={()=>{}}
-        onEnter={()=>{}}
-        onPrevious={()=>{}}
-        onNext={()=>{}}
-        onCountChange={()=>{}}
-        countPerPage={50}
-      />}
+export const DataTableWithScrollBarSitckyAtBottom = ({ ...rest }) => {
+  return <DataTable
+    columns={TemplateColumns}
+    isFixedHeader
+    stickyScrollBar
+    scrollX={2000}
+    dataSource={Array(50).fill(0)}
+    pagination={<Pagination
+      type="fullLength"
+      currentPage={1}
+      totalitem={50}
+      onPageChange={() => { }}
+      onEnter={() => { }}
+      onPrevious={() => { }}
+      onNext={() => { }}
+      onCountChange={() => { }}
+      countPerPage={50}
+    />}
   />
 }
 
@@ -587,9 +586,9 @@ export const DataTableWithRowExpandable: any = ({ ...rest }) => {
   );
 }
 
-export const ResizableDataTable : any = ({ ...rest }) => {
+export const ResizableDataTable: any = ({ ...rest }) => {
 
-  return <DataTable 
+  return <DataTable
     isResizable
     columns={TemplateColumns}
     scrollX={1000}
@@ -611,7 +610,7 @@ export const DataTableTemplate: any = ({ ...rest }) => {
     <Card>
       <DataTable
         {...rest}
-        scrollX={2000} 
+        scrollX={2000}
         isFixedHeader
         columns={TemplateColumns}
         dataSource={TemplateDataSource()}
@@ -693,7 +692,7 @@ const TemplateDataTableStory = ({ ...rest }) => {
     setSelectValue(prev => ({ ...prev, [ind]: value }))
   }
 
-  const TemplateColumnsT : columnI[] = [{
+  const TemplateColumnsT: columnI[] = [{
     title: "Sr No",
     key: "key",
     dataIndex: 'key',
@@ -755,8 +754,17 @@ export const DataTableEmptyBody: any = ({ ...rest }) => {
         {...rest}
         dataSource={[]}
         columns={primaryColumns}
-        emptyTableUi={<h1>Fallback Ui from story</h1>}
-      />
+        emptyTableUi={(
+          <div style={{
+            marginBottom : "4rem"
+          }}>
+            <div style={{
+              margin : "4rem auto 2rem auto",
+              width : "fit-content"
+            }}><NoProducts /></div>
+            <Text alignment="center" fontweight="bolder" type="T-4">No Data Found !!</Text>
+          </div>
+        )} />
     </Card>
   );
 }
