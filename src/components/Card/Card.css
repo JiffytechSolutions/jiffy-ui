@@ -35,16 +35,15 @@
 
 /* card types end*/
 /* spacing */
-.inte-card--tight .inte-card__header,
-.inte-card--tight .inte-card__body,
-.inte-card--tight .inte-card__footer {
-  padding: 1.6rem;
-}
-
 .inte-card--loose .inte-card__header,
 .inte-card--loose .inte-card__body,
 .inte-card--loose .inte-card__footer {
   padding: 2rem;
+}
+.inte-card--tight .inte-card__header,
+.inte-card--tight .inte-card__body,
+.inte-card--tight .inte-card__footer {
+  padding: 1.6rem;
 }
 /* spacing end*/
 

@@ -12,8 +12,8 @@
   background-color: var(--inte-P20);
 }
 
-
-.inte-formElement--hasInnerIconSuf.inte-formElement--loading .inte-formElement__textField {
+.inte-formElement--hasInnerIconSuf.inte-formElement--loading
+  .inte-formElement__textField {
   padding-right: 82px !important;
 }
 
@@ -35,14 +35,10 @@
   display: inline-flex;
 }
 
-
-
 .inte-formElement--hasInnerIconPre .inte-formElement__innericPrefix {
   padding-right: 0.8rem;
   border-right: 0.1rem solid var(--inte-G40);
 }
-
-
 
 .inte-formElement--hasInnerIconSuf .inte-formElement__innericSuffix {
   left: unset;
@@ -57,8 +53,6 @@
 }
 
 /* Inner Prefix and Suffix end*/
-
-
 
 /* Password Strength */
 .inte-formElement__passwordStrenth {
@@ -88,9 +82,11 @@
 }
 
 .inte-formElement__strength--weak {
-  background: linear-gradient(90deg,
-      var(--inte-R350) 0%,
-      var(--inte-Y300) 68.92%);
+  background: linear-gradient(
+    90deg,
+    var(--inte-R350) 0%,
+    var(--inte-Y300) 68.92%
+  );
   width: 50%;
 }
 
@@ -141,7 +137,7 @@
   user-select: none;
 }
 
-.inte-formElement:focus+.inte-formElement--spinner>span:hover,
+.inte-formElement:focus + .inte-formElement--spinner > span:hover,
 .inte-formElement--spinner span:hover {
   background-color: var(--inte-G50);
 }

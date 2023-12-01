@@ -74,7 +74,7 @@ export default {
     },
     status: {
       description:
-        "Change the Color of the  status   <b>(On type dangerPlained and textButton it is not appliclable)</b>",
+        "Change the Color of the  status   <b>(On type dangerPlain and textButton it is not appliclable)</b>",
       control: {
         type: "radio",
         options: ["primary", "secondary", "success", "error", "warning"],
@@ -144,18 +144,15 @@ export default {
       control: {
         type: "number",
       },
-      defaultValue: 10,
+      defaultValue: 50,
     },
     navigatorPattern: {
       description:
-        "Set Navigator Pattern <br/> <b>You can set pattern like This<b/>:<br/><b>[100, 30, 100, 30, 100, 30, 200, 30, 200, 30, 200, 30, 100, 30, 100, 30, 100]</b><br/><b>[100]</b>   <br/> Value is given in the form of array ",
+        "Set Navigator Pattern <br/> <b>You can set pattern like This<b/>:<br/><b>[100, 30, 100, 30, 100, 30, 200, 30, 200, 30, 200, 30, 100, 30, 100, 30, 100]</b><br/><b>[100]</b><br/> Value is given in the form of array<br/> <b>for better experience please use this navigatorPattern [70] and hapticTimeout 500</b>",
       control: {
         type: "number",
       },
-      defaultValue: [
-        100, 30, 100, 30, 100, 30, 200, 30, 200, 30, 200, 30, 100, 30, 100, 30,
-        100,
-      ],
+      defaultValue: [70],
     },
     onClick: {
       description: "Callback when clicked",
@@ -239,7 +236,9 @@ const Template = (rest: NewI) => {
       <Button
         {...rest}
         isHaptic={rest.isHaptic}
-        onClick={() => {}}
+        onClick={() => {
+         
+        }}
         icon={allIcons[rest.icon]({
           size: `${
             rest.size == "large"
@@ -278,7 +277,8 @@ const Template = (rest: NewI) => {
               : "var(--inte-G0)"
           }`,
         })}
-        hapticTimeout={10}
+        navigatorPattern={[70]}
+        hapticTimeout={50}
         isFullWidth={rest.isFullWidth}
         disclosure={rest.disclosure}
       />

@@ -4,6 +4,7 @@ import "./story.css";
 import AnnouncementBarDoc from "../Doument/AnnouncementBarDoc";
 import Carousel from "../../Carousel/Carousel";
 import Marquee from "../../Marquee/Marquee";
+import { Card } from "../../Card";
 
 export default {
   title: "Components/Feedback/AnnouncementBar",
@@ -18,7 +19,7 @@ export default {
         "Update available, click on download button to get the best out of our app",
     },
     bgImage: {
-      description: "This is announcement bar children",
+      description: "set the Src for announcment",
       control: {
         type: "text",
       },
@@ -53,6 +54,20 @@ export default {
       },
       defaultValue: true,
     },
+    customClass: {
+      description: "Set the customClass",
+      control: {
+        type: "text",
+      },
+      defaultValue: "",
+    },
+    action: {
+      description: "Set the action for announcement bar you can set ",
+      control: {
+        disable: true,
+      },
+      
+    },
   },
 };
 const types = ["primary", "danger", "success", "warning", "neutral"];
@@ -71,6 +86,7 @@ const Template = ({ ...rest }) => {
       onClose={destroyf}
       children={rest.children}
       bgImage={rest.bgImage}
+      customClass={rest.customClass}
     />
   );
 };
@@ -162,13 +178,15 @@ announcmentbar_with_slider.decorators = [
 export const announcmentbar_with_marquee: any = Template.bind({});
 announcmentbar_with_marquee.decorators = [
   () => (
-    <AnnouncementBar type="primary" destroy={false}>
+    <Card>
+      <AnnouncementBar type="primary" destroy={false}>
       <Marquee
         content="
     Update available, click on download button to get the best out of our
     app!"
       />
     </AnnouncementBar>
+    </Card>
   ),
 ];
 

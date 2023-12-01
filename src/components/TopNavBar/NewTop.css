@@ -1,0 +1,77 @@
+.newtop-menu {
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 4px 0px;
+  background-color: #fff;
+  padding: 1.6rem 3.2rem;
+  margin-bottom: 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 7.2rem;
+  position: sticky;
+  width: 100%;
+  top: 0;
+  z-index: 999999;
+}
+.newtop-menu .inte-sideBar {
+  all: unset;
+}
+.inte-topBar__connectLeft {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+.newtop-menu .inte-sideBar__listItem {
+  padding-left: unset;
+}
+.newtop-menu .inte-sideBar__section {
+  padding: unset;
+}
+
+.newtop-menu .inte-sideBar__list {
+  display: flex;
+}
+
+.newtop-menu .inte-sideBar__listItem.inte-sideBar__listItem--expandable {
+  position: relative;
+}
+.newtop-menu .inte-sideBar__childList {
+  width: 100%;
+  position: absolute;
+  top: 66px;
+  z-index: 9;
+  border-radius: 0.4rem;
+}
+.newtop-menu .inte-sideBar__label {
+  white-space: pre;
+}
+
+.newtop-menu
+  .inte-sideBar__listItem--expandable--active
+  .inte-sideBar__childList {
+  background-color: #fff;
+  box-shadow: 0 0 2px 1px silver;
+}
+
+/* .newtop-menu
+  .inte-sideBar__listItem--expandable--active
+  .inte-sideBar__childList {
+  background-color: #fff;
+  box-shadow: 0 0 2px 1px silver;
+} */
+
+.newtop-menu
+  .inte-sideBar__list
+  > .inte-sideBar__listItem--active
+  > .inte-sideBar__itemBody::before {
+  height: 3px;
+  width: 100%;
+  left: 0;
+  top: 56px;
+  border-radius: 0.6rem;
+}
+
+@media screen and (max-width: 991px) {
+  .newtop-menu {
+    padding: 0.6rem 2rem;
+  }
+}
