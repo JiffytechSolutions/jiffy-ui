@@ -15,8 +15,6 @@ export interface InputPhoneI {
   controlStates?: "success" | "warning" | "error";
   isClearable?: boolean;
   isRequired?: boolean;
-  min?: number;
-  max?: number;
   maxlength?: number | string | any;
   isDisabled?: boolean;
   onEnter?: () => void;
@@ -48,8 +46,7 @@ const InputPhone = ({
   IsReadOnly = false,
   customClass = "",
   controlStates,
-  min,
-  max,
+
   onEnter,
   onClear,
   onCountryChange = () => {
@@ -81,8 +78,6 @@ const InputPhone = ({
         onChange={(e) => onChange(e)}
         value={value}
         label={label}
-        min={min}
-        max={max}
         helpText={helpText}
         IsReadOnly={IsReadOnly}
         isClearable={isClearable}

@@ -104,20 +104,7 @@ export default {
       },
       defaultValue: false,
     },
-    min: {
-      description: "set the minimum value textfiled",
-      control: {
-        type: "number",
-      },
-      defaultValue: 10,
-    },
-    max: {
-      description: "set the maxmimum value textfiled",
-      control: {
-        type: "number",
-      },
-      defaultValue: 12,
-    },
+
     maxlength: {
       description: "set the maxlength of textfield",
       control: {
@@ -169,8 +156,6 @@ const Template = ({ ...rest }) => {
         controlStates={rest.controlStates}
         placeholder={rest.placeholder}
         label={rest.label}
-        min={rest.min}
-        max={rest.max}
         customClass={rest.customClass}
         isRequired={rest.isRequired}
         IsReadOnly={rest.IsReadOnly}
