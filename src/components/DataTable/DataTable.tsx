@@ -5,6 +5,7 @@ import { Radio } from "../Form";
 import getClassNames from "../../utilities/getClassnames";
 import "./DataTable.css";
 import AnimationWrapper from "../AnimationWrapper/AnimationWrapper";
+import { NoProducts } from "../../illustrations";
 export interface columnI {
   title: string | React.ReactNode;
   dataIndex?: string;
@@ -762,7 +763,7 @@ const DataTable = ({
             columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
           }
         >
-          {emptyTableUi ? emptyTableUi : <h1 style={{ textAlign: 'center' }}>No Data Found!</h1>}
+          {emptyTableUi ? emptyTableUi : <NoProducts />}
         </td>
       </tr>
     );
