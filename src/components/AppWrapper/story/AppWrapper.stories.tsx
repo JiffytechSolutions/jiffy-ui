@@ -488,6 +488,7 @@ const dataTable = () => {
       <DataTable
         columns={TemplateColumnsT}
         isFixedHeader
+        stickyScrollBar
         scrollX={1800}
         dataSource={currTableData}
         rowSelection={{
