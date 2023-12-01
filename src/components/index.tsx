@@ -16,7 +16,7 @@ export { default as Badge } from "./Badge/Badge";
 export type { BadgeI } from "./Badge/Badge";
 export { default as Tag } from "./Tag/Tag";
 export type { TagI } from "./Tag/Tag";
-export { default as TextStyles } from "./TextStyles/TextStyles"; // Depricated for new usage
+// export { default as TextStyles } from "./TextStyles/TextStyles";  Depricated for new usage
 export { default as Text } from "./Text/Text";
 export type { TextI } from "./Text/Text";
 export { default as LRLayout } from "./LRLayout/LRLayout";

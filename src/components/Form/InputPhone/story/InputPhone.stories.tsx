@@ -1,12 +1,13 @@
-import React from "react";
-import PhoneInput from "../PhoneInput";
+import React, { useState } from "react";
 import { Card } from "../../../Card";
 import * as Icon from "../../../../storybook/Foundation/Icons/Icons";
+import InputPhone from "../InputPhone";
+import { data } from "./Data";
 const allIcons: any = { ...Icon };
 
 export default {
-  title: "Components/Form/PhoneInput",
-  component: PhoneInput,
+  title: "Components/Form/InputPhone",
+  component: InputPhone,
   argTypes: {
     label: {
       description: "Add label",
@@ -92,37 +93,33 @@ export default {
 };
 
 const Template = ({ ...rest }) => {
+  const holdData = [
+    {
+      label: "+91",
+      value: "+91",
+    },
+  ];
+  const [value1, setValue1] = useState("");
+  const [value2, setValue2] = useState("+91");
+
+  data.map((item) => {
+    holdData.push({
+      label: item.code,
+      value: item.code,
+    });
+  });
+
   return (
-    <Card cardType="borderLess">
-      <PhoneInput
-        {...rest}
-        helpIcon={<Icon.Search size={16} />}
-        onChange={(i, j) => console.log(i, j)}
+    <Card title="Input Phone Number">
+      <InputPhone
+        countryOptions={holdData}
+        value={value1}
+        countryValue={value2}
+        onChange={(e: any) => setValue1(e)}
+        onCountryChange={(e: any) => setValue2(e)}
       />
     </Card>
   );
 };
 
 export const Primary = Template.bind({});
-// Disabled
-export const Disabled: any = Template.bind({});
-Disabled.decorators = [
-  () => (
-    <Card cardType="borderLess" title="Disabled">
-      <PhoneInput placeholder="type your number" isDisabled />
-    </Card>
-  ),
-];
-// Searchable
-export const Searchable: any = Template.bind({});
-Searchable.decorators = [
-  () => (
-    <Card cardType="borderLess" title="Searchable">
-      <PhoneInput
-        placeholder="Enter country code"
-        isSearchable
-        onChange={(e: any) => console.log(e)}
-      />
-    </Card>
-  ),
-];

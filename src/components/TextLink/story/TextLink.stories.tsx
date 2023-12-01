@@ -52,7 +52,7 @@ export default {
       defaultValue: "ExternalLink",
     },
     url: {
-      description: "Kindly Enter Label",
+      description: "Kindly Enter the url",
       control: {
         type: "text",
       },

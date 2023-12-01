@@ -170,7 +170,7 @@ const TextField = React.forwardRef(
           min={props.min}
           max={props.max}
           step={step}
-          placeholder={props.placeHolder}
+          placeholder={props.placeholder}
           tabIndex={props.tabIndex}
           autoFocus={props.autoFocus}
           className="inte-formElement__control inte-formElement__textField"
@@ -208,13 +208,13 @@ const TextField = React.forwardRef(
                     Number(props.value) < props.max;
                     if (
                       props.value === "" &&
-                      !isNaN(parseInt(String(props.min)))
+                      !isNaN(Number(String(props.min)))
                     ) {
                       onChange(Number(props.min));
                     } else {
                       const update =
-                        Number(props.value) + parseInt(step.toString());
-                      if (update < props.max) {
+                        Number(props.value) + Number(step.toString());
+                      if (update <= props.max) {
                         onChange(update);
                       } else {
                         onChange(props.value);
@@ -227,9 +227,9 @@ const TextField = React.forwardRef(
                       ? props.min?.toString() == ""
                         ? 0
                         : props.min
-                      : parseInt(props.value as string) || 0;
+                      : Number(props.value as string) || 0;
                   const returnvalue =
-                    parseInt(temp) + parseInt(step.toString());
+                    Number(temp) + Number(step.toString());
                   if (
                     props.value === "" &&
                     !isNaN(parseInt(String(props.min)))
@@ -434,7 +434,7 @@ export interface TextfieldI {
   value?: string | number;
   label?: string | React.ReactNode;
   type?: "text" | "number" | "password" | "tel" | "url" | "email";
-  placeHolder?: string;
+  placeholder?: string;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   connectLeft?: React.ReactNode;
@@ -444,7 +444,7 @@ export interface TextfieldI {
   customClass?: string;
   IsReadOnly?: boolean;
   id?: string;
-  controlStates?: "sucess" | "warning" | "error";
+  controlStates?: "success" | "warning" | "error";
   isLoading?: boolean;
   autocomplete?: "on" | "off" | "new-password";
   isClearable?: boolean;
