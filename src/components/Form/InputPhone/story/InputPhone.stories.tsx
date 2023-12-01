@@ -60,7 +60,7 @@ export default {
       defaultValue: "Search",
     },
     helpText: {
-      description: "Set help text",
+      description: "Set Helptext for TextField",
       control: {
         type: "text",
       },
@@ -125,6 +125,18 @@ export default {
       },
       defaultValue: 20,
     },
+    customClass: {
+      description: "Add extra class using customClass prop",
+      control: {
+        type: "text",
+      },
+    },
+    IsReadOnly: {
+      description: "By using this you can set textfiled only readable",
+      control: {
+        type: "text",
+      },
+    },
   },
 };
 
@@ -159,7 +171,15 @@ const Template = ({ ...rest }) => {
         label={rest.label}
         min={rest.min}
         max={rest.max}
+        customClass={rest.customClass}
+        isRequired={rest.isRequired}
+        IsReadOnly={rest.IsReadOnly}
         maxlength={rest.maxlength}
+        helpText={rest.helpText}
+        helpIcon={allIcons[rest.helpIcon]({
+          size: 18,
+          color: "#000",
+        })}
       />
     </Card>
   );

@@ -8,7 +8,6 @@ export interface InputPhoneI {
   value?: string | number;
   label?: string;
   type?: "text" | "number";
-
   helpText?: string;
   helpIcon?: React.ReactNode;
   customClass?: string;
@@ -41,7 +40,7 @@ const InputPhone = ({
   countryOptions,
   placeholder,
   label,
-
+  helpText,
   isClearable = false,
   helpIcon,
   isDisabled = false,
@@ -75,16 +74,16 @@ const InputPhone = ({
   }, [onCountryChange, countryValue]);
 
   return (
-    <div className="inte-inputPhone" ref={myInputRef}>
+    <div className={`inte-inputPhone ${customClass}`} ref={myInputRef}>
       <TextField
         type={type}
-        customClass={customClass}
         placeholder={placeholder}
         onChange={(e) => onChange(e)}
         value={value}
         label={label}
         min={min}
         max={max}
+        helpText={helpText}
         IsReadOnly={IsReadOnly}
         isClearable={isClearable}
         helpIcon={helpIcon}
