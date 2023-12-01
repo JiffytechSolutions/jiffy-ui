@@ -177,7 +177,6 @@ function AutoComplete({
       if (showList1 && selectedIndex > 0) {
         setSelectedIndex(selectedIndex - 1);
         myReff.current?.children[0].children[selectedIndex - 1].scrollIntoView({
-          behavior: "smooth",
           block: "nearest",
         });
       }
@@ -187,7 +186,6 @@ function AutoComplete({
       if ((showList1 && selectedIndex) < filteredName.length - 1) {
         setSelectedIndex(selectedIndex + 1);
         myReff.current?.children[0].children[selectedIndex + 1].scrollIntoView({
-          behavior: "smooth",
           block: "nearest",
         });
       }
@@ -328,7 +326,7 @@ function AutoComplete({
         helpText={helpText}
         label={name}
         prefix={<Search size={20} color={color} />}
-        placeHolder={placeHolder}
+        placeholder={placeHolder}
         isLoading={isLoading}
         autoFocus={autofocus}
         isClearable={isClearable}
@@ -421,7 +419,7 @@ function AutoComplete({
         onKeyDown={(e) => {
           if (!showList) return;
           if (e.key === "Enter" && onEnter) {
-            onEnter(value);
+            onEnter(filteredName[selectedIndex].label);
           }
           if (renderStatementResult) {
             handleKeyDown(e);

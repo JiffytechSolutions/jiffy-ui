@@ -23,7 +23,7 @@ export interface InputPhoneI {
   customClass?: string;
   IsReadOnly?: boolean;
   id?: string;
-  controlStates?: "sucess" | "warning" | "error";
+  controlStates?: "success" | "warning" | "error";
   isLoading?: boolean;
   autocomplete?: "on" | "off" | "new-password";
   isClearable?: boolean;
@@ -71,7 +71,7 @@ const InputPhone = ({
       <TextField
         type={type}
         customClass={customClass}
-        placeHolder={placeHolder}
+        placeholder={placeHolder}
         onChange={(e) => onChange(e)}
         value={value}
         label={label}

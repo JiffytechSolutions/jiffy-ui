@@ -505,7 +505,7 @@ const BulkEditStoryHelper = ({ ...rest }) => {
 
   return (
     <DataTable
-      hasFixedHeader
+      isFixedHeader
       bulkEditRow={bulkEditRow}
       // rowSelection={{
       //     selectedRowKeys : selectedRowKey,

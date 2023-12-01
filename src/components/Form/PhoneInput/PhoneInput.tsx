@@ -208,7 +208,7 @@ const PhoneInput = ({
               {isSearchable && (
                 <li className="inte-phoneInput__item--searchable">
                   <TextField
-                    placeHolder="Search by country name"
+                    placeholder="Search by country name"
                     value={searchText}
                     prefix={<Search size={16} />}
                     // customClass="inte-phoneInput__searchField"

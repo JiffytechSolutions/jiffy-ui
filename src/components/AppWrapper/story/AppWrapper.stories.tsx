@@ -487,7 +487,8 @@ const dataTable = () => {
     <Card>
       <DataTable
         columns={TemplateColumnsT}
-        hasFixedHeader
+        isFixedHeader
+        scrollX={1800}
         dataSource={currTableData}
         rowSelection={{
           selectedRowKeys: currentSelectedRowKeys,

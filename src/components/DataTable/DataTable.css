@@ -186,6 +186,11 @@
   background-color: var(--inte-P50);
 }
 
+.inte-DataTable__resizeHandler--active {
+  background-color: var(--inte-P50) !important;
+  border-right: 1px solid black;
+}
+
 .inte-dataTable__fixHeader--handler {
   position: sticky;
   top:0;
@@ -245,4 +250,16 @@
 
 .inte-dataTable__expanded-td:empty {
   display: none;
+}
+
+.inte-dataTable__stickyScrollBar--wrapper {
+  overflow: auto;
+  z-index: 1;
+  box-shadow: inset -10px 0 8px -8px rgba(16, 24, 40, 0.10);
+  position: fixed;
+  bottom: 0;
+}
+
+.inte-dataTable__stickyScrollBar {
+  height: 1px;
 }
