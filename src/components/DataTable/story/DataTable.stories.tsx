@@ -518,6 +518,17 @@ export const DataTableWithScrollBarSitckyAtBottom = ({...rest}) => {
       stickyScrollBar
       scrollX={2000}
       dataSource={Array(50).fill(0)}
+      pagination={<Pagination
+        type="fullLength"
+        currentPage={1}
+        totalitem={50}
+        onPageChange={()=>{}}
+        onEnter={()=>{}}
+        onPrevious={()=>{}}
+        onNext={()=>{}}
+        onCountChange={()=>{}}
+        countPerPage={50}
+      />}
   />
 }
 
