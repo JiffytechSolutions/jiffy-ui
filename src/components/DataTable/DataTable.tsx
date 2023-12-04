@@ -810,7 +810,7 @@ const DataTable = ({
     >
       {isFixedHeader && hasHeader && (
         <div className="inte-dataTable__fixHeader--handler">
-          <table className="inte-dataTable" style={{ tableLayout: tableLayout ? tableLayout : "fixed", width: scrollX ? scrollX / 10 + "rem" : "auto" }}>
+          <table className="inte-dataTable" style={{ tableLayout: tableLayout ? tableLayout : "fixed", width: scrollX ? scrollX / 10 + "rem" : "100%" }}>
             <colgroup ref={fixHeaderRef}>
               {
                 expandable ? <col style={{ width: "5.2rem" }} /> : null
@@ -842,7 +842,7 @@ const DataTable = ({
         <table className={`inte-dataTable`}
           style={{
             tableLayout: tableLayout ? tableLayout : isFixedHeader ? "fixed" : "auto",
-            width: scrollX ? scrollX / 10 + "rem" : "auto"
+            width: scrollX ? scrollX / 10 + "rem" : "100%"
           }}
         >
           <colgroup ref={tableColRef}>

@@ -16,7 +16,8 @@
 
 .inte-dataTable--bulkEdit .inte-dataTable__cell input ,
 .inte-dataTable--bulkEdit .inte-formElement__control{
-    border:none
+    border:none;
+    background-color: var(--inte-G40);
 }
 
 .inte-dataTable--bulkEdit .inte-dataTable__cell input:focus ,
@@ -33,4 +34,16 @@
     background-color: #F6F6F7;
     padding: 1rem 1rem!important;
     border: 0 !important;
+}
+
+
+
+
+
+.price-edit-action-list {
+    display: flex;
+}
+
+.no-wrap-text {
+    text-wrap: nowrap;
 }

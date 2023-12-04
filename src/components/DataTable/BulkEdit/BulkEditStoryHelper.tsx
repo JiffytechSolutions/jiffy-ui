@@ -9,6 +9,7 @@ import { FlexChild, FlexLayout } from "../../FlexLayout";
 import productImage from "./asset/Image.png";
 import AspectRatio from "../../AspectRatio/AspectRatio";
 import Text from "../../Text/Text";
+import ActionList from "../../ActionList/ActionList";
 
 // interface DataI {
 //     key: number;
@@ -199,6 +200,17 @@ type selectedRowKey = {
   [key: string]: boolean | "indeterminate";
 };
 
+type PriceEditorDataI = {
+  currValue: string,
+  selectValue: string,
+  textFieldValue: string,
+  updatedValue: string
+}
+
+type PriceEditorState = {
+  [key: string]: PriceEditorDataI
+}
+
 type simpleObj = { [key: string]: string };
 
 const BulkEditStoryHelper = ({ ...rest }) => {
@@ -210,6 +222,8 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     "Handling Time": "",
     "Country Of Origin": "",
   });
+
+  const [priceEditorData, setPriceEditorData] = useState<PriceEditorState>({})
 
   const originCountries = [
     {
@@ -261,6 +275,23 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     });
   };
 
+  console.log(priceEditorData)
+
+  const getUpdatedValue = (prevValue: number, selectValue: string, textFieldValue: number) => {
+    switch (selectValue) {
+      case "Increase by Percentage":
+        return `INR ${prevValue + ((textFieldValue / 100) * prevValue)}`
+      case "Decrease by Percentage":
+        return `INR ${prevValue - ((textFieldValue / 100) * prevValue)}`
+      case "Decrease by Fixed Value":
+        return `INR ${prevValue - textFieldValue}`
+      case "Increase by Fixed Value":
+        return `INR ${prevValue + textFieldValue}`
+    }
+  }
+
+  console.log(priceEditorData , "priceEditorData")
+
   const columns: columnI[] = [
     {
       key: "1",
@@ -306,26 +337,43 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     },
     {
       key: "5",
-      width: 200,
+      width: 250,
       // align : "center",
       // dataIndex: "Handling Time",
       title: "Handling Time",
       render: (item: DataI) => (
-        <TextField
-          min={1}
-          value={item["Handling Time"]}
-          onChange={(newValue) =>
-            handelDataChange(newValue, item.key, "Handling Time")
-          }
-        />
+        <FlexLayout spacing="extraTight" wrap="noWrap" valign="center">
+          <Text fontweight="bold" customClass="no-wrap-text"> Days :</Text>
+          <TextField
+            type="number"
+            min={1}
+            value={item["Handling Time"].split(" ")[0]}
+            onChange={(newValue) =>
+              handelDataChange(newValue, item.key, "Handling Time")
+            }
+          />
+        </FlexLayout>
       ),
     },
     {
       key: "6",
-      width: 200,
+      width: 600,
       // align : "center",
-      dataIndex: "Standard Price",
+      // dataIndex: "Standard Price",
       title: "Standard Price",
+      render: (item: DataI) => <PriceEditor
+        updatedValue={priceEditorData[item.key]?.updatedValue}
+        currValue={priceEditorData[item.key]?.currValue}
+        textFieldValue={priceEditorData[item.key]?.textFieldValue}
+        selectValue={priceEditorData[item.key]?.selectValue}
+        onSelectValueChange={(newValue: string) => setPriceEditorData(prev => ({ ...prev, [item.key]: ({ ...prev[item.key], selectValue: newValue }) }))}
+        onTextFieldChange={(newValue: string) => {
+          const prevValue = Number(priceEditorData[item.key]?.currValue.split(" ")[1]);
+          const selectValue = priceEditorData[item.key]?.selectValue;
+          const newUpdatedValue = getUpdatedValue(prevValue, selectValue, Number(newValue));
+          setPriceEditorData(prev => ({ ...prev, [item.key]: ({ ...prev[item.key], textFieldValue: newValue, updatedValue: newUpdatedValue ?? "" }) }))
+        }}
+      />,
     },
     {
       key: "7",
@@ -439,20 +487,35 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     data.map((item) => {
       keysInData[item.key] = false;
     });
+
+    const priceData: PriceEditorState = {}
+    data.map((item) => {
+      priceData[item.key] = ({
+        currValue: item["Standard Price"],
+        selectValue: "",
+        textFieldValue: "",
+        updatedValue: ""
+      })
+    })
+
+    setPriceEditorData(priceData)
+
     setSelectedRowKey(keysInData);
-  }, []);
+  }, [data]);
 
   const bulkEditRow: bulkEditRowI[] = [
     {
-      // colSpan : 2,
-      editior: "Edit this row to update selected products",
+      editior: "Edit this row to update as bulk",
       key: "Product",
       fixed: "left",
     },
     {
-      colSpan: 2,
       editior: "",
-      key: "Product1",
+      key: "Product111",
+    },
+    {
+      editior: "",
+      key: "Product33",
     },
     {
       editior: (
@@ -464,12 +527,16 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     },
     {
       editior: (
-        <TextField
-          value={bulkEditorValue["Handling Time"]}
-          onChange={(newValue) =>
-            handelBulkEditChange(newValue, "Handling Time")
-          }
-        />
+        <FlexLayout spacing="extraTight" wrap="noWrap" valign="center">
+          <Text fontweight="bold" customClass="no-wrap-text"> Days :</Text>
+          <TextField
+            type="number"
+            value={bulkEditorValue["Handling Time"]}
+            onChange={(newValue) =>
+              handelBulkEditChange(newValue, "Handling Time")
+            }
+          />
+        </FlexLayout>
       ),
       key: "Product3",
     },
@@ -511,6 +578,8 @@ const BulkEditStoryHelper = ({ ...rest }) => {
       //     selectedRowKeys : selectedRowKey,
       //     onSelectChange : handelSelectChange
       // }}
+      isResizable
+      stickyScrollBar
       scrollX={3000}
       customClass="inte-dataTable--bulkEdit"
       columns={columns}
@@ -518,5 +587,86 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     />
   );
 };
+
+interface PriceEditorI {
+  currValue: string;
+  selectValue?: string;
+  textFieldValue?: string;
+  onTextFieldChange: (newValue: string) => void;
+  onSelectValueChange: (newValue: string) => void;
+  updatedValue?: string;
+}
+
+const PriceEditor = ({ ...props }: PriceEditorI) => {
+
+  const [selectValue, setSelectValue] = useState('')
+
+  const [isOpen, setIsOpen] = useState(false)
+
+  const buttonName = props.selectValue?.length ? props.selectValue : "Choose Option"
+
+  const activator = <Button isFullWidth halign="spaceBetween" disclosure type="textButton" onClick={() => setIsOpen(prev => !prev)}>
+    {
+      buttonName
+    }
+  </Button>
+
+  return (
+    <FlexLayout wrap="noWrap" spacing="loose" valign="center" halign="fill" desktopWidth="80" tabWidth="80" mobileWidth="80">
+
+      <FlexLayout wrap="noWrap" spacing="mediumTight" valign="center" halign="fill" desktopWidth="50" tabWidth="50" mobileWidth="50">
+        <ActionList
+          customClass="price-edit-action-list"
+          isOpen={isOpen}
+          activator={activator}
+          onClose={() => setIsOpen(false)}
+          options={[
+            {
+              title: "Increase",
+              items: [
+                {
+                  content: "By Percentage",
+                  onClick() {
+                    props.onSelectValueChange("Increase by Percentage")
+                  },
+                },
+                {
+                  content: "Fixed Value",
+                  onClick() {
+                    props.onSelectValueChange("Increase by Fixed Value")
+                  },
+                }
+              ]
+            },
+            {
+              title: "Decrease",
+              items: [
+                {
+                  content: "By Percentage",
+                  onClick() {
+                    props.onSelectValueChange("Decrease by Percentage")
+                  },
+                },
+                {
+                  content: "Fixed Value",
+                  onClick() {
+                    props.onSelectValueChange("Decrease by Fixed Value")
+                  },
+                }
+              ]
+            }
+          ]}
+        />
+        <TextField
+          isDisabled={props.selectValue ? false : true}
+          type="number"
+          value={props.textFieldValue}
+          onChange={(newValue: string) => props.onTextFieldChange(newValue)}
+        />
+      </FlexLayout>
+      <Text>{props.updatedValue?.length ? props.updatedValue : props.currValue}</Text>
+    </FlexLayout>
+  )
+}
 
 export default BulkEditStoryHelper;
