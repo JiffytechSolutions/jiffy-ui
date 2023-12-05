@@ -26,6 +26,7 @@ export interface columnI {
   };
   render?: (item: any) => React.ReactNode;
   onCell?: (rowNum: number) => any;
+  editor?:React.ReactNode
 }
 
 export interface DataSourceI {
@@ -47,7 +48,8 @@ export interface DataTableI {
   emptyTableUi?: React.ReactNode;
   customClass?: string;
   tableLayout?: "fixed" | "auto"
-  bulkEditRow?: bulkEditRowI[];
+  // bulkEditRow?: bulkEditRowI[];
+  bulkEditTable?:boolean;
   stickyScrollBar?: boolean;
 }
 
@@ -107,7 +109,8 @@ const DataTable = ({
   emptyTableUi,
   customClass,
   tableLayout,
-  bulkEditRow,
+  // bulkEditRow,
+  bulkEditTable,
   stickyScrollBar
 }: DataTableI) => {
   const [dataTableKey, setDataTableKey] = useState(1);
@@ -539,7 +542,7 @@ const DataTable = ({
           ) : null} */}
         </tr>
         {
-          !!bulkEditRow && (
+          !!bulkEditTable && (
             <tr className="inte-dataTable__bulkEditRow">
               {expandable && (
                 <th
@@ -570,7 +573,7 @@ const DataTable = ({
                 </th>
               )}
               {
-                bulkEditRow.map(item => (
+                columns.map(item => (
                   <th
                     ref={(cell) => makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)}
                     key={item.key}
@@ -579,21 +582,21 @@ const DataTable = ({
                       [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]: item.fixed,
 
                     })}
-                    colSpan={item.colSpan ?? 1}
+                    // colSpan={item.colSpan ?? 1}
                   >
                     {
-                      item.editior
+                      item.editor
                     }
                   </th>
                 ))
               }
-              {
+              {/* {
                 Array(columns.length - bulkEditRow.length).fill(0).map(item =>
                   <th
                     colSpan={0}
                     ref={(cell) => makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)}
                   ></th>)
-              }
+              } */}
 
             </tr>
           )
@@ -603,7 +606,7 @@ const DataTable = ({
   };
 
   const makeDataTableBodyRows = (item: any, index: number) => {
-    let rowNum = index + (hasHeader ? 1 + (!!bulkEditRow ? 1 : 0) : 0),
+    let rowNum = index + (hasHeader ? 1 + (!!bulkEditTable ? 1 : 0) : 0),
       columnNum = 0;
     const isRowSelected = selectedCheckbox[item.key];
     const isRowExpandable = expandable?.rowExpandable
@@ -810,7 +813,7 @@ const DataTable = ({
     >
       {isFixedHeader && hasHeader && (
         <div className="inte-dataTable__fixHeader--handler">
-          <table className="inte-dataTable" style={{ tableLayout: tableLayout ? tableLayout : "fixed", width: scrollX ? scrollX / 10 + "rem" : "100%" }}>
+          <table className="inte-dataTable" style={{ tableLayout: tableLayout ? tableLayout : "fixed", width: scrollX ? scrollX / 10 + "rem" : "" }}>
             <colgroup ref={fixHeaderRef}>
               {
                 expandable ? <col style={{ width: "5.2rem" }} /> : null
@@ -842,7 +845,7 @@ const DataTable = ({
         <table className={`inte-dataTable`}
           style={{
             tableLayout: tableLayout ? tableLayout : isFixedHeader ? "fixed" : "auto",
-            width: scrollX ? scrollX / 10 + "rem" : "100%"
+            width: scrollX ? scrollX / 10 + "rem" : ""
           }}
         >
           <colgroup ref={tableColRef}>

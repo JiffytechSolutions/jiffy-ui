@@ -33,9 +33,23 @@
 .inte-dataTable__bulkEditRow th {
     background-color: #F6F6F7;
     padding: 1rem 1rem!important;
-    border: 0 !important;
+    /* border: 0 !important; */
 }
 
+.inte-dataTable--bulkEdit .inte-DataTable__resizeHandler {
+    right: 0;
+    &:hover {
+        background-color: var(--inte-P50);
+    }
+}
+
+.bulk-edit-story-wrapper .inte-main {
+    padding: 1rem 0;
+}
+
+.inte-dataTable--bulkEdit.inte-dataTable__container {
+    border-radius: 0;
+}
 
 
 
@@ -46,4 +60,8 @@
 
 .no-wrap-text {
     text-wrap: nowrap;
+}
+
+.bulkEdit-price-editor .inte-actionList {
+    display: flex;
 }
