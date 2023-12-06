@@ -3,7 +3,9 @@ import React from "react";
 import { X } from "../../storybook/Foundation/Icons/Icons";
 import Button, { ButtonI } from "../Button/Button";
 import getClassNames from "../../utilities/getClassnames";
+import useDelayUnmount from "../../utilities/useDelayTimeout";
 import "./Alert.css";
+
 const Alert: React.FC<AlertI> = ({
   type = "default",
   title,
@@ -13,15 +15,16 @@ const Alert: React.FC<AlertI> = ({
   icon,
   primaryAction,
   seconadaryAction,
-  customClass
+  customClass,
+  isOpen = true,
 }: AlertI) => {
-
+  const animateData = useDelayUnmount(isOpen, 300);
   const checkAlertType: { [key: string]: string } = {
     default: "inte-alert--default",
     warning: "inte-alert--warning",
     danger: "inte-alert--danger",
     success: "inte-alert--success",
-    info: "inte-alert--info"
+    info: "inte-alert--info",
   };
 
   const typeNotify = type && checkAlertType[type];
@@ -50,50 +53,71 @@ const Alert: React.FC<AlertI> = ({
     }
   };
   return (
-    <div
-      className={getClassNames({
-        "inte-alert": true,
-        [typeNotify]: typeNotify,
-        "inte-alert__hasDestroy": hasDestroy,
-        [customClass as string]: customClass
-      })}  >
-      <div
-        className={getClassNames({
-          "inte-alert__content": true,
-          "inte-alert__withDescription": description
-        })}>
-        {icon ? <div className="inte-alert__icon">{icon}</div> : ""}
-        <div className={"inte-alert__text"}>
-          {title && (<div className="inte-alert__title">{title}</div>)}
-          {description && (
-            <div className="inte-alert__description">{description}</div>
-          )}
-          {
-            (primaryAction || seconadaryAction) && <div className="inte-alert__actionsBtn">
-              {primaryAction && <Button type="outlined" content={primaryAction.content} icon={primaryAction.icon} iconAlign={primaryAction.iconAlign} onClick={primaryAction.onClick} />}
-              {seconadaryAction && <Button type="textButton" icon={seconadaryAction.icon} content={seconadaryAction.content} onClick={seconadaryAction.onClick} />}
-
+    <React.Fragment>
+      {animateData && (
+        <div
+          className={getClassNames({
+            "inte-alert": true,
+            [typeNotify]: typeNotify,
+            "inte-alert__hasDestroy": hasDestroy,
+            [customClass as string]: customClass,
+            "inte-alertAnimation--in": isOpen,
+            "inte-alertAnimation--out": !isOpen,
+          })}
+        >
+          <div
+            className={getClassNames({
+              "inte-alert__content": true,
+              "inte-alert__withDescription": description,
+            })}
+          >
+            {icon ? <div className="inte-alert__icon">{icon}</div> : ""}
+            <div className={"inte-alert__text"}>
+              {title && <div className="inte-alert__title">{title}</div>}
+              {description && (
+                <div className="inte-alert__description">{description}</div>
+              )}
+              {(primaryAction || seconadaryAction) && (
+                <div className="inte-alert__actionsBtn">
+                  {primaryAction && (
+                    <Button
+                      type="outlined"
+                      content={primaryAction.content}
+                      icon={primaryAction.icon}
+                      iconAlign={primaryAction.iconAlign}
+                      onClick={primaryAction.onClick}
+                    />
+                  )}
+                  {seconadaryAction && (
+                    <Button
+                      type="textButton"
+                      icon={seconadaryAction.icon}
+                      content={seconadaryAction.content}
+                      onClick={seconadaryAction.onClick}
+                    />
+                  )}
+                </div>
+              )}
             </div>
-          }
-
+          </div>
+          {checkDestroy() && checkDestroy()}
         </div>
-      </div>
-      {checkDestroy() && checkDestroy()}
-    </div>
+      )}
+    </React.Fragment>
   );
 };
 
 export interface AlertI {
   type: "default" | "warning" | "success" | "danger" | "info";
-  title: string|React.ReactNode;
-  description?: React.ReactNode
+  title: string | React.ReactNode;
+  description?: React.ReactNode;
   onClose?: () => void;
   hasDestroy?: boolean;
+  isOpen?: boolean;
   icon?: React.ReactNode;
   primaryAction?: ButtonI;
-  seconadaryAction?: ButtonI
-  customClass?: string
+  seconadaryAction?: ButtonI;
+  customClass?: string;
 }
-
 
 export default Alert;

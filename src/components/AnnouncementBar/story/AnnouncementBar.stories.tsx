@@ -66,7 +66,6 @@ export default {
       control: {
         disable: true,
       },
-      
     },
   },
 };
@@ -180,12 +179,12 @@ announcmentbar_with_marquee.decorators = [
   () => (
     <Card>
       <AnnouncementBar type="primary" destroy={false}>
-      <Marquee
-        content="
+        <Marquee
+          content="
     Update available, click on download button to get the best out of our
     app!"
-      />
-    </AnnouncementBar>
+        />
+      </AnnouncementBar>
     </Card>
   ),
 ];

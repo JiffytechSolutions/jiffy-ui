@@ -6,12 +6,14 @@ export interface MarqueeI {
   content: any;
   speed?: number;
   getFullView?: boolean;
+  align?: "start" | "center" | "end" | "fill";
 }
 
 const Marquee: React.FC<MarqueeI> = ({
   content,
   speed = 10,
   getFullView = false,
+  align = "start",
 }) => {
   const [position, setPosition] = useState<number>(0);
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -82,6 +84,10 @@ const Marquee: React.FC<MarqueeI> = ({
       className={getClassNames({
         "inte-marquee__container": true,
         "inte-marquee--hasFullView": getFullView,
+        "inte-marquee__start": align == "start",
+        "inte-marquee__center": align == "center",
+        "inte-marquee__end": align == "end",
+        "inte-marquee__fill": align === "fill",
       })}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

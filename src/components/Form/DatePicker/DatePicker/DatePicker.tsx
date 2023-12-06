@@ -55,12 +55,10 @@ const DatePicker = ({
   onTextFieldClear = () => {},
 }: DatePickerI) => {
   const [calendarDate, setCalendarDate] = useState(defaultOpenDate);
-  const [calendarType, setCalendarType] = useState<"day" | "year" | "month">(
-    "day"
-  );
-  const [prevCalendarType, setPrevCalendarType] = useState<
-    "day" | "year" | "month"
-  >("day");
+  const [calendarType, setCalendarType] =
+    useState<"day" | "year" | "month">("day");
+  const [prevCalendarType, setPrevCalendarType] =
+    useState<"day" | "year" | "month">("day");
   const [isOpen, setIsOpen] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [date, setDate] = useState(selectedDate);
@@ -188,10 +186,12 @@ const DatePicker = ({
   }, [selectedTime, isOpen]);
 
   return (
-    <div className={getClassNames({
-      "inte-textField--forDatePicker" : true,
-      "inte-textField--forDatePicker--hasOnlyIcon" : isOnlyIcon
-    })}>
+    <div
+      className={getClassNames({
+        "inte-textField--forDatePicker": true,
+        "inte-textField--forDatePicker--hasOnlyIcon": isOnlyIcon,
+      })}
+    >
       {label &&
         (typeof label === "string" ? (
           <Text as="label" type="T-7" customClass="inte-datePicker__label">
