@@ -1,4 +1,4 @@
-export interface carouselI {
+export interface CarouselI {
   children: React.ReactNode;
   breakpoints?: BreakpointsI;
   beforeSlideChange?: (currentSlide: number, nextSlide: number) => void;
@@ -18,6 +18,7 @@ export interface carouselI {
   pauseOnHover?: boolean;
   pauseOnDotsHover?: boolean;
   persistSlideOnRefresh?: boolean;
+  staticId?: string | number;
   dotsPosition?:
     | "topLeft"
     | "topCenter"

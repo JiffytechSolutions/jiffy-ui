@@ -75,6 +75,14 @@ export default {
       },
       defaultValue: false,
     },
+    staticId: {
+      description:
+        "This prop is required only when you provide persistSlideOnRefresh prop as true and it is useful when you refresh the page then slide will not change .<br/> Note: static id must be provide when you are passing persistSlideOnRefresh prop as true ",
+      control: {
+        type: "text",
+      },
+      defaultValue: "1",
+    },
     slideUsingTouch: {
       description: "Drag Using Touch",
       control: {
@@ -789,7 +797,16 @@ CarouselWithPersistSlideOnRefresh.decorators = [
     return (
       <Card title="Carousel with Persist slide on Refresh">
         <Carousel
+          staticId="1"
           slidesToShow={3}
+          isEndless={true}
+          persistSlideOnRefresh={true}
+        >
+          {renderSlidesWithoutImages()}
+        </Carousel>
+        <Carousel
+          staticId="2"
+          slidesToShow={2}
           isEndless={true}
           persistSlideOnRefresh={true}
         >
