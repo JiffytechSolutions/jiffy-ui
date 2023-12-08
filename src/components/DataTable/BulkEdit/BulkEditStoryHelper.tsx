@@ -14,6 +14,7 @@ import AppBar from "../../AppBar/AppBar";
 import AppWrapper from "../../AppWrapper/AppWrapper";
 import { Label } from "../../Form/TextField/story/TextField.stories";
 import ChoiceList from "../../ChoiceList/ChoiceList";
+import Modal from "../../Modal/Modal";
 
 // interface DataI {
 //     key: number;
@@ -228,11 +229,17 @@ const BulkEditStoryHelper = ({ ...rest }) => {
   });
 
   const [bulkPriceEditorValue, setBulkPriceEditorValue] = useState({
-    selectValue : "",
-    textFieldValue : "",
+    selectValue: "",
+    textFieldValue: "",
   })
 
   const [priceEditorData, setPriceEditorData] = useState<PriceEditorState>({})
+
+  const [descriptionEditorData, setDescriptionEditorData] = useState({
+    open: false,
+    data: "",
+    key: ""
+  })
 
   const originCountries = [
     {
@@ -284,7 +291,7 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     });
   };
 
-  console.log(priceEditorData)
+  console.log(currData, "-----------------")
 
   const getUpdatedValue = (prevValue: number, selectValue: string, textFieldValue: number) => {
     switch (selectValue) {
@@ -299,8 +306,6 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     }
   }
 
-  console.log(priceEditorData , "priceEditorData")
-
   const columns: columnI[] = [
     {
       key: "1",
@@ -310,7 +315,7 @@ const BulkEditStoryHelper = ({ ...rest }) => {
       title: "Product Details",
       fixed: "left",
       render: (item: string) => (
-        <FlexLayout wrap="noWrap" spacing="tight">
+        <FlexLayout wrap="noWrap" spacing="tight" valign="center">
           <AspectRatio ratio={1} style={{ width: "32px" }}>
             <img src={`${productImage}`} />
           </AspectRatio>
@@ -335,56 +340,47 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     },
     {
       key: "4",
-      width: 150,
+      width: 100,
       // align : "center",
-      dataIndex: "Description",
+      // dataIndex: "Description",
       title: "Description",
-      render: (item: string) => (
-        <Button halign="center" isFullWidth type="textButton">
+      render: (item: DataI) => (
+        <Button halign="center" onClick={() => setDescriptionEditorData(({ open: true, data: item.Description, key: item.key }))} isFullWidth type="textButton">
           View
         </Button>
-      ),
-      editor: (
-        <Button type="outlined" halign="center" isFullWidth>
-          Edit
-        </Button>
-      ),
+      )
     },
     {
       key: "5",
-      width: 250,
+      width: 150,
       // align : "center",
       // dataIndex: "Handling Time",
       title: "Handling Time",
       render: (item: DataI) => (
-        <FlexLayout spacing="extraTight" wrap="noWrap" valign="center">
-          <Text fontweight="bold" customClass="no-wrap-text"> Days :</Text>
-          <TextField
-            type="number"
-            min={1}
-            value={item["Handling Time"].split(" ")[0]}
-            onChange={(newValue) =>
-              handelDataChange(newValue, item.key, "Handling Time")
-            }
-          />
-        </FlexLayout>
+        <TextField
+          prefix={"Days : "}
+          type="number"
+          min={1}
+          value={item["Handling Time"].split(" ")[0]}
+          onChange={(newValue) =>
+            handelDataChange(newValue, item.key, "Handling Time")
+          }
+        />
       ),
       editor: (
-        <FlexLayout spacing="extraTight" wrap="noWrap" valign="center">
-          <Text fontweight="bold" customClass="no-wrap-text"> Days :</Text>
-          <TextField
-            type="number"
-            value={bulkEditorValue["Handling Time"]}
-            onChange={(newValue) =>
-              handelBulkEditChange(newValue, "Handling Time")
-            }
-          />
-        </FlexLayout>
+        <TextField
+          prefix={"Days : "}
+          type="number"
+          value={bulkEditorValue["Handling Time"]}
+          onChange={(newValue) =>
+            handelBulkEditChange(newValue, "Handling Time")
+          }
+        />
       ),
     },
     {
       key: "6",
-      width: 600,
+      width: 400,
       // align : "center",
       // dataIndex: "Standard Price",
       title: "Standard Price",
@@ -402,29 +398,29 @@ const BulkEditStoryHelper = ({ ...rest }) => {
         }}
       />,
       editor: (
-        <PriceEditor 
+        <PriceEditor
           selectValue={bulkEditorValue.selectedValue}
           textFieldValue={bulkEditorValue.textFieldValue}
-          onSelectValueChange={(newValue) =>{
+          onSelectValueChange={(newValue) => {
             setPriceEditorData(prev => {
-              const newData = {...prev}
+              const newData = { ...prev }
               Object.keys(newData).map(item => {
                 newData[item].selectValue = newValue
               })
               return newData
             })
-            setBulkEditorValue(prev => ({...prev , selectedValue : newValue}))
+            setBulkEditorValue(prev => ({ ...prev, selectedValue: newValue }))
           }}
-          onTextFieldChange={(newValue) =>{
+          onTextFieldChange={(newValue) => {
             setPriceEditorData(prev => {
-              const newData = {...prev}
+              const newData = { ...prev }
               Object.keys(newData).map(item => {
                 newData[item].textFieldValue = newValue
-                newData[item].updatedValue = getUpdatedValue(Number(newData[item].currValue.split(" ")[1]) ,bulkEditorValue.selectedValue , Number(newValue) ) ?? ""
+                newData[item].updatedValue = getUpdatedValue(Number(newData[item].currValue.split(" ")[1]), bulkEditorValue.selectedValue, Number(newValue)) ?? ""
               })
               return newData
             })
-            setBulkEditorValue(prev => ({...prev , textFieldValue : newValue}))
+            setBulkEditorValue(prev => ({ ...prev, textFieldValue: newValue }))
           }}
         />
       ),
@@ -468,7 +464,7 @@ const BulkEditStoryHelper = ({ ...rest }) => {
       editor: (
         <Select
           options={originCountries}
-          value={bulkEditorValue["Origin Of Country"]}
+          value={bulkEditorValue["Country Of Origin"]}
           onChange={(newValue) =>
             handelBulkEditChange(newValue, "Country Of Origin")
           }
@@ -566,127 +562,34 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     setSelectedRowKey(keysInData);
   }, [data]);
 
-  const bulkEditRow: bulkEditRowI[] = [
-    {
-      editior: "Edit this row to update as bulk",
-      key: "Product",
-      fixed: "left",
-    },
-    {
-      editior: "",
-      key: "Product111",
-    },
-    {
-      editior: "",
-      key: "Product33",
-    },
-    {
-      editior: (
-        <Button type="outlined" halign="center" isFullWidth>
-          Edit
-        </Button>
-      ),
-      key: "Product2",
-    },
-    {
-      editior: (
-        <FlexLayout spacing="extraTight" wrap="noWrap" valign="center">
-          <Text fontweight="bold" customClass="no-wrap-text"> Days :</Text>
-          <TextField
-            type="number"
-            value={bulkEditorValue["Handling Time"]}
-            onChange={(newValue) =>
-              handelBulkEditChange(newValue, "Handling Time")
-            }
-          />
-        </FlexLayout>
-      ),
-      key: "Product3",
-    },
-    {
-      // colSpan : 2,
-      editior: (
-        <PriceEditor 
-          selectValue={bulkEditorValue.selectedValue}
-          textFieldValue={bulkEditorValue.textFieldValue}
-          onSelectValueChange={(newValue) =>{
-            setPriceEditorData(prev => {
-              const newData = {...prev}
-              Object.keys(newData).map(item => {
-                newData[item].selectValue = newValue
-              })
-              return newData
-            })
-            setBulkEditorValue(prev => ({...prev , selectedValue : newValue}))
-          }}
-          onTextFieldChange={(newValue) =>{
-            setPriceEditorData(prev => {
-              const newData = {...prev}
-              Object.keys(newData).map(item => {
-                newData[item].textFieldValue = newValue
-                newData[item].updatedValue = getUpdatedValue(Number(newData[item].currValue.split(" ")[1]) ,bulkEditorValue.selectedValue , Number(newValue) ) ?? ""
-              })
-              return newData
-            })
-            setBulkEditorValue(prev => ({...prev , textFieldValue : newValue}))
-          }}
-        />
-      ),
-      key: "Pro1",
-    },
-    {
-      colSpan: 3,
-      editior: "",
-      key: "Product5",
-    },
-    {
-      // colSpan : 2,
-      editior: (
-        <Select
-          options={originCountries}
-          value={bulkEditorValue["Origin Of Country"]}
-          onChange={(newValue) =>
-            handelBulkEditChange(newValue, "Country Of Origin")
-          }
-        />
-      ),
-      key: "Product1",
-    },
-    // {
-    //     colSpan : 18,
-    //     key : "Product2",
-    //     editior : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi distinctio doloremque voluptate, natus cumque deleniti eius nihil explicabo asperiores voluptatem?"
-    // }
-  ];
-
-  const [openChoiceList , setOpenChoiceList] = useState(false)
-  const [choiceListValue , setChoiceListValue] = useState(["1" , "4" , "5" , "6" , "10" ])
+  const [openChoiceList, setOpenChoiceList] = useState(false)
+  const [choiceListValue, setChoiceListValue] = useState(["1", "4", "5", "6", "10"])
 
   const choiceListOptions = useMemo(() => {
-    return columns.map(column => ({label : column.title , value : column.key}))
-  },[columns])
+    return columns.map(column => ({ label: column.title, value: column.key }))
+  }, [columns])
 
   const currentShowingColumns = useMemo(() => {
     return columns.filter(item => choiceListValue.includes(item.key))
-  },[choiceListValue , columns])
+  }, [choiceListValue, columns])
 
   const choiceListActivator = <Button type="outlined" disclosure onClick={() => setOpenChoiceList(prev => !prev)}>Customize Columns</Button>
 
   const scrollX = useMemo(() => {
-    let t  = 0;
+    let t = 0;
     currentShowingColumns.map(column => {
-      t+=column.width ?? 0
+      t += column.width ?? 0
     })
     return t
-  },[currentShowingColumns])
+  }, [currentShowingColumns])
 
   return (
-    <AppWrapper 
+    <AppWrapper
       embeddedView
-      appBar={<AppBar 
+      appBar={<AppBar
         connectLeft="Edit Products"
         connectRight={
-          <ChoiceList 
+          <ChoiceList
             activator={choiceListActivator}
             onClose={() => setOpenChoiceList(false)}
             isOpen={openChoiceList}
@@ -699,18 +602,26 @@ const BulkEditStoryHelper = ({ ...rest }) => {
       />}
       customClass="bulk-edit-story-wrapper"
     >
+      <Modal
+        isOpen={descriptionEditorData.open}
+        onClose={() => setDescriptionEditorData({ open: false, data: "", key: "" })}
+        heading="Edit Description"
+        primaryAction={{
+          content: 'Save'
+        }}
+        secondaryAction={{
+          content: "Cancel",
+          onClick: () => setDescriptionEditorData({ open: false, data: "", key: "" })
+        }}
+      >
+        <textarea style={{ width: "100%", margin: "auto" }}>{descriptionEditorData.data}</textarea>
+      </Modal>
       <DataTable
         isFixedHeader
-        // bulkEditRow={bulkEditRow}
-        // rowSelection={{
-        //     selectedRowKeys : selectedRowKey,
-        //     onSelectChange : handelSelectChange
-        // }}
         scrollX={scrollX}
         isResizable
         stickyScrollBar
         bulkEditTable
-        // scrollX={3000}
         customClass="inte-dataTable--bulkEdit"
         columns={currentShowingColumns}
         dataSource={currData}
@@ -728,6 +639,16 @@ interface PriceEditorI {
   updatedValue?: string;
 }
 
+// interface DescriptionEditorI {
+//   open : boolean;
+//   onClose: () => void;
+//   co
+// }
+
+// const DescriptionEditor = () => {
+//   return <Modal />
+// }
+
 const PriceEditor = ({ ...props }: PriceEditorI) => {
 
   const [selectValue, setSelectValue] = useState('')
@@ -743,60 +664,59 @@ const PriceEditor = ({ ...props }: PriceEditorI) => {
   </Button>
 
   return (
-    <FlexLayout wrap="noWrap" spacing="loose" valign="center" halign="fill"  customClass="bulkEdit-price-editor" desktopWidth="33" tabWidth="33" mobileWidth="33">
+    <div className="price-editor-container">
       {/* <FlexLayout wrap="noWrap" spacing="mediumTight" valign="center" halign="fill" > */}
-        <ActionList
-          customClass="price-edit-action-list"
-          isOpen={isOpen}
-          activator={activator}
-          onClose={() => setIsOpen(false)}
-          options={[
-            {
-              title: "Increase",
-              items: [
-                {
-                  content: "By Percentage",
-                  onClick() {
-                    props.onSelectValueChange("Increase by Percentage")
-                  },
+      <ActionList
+        customClass="price-edit-action-list"
+        isOpen={isOpen}
+        activator={activator}
+        onClose={() => setIsOpen(false)}
+        options={[
+          {
+            title: "Increase",
+            items: [
+              {
+                content: "By Percentage",
+                onClick() {
+                  props.onSelectValueChange("Increase by Percentage")
                 },
-                {
-                  content: "Fixed Value",
-                  onClick() {
-                    props.onSelectValueChange("Increase by Fixed Value")
-                  },
-                }
-              ]
-            },
-            {
-              title: "Decrease",
-              items: [
-                {
-                  content: "By Percentage",
-                  onClick() {
-                    props.onSelectValueChange("Decrease by Percentage")
-                  },
+              },
+              {
+                content: "Fixed Value",
+                onClick() {
+                  props.onSelectValueChange("Increase by Fixed Value")
                 },
-                {
-                  content: "Fixed Value",
-                  onClick() {
-                    props.onSelectValueChange("Decrease by Fixed Value")
-                  },
-                }
-              ]
-            }
-          ]}
-        />
-        <TextField
-          // isDisabled={props.selectValue ? false : true}
-          type="number"
-          min={0}
-          value={props.textFieldValue}
-          onChange={(newValue: string) => props.onTextFieldChange(newValue)}
-        />
-      {/* </FlexLayout> */}
+              }
+            ]
+          },
+          {
+            title: "Decrease",
+            items: [
+              {
+                content: "By Percentage",
+                onClick() {
+                  props.onSelectValueChange("Decrease by Percentage")
+                },
+              },
+              {
+                content: "Fixed Value",
+                onClick() {
+                  props.onSelectValueChange("Decrease by Fixed Value")
+                },
+              }
+            ]
+          }
+        ]}
+      />
+      <TextField
+        isDisabled={props.selectValue ? false : true}
+        type="number"
+        min={0}
+        value={props.textFieldValue}
+        onChange={(newValue: string) => props.onTextFieldChange(newValue)}
+      />
       <Text>{props.updatedValue?.length ? props.updatedValue : props.currValue}</Text>
-    </FlexLayout>
+    </div>
   )
 }
 

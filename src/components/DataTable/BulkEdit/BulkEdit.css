@@ -1,10 +1,19 @@
 .inte-dataTable--bulkEdit .inte-dataTable__checkbox .inte-checkbox {
     display: flex;
     align-items: center;
-} 
+}
+
+.inte-dataTable--bulkEdit .inte-dataTable__headerRow th {
+    padding: 0 1.2rem;
+}
+
+.inte-dataTable--bulkEdit  *:not(th) {
+    font-weight: 400 !important;
+    font-size: small !important;
+}
 
 .inte-dataTable--bulkEdit .inte-dataTable__cell {
-    padding: 0.5rem 1rem;
+    padding: 0rem 0rem;
     font-size: 1.4rem;
     line-height: 2rem;
     color: #1C2433;
@@ -14,10 +23,12 @@
     border-left: 0.1rem solid var(--inte-G40);
 }
 
+
 .inte-dataTable--bulkEdit .inte-dataTable__cell input ,
 .inte-dataTable--bulkEdit .inte-formElement__control{
     border:none;
-    background-color: var(--inte-G40);
+    border-radius: 0;
+    /* background-color: var(--inte-G40); */
 }
 
 .inte-dataTable--bulkEdit .inte-dataTable__cell input:focus ,
@@ -32,7 +43,7 @@
 
 .inte-dataTable__bulkEditRow th {
     background-color: #F6F6F7;
-    padding: 1rem 1rem!important;
+    padding: 1rem 0rem!important;
     /* border: 0 !important; */
 }
 
@@ -64,4 +75,58 @@
 
 .bulkEdit-price-editor .inte-actionList {
     display: flex;
+}
+
+.bulk-edit-story-wrapper .inte-appBar__toggleButton {
+    display: none;
+}
+
+
+
+/* //for minimal styling */
+
+.inte-dataTable__cell:not(th) .bulkEdit-price-editor .inte-flex__item:nth-child(2) {
+   
+}
+
+.inte-dataTable__cell  .price-editor-container {
+    display: grid;
+    gap:12px;
+    align-items: center;
+    grid-template-columns: 2fr 1.5fr 1fr;
+    width: 100%;
+    padding: 0 1.2rem;
+}
+
+.inte-dataTable__cell:not(th) .price-editor-container > .inte-formElement {
+    border-left : 1px solid var(--inte-G40);
+    border-right : 1px solid var(--inte-G40);
+}
+
+.inte-dataTable--bulkEdit .inte-formElement--spinner span {
+    background: unset;
+}
+
+.inte-dataTable--bulkEdit .inte-formElement .inte-formElement__textField ,
+.inte-dataTable--bulkEdit .inte-formElement__select {
+    height: 3.2rem !important;
+}
+
+.inte-dataTable--bulkEdit .inte-formElement--spinner  {
+    height: 3.2rem;
+}
+
+.inte-dataTable--bulkEdit .inte-formElement--spinner span ,
+.inte-dataTable--bulkEdit .inte-btn__disclosure{
+    height: 1.6rem;
+    width: 2rem;
+    
+}
+
+.inte-dataTable--bulkEdit .inte-formElement--spinner span svg {
+    color: var(--inte-G450);
+}
+
+.inte-dataTable--bulkEdit .inte-formElement__innericPrefix {
+    z-index: 0;
 }
