@@ -26,7 +26,7 @@ import {
 import { FlexLayout } from "../../FlexLayout";
 import AppProvider from "../../../utilities/context/AppContext";
 import TemplateColumns from "../../DataTable/story/TemplateColumns";
-import DataTable from "../../DataTable/DataTable";
+import DataTable, { columnI } from "../../DataTable/DataTable";
 import SideBar from "../../SideBar/SideBar";
 import Badge from "../../Badge/Badge";
 import Card from "../../Card/Card";
@@ -109,7 +109,11 @@ const features = (
   <div className="inte-feature">
     <AutoComplete
       options={[]}
-      placeHolder="Search for Fruits, Vegetables or eating items" value={""} onChange={undefined} onClick={undefined} />
+      placeHolder="Search for Fruits, Vegetables or eating items"
+      value={""}
+      onChange={undefined}
+      onClick={undefined}
+    />
     <Custom
       button={"More Filters"}
       type={"outlined"}
@@ -469,12 +473,12 @@ const dataTable = () => {
     return res;
   }, [selectedRowKey, currentPage, itemPerPage]);
 
-  const TemplateColumnsT = [
+  const TemplateColumnsT: columnI[] = [
     {
       title: "Sr No",
       key: "key",
       dataIndex: "key",
-      fixed:"left",
+      fixed: "left",
     },
     ...TemplateColumns,
   ];
@@ -483,7 +487,9 @@ const dataTable = () => {
     <Card>
       <DataTable
         columns={TemplateColumnsT}
-        hasFixedHeader
+        isFixedHeader
+        stickyScrollBar
+        scrollX={1800}
         dataSource={currTableData}
         rowSelection={{
           selectedRowKeys: currentSelectedRowKeys,
@@ -532,11 +538,11 @@ const Template = ({ ...rest }) => {
       secondaryAction={[
         {
           content: "Sync With MarketPlace",
-          onClick: function noRefCheck() { },
+          onClick: function noRefCheck() {},
         },
         {
           content: "Sync With MarketPlaces",
-          onClick: function noRefCheck() { },
+          onClick: function noRefCheck() {},
         },
         {
           content: "Delete Listing",
@@ -547,12 +553,12 @@ const Template = ({ ...rest }) => {
       ]}
       tertiaryAction={{
         content: "Overview",
-        onClick: function noRefCheck() { },
+        onClick: function noRefCheck() {},
       }}
       primaryAction={{
         content: "Submit",
         icon: <Check color="var(--inte-G0)" size="24" />,
-        onClick: function noRefCheck() { },
+        onClick: function noRefCheck() {},
       }}
     />
   );
@@ -570,7 +576,7 @@ const Template = ({ ...rest }) => {
                 <CustomActionList />
               </FlexLayout>
             }
-          // stickyTop={false}
+            // stickyTop={false}
           />
         }
         sideBar={sideBar()}

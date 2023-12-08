@@ -82,12 +82,6 @@ const Popover = ({
     };
   }, [showDiv]);
 
-  useEffect(() => {
-    return () => {
-      onClose();
-    };
-  }, []);
-
   const { handleTouchStart, handleTouchMove, handleTouchEnd } = handleOnDrag(
     popoverRef,
     scrollRef,

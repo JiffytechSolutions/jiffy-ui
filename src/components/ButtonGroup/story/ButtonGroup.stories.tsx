@@ -5,6 +5,7 @@ import { FlexLayout } from "../../FlexLayout";
 import Button from "../../Button/Button";
 import ButtonGroup from "../ButtonGroup";
 import ButtonGroupDoc from "../Document/ButtonGroupDoc";
+import Text from "../../Text/Text";
 
 export default {
   title: "Components/Actions/ButtonGroup",
@@ -48,11 +49,15 @@ Segmented.decorators = [
     <Card title={"Segmenetd Buttons"}>
       <FlexLayout direction="vertical" spacing="loose">
         {typessize.map((variant: any, index) => (
+          < FlexLayout direction="vertical" spacing="extraTight">
+          <Text fontweight="bolder" type="T-7">{variant}</Text>
           <ButtonGroup segmented key={index}>
             <Button type={variant}>Button</Button>
             <Button type={variant}>Button</Button>
             <Button type={variant}>Button</Button>
           </ButtonGroup>
+          </FlexLayout>
+          
         ))}
       </FlexLayout>
     </Card>

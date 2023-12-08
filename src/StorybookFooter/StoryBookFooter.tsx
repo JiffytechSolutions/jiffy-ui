@@ -1,9 +1,9 @@
 
 import React from "react";
-import { FlexLayout, TextLink, TextStyles } from "../components";
+import { FlexLayout, Text, TextLink } from "../components";
 import { StoryBookFooterLogo } from './FooterLogo'
 // import { TextLink } from "../components/TextLink/TextLink";
-
+import TextStyles  from "../components/TextStyles/TextStyles";
 
 
 export const StoryBookFooter = () => {
@@ -16,17 +16,9 @@ export const StoryBookFooter = () => {
                         <StoryBookFooterLogo />
                         <TextLink label="CedCommerce Website" />
                     </FlexLayout>
-
-                    <TextStyles
-                        alignment="left"
-                        fontweight="normal"
-                        paragraphTypes="LG-1.5"
-                        textcolor="light"
-                        type="Paragraph"
-                        utility="none"
-                    >
-                        © 2023 CedCommerce. All Rights Reserved. Ounce@version3.0
-                    </TextStyles>
+                    <Text alignment="left" customClass="none" textcolor="subdued" fontweight="normal" type="T-8">
+                    © 2023 CedCommerce. All Rights Reserved. Ounce@version3.0
+                    </Text>
                 </FlexLayout>
             </div>
         </>

@@ -347,7 +347,7 @@ export const ButtonGroupDoc = () => {
         <hr className="section-devider" />
 
         {/* State */}
-        <div className="block--section">
+        {/* <div className="block--section">
           <TextStyles
             alignment="left"
             displayTypes="SM-3.4"
@@ -414,7 +414,7 @@ export const ButtonGroupDoc = () => {
               </div>
             </FlexLayout>
           </FlexLayout>
-        </div>
+        </div> */}
         {/* Do’s & Don’ts section */}
         <hr className="section-devider" />
         <div className="block--section">

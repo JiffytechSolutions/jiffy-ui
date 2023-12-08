@@ -73,6 +73,10 @@
   z-index: 0;
 }
 
+body.inte-bodyHasSheetBackdrop {
+  overflow: hidden;
+}
+
 @media screen and (min-width: 992px) {
   .inte-appWrapper.inte-sideBar--active:not(
       .inte-appWrapper--embeddedView

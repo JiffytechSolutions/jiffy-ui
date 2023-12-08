@@ -83,6 +83,7 @@ const Button = ({
       button.removeChild(ripple);
     }, 600);
   };
+  
   const renderButton = (
     <button
       id={id}
@@ -109,7 +110,7 @@ const Button = ({
       className={getClassNames({
         "inte-btn": true,
         "inte-btn--disable": isDisabled,
-        "inte-btn--hasDisclosure": true,
+        "inte-btn--hasDisclosure":disclosure ,
         [bType]: bType,
         "inte-btn--hasIcon": true,
         [halignCss as string]: halignCss,
