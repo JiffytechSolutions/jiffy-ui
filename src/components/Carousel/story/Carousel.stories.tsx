@@ -804,14 +804,6 @@ CarouselWithPersistSlideOnRefresh.decorators = [
         >
           {renderSlidesWithoutImages()}
         </Carousel>
-        <Carousel
-          staticId="2"
-          slidesToShow={2}
-          isEndless={true}
-          persistSlideOnRefresh={true}
-        >
-          {renderSlidesWithoutImages()}
-        </Carousel>
       </Card>
     );
   },

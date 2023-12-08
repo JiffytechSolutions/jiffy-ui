@@ -1,4 +1,4 @@
-export interface CarouselI {
+export type CarouselI =  {
   children: React.ReactNode;
   breakpoints?: BreakpointsI;
   beforeSlideChange?: (currentSlide: number, nextSlide: number) => void;
@@ -17,8 +17,6 @@ export interface CarouselI {
   showArrows?: boolean;
   pauseOnHover?: boolean;
   pauseOnDotsHover?: boolean;
-  persistSlideOnRefresh?: boolean;
-  staticId?: string | number;
   dotsPosition?:
     | "topLeft"
     | "topCenter"
@@ -38,8 +36,14 @@ export interface CarouselI {
   ref?: React.RefObject<any>;
   syncWith?: React.RefObject<any> | null;
   customClass?: string;
-}
-interface BreakpointsI {
+} & ({
+  persistSlideOnRefresh?: undefined;
+} | {
+  persistSlideOnRefresh: boolean;
+  staticId: string | number;
+})
+
+export interface BreakpointsI {
   [key: number]: {
     slidesToShow?: number;
     isAutoplay?: boolean;
