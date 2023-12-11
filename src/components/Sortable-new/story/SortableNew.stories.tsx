@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card } from "../../..";
 import SortableNew from "../SortableNew";
 import SortableT, { SortableDataI } from "../SortableT";
+import SortableStoryHelper from "./SortableStoryHelper";
 
 export default {
   title: "Components/SortableNew",
@@ -84,15 +85,5 @@ export const Primary = Template.bind({});
 
 export const NewSortableSum = ({...rest}) => {
 
-  const [sortableData , setSortableData] = useState<SortableDataI[]>(Array(5).fill(0).map((_ , index) => ({
-    id : index,
-    content : <div className="soltable-item-story">{index+1}</div> as React.ReactNode
-  }) ))
-
-  return (
-    <SortableT 
-      data={sortableData}
-      onChange={(newDataArray) => setSortableData(newDataArray)}
-    />
-  )
+  return <SortableStoryHelper />
 }
