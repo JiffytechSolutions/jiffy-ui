@@ -16,6 +16,10 @@
   margin-top: 1.5rem;
 }
 
+.inte-alert__animation + .inte-alert__animation {
+  margin-top: 1.5rem;
+}
+
 /* alert destroy  */
 .inte-alert--destroy {
   position: absolute;
@@ -192,16 +196,3 @@
 }
 
 /*Alerts End*/
-/* animation css  */
-
-.inte-alertAnimation--in {
-  transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
-  height: auto;
-  max-height: 9999px;
-}
-
-.inte-alertAnimation--out {
-  max-height: 0;
-  transition: max-height 0.4s cubic-bezier(0, 1, 0, 1);
-  overflow: hidden;
-}

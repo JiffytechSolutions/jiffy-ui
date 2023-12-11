@@ -4,7 +4,7 @@
   font-weight: var(--weight-normal);
   display: inline-flex;
   transition: 300ms all linear;
-  background-color: var(--inte-G20);
+  background-color: var(--inte-G30);
   color: var(--inte-G800);
   align-items: center;
 }
@@ -20,9 +20,7 @@
 .inte-tag--hasPopover {
   cursor: pointer;
 }
-.inte-tag--activePopover {
-  background-color: var(--inte-G42);
-}
+
 .inte-tag--disabled {
   user-select: none;
   cursor: not-allowed;
@@ -79,4 +77,40 @@
 /* DARK MODE */
 [data-theme="dark"] .inte-tag {
   opacity: 0.7;
+}
+/* animation tags css */
+.inte-tagAnimation--in {
+  animation: tagAnimationIn 200ms linear forwards;
+}
+.inte-tagAnimation--out {
+  animation: tagAnimationOut 200ms linear forwards;
+}
+/* inte-tag inte-tag--activePopover inte-tagAnimation--in inte-tag--small */
+@keyframes tagAnimationIn {
+  100% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1);
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
+  0% {
+    -webkit-transform: scale(0, 0);
+    transform: scale(0);
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+}
+@keyframes tagAnimationOut {
+  100% {
+    -webkit-transform: scale(0, 0);
+    transform: scale(0);
+    -webkit-opacity: 0;
+    opacity: 0;
+  }
+  0% {
+    -webkit-transform: scale(1, 1);
+    transform: scale(1);
+    -webkit-opacity: 1;
+    opacity: 1;
+  }
 }
