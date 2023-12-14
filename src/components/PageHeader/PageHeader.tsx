@@ -223,7 +223,7 @@ function PageHeader({
                 "inte-pageHeader__title--embededView": isEmbededView,
               })}
             >
-              <h1>{title}</h1>
+              {React.isValidElement(title) ? title : <h1>{title}</h1>}
               {props.titleBadge && <Badge {...props.titleBadge} />}
             </div>
           )}

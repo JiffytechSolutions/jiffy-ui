@@ -65,7 +65,8 @@ export default {
       defaultValue: false,
     },
     isActive: {
-      description: "Toggle the popover",
+      description:
+        "This prop is working when tag with popover (Toggle the popover)",
       control: {
         type: "boolean",
       },
@@ -77,6 +78,22 @@ export default {
         type: "text",
       },
       defaultValue: "",
+    },
+    isAnimation: {
+      description:
+        "If you are Show and hide Tag component with animation then use isAnimation prop and sent the value true",
+      control: {
+        type: "boolean",
+      },
+      defaultValue: false,
+    },
+    isOpen: {
+      description:
+        "This prop is working when  isAnimation is true (Show and hide tag component)",
+      control: {
+        type: "boolean",
+      },
+      defaultValue: true,
     },
   },
 };
@@ -92,6 +109,8 @@ const Template = ({ ...rest }) => {
         hasPopover={rest.hasPopover}
         count={rest.count}
         customClass={rest.customClass}
+        isAnimation={rest.isAnimation}
+        isOpen={rest.isOpen}
       >
         {rest.children}
       </Tag>
@@ -258,6 +277,72 @@ tag_with_popover_and_count.decorators = [
             </Tag>
           </FlexLayout>
         </Popover>
+      </Card>
+    );
+  },
+];
+
+// animation tags
+export const tag_with_animation: any = Template.bind({});
+tag_with_animation.decorators = [
+  () => {
+    const [open1, setOpen1] = useState<boolean>(true);
+    const [open2, setOpen2] = useState<boolean>(true);
+    const [open3, setOpen3] = useState<boolean>(true);
+    const [open4, setOpen4] = useState<boolean>(true);
+    const [open5, setOpen5] = useState<boolean>(true);
+    const [open6, setOpen6] = useState<boolean>(true);
+    return (
+      <Card>
+        <FlexLayout spacing="loose">
+          <Tag
+            onDestroy={() => setOpen1(false)}
+            isOpen={open1}
+            isAnimation={true}
+          >
+            Tag1
+          </Tag>
+
+          <Tag
+            onDestroy={() => setOpen2(false)}
+            isOpen={open2}
+            isAnimation={true}
+          >
+            Tag2
+          </Tag>
+
+          <Tag
+            onDestroy={() => setOpen3(false)}
+            isOpen={open3}
+            isAnimation={true}
+          >
+            Tag3
+          </Tag>
+
+          <Tag
+            onDestroy={() => setOpen4(false)}
+            isOpen={open4}
+            isAnimation={true}
+          >
+            Tag4
+          </Tag>
+
+          <Tag
+            onDestroy={() => setOpen5(false)}
+            isOpen={open5}
+            isAnimation={true}
+          >
+            Tag5
+          </Tag>
+
+          <Tag
+            onDestroy={() => setOpen6(false)}
+            isOpen={open6}
+            isAnimation={true}
+          >
+            Tag6
+          </Tag>
+        </FlexLayout>
       </Card>
     );
   },

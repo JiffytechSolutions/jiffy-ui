@@ -9,10 +9,14 @@
   display: flex;
   width: 2rem !important;
   height: 2rem !important;
-  min-width: 2rem
+  min-width: 2rem;
 }
 
-.inte-alert+.inte-alert {
+.inte-alert + .inte-alert {
+  margin-top: 1.5rem;
+}
+
+.inte-alert__animation + .inte-alert__animation {
   margin-top: 1.5rem;
 }
 
@@ -23,12 +27,12 @@
   top: 1.2rem;
 }
 
-.inte-alert--destroy>span {
+.inte-alert--destroy > span {
   transition: 300ms all linear;
-  border: .1rem solid transparent;
+  border: 0.1rem solid transparent;
 }
 
-.inte-alert--destroy>span:hover {
+.inte-alert--destroy > span:hover {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
@@ -40,8 +44,6 @@
   padding-right: 5.4rem;
 }
 
-
-
 .inte-alert__content {
   display: flex;
   justify-content: flex-start;
@@ -52,7 +54,7 @@
 .inte-alert__withDescription .inte-alert__description {
   color: var(--inte-G450) !important;
   font-size: var(--inte-FS1-6);
-  margin-top: .4rem;
+  margin-top: 0.4rem;
 }
 
 .inte-alert__icon {
@@ -67,10 +69,9 @@
   font-size: var(--inte-FS1-6) !important;
   font-weight: var(--weight-normal) !important;
   color: var(--inte-G800);
-
 }
 .inte-alert__withDescription .inte-alert__text .inte-alert__title {
-  font-weight: var(--weight-bolder)!important;
+  font-weight: var(--weight-bolder) !important;
 }
 .inte-alert__action {
   margin-top: 2rem;
@@ -80,17 +81,17 @@
 /* alert types */
 .inte-alert--default {
   background-color: var(--inte-G15);
-  border: .1rem solid var(--inte-G45);
+  border: 0.1rem solid var(--inte-G45);
 }
 
 .inte-alert--warning {
   background-color: var(--inte-Y50);
-  border: .1rem solid var(--inte-Y95);
+  border: 0.1rem solid var(--inte-Y95);
 }
 
 .inte-alert--danger {
   background-color: var(--inte-R30);
-  border: .1rem solid var(--inte-R80);
+  border: 0.1rem solid var(--inte-R80);
 }
 
 .inte-alert--success {
@@ -100,7 +101,7 @@
 
 .inte-alert--info {
   background-color: var(--inte-P30);
-  border: 0.1rem solid var(--inte-P60)
+  border: 0.1rem solid var(--inte-P60);
 }
 
 /* alert icon color change */
@@ -133,23 +134,23 @@
 }
 
 .inte-alert--default .inte-btn--outlined {
-  border: .1rem solid var(--inte-G50);
+  border: 0.1rem solid var(--inte-G50);
 }
 
 .inte-alert--info .inte-btn--outlined {
-  border: .1rem solid var(--inte-P60);
+  border: 0.1rem solid var(--inte-P60);
 }
 
 .inte-alert--success .inte-btn--outlined {
-  border: .1rem solid var(--inte-GR90);
+  border: 0.1rem solid var(--inte-GR90);
 }
 
 .inte-alert--warning .inte-btn--outlined {
-  border: .1rem solid var(--inte-Y95);
+  border: 0.1rem solid var(--inte-Y95);
 }
 
 .inte-alert--danger .inte-btn--outlined {
-  border: .1rem solid var(--inte-R80);
+  border: 0.1rem solid var(--inte-R80);
 }
 
 /* action button hover */

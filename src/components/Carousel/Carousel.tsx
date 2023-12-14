@@ -1,10 +1,10 @@
-import React, { forwardRef, useEffect, useRef, useState } from "react";
+import React, { forwardRef, useEffect, useId, useRef, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
 } from "../../storybook/Foundation/Icons/Icons";
 import { getArrowalign, getDotsalign } from "./utilities/getClasses";
-import { carouselI } from "./utilities/types";
+import { CarouselI } from "./utilities/types";
 import {
   fadeStyle,
   generateWrapperStyle,
@@ -38,9 +38,10 @@ const Carousel = forwardRef(
       customClass = "",
       dotsPosition = "bottomCenter",
       arrowPosition = "bottomCenter",
+      staticId,
       beforeSlideChange,
       afterSlideChange,
-    }: carouselI,
+    }: CarouselI,
     ref: any
   ) => {
     const carouselChildren = React.Children.toArray(children);
@@ -135,7 +136,7 @@ const Carousel = forwardRef(
     const handleSlideOnPageRefresh = (index: number, width: number) => {
       const obj = { index: index, translateWidth: width };
       const stringifiedObj = JSON.stringify(obj);
-      sessionStorage.setItem("indexActive", stringifiedObj);
+      sessionStorage.setItem("indexActive" + (staticId || "0"), stringifiedObj);
     };
     // Execute when component render
     const onComponentRender = () => {
@@ -165,7 +166,8 @@ const Carousel = forwardRef(
     // Getting required width of wrapper and list
     useEffect(() => {
       const stringifiedObj: any =
-        persistSlideOnRefresh && sessionStorage.getItem("indexActive");
+        persistSlideOnRefresh &&
+        sessionStorage.getItem("indexActive" + (staticId || "0"));
       if (stringifiedObj) {
         onComponentRender();
         const obj = JSON.parse(stringifiedObj);
@@ -573,6 +575,7 @@ const Carousel = forwardRef(
     };
     return (
       <div
+        {...(staticId ? { id: "inte-carousel-" + staticId } : {})}
         className={getClassNames({
           "inte-carousel": true,
           [dotsAlign]: dotsAlign,

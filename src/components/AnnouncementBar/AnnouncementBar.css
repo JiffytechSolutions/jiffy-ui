@@ -32,7 +32,7 @@
 .inte-announcementBar__destroy button {
   background-color: unset;
   border: 0 !important;
-  box-shadow: unset!important;
+  box-shadow: unset !important;
 }
 .inte-announcementBar__destroy button:hover {
   background-color: rgba(0, 0, 0, 0.1);
@@ -46,23 +46,26 @@
 .inte-announcementBar--hasAction {
   gap: 1.2rem;
 }
-.inte-announcementBar__action > button{
-  box-shadow: unset!important;
+.inte-announcementBar__action > button {
+  box-shadow: unset !important;
 }
-.inte-announcement--warning .inte-announcementBar__action > button{
+.inte-announcement--warning .inte-announcementBar__action > button {
   border-color: var(--inte-G800);
 }
 .inte-announcementBar__action > button .inte-btn__text {
   color: var(--inte-G0);
 }
-.inte-announcement--warning .inte-announcementBar__action > button .inte-btn__text{
-  color:var(--inte-G800)
+.inte-announcement--warning
+  .inte-announcementBar__action
+  > button
+  .inte-btn__text {
+  color: var(--inte-G800);
 }
 .inte-announcementBar__action > button:hover {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .inte-announcementBar__action > button:active {
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /* Action Button End */
 
@@ -88,13 +91,63 @@
 .inte-announcement--neutral {
   background-color: var(--inte-G800);
 }
+/*  show code button of storybook */
+#anchor--components-feedback-announcementbar--primary .docs-story.css-kdwx3d,
+#anchor--components-feedback-announcementbar--announcementbar-types
+  .docs-story.css-kdwx3d,
+#story--components-feedback-announcementbar--announcementbar-types
+  .docs-story.css-kdwx3d,
+#anchor--components-feedback-announcementbar--announcmentbar-with-action
+  .docs-story.css-kdwx3d,
+#anchor--components-feedback-announcementbar--announcmentbar-with-all
+  .docs-story.css-kdwx3d,
+#anchor--components-feedback-announcementbar--announcmentbar-with-slider
+  .docs-story.css-kdwx3d,
+#anchor--components-feedback-announcementbar--announcement-bar-with-animation
+  .docs-story.css-kdwx3d,
+#anchor--components-feedback-announcementbar--announcement-bar-with-out-animation
+  .docs-story.css-kdwx3d {
+  padding: 0 0 3rem 0;
+}
 /* Types End */
-
 
 @media screen and (max-width: 768px) {
   .inte-announcementBar__content {
     font-weight: var(--weight-bold);
     font-size: 1.4rem;
-}
+  }
 }
 
+/* animation css  */
+.inte-announcementBar__animation--in {
+  animation: announcementBarIn 300ms linear;
+  transform-origin: top;
+}
+
+.inte-announcementBar__animation--out {
+  animation: announcementBarOut 300ms;
+  animation-fill-mode: forwards;
+  transform-origin: top;
+}
+
+@keyframes announcementBarIn {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes announcementBarOut {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+}

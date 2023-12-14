@@ -62,11 +62,11 @@ const Popover = ({
   useEffect(() => {
     const clickOutsideFun = handleClickOutside(parentRef, popoverRef, onClose);
     const changePos = changePosition(parentRef, popoverRef, { direction });
-    if (parentRef.current) {
-      const addAttr = parentRef.current.children[0];
-      addAttr.setAttribute("aria-expanded", isOpen);
-      addAttr.setAttribute("aria-controls", `inte-popover--wrapper${id}`);
-      addAttr.setAttribute("aria-owns", `inte-popover--wrapper${id}`);
+    if (parentRef?.current) {
+      const addAttr = parentRef?.current?.children[0];
+      addAttr?.setAttribute("aria-expanded", isOpen);
+      addAttr?.setAttribute("aria-controls", `inte-popover--wrapper${id}`);
+      addAttr?.setAttribute("aria-owns", `inte-popover--wrapper${id}`);
     }
     if (showDiv) {
       window.addEventListener("resize", changePos, true);
