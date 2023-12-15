@@ -37,3 +37,8 @@
 .inte-datePicker__timeSelect .inte-btn__container--fullWidth {
   width: 100%;
 }
+@media screen and (max-width: 390px) {
+  .inte-datePicker--popover {
+    width: 100%;
+  }
+}

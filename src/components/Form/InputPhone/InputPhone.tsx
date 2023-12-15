@@ -10,6 +10,7 @@ export interface InputPhoneI {
   type?: "text" | "number";
   helpText?: string;
   helpIcon?: React.ReactNode;
+  isSearchable?: boolean;
   customClass?: string;
   IsReadOnly?: boolean;
   controlStates?: "success" | "warning" | "error";
@@ -46,7 +47,7 @@ const InputPhone = ({
   IsReadOnly = false,
   customClass = "",
   controlStates,
-
+  isSearchable = false,
   onEnter,
   onClear,
   onCountryChange = () => {
@@ -92,6 +93,7 @@ const InputPhone = ({
             onChange={(e) => onCountryChange(e)}
             value={countryValue ?? ""}
             options={countryOptions ?? []}
+            isSearchable={isSearchable}
           />
         }
       />

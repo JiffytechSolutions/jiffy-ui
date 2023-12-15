@@ -286,63 +286,63 @@ tag_with_popover_and_count.decorators = [
 export const tag_with_animation: any = Template.bind({});
 tag_with_animation.decorators = [
   () => {
-    const [open1, setOpen1] = useState<boolean>(true);
-    const [open2, setOpen2] = useState<boolean>(true);
-    const [open3, setOpen3] = useState<boolean>(true);
-    const [open4, setOpen4] = useState<boolean>(true);
-    const [open5, setOpen5] = useState<boolean>(true);
-    const [open6, setOpen6] = useState<boolean>(true);
+    const arr = [1, 2, 3, 4, 5];
+    const [openStates, setOpenStates] = useState(arr.map(() => true));
+
+    const handleDestroy = (index: any) => {
+      setOpenStates((prevStates) =>
+        prevStates.map((state, i) => (i === index ? false : state))
+      );
+    };
+
     return (
       <Card>
-        <FlexLayout spacing="loose">
+        {arr.map((value, index) => (
           <Tag
-            onDestroy={() => setOpen1(false)}
-            isOpen={open1}
+            key={index}
+            onDestroy={() => handleDestroy(index)}
+            isOpen={openStates[index]}
             isAnimation={true}
           >
-            Tag1
+            Tag {value}
           </Tag>
+        ))}
+      </Card>
+    );
+  },
+];
 
-          <Tag
-            onDestroy={() => setOpen2(false)}
-            isOpen={open2}
-            isAnimation={true}
-          >
-            Tag2
-          </Tag>
+export const tag_with_animation_with_remiveItem: any = Template.bind({});
+tag_with_animation_with_remiveItem.decorators = [
+  () => {
+    const initialArr = [1, 2, 3, 4, 5];
+    const [arr, setArr] = useState(initialArr);
+    const [openStates, setOpenStates] = useState(initialArr.map(() => true));
 
-          <Tag
-            onDestroy={() => setOpen3(false)}
-            isOpen={open3}
-            isAnimation={true}
-          >
-            Tag3
-          </Tag>
+    const handleDestroy = (index: any) => {
+      setOpenStates((prevStates) =>
+        prevStates.map((state, i) => (i === index ? false : state))
+      );
+      // Remove the item from the array
+      setTimeout(() => {
+        const newArr = arr.filter((_, i) => i !== index);
+        setArr(newArr);
+      }, 200);
+    };
+    console.log(arr);
 
+    return (
+      <Card>
+        {arr.map((value, index) => (
           <Tag
-            onDestroy={() => setOpen4(false)}
-            isOpen={open4}
+            key={index}
+            onDestroy={() => handleDestroy(index)}
+            isOpen={openStates[index]}
             isAnimation={true}
           >
-            Tag4
+            Tag {value}
           </Tag>
-
-          <Tag
-            onDestroy={() => setOpen5(false)}
-            isOpen={open5}
-            isAnimation={true}
-          >
-            Tag5
-          </Tag>
-
-          <Tag
-            onDestroy={() => setOpen6(false)}
-            isOpen={open6}
-            isAnimation={true}
-          >
-            Tag6
-          </Tag>
-        </FlexLayout>
+        ))}
       </Card>
     );
   },
