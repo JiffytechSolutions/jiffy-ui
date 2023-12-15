@@ -64,8 +64,9 @@ export default {
       description: "Set status as per need",
       control: {
         type: "radio",
-        options: ["success", "warning", "error"],
+        options: ["success", "warning", "error", "default"],
       },
+      defaultValue: "default",
     },
     prefix: {
       description: "You can Use any Icon or ReactNode as Prefix",
@@ -402,6 +403,7 @@ Types.decorators = [
 ];
 // password
 export const hasStrengthPassword: any = Template.bind({});
+
 hasStrengthPassword.decorators = [
   () => {
     const [value, setValue] = useState("");

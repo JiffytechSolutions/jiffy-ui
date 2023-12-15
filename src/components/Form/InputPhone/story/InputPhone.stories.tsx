@@ -124,6 +124,13 @@ export default {
         type: "text",
       },
     },
+    isSearchable: {
+      description: "This prop is true then you can search the item",
+      control: {
+        type: "boolean",
+      },
+      defaultValue: false,
+    },
   },
 };
 
@@ -148,6 +155,7 @@ const Template = ({ ...rest }) => {
     <Card title="Input Phone Number">
       <InputPhone
         countryOptions={holdData}
+        isSearchable={rest.isSearchable}
         value={value1}
         countryValue={value2}
         onChange={(e: any) => setValue1(e)}
@@ -190,6 +198,82 @@ const countryCodeData: any = [
   },
 ];
 
+// Input Phone Number  Types
+export const Input_Phone_Number_Types: any = Template.bind({});
+Input_Phone_Number_Types.decorators = [
+  () => {
+    const [value1, setValue1] = useState("");
+    const [value2, setValue2] = useState("");
+
+    const [value3, setValue3] = useState("");
+    const [value4, setValue4] = useState("");
+    return (
+      <Card title="Input Phone Number Types">
+        <FlexLayout direction="vertical" spacing="extraLoose">
+          <InputPhone
+            label="Type number"
+            type="number"
+            countryOptions={countryCodeData}
+            value={value1}
+            countryValue={value2}
+            isSearchable
+            onChange={(e: any) => setValue1(e)}
+            onCountryChange={(e: any) => setValue2(e)}
+            placeholder="Enter phone number"
+            onClear={() => setValue1("")}
+          />
+          <InputPhone
+            label="Type text"
+            type="text"
+            countryOptions={countryCodeData}
+            value={value3}
+            countryValue={value4}
+            isSearchable
+            onChange={(e: any) => setValue3(e)}
+            onCountryChange={(e: any) => setValue4(e)}
+            placeholder="Enter phone number"
+            onClear={() => setValue3("")}
+          />
+        </FlexLayout>
+      </Card>
+    );
+  },
+];
+
+// Input Phone Number  controlStates
+export const Input_Phone_Number_controlStates: any = Template.bind({});
+Input_Phone_Number_controlStates.decorators = [
+  () => {
+    const types = ["none", "success", "warning", "error"];
+    const [value1, setValue1] = useState("");
+    const [value2, setValue2] = useState("");
+
+    return (
+      <Card title="Input Phone Number Types">
+        <FlexLayout direction="vertical" spacing="extraLoose">
+          {types.map((item: string | any) => {
+            return (
+              <InputPhone
+                label={item}
+                controlStates={item}
+                countryOptions={countryCodeData}
+                value={value1}
+                countryValue={value2}
+                isSearchable
+                onChange={(e: any) => setValue1(e)}
+                onCountryChange={(e: any) => setValue2(e)}
+                placeholder="Enter phone number"
+                onClear={() => setValue1("")}
+                isClearable={value1 === "" ? false : true}
+              />
+            );
+          })}
+        </FlexLayout>
+      </Card>
+    );
+  },
+];
+
 // Input Phone Number with placeholder
 export const Input_Phone_Number_Placeholder: any = Template.bind({});
 Input_Phone_Number_Placeholder.decorators = [
@@ -228,24 +312,6 @@ Input_Phone_Number_Placeholder.decorators = [
 export const Input_Phone_Number_Clear: any = Template.bind({});
 Input_Phone_Number_Clear.decorators = [
   () => {
-    const countryCodeData: any = [
-      {
-        label: "+91",
-        value: "+91",
-      },
-      {
-        label: "+92",
-        value: "+92",
-      },
-      {
-        label: "+98",
-        value: "+98",
-      },
-      {
-        label: "+154",
-        value: "+154",
-      },
-    ];
     const [value1, setValue1] = useState("");
     const [value2, setValue2] = useState("");
 
@@ -266,7 +332,32 @@ Input_Phone_Number_Clear.decorators = [
   },
 ];
 
-// Input Phone Number with placeholder
+// Input Phone Number with Search_CountryCode
+export const Input_Phone_Number_with_Searchable: any = Template.bind({});
+Input_Phone_Number_with_Searchable.decorators = [
+  () => {
+    const [value1, setValue1] = useState("");
+    const [value2, setValue2] = useState("");
+
+    return (
+      <Card title="You can search country code">
+        <InputPhone
+          countryOptions={countryCodeData}
+          value={value1}
+          countryValue={value2}
+          isSearchable
+          onChange={(e: any) => setValue1(e)}
+          onCountryChange={(e: any) => setValue2(e)}
+          placeholder="Enter phone number"
+          onClear={() => setValue1("")}
+          isClearable={value1 === "" ? false : true}
+        />
+      </Card>
+    );
+  },
+];
+
+// Input Phone Number with Label
 export const Input_Phone_Number_Label: any = Template.bind({});
 Input_Phone_Number_Label.decorators = [
   () => {
@@ -280,6 +371,33 @@ Input_Phone_Number_Label.decorators = [
           isRequired
           countryOptions={countryCodeData}
           value={value1}
+          countryValue={value2}
+          onChange={(e: any) => setValue1(e)}
+          onCountryChange={(e: any) => setValue2(e)}
+          placeholder="Enter phone number"
+          onClear={() => setValue1("")}
+          isClearable={value1 === "" ? false : true}
+        />
+      </Card>
+    );
+  },
+];
+// help text with icon
+export const Input_Phone_Number_heleText_with_helpIcon: any = Template.bind({});
+Input_Phone_Number_heleText_with_helpIcon.decorators = [
+  () => {
+    const [value1, setValue1] = useState("");
+    const [value2, setValue2] = useState("");
+
+    return (
+      <Card title="Input phone number label with require">
+        <InputPhone
+          label="Input phone number"
+          isRequired
+          countryOptions={countryCodeData}
+          value={value1}
+          helpText="Help Text"
+          helpIcon={<Icon.Search size={20} />}
           countryValue={value2}
           onChange={(e: any) => setValue1(e)}
           onCountryChange={(e: any) => setValue2(e)}

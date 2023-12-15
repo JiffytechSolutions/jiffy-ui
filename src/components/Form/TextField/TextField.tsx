@@ -30,7 +30,7 @@ const TextField = React.forwardRef(
       helpIcon,
       isDisabled = false,
       isRequired = false,
-      controlStates,
+      controlStates = "default",
       step = 1,
       customClass = "",
       ariaOwns,
@@ -228,8 +228,7 @@ const TextField = React.forwardRef(
                         ? 0
                         : props.min
                       : Number(props.value as string) || 0;
-                  const returnvalue =
-                    Number(temp) + Number(step.toString());
+                  const returnvalue = Number(temp) + Number(step.toString());
                   if (
                     props.value === "" &&
                     !isNaN(parseInt(String(props.min)))
@@ -444,7 +443,7 @@ export interface TextfieldI {
   customClass?: string;
   IsReadOnly?: boolean;
   id?: string;
-  controlStates?: "success" | "warning" | "error";
+  controlStates?: "success" | "warning" | "error" | "default";
   isLoading?: boolean;
   autocomplete?: "on" | "off" | "new-password";
   isClearable?: boolean;

@@ -1,11 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// eslint-disable @typescript-eslint/no-explicit-any /
 import React from "react";
 import Badge from "../Badge/Badge";
 import { ChevronDown, ChevronUp } from "../../storybook/Foundation/Icons/Icons";
 import getClassNames from "../../utilities/getClassnames";
-import "./Tag.css";
 import useDelayUnmount from "../../utilities/useDelayTimeout";
+import "./Tag.css";
+
 const Tag: React.FC<TagI> = ({
   onDestroy = false, // This function destroy  or remove  cross icon in tag
   isAnimation = false,

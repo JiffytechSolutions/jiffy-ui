@@ -142,3 +142,9 @@
   font-size: var(--inte-FS1-4);
   margin-top: 0.4rem !important;
 }
+
+@media screen and (max-width: 390px) {
+  .inte-dateInput__container {
+    padding: 1rem;
+  }
+}
