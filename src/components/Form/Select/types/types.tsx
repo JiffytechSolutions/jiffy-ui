@@ -17,7 +17,7 @@ export type SelectI = {
   isCreatable?: boolean;
   isVirtualSelect?: boolean;
   accessibilityLabel?: string;
-  controlStates?: "success" | "warning" | "error";
+  controlStates?: "success" | "warning" | "error" | "default";
   heading?: string;
   customClass?: string;
 };

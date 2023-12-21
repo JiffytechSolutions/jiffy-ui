@@ -119,7 +119,6 @@ input:placeholder-shown {
 /* Warning case end */
 
 /* Success case */
-
 .inte-formElement--success .inte-formElement__control {
   border: 1px solid var(--inte-GR300) !important;
 }

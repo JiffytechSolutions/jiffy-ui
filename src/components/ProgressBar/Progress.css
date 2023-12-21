@@ -4,12 +4,13 @@
   align-items: center;
   position: relative;
   width: 100%;
+  gap: 1.2rem;
 }
 
 .inte__progressbar {
   width: 100%;
   border-radius: var(--radius-rounded-5);
-  background-color: var(--inte-P30);
+  /* background-color: var(--inte-P30); */
   position: relative;
   overflow: hidden;
 }
@@ -41,7 +42,7 @@
   bottom: 0;
   border-radius: var(--radius-rounded-5);
   transition: 300ms all ease-in-out;
-  background-color: var(--inte-P500);
+  /* background-color: var(--inte-P500); */
 }
 
 .inte__progressbar--status-inprogress::after {
@@ -51,12 +52,12 @@
   bottom: 0;
   left: 0;
   transform: translateX(-100%);
-  background-image: linear-gradient(
+  /* background-image: linear-gradient(
     90deg,
     rgba(39, 9, 131, 0.7) 0,
     rgba(39, 9, 131, 0.639) 50%,
     rgba(39, 9, 131, 0.459) 100%
-  );
+  );  */
   -webkit-animation: shimmer 2s ease-out infinite;
   animation: shimmer 2s ease-out infinite;
   content: "";
@@ -157,4 +158,60 @@
   border-width: 0.5rem;
   border-style: solid;
   border-color: var(--inte-G800) transparent transparent transparent;
+}
+
+/*progressbar bg types  */
+.inte-progressbar--primary .inte__progressbar {
+  background-color: var(--inte-P30);
+}
+.inte-progressbar--seconadary .inte__progressbar {
+  background-color: var(--inte-G15);
+}
+.inte-progressbar--success .inte__progressbar {
+  background-color: var(--inte-GR40);
+}
+.inte-progressbar--error .inte__progressbar {
+  background-color: var(--inte-R30);
+}
+.inte-progressbar--warning .inte__progressbar {
+  background-color: var(--inte-Y50);
+}
+
+/* progress precentage bg types  */
+.inte-progressbar--primary .inte__progressbar--status {
+  background-color: var(--inte-P500);
+}
+
+.inte-progressbar--seconadary .inte__progressbar--status {
+  background-color: var(--inte-G600);
+}
+
+.inte-progressbar--success .inte__progressbar--status {
+  background-color: var(--inte-GR200);
+}
+
+.inte-progressbar--error .inte__progressbar--status {
+  background-color: var(--inte-R200);
+}
+
+.inte-progressbar--warning .inte__progressbar--status {
+  background-color: var(--inte-Y300);
+}
+/* progressbar animation types bg color */
+.inte-progressbar--primary .inte__progressbar--status-inprogress::after {
+  background-color: var(--inte-P700);
+}
+.inte-progressbar--seconadary .inte__progressbar--status-inprogress::after {
+  background-color: var(--inte-G800);
+}
+
+.inte-progressbar--success .inte__progressbar--status-inprogress::after {
+  background-color: var(--inte-GR300);
+}
+
+.inte-progressbar--error .inte__progressbar--status-inprogress::after {
+  background-color: var(--inte-R400);
+}
+.inte-progressbar--warning .inte__progressbar--status-inprogress::after {
+  background-color: var(--inte-Y100);
 }
