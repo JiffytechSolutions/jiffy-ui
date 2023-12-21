@@ -93,7 +93,7 @@ export default {
         <tr>
           <td><code>render</code></td>
           <td>A function to customize the rendering of the cell content.</td>
-          <td><code>(item: any) => React.ReactNode</code></td>
+          <td><code>(item: any , wholeObj : DataSourceI) => React.ReactNode</code></td>
         </tr>
       </tbody>
     </table>`,

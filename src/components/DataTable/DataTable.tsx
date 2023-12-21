@@ -9,7 +9,7 @@ import { NoProducts } from "../../illustrations";
 export interface columnI {
   title: string | React.ReactNode;
   dataIndex?: string;
-  key: string;
+  key: string | number;
   width?: number;
   align?:
   | "start"
@@ -24,13 +24,13 @@ export interface columnI {
     onSort?: (clickedColumn: columnI, order: 'asec' | 'desc') => void;
     comparator?: (a: any, b: any, order: any) => number;
   };
-  render?: (item: any) => React.ReactNode;
+  render?: (item: any , wholeObj : DataSourceI) => React.ReactNode;
   onCell?: (rowNum: number) => any;
   editor?:React.ReactNode
 }
 
 export interface DataSourceI {
-  key: any,
+  key: string | number,
   [key: string]: any
 }
 
@@ -48,9 +48,9 @@ export interface DataTableI {
   emptyTableUi?: React.ReactNode;
   customClass?: string;
   tableLayout?: "fixed" | "auto"
-  // bulkEditRow?: bulkEditRowI[];
   bulkEditTable?:boolean;
   stickyScrollBar?: boolean;
+  isCellEdited?:(columnKey : string | number , rowKey : string | number,cell : DataSourceI) => boolean;
 }
 
 export interface expandableI {
@@ -109,7 +109,7 @@ const DataTable = ({
   emptyTableUi,
   customClass,
   tableLayout,
-  // bulkEditRow,
+  isCellEdited,
   bulkEditTable,
   stickyScrollBar
 }: DataTableI) => {
@@ -693,7 +693,8 @@ const DataTable = ({
             let span = i.onCell ? i.onCell(rowNum) : "";
             if (span === -1) return null;
             let ele = i.dataIndex ? item[i.dataIndex] : item;
-            ele = i.render ? i.render(ele) : ele;
+            ele = i.render ? i.render(ele , item) : ele;
+            const isEdited = isCellEdited ?  isCellEdited(dataSource[index]?.key , columns[ind]?.key , i) : false;
             return (
               <td
                 {...span}
@@ -705,7 +706,8 @@ const DataTable = ({
                 ref={(cell) => makeCellRefsArray(rowNum, columnNum++, cell)}
                 className={getClassNames({
                   'inte-dataTable__cell': true,
-                  [`inte-dataTable__cell--Fixed` + i.fixed?.toLowerCase()]: i.fixed
+                  [`inte-dataTable__cell--Fixed` + i.fixed?.toLowerCase()]: i.fixed,
+                  'inte-dataTable__cell--edited' : isEdited
                 })}
               >
                 {ele}
@@ -758,9 +760,8 @@ const DataTable = ({
         </tr>
       ));
 
-  const makeDataTableEmptyRow = () => {
-    return (
-      <tr>
+  const DataTableEmptyRow =  (
+    <tr>
         <td
           colSpan={
             columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
@@ -768,9 +769,9 @@ const DataTable = ({
         >
           {emptyTableUi ? emptyTableUi : <NoProducts />}
         </td>
-      </tr>
-    );
-  };
+     </tr>
+  )
+  
 
   const scrollGrid = () => {
     const scrollLeft = stickyScrollBarRef.current?.scrollLeft
@@ -879,7 +880,7 @@ const DataTable = ({
                 ? data.map((item: any, index: number) => {
                   return makeDataTableBodyRows(item, index);
                 })
-                : makeDataTableEmptyRow()}
+                : DataTableEmptyRow}
           </tbody>
         </table>
       </div>

@@ -266,3 +266,7 @@
 .inte-dataTable__stickyScrollBar {
   height: 1px;
 }
+
+.inte-dataTable__cell--edited {
+  background-color: #F2F7FE;
+}

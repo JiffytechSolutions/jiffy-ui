@@ -795,16 +795,28 @@ export const CarouselWithPersistSlideOnRefresh: any = Template.bind({});
 CarouselWithPersistSlideOnRefresh.decorators = [
   () => {
     return (
-      <Card title="Carousel with Persist slide on Refresh">
-        <Carousel
-          staticId="1"
-          slidesToShow={3}
-          isEndless={true}
-          persistSlideOnRefresh={true}
-        >
-          {renderSlidesWithoutImages()}
-        </Carousel>
-      </Card>
+      <>
+        <Card title="Carousel with Persist slide on Refresh">
+          <Carousel
+            staticId="1"
+            slidesToShow={3}
+            isEndless={true}
+            persistSlideOnRefresh={true}
+          >
+            {renderSlidesWithoutImages()}
+          </Carousel>
+        </Card>
+        <Card title="Carousel with Persist slide on Refresh">
+          <Carousel
+            staticId="2"
+            slidesToShow={3}
+            isEndless={true}
+            persistSlideOnRefresh={true}
+          >
+            {renderSlidesWithoutImages()}
+          </Carousel>
+        </Card>
+      </>
     );
   },
 ];

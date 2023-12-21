@@ -2,6 +2,7 @@ import React, { MouseEvent, useEffect, useRef, useState } from 'react'
 
 import "./SortableNew.css"
 import PortalComponent from '../../utilities/PoratalComponent';
+import { elementRect, makeRangeArray, pointInRangeArr, swapArray , getClientXY } from './DraggableUtilityFun';
 
 export type dragableArray = {
   content: React.ReactNode;
@@ -22,55 +23,21 @@ export interface DraggableI {
   containerStyle?: React.CSSProperties
 }
 
-type elementRect = {
-  top: number,
-  left: number,
-  width: number,
-  height: number,
-  bottom: number,
-  right: number,
-}
+// const pointInRangeArr = (arr: elementRect[], point: { x: number; y: number }) => {
+//   const { x, y } = point;
+//   for (let i = 0; i < arr.length; i++) {
+//     const currRect = arr[i]
+//     if (
+//       currRect.top <= y &&
+//       currRect.bottom >= y &&
+//       currRect.left <= x &&
+//       currRect.right >= x
+//     )
+//       return i;
+//   }
 
-const swapArray = (from: number, to: number, arr: any[]): any[] => {
-  let res = [...arr];
-  const delItem = arr[from];
-  res.splice(from, 1);
-  res.splice(to, 0, delItem);
-  return [...res];
-};
-
-const makeRangeArray = (container: HTMLElement) => {
-  const containerRect = container.getBoundingClientRect();
-  const res = Array.from(container.children).map(item => {
-    const currRect = item.getBoundingClientRect();
-    const currRange = {
-      top: currRect.top + container.scrollTop - containerRect.top,
-      bottom: currRect.bottom + container.scrollTop - containerRect.top,
-      left: currRect.left + container.scrollLeft - containerRect.left,
-      right: currRect.right + container.scrollLeft - containerRect.left,
-      width: currRect.width,
-      height: currRect.height
-    }
-    return currRange;
-  })
-  return res;
-}
-
-const pointInRangeArr = (arr: elementRect[], point: { x: number; y: number }) => {
-  const { x, y } = point;
-  for (let i = 0; i < arr.length; i++) {
-    const currRect = arr[i]
-    if (
-      currRect.top <= y &&
-      currRect.bottom >= y &&
-      currRect.left <= x &&
-      currRect.right >= x
-    )
-      return i;
-  }
-
-  return -1
-};
+//   return -1
+// };
 
 const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: DraggableI) => {
 
@@ -87,14 +54,15 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
 
   const timerRef = useRef<NodeJS.Timeout>()
 
-  const handelAutoScroll = (event: MouseEvent) => {
+  const handelAutoScroll = (event: MouseEvent | TouchEvent) => {
     const edgeSize = 50
     if (!containerRef.current) return
 
     const containerRect = containerRef.current.getBoundingClientRect();
+    const {clientX , clientY} = getClientXY(event)
 
-    const viewportX = event.clientX;
-    const viewportY = event.clientY;
+    const viewportX = clientX;
+    const viewportY = clientY;
     const viewportWidth = containerRef.current.clientWidth;
     const viewportHeight = containerRef.current.clientHeight;
 
@@ -167,7 +135,7 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
       if (isInTopEdge && canScrollUp) {
         const intensity = ((edgeTop - viewportY) / edgeSize);
         nextScrollY = (nextScrollY - (maxStep * intensity));
-        
+
         // Should we scroll down?
       } else if (isInBottomEdge && canScrollDown) {
         const intensity = ((viewportY - edgeBottom) / edgeSize);
@@ -202,13 +170,16 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
 
   }
 
-  const handelMouseDown = (event: MouseEvent, index: number) => {
-    if (!containerRef.current) return
-    const eleRect = event.currentTarget.getBoundingClientRect()
+  const handelMouseDown = (event: MouseEvent | TouchEvent | any, index: number) => {
+    if (!containerRef.current || !event.currentTarget) return
+
+    const {clientX , clientY} = getClientXY(event)
+
+    const eleRect = (event.currentTarget as Element).getBoundingClientRect()
 
     const thresholdCursor = {
-      left: event.clientX - eleRect.left,
-      top: event.clientY - eleRect.top,
+      left:clientX - eleRect.left,
+      top: clientY - eleRect.top,
     }
 
     const fixedEle = (
@@ -237,10 +208,13 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
     setDummyData([...data])
   }
 
-  const handelMouseMove = (event: any) => {
+  const handelMouseMove = (event: MouseEvent | TouchEvent | any) => {
     if (!draggableData || !containerRef.current || !fixedElementRef.current) return;
-    fixedElementRef.current.style.top = event.clientY - draggableData.thresholdCursor.top + 'px';
-    fixedElementRef.current.style.left = event.clientX - draggableData.thresholdCursor.left + 'px';
+
+    const {clientX , clientY} = getClientXY(event)
+
+    fixedElementRef.current.style.top = clientY - draggableData.thresholdCursor.top + 'px';
+    fixedElementRef.current.style.left = clientX - draggableData.thresholdCursor.left + 'px';
 
     const { top, left } = containerRef.current.getBoundingClientRect()
 
@@ -249,8 +223,8 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
     const latestIndex = pointInRangeArr(
       originalRangeArray,
       {
-        x: event.clientX + containerRef.current.scrollLeft - left,
-        y: event.clientY + containerRef.current.scrollTop - top
+        x: clientX + containerRef.current.scrollLeft - left,
+        y: clientY + containerRef.current.scrollTop - top
       }
     )
 
@@ -284,9 +258,15 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
     if (!containerRef.current) return;
     window.addEventListener("mousemove", handelMouseMove)
     window.addEventListener("mouseup", handelMouseUp);
+
+    window.addEventListener("touchmove" , handelMouseMove)
+    window.addEventListener("touchend" , handelMouseUp)
     return () => {
       window.removeEventListener("mousemove", handelMouseMove)
       window.removeEventListener("mouseup", handelMouseUp);
+
+      window.removeEventListener("touchmove" , handelMouseMove)
+      window.removeEventListener("touchend" , handelMouseUp)
     }
   }, [draggableData])
 
@@ -327,7 +307,10 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
   }, [data])
 
   useEffect(() => {
-    if (!dummyContainerRef.current) return;
+    if (!dummyContainerRef.current) {
+      clearTimeout(timerRef.current)
+      return
+    }
     let rangeArr = makeRangeArray(dummyContainerRef.current);
     setDummyRangeArray([...rangeArr])
   }, [draggableData])
@@ -349,6 +332,7 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
               key={ele.id}
               className="inte-draggable__item"
               onMouseDown={(event) => handelMouseDown(event, ind)}
+              onTouchStart={(event) => handelMouseDown(event , ind)}
               style={{
                 opacity: draggableData?.index === ind ? ".2" : "",
                 transition: draggableData ? `transform ${animationDuration}ms ` : "",

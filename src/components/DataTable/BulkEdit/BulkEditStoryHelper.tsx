@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { Select, TextField } from "../../Form";
 import { Card } from "../../Card";
-import DataTable, { bulkEditRowI, columnI } from "../DataTable";
+import DataTable, { bulkEditRowI, columnI , DataSourceI } from "../DataTable";
 import Button from "../../Button/Button";
 import "./BulkEdit.css";
 import data, { DataI } from "./Data";
@@ -219,19 +219,13 @@ type PriceEditorState = {
 type simpleObj = { [key: string]: string };
 
 const BulkEditStoryHelper = ({ ...rest }) => {
-  const [selectedRowKey, setSelectedRowKey] = useState<selectedRowKey>({});
 
-  const [currData, setCurrData] = useState(data);
+  const [currData, setCurrData] = useState<DataI[]>(structuredClone(data));
 
   const [bulkEditorValue, setBulkEditorValue] = useState<simpleObj>({
     "Handling Time": "",
     "Country Of Origin": "",
   });
-
-  const [bulkPriceEditorValue, setBulkPriceEditorValue] = useState({
-    selectValue: "",
-    textFieldValue: "",
-  })
 
   const [priceEditorData, setPriceEditorData] = useState<PriceEditorState>({})
 
@@ -280,7 +274,6 @@ const BulkEditStoryHelper = ({ ...rest }) => {
   const handelBulkEditChange = (value: string, index: string) => {
     setCurrData((prev) =>
       prev.map((item) => {
-        // if(selectedRowKey[item.key])
         item[index as keyof DataI] = value;
         return item;
       })
@@ -290,8 +283,6 @@ const BulkEditStoryHelper = ({ ...rest }) => {
       return prev;
     });
   };
-
-  console.log(currData, "-----------------")
 
   const getUpdatedValue = (prevValue: number, selectValue: string, textFieldValue: number) => {
     switch (selectValue) {
@@ -306,9 +297,29 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     }
   }
 
+  const checkIsCellEdited = (rowKey : string | number , columnKey: string | number , item : DataSourceI) => {
+    let currUpdatedItem , originalItem;
+    switch (columnKey) {
+      case  "Handling Time":
+        currUpdatedItem = currData.filter(item => item.key === rowKey)[0][columnKey]
+        originalItem  = data.filter(item => item.key === rowKey)[0][columnKey]
+        return currUpdatedItem !== originalItem;
+      case "Country Of Origin":
+        currUpdatedItem = currData.filter(item => item.key === rowKey)[0][columnKey];
+        originalItem  = data.filter(item => item.key === rowKey)[0][columnKey]
+        return currUpdatedItem !== originalItem;
+      case "Standard Price":
+        currUpdatedItem = priceEditorData[rowKey]?.updatedValue
+        originalItem = priceEditorData[rowKey]?.currValue
+        return currUpdatedItem !== originalItem;
+    }
+
+    return false
+  }
+
   const columns: columnI[] = [
     {
-      key: "1",
+      key: "Product Details",
       width: 350,
       // align : "center",
       dataIndex: "Product Details",
@@ -322,24 +333,24 @@ const BulkEditStoryHelper = ({ ...rest }) => {
           <Text>{item}</Text>
         </FlexLayout>
       ),
-      editor: "Edit this row to update as bulk",
+      editor: <div style={{paddingLeft : "1.2rem"}} >Edit this row to update as bulk</div>,
     },
     {
-      key: "2",
+      key: "SKU",
       width: 200,
       // align : "center",
       dataIndex: "SKU",
       title: "SKU",
     },
     {
-      key: "3",
+      key: "Title",
       width: 350,
       align: "left",
       dataIndex: "Title",
       title: "Title",
     },
     {
-      key: "4",
+      key: "Description",
       width: 100,
       // align : "center",
       // dataIndex: "Description",
@@ -351,7 +362,7 @@ const BulkEditStoryHelper = ({ ...rest }) => {
       )
     },
     {
-      key: "5",
+      key: "Handling Time",
       width: 150,
       // align : "center",
       // dataIndex: "Handling Time",
@@ -363,7 +374,7 @@ const BulkEditStoryHelper = ({ ...rest }) => {
           min={1}
           value={item["Handling Time"].split(" ")[0]}
           onChange={(newValue) =>
-            handelDataChange(newValue, item.key, "Handling Time")
+            handelDataChange(`${newValue} days`, item.key, "Handling Time")
           }
         />
       ),
@@ -371,15 +382,15 @@ const BulkEditStoryHelper = ({ ...rest }) => {
         <TextField
           prefix={"Days : "}
           type="number"
-          value={bulkEditorValue["Handling Time"]}
+          value={bulkEditorValue["Handling Time"].split(" ")[0]}
           onChange={(newValue) =>
-            handelBulkEditChange(newValue, "Handling Time")
+            handelBulkEditChange(`${newValue} days`, "Handling Time")
           }
         />
       ),
     },
     {
-      key: "6",
+      key: "Standard Price",
       width: 400,
       // align : "center",
       // dataIndex: "Standard Price",
@@ -426,28 +437,28 @@ const BulkEditStoryHelper = ({ ...rest }) => {
       ),
     },
     {
-      key: "7",
+      key: "Inventory",
       width: 200,
       // align : "center",
       dataIndex: "Inventory",
       title: "Inventory",
     },
     {
-      key: "8",
+      key: "Product ID",
       width: 200,
       // align : "center",
       dataIndex: "Product ID",
       title: "Product ID",
     },
     {
-      key: "9",
+      key: "Product ID Type",
       width: 200,
       // align : "center",
       dataIndex: "Product ID Type",
       title: "Product ID Type",
     },
     {
-      key: "10",
+      key: "Country Of Origin",
       width: 200,
       // align : "center",
       // dataIndex: "Country Of Origin",
@@ -472,63 +483,63 @@ const BulkEditStoryHelper = ({ ...rest }) => {
       ),
     },
     {
-      key: "11",
+      key: "Condition",
       width: 200,
       // align : "center",
       dataIndex: "Condition",
       title: "Condition",
     },
     {
-      key: "12",
+      key: "Sale Price",
       width: 200,
       // align : "center",
       dataIndex: "Sale Price",
       title: "Sale Price",
     },
     {
-      key: "13",
+      key: "Sale Start Date",
       width: 200,
       // align : "center",
       dataIndex: "Sale Start Date",
       title: "Sale Start Date",
     },
     {
-      key: "14",
+      key: "Sale End Date",
       width: 200,
       // align : "center",
       dataIndex: "Sale End Date",
       title: "Sale End Date",
     },
     {
-      key: "15",
+      key: "Item Weight",
       width: 200,
       // align : "center",
       dataIndex: "Item Weight",
       title: "Item Weight",
     },
     {
-      key: "16",
+      key: "Item Weight Unit",
       width: 200,
       // align : "center",
       dataIndex: "Item Weight Unit",
       title: "Item Weight Unit",
     },
     {
-      key: "17",
+      key: "Batteries Included",
       width: 200,
       // align : "center",
       dataIndex: "Batteries Included",
       title: "Batteries Included",
     },
     {
-      key: "18",
+      key: "Dangerous Goods Regulations",
       width: 200,
       // align : "center",
       dataIndex: "Dangerous Goods Regulations",
       title: "Dangerous Goods Regulations",
     },
     {
-      key: "19",
+      key: "Fulfillment Centre ID",
       width: 200,
       // align : "center",
       dataIndex: "Fulfillment Centre ID",
@@ -536,41 +547,34 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     },
   ];
 
-  const handelSelectChange = (newValue: selectedRowKey) => {
-    console.log(newValue);
-    setSelectedRowKey(newValue);
-  };
+  // console.log(priceEditorData , "priceEditorData" , descriptionEditorData , "descriptionEditorData")
+
+  // console.log(currData , "currData" , data , "Original Data")
+
 
   useEffect(() => {
-    const keysInData: selectedRowKey = {};
-    data.map((item) => {
-      keysInData[item.key] = false;
-    });
-
     const priceData: PriceEditorState = {}
     data.map((item) => {
       priceData[item.key] = ({
         currValue: item["Standard Price"],
         selectValue: "",
         textFieldValue: "",
-        updatedValue: ""
+        updatedValue: item["Standard Price"]
       })
     })
 
     setPriceEditorData(priceData)
-
-    setSelectedRowKey(keysInData);
   }, [data]);
 
   const [openChoiceList, setOpenChoiceList] = useState(false)
-  const [choiceListValue, setChoiceListValue] = useState(["1", "4", "5", "6", "10"])
+  const [choiceListValue, setChoiceListValue] = useState(["Product Details", "Description", "Handling Time", "Standard Price", "Country Of Origin"])
 
   const choiceListOptions = useMemo(() => {
     return columns.map(column => ({ label: column.title, value: column.key }))
   }, [columns])
 
   const currentShowingColumns = useMemo(() => {
-    return columns.filter(item => choiceListValue.includes(item.key))
+    return columns.filter(item => choiceListValue.includes(item.key.toString()))
   }, [choiceListValue, columns])
 
   const choiceListActivator = <Button type="outlined" disclosure onClick={() => setOpenChoiceList(prev => !prev)}>Customize Columns</Button>
@@ -614,7 +618,7 @@ const BulkEditStoryHelper = ({ ...rest }) => {
           onClick: () => setDescriptionEditorData({ open: false, data: "", key: "" })
         }}
       >
-        <textarea style={{ width: "100%", margin: "auto" }}>{descriptionEditorData.data}</textarea>
+        <textarea style={{ width: "100%", margin: "auto" }} value={descriptionEditorData.data} onChange={() => true} />
       </Modal>
       <DataTable
         isFixedHeader
@@ -625,6 +629,7 @@ const BulkEditStoryHelper = ({ ...rest }) => {
         customClass="inte-dataTable--bulkEdit"
         columns={currentShowingColumns}
         dataSource={currData}
+        isCellEdited={checkIsCellEdited}
       />
     </AppWrapper>
   );
@@ -639,15 +644,6 @@ interface PriceEditorI {
   updatedValue?: string;
 }
 
-// interface DescriptionEditorI {
-//   open : boolean;
-//   onClose: () => void;
-//   co
-// }
-
-// const DescriptionEditor = () => {
-//   return <Modal />
-// }
 
 const PriceEditor = ({ ...props }: PriceEditorI) => {
 
