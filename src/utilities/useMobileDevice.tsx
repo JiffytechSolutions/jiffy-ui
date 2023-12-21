@@ -23,7 +23,7 @@ const useMobileDevice = () => {
         window.innerWidth < 991 &&
         mobileDevicePatterns.some((device) =>
           navigator.userAgent.match(device)
-        );
+        )
       setIsMobile(isMobile);
     };
     handleResize();

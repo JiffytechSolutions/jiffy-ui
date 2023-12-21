@@ -64,7 +64,7 @@ const AppWrapper = ({
     return () => {
       window.removeEventListener('resize', calculateElementHeights);
     };
-  }, [announcementBar , isMobile , context.sideBar[0]]);
+  }, [announcementBar , isMobile , context.sideBar[0]])
 
 
   return (

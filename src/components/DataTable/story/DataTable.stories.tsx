@@ -93,7 +93,7 @@ export default {
         <tr>
           <td><code>render</code></td>
           <td>A function to customize the rendering of the cell content.</td>
-          <td><code>(item: any) => React.ReactNode</code></td>
+          <td><code>(item: any , wholeObj : DataSourceI) => React.ReactNode</code></td>
         </tr>
       </tbody>
     </table>`,
@@ -629,6 +629,8 @@ const TemplateDataTableStory = ({ ...rest }) => {
   const [itemPerPage, setItemPerPage] = useState(10);
   const [selectedRowKey, setSelectedRowKey] = useState<any>({})
 
+
+
   const currTableData = useMemo(() => {
     const firstItemIndex = (currentPage - 1) * itemPerPage;
     const lastItemIndex = firstItemIndex + itemPerPage;
@@ -668,7 +670,6 @@ const TemplateDataTableStory = ({ ...rest }) => {
   };
 
   const handelSelectChange = (newSelectedKeys: any) => {
-    console.log(newSelectedKeys)
     let newKeys = { ...selectedRowKey }
     Object.keys(newSelectedKeys).map(item => {
       newKeys[item] = newSelectedKeys[item]
@@ -714,6 +715,8 @@ const TemplateDataTableStory = ({ ...rest }) => {
       </FlexLayout>
     </>
   }, ...TemplateColumns]
+
+  console.log(selectedRowKey , "svmkdsmvmsa;ldv" , currentSelectedRowKeys)
 
   return (
     <Card>

@@ -258,8 +258,15 @@
   box-shadow: inset -10px 0 8px -8px rgba(16, 24, 40, 0.10);
   position: fixed;
   bottom: 0;
+  &::-webkit-scrollbar {
+    height: 10px;
+  }
 }
 
 .inte-dataTable__stickyScrollBar {
   height: 1px;
+}
+
+.inte-dataTable__cell--edited {
+  background-color: #F2F7FE;
 }

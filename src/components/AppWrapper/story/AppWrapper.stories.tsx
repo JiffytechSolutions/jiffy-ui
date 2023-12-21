@@ -484,32 +484,30 @@ const dataTable = () => {
   ];
 
   return (
-    <Card>
-      <DataTable
-        columns={TemplateColumnsT}
-        isFixedHeader
-        stickyScrollBar
-        scrollX={1800}
-        dataSource={currTableData}
-        rowSelection={{
-          selectedRowKeys: currentSelectedRowKeys,
-          onSelectChange: handelSelectChange,
-        }}
-        pagination={
-          <Pagination
-            type="fullLength"
-            currentPage={currentPage}
-            totalitem={5000}
-            onPageChange={onPageChange}
-            onEnter={onEnter}
-            onPrevious={onPrevious}
-            onNext={onNext}
-            onCountChange={onCountChange}
-            countPerPage={itemPerPage}
-          />
-        }
-      />
-    </Card>
+    <DataTable
+      columns={TemplateColumnsT}
+      isFixedHeader
+      stickyScrollBar
+      scrollX={1800}
+      dataSource={currTableData}
+      rowSelection={{
+        selectedRowKeys: currentSelectedRowKeys,
+        onSelectChange: handelSelectChange,
+      }}
+      pagination={
+        <Pagination
+          type="fullLength"
+          currentPage={currentPage}
+          totalitem={5000}
+          onPageChange={onPageChange}
+          onEnter={onEnter}
+          onPrevious={onPrevious}
+          onNext={onNext}
+          onCountChange={onCountChange}
+          countPerPage={itemPerPage}
+        />
+      }
+    />
   );
 };
 
@@ -538,11 +536,11 @@ const Template = ({ ...rest }) => {
       secondaryAction={[
         {
           content: "Sync With MarketPlace",
-          onClick: function noRefCheck() {},
+          onClick: function noRefCheck() { },
         },
         {
           content: "Sync With MarketPlaces",
-          onClick: function noRefCheck() {},
+          onClick: function noRefCheck() { },
         },
         {
           content: "Delete Listing",
@@ -553,12 +551,12 @@ const Template = ({ ...rest }) => {
       ]}
       tertiaryAction={{
         content: "Overview",
-        onClick: function noRefCheck() {},
+        onClick: function noRefCheck() { },
       }}
       primaryAction={{
         content: "Submit",
         icon: <Check color="var(--inte-G0)" size="24" />,
-        onClick: function noRefCheck() {},
+        onClick: function noRefCheck() { },
       }}
     />
   );
@@ -576,7 +574,7 @@ const Template = ({ ...rest }) => {
                 <CustomActionList />
               </FlexLayout>
             }
-            // stickyTop={false}
+          // stickyTop={false}
           />
         }
         sideBar={sideBar()}
@@ -584,8 +582,10 @@ const Template = ({ ...rest }) => {
         announcementBar={announcementBar ? announce : undefined}
       >
         {pageHeader}
-        {features}
-        {dataTable()}
+        <Card>
+          {features}
+          {dataTable()}
+        </Card>
         <Modal
           modalSize="large"
           isOpen={open}
