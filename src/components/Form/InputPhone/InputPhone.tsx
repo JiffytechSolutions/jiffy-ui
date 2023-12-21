@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import TextField from "../TextField/TextField";
 import Select from "../Select/Select";
 import "./InputPhone.css";
+import getClassNames from "../../../utilities/getClassnames";
 
 export interface InputPhoneI {
   placeholder?: string;
@@ -72,8 +73,14 @@ const InputPhone = ({
   }, [onCountryChange, countryValue]);
 
   return (
-    <div className={`inte-inputPhone ${customClass}`} ref={myInputRef}>
+    <div
+      className={getClassNames({
+        "inte-inputPhone": true,
+        [customClass as string]: customClass,
+      })}
+    >
       <TextField
+        ref={myInputRef}
         type={type}
         placeholder={placeholder}
         onChange={(e) => onChange(e)}

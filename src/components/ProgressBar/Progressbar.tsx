@@ -5,6 +5,7 @@ import "./Progress.css";
 function Progressbar({
   percentage = 0,
   count,
+  type = "primary",
   progessSize = "thin",
   isAnimating = false,
   customClass,
@@ -20,12 +21,25 @@ function Progressbar({
   };
   const pthick = progessSize && getProgresssize[progessSize];
 
+  const progressbarType: { [key: string]: string } = {
+    primary: "inte-progressbar--primary",
+    secondary: "inte-progressbar--seconadary",
+    success: "inte-progressbar--success",
+    error: "inte-progressbar--error",
+    warning: "inte-progressbar--warning",
+  };
+  const typeValue = type && progressbarType[type];
   return (
-    <div className="inte-progressbar__wrapper">
+    <div
+      className={getClassNames({
+        "inte-progressbar__wrapper": true,
+        [typeValue]: typeValue,
+        [customClass as string]: customClass,
+      })}
+    >
       <div
         className={getClassNames({
           inte__progressbar: true,
-          [customClass as string]: customClass,
           [pthick]: pthick,
         })}
       >
@@ -61,9 +75,10 @@ function Progressbar({
 }
 export interface ProgressbarI {
   percentage?: number;
-  customClass?: string;
-  count?: "tooltipCount" | "linearCount";
+  type?: "primary" | "secondary" | "success" | "error" | "warning";
   progessSize?: "thin" | "thick";
+  count?: "tooltipCount" | "linearCount";
   isAnimating?: boolean;
+  customClass?: string;
 }
 export default Progressbar;

@@ -30,7 +30,7 @@ const TextField = React.forwardRef(
       helpIcon,
       isDisabled = false,
       isRequired = false,
-      controlStates = "default",
+      controlStates,
       step = 1,
       customClass = "",
       ariaOwns,
@@ -305,7 +305,7 @@ const TextField = React.forwardRef(
         {props.connectLeft && (
           <div className="inte-form--connectLeft">{props.connectLeft}</div>
         )}
-        <div className="inte-formElement__inner">
+        <div className="inte-formElement__inner" ref={handleRef}>
           {getInput()}
           {innerSufIconClass != "" ? (
             <span

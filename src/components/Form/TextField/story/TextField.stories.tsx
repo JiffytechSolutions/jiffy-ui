@@ -349,9 +349,13 @@ const Template = ({ ...rest }) => {
           helpIcon={allIcons[rest.helpIcon]({
             size: 20,
             color: `${
-              rest.controlStates == "Error"
-                ? "var(--inte-R200)"
-                : "var(--inte-G90)"
+              rest.controlStates == "error"
+                ? "#C4281C"
+                : rest.controlStates === "success"
+                ? "var(--inte-GR300)"
+                : rest.controlStates === "warning"
+                ? "var(--inte-Y300)"
+                : "#616771"
             }`,
           })}
         />

@@ -1,5 +1,5 @@
 import React from "react";
-import { Progressbar, Card, FlexLayout } from "../..";
+import { Progressbar, Card, FlexLayout, Text } from "../..";
 import ProgressBarDoc from "../Document/ProgressBarDoc";
 import { ProgressbarI } from "../Progressbar";
 
@@ -18,7 +18,7 @@ export default {
       control: {
         type: "number",
       },
-      defaultValue: 10,
+      defaultValue: 30,
     },
     progessSize: {
       description: "set size of progresbar",
@@ -49,13 +49,21 @@ export default {
       },
       defaultValue: false,
     },
+    type: {
+      description: "Set type progressbar background color",
+      control: {
+        type: "radio",
+        options: ["primary", "secondary", "success", "error", "warning"],
+      },
+      defaultValue: "primary",
+    },
   },
 };
 
 const Template = (rest: ProgressbarI) => {
   return (
     <Card title="Progress Bar">
-      <Progressbar percentage={20} {...rest} />
+      <Progressbar percentage={20} {...rest} type={rest.type} />
     </Card>
   );
 };
@@ -63,27 +71,72 @@ const Template = (rest: ProgressbarI) => {
 export const Primary = Template.bind({
   percentage: 20,
 });
-//
-export const ProgressBarWithoutMessage: any = Template.bind({});
-ProgressBarWithoutMessage.decorators = [
+
+// Types of progressbar
+export const Types: any = Template.bind({});
+Types.decorators = [
   () => {
     return (
-      <Card title="Progress Bar Without Message">
-        <Progressbar percentage={20} />
+      <Card title="Progressbar types">
+        <FlexLayout spacing="loose" direction="vertical">
+          {["primary", "secondary", "success", "error", "warning"].map(
+            (items: any, index: number) => {
+              return (
+                <FlexLayout spacing="loose" direction="vertical">
+                  <Text>{items}</Text>
+                  <Progressbar key={index} type={items} percentage={20} />
+                </FlexLayout>
+              );
+            }
+          )}
+        </FlexLayout>
       </Card>
     );
   },
 ];
-// size
-export const Progresssize: any = Template.bind({});
-Progresssize.decorators = [
+
+// Types of progressbar
+export const Types_with_animation: any = Template.bind({});
+Types_with_animation.decorators = [
+  () => {
+    return (
+      <Card title="Progressbar types with animation">
+        <FlexLayout spacing="loose" direction="vertical">
+          {["primary", "secondary", "success", "error", "warning"].map(
+            (items: any, index: number) => {
+              return (
+                <FlexLayout spacing="loose" direction="vertical">
+                  <Text>{items}</Text>
+                  <Progressbar
+                    key={index}
+                    type={items}
+                    percentage={60}
+                    isAnimating
+                    progessSize="thick"
+                  />
+                </FlexLayout>
+              );
+            }
+          )}
+        </FlexLayout>
+      </Card>
+    );
+  },
+];
+
+//Progressbar size
+export const Size: any = Template.bind({});
+Size.decorators = [
   () => {
     return (
       <Card title="Progress Bar size">
         <FlexLayout spacing="loose" direction="vertical">
           {["thin", "thick"].map((items: any, index: number) => {
             return (
-              <Progressbar key={index} progessSize={items} percentage={20} />
+              <FlexLayout spacing="loose" direction="vertical">
+                <Text>{items}</Text>
+                <Progressbar key={index} progessSize={items} percentage={20} />
+              </FlexLayout>
             );
           })}
         </FlexLayout>
@@ -91,13 +144,81 @@ Progresssize.decorators = [
     );
   },
 ];
+
+//Progressbar count
+export const Count: any = Template.bind({});
+Count.decorators = [
+  () => {
+    return (
+      <Card title="ProgressBar count">
+        <FlexLayout spacing="loose" direction="vertical">
+          {["tooltipCount", "linearCount"].map((items: any, index: number) => {
+            return (
+              <FlexLayout spacing="loose" direction="vertical">
+                <Text>{items}</Text>
+                <Progressbar key={index} percentage={20} count={items} />
+              </FlexLayout>
+            );
+          })}
+        </FlexLayout>
+      </Card>
+    );
+  },
+];
+
+//Progressbar percentage
+export const Percentage: any = Template.bind({});
+Percentage.decorators = [
+  () => {
+    return (
+      <Card title="ProgressBar Percentage">
+        <FlexLayout spacing="loose" direction="vertical">
+          {[10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map(
+            (items: any, index: number) => {
+              return (
+                <Progressbar
+                  key={index}
+                  percentage={items}
+                  count="linearCount"
+                />
+              );
+            }
+          )}
+        </FlexLayout>
+      </Card>
+    );
+  },
+];
+
 // animation
-export const ProgressWithAnimation: any = Template.bind({});
-ProgressWithAnimation.decorators = [
+export const Animation: any = Template.bind({});
+Animation.decorators = [
   () => {
     return (
       <Card title="Progress Bar with Animation">
-        <Progressbar isAnimating percentage={20} />
+        <Progressbar isAnimating percentage={45} />
+      </Card>
+    );
+  },
+];
+// Animation_with_Percentage
+export const Animation_with_Percentage: any = Template.bind({});
+Animation_with_Percentage.decorators = [
+  () => {
+    return (
+      <Card title="Progress Bar with Animation">
+        <Progressbar isAnimating percentage={40} count="linearCount" />
+      </Card>
+    );
+  },
+];
+// Animation_with_Percentage
+export const Animation_with_Tooltip: any = Template.bind({});
+Animation_with_Tooltip.decorators = [
+  () => {
+    return (
+      <Card title="Progress Bar with Animation">
+        <Progressbar isAnimating percentage={40} count="tooltipCount" />
       </Card>
     );
   },

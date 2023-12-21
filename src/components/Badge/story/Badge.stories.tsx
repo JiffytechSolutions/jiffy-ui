@@ -31,7 +31,6 @@ export default {
       },
       defaultValue: false,
     },
-
     type: {
       description: "Set type badge background color",
       control: {
@@ -120,18 +119,19 @@ const Template = ({ ...rest }) => {
         size={rest.size}
         icon={allIcons[rest.icon]({
           size: 16,
-          color: `${rest.variant === "accent" && rest.type === "primary"
-            ? "var(--inte-P900)"
-            : rest.variant === "accent" && rest.type == "secondary"
+          color: `${
+            rest.variant === "accent" && rest.type === "primary"
+              ? "var(--inte-P900)"
+              : rest.variant === "accent" && rest.type == "secondary"
               ? "var(--inte-G800)"
               : rest.variant === "accent" && rest.type == "success"
-                ? "var(--inte-GR150)"
-                : rest.variant === "accent" && rest.type == "error"
-                  ? "var(--inte-R400)"
-                  : rest.variant === "accent" && rest.type == "warning"
-                    ? "var(--inte-Y600)"
-                    : "var(--inte-G0)"
-            }`,
+              ? "var(--inte-GR150)"
+              : rest.variant === "accent" && rest.type == "error"
+              ? "var(--inte-R400)"
+              : rest.variant === "accent" && rest.type == "warning"
+              ? "var(--inte-Y600)"
+              : "var(--inte-G0)"
+          }`,
         })}
         iconAlign={rest.iconAlign}
         type={rest.type}
@@ -155,9 +155,11 @@ export const Types: any = Template.bind({});
 Types.decorators = [
   () => (
     <Card>
-      <FlexLayout spacing="loose"  wrap="wrap">
+      <FlexLayout spacing="loose" wrap="wrap">
         {size.map((variant: any, index: any) => (
-          <Badge key={index} type={variant}>{variant} Badge</Badge>
+          <Badge key={index} type={variant}>
+            {variant} Badge
+          </Badge>
         ))}
       </FlexLayout>
     </Card>
@@ -184,7 +186,7 @@ export const BadgeFilledVariant: any = Template.bind({});
 BadgeFilledVariant.decorators = [
   () => (
     <Card>
-      <FlexLayout spacing="loose"  wrap="wrap">
+      <FlexLayout spacing="loose" wrap="wrap">
         {size.map((variant: any) => (
           <Badge variant="filled" type={variant}>
             {variant} Badge
@@ -202,7 +204,7 @@ export const BadgeFilledVariantWithLeftAndRightIconAlign: any = Template.bind(
 BadgeFilledVariantWithLeftAndRightIconAlign.decorators = [
   () => (
     <Card>
-      <FlexLayout spacing="loose"  wrap="wrap">
+      <FlexLayout spacing="loose" wrap="wrap">
         {size.map((variant: any) => (
           <FlexLayout direction="vertical" spacing="loose">
             <Badge
@@ -233,7 +235,7 @@ export const BadgeAccentVariant: any = Template.bind({});
 BadgeAccentVariant.decorators = [
   () => (
     <Card>
-      <FlexLayout spacing="loose"  wrap="wrap">
+      <FlexLayout spacing="loose" wrap="wrap">
         {size.map((variant: any) => (
           <Badge variant="accent" type={variant}>
             {variant} Badge
@@ -251,7 +253,7 @@ export const AccentFilledVariantWithLeftAndRightIconAlign: any = Template.bind(
 AccentFilledVariantWithLeftAndRightIconAlign.decorators = [
   () => (
     <Card>
-      <FlexLayout spacing="loose"  wrap="wrap">
+      <FlexLayout spacing="loose" wrap="wrap">
         {size.map((variant: any) => (
           <FlexLayout direction="vertical" spacing="loose">
             <Badge
@@ -282,7 +284,7 @@ export const BadgeDotVariant: any = Template.bind({});
 BadgeDotVariant.decorators = [
   () => (
     <Card>
-      <FlexLayout spacing="loose"  wrap="wrap">
+      <FlexLayout spacing="loose" wrap="wrap">
         {size.map((variant: any) => (
           <Badge dot size="large" type={variant}>
             {variant} Badge
@@ -298,7 +300,7 @@ export const BadgeIconLeftAlign: any = Template.bind({});
 BadgeIconLeftAlign.decorators = [
   () => (
     <Card>
-      <FlexLayout spacing="loose"  wrap="wrap">
+      <FlexLayout spacing="loose" wrap="wrap">
         {size.map((variant: any) => (
           <Badge icon={<Check size={16} />} iconAlign="left" type={variant}>
             {variant} Badge
@@ -313,7 +315,7 @@ export const BadgeIconRightAlign: any = Template.bind({});
 BadgeIconRightAlign.decorators = [
   () => (
     <Card>
-      <FlexLayout spacing="loose"  wrap="wrap">
+      <FlexLayout spacing="loose" wrap="wrap">
         {size.map((variant: any) => (
           <Badge icon={<Check size={16} />} iconAlign="right" type={variant}>
             {variant} Badge
@@ -374,7 +376,5 @@ BadgeWithHelpText.decorators = [
   ),
 ];
 export function Documentation() {
-  return (
-    <BadgeDoc />
-  );
+  return <BadgeDoc />;
 }
