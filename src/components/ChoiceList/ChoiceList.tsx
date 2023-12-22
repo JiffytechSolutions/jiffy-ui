@@ -50,7 +50,7 @@ const ChoiceList = ({
   const [checkClass, setCheckClass] = useState(false);
   const [curr, setCurr] = useState(0);
   const parentRef = useRef<any>(null);
-  const isMobileDevice = useMobileDevice()
+  const isMobileDevice = useMobileDevice();
 
   const handleRadioGroupChange = useCallback((val: string | number) => {
     onChange(val);

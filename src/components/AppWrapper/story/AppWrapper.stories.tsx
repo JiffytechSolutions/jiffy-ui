@@ -314,7 +314,7 @@ const sideBar = () => {
   ];
 
   const handelMenuChange = (newPath: string) => {
-    console.log("newPath => ", newPath);
+    // console.log("newPath => ", newPath);
   };
 
   const makeStore = () => {
@@ -455,7 +455,6 @@ const dataTable = () => {
   };
 
   const handelSelectChange = (newSelectedKeys: any) => {
-    console.log(newSelectedKeys);
     let newKeys = { ...selectedRowKey };
     Object.keys(newSelectedKeys).map((item) => {
       newKeys[item] = newSelectedKeys[item];
@@ -536,11 +535,11 @@ const Template = ({ ...rest }) => {
       secondaryAction={[
         {
           content: "Sync With MarketPlace",
-          onClick: function noRefCheck() { },
+          onClick: function noRefCheck() {},
         },
         {
           content: "Sync With MarketPlaces",
-          onClick: function noRefCheck() { },
+          onClick: function noRefCheck() {},
         },
         {
           content: "Delete Listing",
@@ -551,12 +550,12 @@ const Template = ({ ...rest }) => {
       ]}
       tertiaryAction={{
         content: "Overview",
-        onClick: function noRefCheck() { },
+        onClick: function noRefCheck() {},
       }}
       primaryAction={{
         content: "Submit",
         icon: <Check color="var(--inte-G0)" size="24" />,
-        onClick: function noRefCheck() { },
+        onClick: function noRefCheck() {},
       }}
     />
   );
@@ -574,7 +573,7 @@ const Template = ({ ...rest }) => {
                 <CustomActionList />
               </FlexLayout>
             }
-          // stickyTop={false}
+            // stickyTop={false}
           />
         }
         sideBar={sideBar()}
