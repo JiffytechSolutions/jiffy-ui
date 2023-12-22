@@ -25,6 +25,8 @@ const TopNavBar = ({ menu, onChange, customClass = "" }: TopNavBarI) => {
   const [scrollLeft, setScrollLeft] = useState(0);
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
+  const ref1: any = useRef(null);
+  const ref2: any = useRef(null);
 
   const handelPopoverRefEle = (ele: any) => {
     if (!ele) return;
@@ -74,9 +76,100 @@ const TopNavBar = ({ menu, onChange, customClass = "" }: TopNavBarI) => {
     if (listRef.current) {
       const newScrollLeft = scrollLeft + scrollAmount;
       listRef.current.scrollLeft = newScrollLeft;
+      console.log(scrollAmount, newScrollLeft, "scroll");
       setScrollLeft(newScrollLeft);
     }
   };
+  // new feature
+
+  const [isPressed, setIsPressed] = useState(false);
+
+  // useEffect(() => {
+  // let interval: any;
+
+  // const speedFunction = (id: number) => {
+  //   console.log(id, "Function called");
+  //   // Your code here
+  // };
+
+  // const handleMouseDown = () => {
+  //   setIsPressed(true);
+  //   interval = setInterval(() => {
+  //     speedFunction(1);
+  //   }, 100); // Adjust the interval as needed
+  // };
+
+  // const handleMouseUp = () => {
+  //   setIsPressed(false);
+  //   clearInterval(interval);
+  // };
+
+  // // Attach event listeners
+  // document.addEventListener("mousedown", handleMouseDown);
+  // document.addEventListener("mouseup", handleMouseUp);
+  // document.addEventListener("touchstart", handleMouseDown);
+  // document.addEventListener("touchend", handleMouseUp);
+
+  // // Clean up event listeners
+  // return () => {
+  //   document.removeEventListener("mousedown", handleMouseDown);
+  //   document.removeEventListener("mouseup", handleMouseUp);
+  //   document.removeEventListener("touchstart", handleMouseDown);
+  //   document.removeEventListener("touchend", handleMouseUp);
+  //   clearInterval(interval);
+  // };
+  // }, []);
+
+  useEffect(() => {
+    let interval: any;
+
+    const handleMouseDown = () => {
+      setIsPressed(true);
+      interval = setInterval(() => {
+        speedFunction(-100);
+      }, 300); // Adjust the interval as needed
+
+      const [time, setTime] = useState(5);
+      useEffect(() => {
+        const t = setTimeout(() => {
+          if (time > 0) {
+            setTime((e) => e - 1);
+          } else {
+            clearTimeout(t);
+          }
+        }, 1000);
+        return () => {
+          clearTimeout(t);
+        };
+      }, [time]);
+    };
+
+    const handleMouseUp = () => {
+      setIsPressed(false);
+      clearInterval(interval);
+    };
+    // Attach event listeners
+    ref1?.current?.addEventListener("mousedown", handleMouseDown);
+    ref1?.current?.addEventListener("mouseup", handleMouseUp);
+    ref1?.current?.addEventListener("touchstart", handleMouseDown);
+    ref1?.current?.addEventListener("touchend", handleMouseUp);
+
+    // Clean up event listeners
+    return () => {
+      ref1?.current?.removeEventListener("mousedown", handleMouseDown);
+      ref1?.current?.removeEventListener("mouseup", handleMouseUp);
+      ref1?.current?.removeEventListener("touchstart", handleMouseDown);
+      ref1?.current?.removeEventListener("touchend", handleMouseUp);
+      clearInterval(interval);
+    };
+  }, []);
+
+  const speedFunction = (id: number) => {
+    handleScroll(id);
+    // console.log(ref1, "Function called");
+    // Your code here
+  };
+  // end
 
   return (
     <>
@@ -87,7 +180,8 @@ const TopNavBar = ({ menu, onChange, customClass = "" }: TopNavBarI) => {
           [customClass]: customClass,
         })}
       >
-        {showLeftButton && (
+        {/* {showLeftButton && ( */}
+        <div ref={ref1}>
           <Button
             onClick={() => {
               handleScroll(-100);
@@ -96,7 +190,8 @@ const TopNavBar = ({ menu, onChange, customClass = "" }: TopNavBarI) => {
             icon={<ArrowLeft />}
             customClass="inte-arrowLeft__scroll"
           />
-        )}
+        </div>
+        {/* // )} */}
         <ul className="inte-top__list" ref={listRef}>
           {menu?.map((item: any, Pindex: number) => (
             <li
@@ -146,12 +241,14 @@ const TopNavBar = ({ menu, onChange, customClass = "" }: TopNavBarI) => {
           ))}
         </ul>
         {showRightButton && (
-          <Button
-            onClick={() => handleScroll(100)}
-            type="outlined"
-            icon={<ArrowRight />}
-            customClass="inte-arrowRight__scroll"
-          />
+          <div ref={ref2}>
+            <Button
+              onClick={() => handleScroll(100)}
+              type="outlined"
+              icon={<ArrowRight />}
+              customClass="inte-arrowRight__scroll"
+            />
+          </div>
         )}
       </div>
     </>

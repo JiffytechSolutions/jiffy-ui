@@ -14,7 +14,7 @@ import Button from "../Button/Button";
 import getClassNames from "../../utilities/getClassnames";
 import useDelayUnmount from "../../utilities/useDelayTimeout";
 import "./Image.css";
-export interface ImageProps {
+export interface ImageI {
   src: string;
   alt?: string;
   height?: number;
@@ -48,7 +48,7 @@ export interface ImageItemsI {
   objectFit?: "fill" | "contain" | "cover" | "none";
 }
 
-const Image: React.FC<ImageProps> = ({
+const Image: React.FC<ImageI> = ({
   src,
   alt,
   width = "100%",

@@ -203,7 +203,7 @@ const Template = ({ ...rest }) => {
 export const Primary = Template.bind({});
 
 // Pagination of types
-const PaginationType = ["navButton", "fullLength"];
+const PaginationType = ["fullLength", "navButton"];
 export const Pagination__Type: any = Template.bind({});
 Pagination__Type.decorators = [
   () => {
@@ -237,12 +237,7 @@ Pagination__Type.decorators = [
     };
     return (
       <Card title={"Pagination of types"}>
-        <FlexLayout
-          spacing="extraLoose"
-          tabWidth="100"
-          desktopWidth="100"
-          mobileWidth="100"
-        >
+        <FlexLayout spacing="extraLoose" direction="vertical">
           {PaginationType.map((variant: any) => {
             return (
               <Card title={variant} cardType="bordered">
