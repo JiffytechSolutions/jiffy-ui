@@ -1,4 +1,3 @@
-
 import React from "react";
 import Lottie from "lottie-react";
 import CreateCampaign from "./components/CreateCampaignAnimation.json";
@@ -31,48 +30,47 @@ import NoAccountConnected from "./components/NoaccountConnectedEmptyProfile.json
 
 const AnimatingIllustration: React.FC<AnimatingIllustrationI> = ({
   animationData = "CreateCampaign",
-  loop=false,
+  loop = false,
   style,
   customClass,
 }: AnimatingIllustrationI) => {
-
-  const getanimationData =   {
-      "CreateCampaign": CreateCampaign,
-      "NoAccountConnect": NoAccountConnect,
-      "NoCampaignAvailabel": NoCampaignAvailabel,
-      "NoAccountSearch": NoAccountSearch,
-      "Nonotification": Nonotification,
-      "Add": Add,
-      "PageNotFound": PageNotFound,
-      "ConnectedSucessfully": ConnectedSucessfully,
-      "Mail": Mail,
-      "Meeting": Meeting,
-      "NoInternet": NoInternet,
-      "Journal":Journal,
-      "BrokenPage":BrokenPage,
-      "BrokenLink":BrokenLink,
-      "WeAreFacingIssue":WeAreFacingIssue,
-      "Ticket":Ticket,
-      "Refresh":Refresh,
-      "SessionExpire":SessionExpire,
-      "NoSearchResult":NoSearchResult,
-      "NoProductSearchAvailabel1":NoProductSearchAvailabel1,
-      "NoProductSearchAvailabel2":NoProductSearchAvailabel2,
-      "NoProductAvailabel1":NoProductAvailabel1,
-      "NoProductAvailabel2":NoProductAvailabel2,
-      "NoOrderFoundOnSearch":NoOrderFoundOnSearch,
-      "NoOrderFound":NoOrderFound,
-      "Logout":Logout,
-      "NoAccountConnected":NoAccountConnected
+  const getanimationData = {
+    CreateCampaign: CreateCampaign,
+    NoAccountConnect: NoAccountConnect,
+    NoCampaignAvailabel: NoCampaignAvailabel,
+    NoAccountSearch: NoAccountSearch,
+    Nonotification: Nonotification,
+    Add: Add,
+    PageNotFound: PageNotFound,
+    ConnectedSucessfully: ConnectedSucessfully,
+    Mail: Mail,
+    Meeting: Meeting,
+    NoInternet: NoInternet,
+    Journal: Journal,
+    BrokenPage: BrokenPage,
+    BrokenLink: BrokenLink,
+    WeAreFacingIssue: WeAreFacingIssue,
+    Ticket: Ticket,
+    Refresh: Refresh,
+    SessionExpire: SessionExpire,
+    NoSearchResult: NoSearchResult,
+    NoProductSearchAvailabel1: NoProductSearchAvailabel1,
+    NoProductSearchAvailabel2: NoProductSearchAvailabel2,
+    NoProductAvailabel1: NoProductAvailabel1,
+    NoProductAvailabel2: NoProductAvailabel2,
+    NoOrderFoundOnSearch: NoOrderFoundOnSearch,
+    NoOrderFound: NoOrderFound,
+    Logout: Logout,
+    NoAccountConnected: NoAccountConnected,
   };
   const AnimationData = getanimationData[animationData];
   return (
-      <Lottie
-        className={`inte-animatingIllustration ${customClass}`}
-        loop={loop}
-        animationData={AnimationData}
-        style={style}
-      />
+    <Lottie
+      className={`inte-animatingIllustration ${customClass}`}
+      loop={loop}
+      animationData={AnimationData}
+      style={style}
+    />
   );
 };
 export interface AnimatingIllustrationI {
@@ -88,22 +86,22 @@ export interface AnimatingIllustrationI {
     | "Mail"
     | "Meeting"
     | "NoInternet"
-    |"Journal"
-    |"BrokenPage"
-    |"BrokenLink"
-    |"WeAreFacingIssue"
-    |"Ticket"
-    |"Refresh"
-    |"SessionExpire"
-    |"NoSearchResult"
-    |"NoProductSearchAvailabel1"
-    |"NoProductSearchAvailabel2"
-    |"NoProductAvailabel1"
-    |"NoProductAvailabel2"
-    |"NoOrderFoundOnSearch"
-    |"NoOrderFound"
-    |"Logout"
-    |"NoAccountConnected";
+    | "Journal"
+    | "BrokenPage"
+    | "BrokenLink"
+    | "WeAreFacingIssue"
+    | "Ticket"
+    | "Refresh"
+    | "SessionExpire"
+    | "NoSearchResult"
+    | "NoProductSearchAvailabel1"
+    | "NoProductSearchAvailabel2"
+    | "NoProductAvailabel1"
+    | "NoProductAvailabel2"
+    | "NoOrderFoundOnSearch"
+    | "NoOrderFound"
+    | "Logout"
+    | "NoAccountConnected";
   style?: any;
   loop?: boolean;
   customClass?: string;

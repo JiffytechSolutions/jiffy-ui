@@ -16,7 +16,6 @@ export { default as Badge } from "./Badge/Badge";
 export type { BadgeI } from "./Badge/Badge";
 export { default as Tag } from "./Tag/Tag";
 export type { TagI } from "./Tag/Tag";
-// export { default as TextStyles } from "./TextStyles/TextStyles";  Depricated for new usage
 export { default as Text } from "./Text/Text";
 export type { TextI } from "./Text/Text";
 export { default as LRLayout } from "./LRLayout/LRLayout";
@@ -60,6 +59,7 @@ export type { AvatarI } from "./Avatar/Avatar";
 export { default as Breadcrumb } from "./Breadcrumb/Breadcrumb";
 export type { BreadcrumbI } from "./Breadcrumb/Breadcrumb";
 export { default as CopyClipboard } from "./CopyClipboard/CopyClipboard"; // Depricated for new usage
+export type { CopyClipboardI } from "./CopyClipboard/CopyClipboard";
 export { default as ToolTip } from "./ToolTip/ToolTip";
 export type { ToolTipI } from "./ToolTip/ToolTip";
 export { default as FileUpload } from "./FileUpload/FileUpload";
@@ -75,6 +75,7 @@ export type { StepWizardI } from "./StepWizard/StepWizard";
 export { default as Sheet } from "./Sheet/Sheet";
 export type { SheetI } from "./Sheet/Sheet";
 export { default as RangeSlider } from "./RangeSlider/RangeSlider";
+export type { RangeSliderI } from "./RangeSlider/RangeSlider";
 export { default as Sortable } from "./Sortable/Sortable";
 export type { SortableI } from "./Sortable/Sortable";
 export { default as Seprator } from "./Seprator/Seprator";
@@ -108,16 +109,21 @@ export { default as DatePicker } from "./Form/DatePicker/DatePicker/DatePicker";
 export type { DatePickerI } from "./Form/DatePicker/DatePicker/DatePicker";
 export { default as RangePicker } from "./Form/DatePicker/RangePicker/RangePicker";
 export type { RangePickerI } from "./Form/DatePicker/RangePicker/RangePicker";
+export { default as Image } from "./Image/Image";
+export type { ImageI } from "./Image/Image";
+export { default as ImageMagnifier } from "./ImageMagnifier/ImageMagnifier";
+export type { ImageMagnifierI } from "./ImageMagnifier/ImageMagnifier";
+export { default as InputPhone } from "./Form/InputPhone/InputPhone";
+export type { InputPhoneI } from "./Form/InputPhone/InputPhone";
+export { default as SpyTabs } from "./Tabs/SpyTabs";
+export type { SpyTabsI } from "./Tabs/SpyTabs";
+
 export { default as VirtualScroll } from "./VirtualScroll/VirtualScroll";
 export { default as VirtualSelect } from "./Form/VirtualSelect/VirtualSelect";
 export { default as AnimatingIllustration } from "./AnimationingIllustration/Illustration";
 export { default as useMobileDevice } from "../utilities/useMobileDevice";
 export { default as useWindowResize } from "../utilities/useWindowResize";
 export { default as isTouchDevice } from "../utilities/isTouchDevice";
-export { default as Image } from "./Image/Image";
-export { default as ImageMagnifier } from "./ImageMagnifier/ImageMagnifier";
-export { default as SpyTabs } from "./Tabs/SpyTabs"
-export type {SpyTabsI} from './Tabs/SpyTabs'
 export * from "./Card";
 export * from "./FlexLayout";
 export * from "./Form";

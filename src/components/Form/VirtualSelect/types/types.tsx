@@ -18,6 +18,6 @@ export type VirtualSelectI = {
   isClearable?: boolean;
   isCreatable?: boolean;
   accessibilityLabel?: string;
-  controlStates?: "success" | "warning" | "error";
+  controlStates?: "success" | "warning" | "error" | "default";
   customClass?: string;
 };

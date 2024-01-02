@@ -1,46 +1,39 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react'
-import './TextEditor.css'
-import Button from '../Button/Button'
+import React, { FormEvent, useEffect, useRef, useState } from "react";
+import "./TextEditor.css";
+import Button from "../Button/Button";
 
 export interface TextEditorI {
   placeholder?: string;
   initialText?: string;
 }
 
-
 const convertStringToHTML = (htmlString: string) => {
   const parser = new DOMParser();
-  const html = parser.parseFromString(htmlString, 'text/html');
+  const html = parser.parseFromString(htmlString, "text/html");
 
   return { __html: html.body.innerHTML } as { __html: string | TrustedHTML };
 };
 
 const setEndOfContenteditable = (contentEditableElement: Element) => {
   let range, selection;
-  range = document.createRange();//Create a range (a range is a like the selection but invisible)
-  range.selectNodeContents(contentEditableElement);//Select the entire contents of the element with the range
-  range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
-  selection = window.getSelection();//get the selection object (allows you to change selection)
-  selection?.removeAllRanges();//remove any selections already made
-  selection?.addRange(range);//make the range you have just created the visible selection
-}
+  range = document.createRange(); //Create a range (a range is a like the selection but invisible)
+  range.selectNodeContents(contentEditableElement); //Select the entire contents of the element with the range
+  range.collapse(false); //collapse the range to the end point. false means collapse to end rather than the start
+  selection = window.getSelection(); //get the selection object (allows you to change selection)
+  selection?.removeAllRanges(); //remove any selections already made
+  selection?.addRange(range); //make the range you have just created the visible selection
+};
 
-const TextEditor = ({
-  placeholder,
-  initialText
-}: TextEditorI) => {
 
   const selection = document.getSelection()
   const range = new Range
-
   const [currStyleApplied, setCurrStyleApplied] = useState({
     bold: false,
     italic: false,
     underline: false,
-  })
+  });
 
-  const editorRef = useRef<HTMLDivElement>(null)
-
+  const editorRef = useRef<HTMLDivElement>(null);
 
   const handelOnInput = (e: React.FormEvent) => {
     console.log("onInputCalling");
@@ -69,6 +62,7 @@ const TextEditor = ({
       selection.addRange(range);
     }
   };
+
 
   const giveCurrentFormat = (selectedRange:Range , currentStyle : {bold:boolean , italic:boolean , underline:boolean}) => {
     const treeWalker = document.createTreeWalker(selectedRange.startContainer)
@@ -154,17 +148,14 @@ const TextEditor = ({
       </div>
       <div
         ref={editorRef}
-        className='inte-textEditor__body'
+        className="inte-textEditor__body"
         contentEditable={true}
         onInput={handelOnInput}
       >
-        {
-          initialText
-        }
+        {initialText}
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default TextEditor
+export default TextEditor;

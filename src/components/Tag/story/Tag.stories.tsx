@@ -329,7 +329,6 @@ tag_with_animation_with_remiveItem.decorators = [
         setArr(newArr);
       }, 200);
     };
-    console.log(arr);
 
     return (
       <Card>

@@ -245,7 +245,7 @@ const menu3 = [
 ];
 
 const handelMenuChange = (newPath: string) => {
-  console.log("newPath => ", newPath);
+  // console.log("newPath => ", newPath);
 };
 
 const makeStore = () => {
