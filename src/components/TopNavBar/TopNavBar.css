@@ -4,6 +4,12 @@
   border-bottom: 0.1rem solid silver;
   display: flex;
   align-items: center;
+  background-color: var(--inte-G0);
+}
+.inte-TopNav--stickyTop {
+  position: sticky;
+  top: 0;
+  z-index: var(--inte-Z-6);
 }
 /* Hide scrollbar for Chrome, Safari and Opera */
 .inte-TopNav ::-webkit-scrollbar {
