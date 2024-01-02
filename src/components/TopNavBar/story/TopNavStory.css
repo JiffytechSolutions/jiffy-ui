@@ -1,0 +1,21 @@
+.inte-appWrapper .inte-announcementBar + .inte-TopNav__wrapper {
+  top: 48px;
+}
+.inte-TopNav__customClass .inte-appBar--container,
+.inte-TopNav__customClass .inte-pageFooter {
+  margin-left: unset !important;
+  width: 100% !important;
+}
+
+.inte-TopNav__customClass .inte-pageFooter,
+.inte-TopNav__customClass .inte-main {
+  margin-left: unset !important;
+}
+
+.inte-TopNav__customClass.inte-sideBar--active .inte-sideBar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  transform: translateX(-28rem);
+}
