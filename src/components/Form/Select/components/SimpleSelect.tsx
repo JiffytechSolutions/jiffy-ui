@@ -47,6 +47,7 @@ const SimpleSelect = ({
   onInputChange = () => null,
   value,
   heading,
+  width,
 }: SelectI): JSX.Element => {
   const isMobile: boolean = useMobileDevice();
   const rID = useId();
@@ -837,7 +838,7 @@ const SimpleSelect = ({
   return (
     <div
       className={getClassNames({
-        "inte-formElement": true,
+        "inte-formElement ": true,
         "inte-formElement--focus": dropdownActive,
         "inte-formElement--select-focused": isFocused,
         "inte-formElement--loading": isLoading,
@@ -846,6 +847,7 @@ const SimpleSelect = ({
         [controlStatesVal]: controlStates,
       })}
       {...(isRequired ? { "aria-required": "true" } : {})}
+      style={{ width: width + "px" }}
     >
       {label && (
         <label

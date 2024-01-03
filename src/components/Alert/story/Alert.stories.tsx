@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Alert, Card, TextLink, Text, AnimationWrapper } from "../..";
+import React from "react";
+import { Alert, Card, TextLink, Text } from "../..";
 import FlexLayout from "../../FlexLayout/FlexLayout";
 import * as Icons from "../../../storybook/Foundation/Icons/Icons";
 import {
@@ -48,7 +48,7 @@ export default {
       control: {
         type: "boolean",
       },
-      defaultValue: false,
+      defaultValue: true,
     },
     icon: {
       description: "Set Button Icon",
@@ -109,26 +109,22 @@ export default {
 };
 
 const destroyf = () => {
-  // alert("Destroy Clicked!!");
+  alert("Destroy Clicked!!");
 };
 
 const Template = ({ ...rest }: any) => {
-  const [hide, setHide] = useState(true);
   return (
     <Card title="Alerts">
       <Alert
         {...rest}
-        onClose={() => {
-          destroyf();
-          setHide(!hide);
-        }}
+        onClose={destroyf}
+        destroy={rest.destroy}
         icon={allIcons[rest.icon]({
           size: 20,
           color: "red",
         })}
         type={rest.type}
         description={rest.description}
-        hasDestroy={rest.hasDestroy}
       />
     </Card>
   );
@@ -269,32 +265,29 @@ AlertWithSecondaryAction.decorators = [
 //Alert With destroy
 export const AlertWithDestroy: any = Template.bind({});
 AlertWithDestroy.decorators = [
-  () => {
-    return (
-      <Card>
-        <FlexLayout spacing="extraLoose" direction="vertical">
-          {type.map((items: any, index: number) => {
-            return (
-              <Alert
-                icon={items.icon}
-                type={items.type}
-                // onClose={() => showHide.push(index)}
-                hasDestroy
-                title={"Alert Message"}
-                description={"Alert Description."}
-                primaryAction={{
-                  content: "Learn More",
-                }}
-                seconadaryAction={{
-                  content: "Learn More",
-                }}
-              />
-            );
-          })}
-        </FlexLayout>
-      </Card>
-    );
-  },
+  () => (
+    <Card>
+      <FlexLayout spacing="extraLoose" direction="vertical">
+        {type.map((items: any) => {
+          return (
+            <Alert
+              icon={items.icon}
+              type={items.type}
+              hasDestroy
+              title={"Alert Message"}
+              description={"Alert Description."}
+              primaryAction={{
+                content: "Learn More",
+              }}
+              seconadaryAction={{
+                content: "Learn More",
+              }}
+            />
+          );
+        })}
+      </FlexLayout>
+    </Card>
+  ),
 ];
 //Alert with link
 export const AlertWithLink: any = Template.bind({});
@@ -322,138 +315,6 @@ AlertWithLink.decorators = [
   ),
 ];
 
-// animate
-export const Alert_With_Animation: any = Template.bind({});
-Alert_With_Animation.decorators = [
-  () => {
-    const [showHide1, setShowHide1] = useState(true);
-    const [showHide2, setShowHide2] = useState(true);
-    const [showHide3, setShowHide3] = useState(true);
-
-    return (
-      <Card>
-        <AnimationWrapper
-          show={showHide1}
-          inAnimation="inAnimate"
-          outAnimation="outAnimate"
-        >
-          <Alert
-            type="info"
-            onClose={() => setShowHide1(!showHide1)}
-            hasDestroy
-            title={"Alert Message"}
-            description={"Alert Description."}
-            primaryAction={{
-              content: "Learn More",
-            }}
-            seconadaryAction={{
-              content: "Learn More",
-            }}
-          />
-        </AnimationWrapper>
-        <AnimationWrapper
-          show={showHide2}
-          inAnimation="inAnimate"
-          outAnimation="outAnimate"
-        >
-          <Alert
-            type="danger"
-            onClose={() => setShowHide2(!showHide2)}
-            hasDestroy
-            title={"Alert Message"}
-            description={"Alert Description."}
-            primaryAction={{
-              content: "Learn More",
-            }}
-            seconadaryAction={{
-              content: "Learn More",
-            }}
-          />
-        </AnimationWrapper>
-        <AnimationWrapper
-          show={showHide3}
-          inAnimation="inAnimate"
-          outAnimation="outAnimate"
-        >
-          <Alert
-            type="info"
-            onClose={() => setShowHide3(!showHide3)}
-            hasDestroy
-            title={"Alert Message"}
-            description={"Alert Description."}
-            primaryAction={{
-              content: "Learn More",
-            }}
-            seconadaryAction={{
-              content: "Learn More",
-            }}
-          />
-        </AnimationWrapper>
-      </Card>
-    );
-  },
-];
-//alert without animate
-export const Alert_WithOut_Animation: any = Template.bind({});
-Alert_WithOut_Animation.decorators = [
-  () => {
-    const [showHide1, setShowHide1] = useState(true);
-    const [showHide2, setShowHide2] = useState(true);
-    const [showHide3, setShowHide3] = useState(true);
-
-    return (
-      <Card>
-        {showHide1 && (
-          <Alert
-            type="info"
-            onClose={() => setShowHide1(!showHide1)}
-            hasDestroy
-            title={"Alert Message"}
-            description={"Alert Description."}
-            primaryAction={{
-              content: "Learn More",
-            }}
-            seconadaryAction={{
-              content: "Learn More",
-            }}
-          />
-        )}
-
-        {showHide2 && (
-          <Alert
-            type="danger"
-            onClose={() => setShowHide2(!showHide2)}
-            hasDestroy
-            title={"Alert Message"}
-            description={"Alert Description."}
-            primaryAction={{
-              content: "Learn More",
-            }}
-            seconadaryAction={{
-              content: "Learn More",
-            }}
-          />
-        )}
-
-        {showHide3 && (
-          <Alert
-            type="info"
-            onClose={() => setShowHide3(!showHide3)}
-            hasDestroy
-            title={"Alert Message"}
-            description={"Alert Description."}
-            primaryAction={{
-              content: "Learn More",
-            }}
-            seconadaryAction={{
-              content: "Learn More",
-            }}
-          />
-        )}
-      </Card>
-    );
-  },
-];
 export function Documentation() {
   return <AlertDoc />;
 }

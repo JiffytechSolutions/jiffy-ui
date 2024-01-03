@@ -70,7 +70,8 @@ export default {
       defaultValue: "id",
     },
     onEnter: {
-      description: "The callback function that is triggered when Enter key is pressed",
+      description:
+        "The callback function that is triggered when Enter key is pressed",
       control: {
         disable: true,
       },
@@ -137,10 +138,9 @@ WithLabel.decorators = [
           }}
         />
       </Card>
-    )
+    );
   },
 ];
-
 
 export const placeHolder: any = Template.bind({});
 placeHolder.decorators = [
@@ -157,7 +157,7 @@ placeHolder.decorators = [
           }}
         />
       </Card>
-    )
+    );
   },
 ];
 
@@ -177,10 +177,9 @@ Readonly.decorators = [
           }}
         />
       </Card>
-    )
+    );
   },
 ];
-
 
 export const Rows: any = Template.bind({});
 Rows.decorators = [
@@ -199,6 +198,6 @@ Rows.decorators = [
           }}
         />
       </Card>
-    )
+    );
   },
 ];

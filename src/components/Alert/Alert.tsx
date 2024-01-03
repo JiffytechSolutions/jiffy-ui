@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect } from "react";
+import React from "react";
 import { X } from "../../storybook/Foundation/Icons/Icons";
 import Button, { ButtonI } from "../Button/Button";
 import getClassNames from "../../utilities/getClassnames";
@@ -29,36 +29,26 @@ const Alert: React.FC<AlertI> = ({
   const checkDestroy = () => {
     if (hasDestroy) {
       return (
-        <span className="inte-alert--destroy">
-          <span
-            role={"button"}
-            aria-label="inte-alert--destroy"
-            style={{
-              cursor: "pointer",
-              display: "flex",
-              padding: "0.5rem",
-              borderRadius: "var( --radius-rounded-6)",
-            }}
-            onClick={onClose}
-          >
-            <X size={20} color={"var(--inte-G800)"} strokeWidth={3} />
+        <>
+          <span className="inte-alert--destroy">
+            <span
+              role={"button"}
+              aria-label="inte-alert--destroy"
+              style={{
+                cursor: "pointer",
+                display: "flex",
+                padding: "0.5rem",
+                borderRadius: "var( --radius-rounded-6)",
+              }}
+              onClick={onClose}
+            >
+              <X size={20} color={"var(--inte-G800)"} strokeWidth={3} />
+            </span>
           </span>
-        </span>
+        </>
       );
     }
   };
-
-  useEffect(() => {
-    const parentElement = document?.querySelectorAll(".inte-alert");
-    for (let i = 0; i < parentElement.length; i++) {
-      let addClass = parentElement[i].closest(".inte-animationWrapper");
-
-      if (addClass?.classList.contains("inte-animationWrapper")) {
-        addClass?.classList.add("inte-alert__animation");
-      }
-    }
-  }, []);
-
   return (
     <div
       className={getClassNames({
@@ -114,7 +104,6 @@ export interface AlertI {
   description?: React.ReactNode;
   onClose?: () => void;
   hasDestroy?: boolean;
-
   icon?: React.ReactNode;
   primaryAction?: ButtonI;
   seconadaryAction?: ButtonI;

@@ -41,6 +41,7 @@ const TextEditor = ({
 
   const selection = document.getSelection()
   const range = new Range
+
   const [currStyleApplied, setCurrStyleApplied] = useState({
     bold: false,
     italic: false,
@@ -50,7 +51,6 @@ const TextEditor = ({
   const [inputType, setInputType] = useState<string>("")
 
   const editorRef = useRef<HTMLDivElement>(null)
-
   const findAppliedStyleInRange = (range: Range) => {
     let currentContainer: Node | null = null
     let appliedStyle: { [key: string]: null | boolean } = {
@@ -62,7 +62,6 @@ const TextEditor = ({
       currentContainer = range.startContainer;
     }
     while (currentContainer && currentContainer !== editorRef.current) {
-
       console.log((currentContainer as HTMLElement).classList)
 
       if ((currentContainer as HTMLElement).classList?.contains(classList.BOLD)) {
@@ -128,7 +127,6 @@ const TextEditor = ({
       }
 
       if (container.classList.length) currRange.surroundContents(container)
-
       selection.removeAllRanges()
       selection.addRange(currRange)
       selection.collapseToEnd()

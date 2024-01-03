@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { X } from "../../storybook/Foundation/Icons/Icons";
 import Button, { ButtonI } from "../Button/Button";
 import getClassNames from "../../utilities/getClassnames";
 import useWindowResize from "../../utilities/useWindowResize";
-import useDelayUnmount from "../../utilities/useDelayTimeout";
 import "./AnnouncementBar.css";
 
 const AnnouncementBar: React.FC<AnnouncementBarI> = ({
@@ -18,10 +17,8 @@ const AnnouncementBar: React.FC<AnnouncementBarI> = ({
   bgImage,
   action,
   isOpen = true,
-  isAnimation = false,
 }: AnnouncementBarI) => {
   const { width } = useWindowResize();
-  const animation = isAnimation ? useDelayUnmount(isOpen, 300) : isOpen;
   const checkAnnouncementType: { [key: string]: string } = {
     warning: "inte-announcement--warning",
     danger: "inte-announcement--danger",
@@ -36,10 +33,9 @@ const AnnouncementBar: React.FC<AnnouncementBarI> = ({
     backgroundRepeat: "no-repeat",
     backgroundPosition: "2rem 0",
   };
-
   return (
     <>
-      {animation && (
+      {isOpen && (
         <div
           {...(bgImage && width >= 768 ? { style: styleBg } : {})}
           className={getClassNames({
@@ -47,10 +43,6 @@ const AnnouncementBar: React.FC<AnnouncementBarI> = ({
             [typeAnnouncement]: typeAnnouncement,
             "inte-announcementBar--hasClose": destroy,
             "inte-announcementBar--hasAction": action,
-            "inte-announcementBar__animation--in":
-              isOpen && destroy && isAnimation,
-            "inte-announcementBar__animation--out":
-              !isOpen && destroy && isAnimation,
             [customClass as string]: customClass,
           })}
         >
@@ -88,7 +80,6 @@ export interface AnnouncementBarI {
   onClose?: () => void;
   destroy?: boolean;
   isOpen?: boolean;
-  isAnimation?: boolean;
   customClass?: string;
   bgImage?: string;
   action?: ButtonI;
