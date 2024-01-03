@@ -24,7 +24,6 @@ const setEndOfContenteditable = (contentEditableElement: Element) => {
   selection?.addRange(range); //make the range you have just created the visible selection
 };
 
-<<<<<<< HEAD
 const classList = {
   BOLD : 'bold',
   ITALIC : 'italic',
@@ -39,8 +38,6 @@ const TextEditor = ({
   placeholder,
   initialText
 }: TextEditorI) => {
-=======
->>>>>>> 58d0f93628ccd6d0b93ca3655c46efa6a87ffaaf
 
   const selection = document.getSelection()
   const range = new Range
@@ -48,17 +45,11 @@ const TextEditor = ({
     bold: false,
     italic: false,
     underline: false,
-<<<<<<< HEAD
   })
 
   const [inputType, setInputType] = useState<string>("")
 
   const editorRef = useRef<HTMLDivElement>(null)
-=======
-  });
-
-  const editorRef = useRef<HTMLDivElement>(null);
->>>>>>> 58d0f93628ccd6d0b93ca3655c46efa6a87ffaaf
 
   const findAppliedStyleInRange = (range: Range) => {
     let currentContainer: Node | null = null
@@ -81,20 +72,12 @@ const TextEditor = ({
         if (appliedStyle.bold === null) appliedStyle.bold = false
       }
 
-<<<<<<< HEAD
       if ((currentContainer as HTMLElement).classList?.contains(classList.ITALIC)) {
         if (appliedStyle.italic === null) appliedStyle.italic = true;
       }
       if ((currentContainer as HTMLElement).classList?.contains(classList.NOTITALIC)) {
         if (appliedStyle.italic === null) appliedStyle.italic = false;
       }
-=======
-
-  const giveCurrentFormat = (selectedRange:Range , currentStyle : {bold:boolean , italic:boolean , underline:boolean}) => {
-    const treeWalker = document.createTreeWalker(selectedRange.startContainer)
-    console.log(selectedRange , currentStyle , treeWalker)
-  }
->>>>>>> 58d0f93628ccd6d0b93ca3655c46efa6a87ffaaf
 
       if ((currentContainer as HTMLElement).classList?.contains(classList.UNDERLINE)) {
         if (appliedStyle.underline === null) appliedStyle.underline = true
@@ -195,10 +178,6 @@ const TextEditor = ({
         contentEditable={true}
         onInput={handelOnInput}
       >
-<<<<<<< HEAD
-=======
-        {initialText}
->>>>>>> 58d0f93628ccd6d0b93ca3655c46efa6a87ffaaf
       </div>
     </div>
   );
