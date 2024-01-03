@@ -25,3 +25,28 @@
 .inte-textEditor__placeholder {
     color: #70747E;
 }
+
+.bold {
+    font-weight: bold;
+}
+
+.italic{
+    font-style: italic;
+}
+
+.underline {
+    border-bottom:1px solid black
+}
+
+.notBold {
+    font-weight: normal;
+}
+
+.notItalic {
+    font-style: normal;
+}
+
+.notUnderline {
+    border-bottom:1px solid white;
+    text-decoration: none;
+}
