@@ -9,7 +9,7 @@ import useBodyLock from '../../utilities/UseBodyLock';
 export type dragableArray = {
   content: React.ReactNode;
   id: number | string;
-}[]
+}[];
 
 type draggableDataI = {
   index: number;
@@ -19,10 +19,10 @@ type draggableDataI = {
 };
 
 export interface DraggableI {
-  data: dragableArray
+  data: dragableArray;
   onChange: (newAlignedData: dragableArray) => void;
   animationDuration?: number;
-  containerStyle?: React.CSSProperties
+  containerStyle?: React.CSSProperties;
 }
 
 // const pointInRangeArr = (arr: elementRect[], point: { x: number; y: number }) => {
@@ -60,11 +60,11 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
   const timerRef = useRef<NodeJS.Timeout>()
 
   const handelAutoScroll = (event: MouseEvent | TouchEvent) => {
-    const edgeSize = 50
-    if (!containerRef.current) return
+    const edgeSize = 50;
+    if (!containerRef.current) return;
 
     const containerRect = containerRef.current.getBoundingClientRect();
-    const {clientX , clientY} = getClientXY(event)
+    const { clientX, clientY } = getClientXY(event);
 
     const viewportX = clientX;
     const viewportY = clientY;
@@ -73,13 +73,13 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
 
     const edgeTop = edgeSize + containerRect.top;
     const edgeLeft = edgeSize + containerRect.left;
-    const edgeBottom = (viewportHeight + containerRect.top - edgeSize);
-    const edgeRight = (viewportWidth + containerRect.left - edgeSize);
+    const edgeBottom = viewportHeight + containerRect.top - edgeSize;
+    const edgeRight = viewportWidth + containerRect.left - edgeSize;
 
-    const isInLeftEdge = (viewportX < edgeLeft);
-    const isInRightEdge = (viewportX > edgeRight);
-    const isInTopEdge = (viewportY < edgeTop);
-    const isInBottomEdge = (viewportY > edgeBottom);
+    const isInLeftEdge = viewportX < edgeLeft;
+    const isInRightEdge = viewportX > edgeRight;
+    const isInTopEdge = viewportY < edgeTop;
+    const isInBottomEdge = viewportY > edgeBottom;
 
     if (!(isInLeftEdge || isInRightEdge || isInTopEdge || isInBottomEdge)) {
       clearTimeout(timerRef.current);
@@ -89,7 +89,7 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
     const containerWidth = Math.max(
       containerRef.current.scrollWidth,
       containerRef.current.offsetWidth,
-      containerRef.current.clientWidth,
+      containerRef.current.clientWidth
     );
 
     const containerHeight = Math.max(
@@ -98,19 +98,19 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
       containerRef.current.clientHeight
     );
 
-    const maxScrollX = (containerWidth - viewportWidth);
-    const maxScrollY = (containerHeight - viewportHeight);
+    const maxScrollX = containerWidth - viewportWidth;
+    const maxScrollY = containerHeight - viewportHeight;
 
     function adjustWindowScroll() {
-      if (!containerRef.current) return false
+      if (!containerRef.current) return false;
 
       const currentScrollX = containerRef.current.scrollLeft;
       const currentScrollY = containerRef.current.scrollTop;
 
-      const canScrollUp = (currentScrollY > 0);
-      const canScrollDown = (currentScrollY < maxScrollY);
-      const canScrollLeft = (currentScrollX > 0);
-      const canScrollRight = (currentScrollX < maxScrollX);
+      const canScrollUp = currentScrollY > 0;
+      const canScrollDown = currentScrollY < maxScrollY;
+      const canScrollLeft = currentScrollX > 0;
+      const canScrollRight = currentScrollX < maxScrollX;
 
       // Since we can potentially scroll in two directions at the same time,
       // let's keep track of the next scroll, starting with the current scroll.
@@ -128,23 +128,23 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
 
       // Should we scroll left?
       if (isInLeftEdge && canScrollLeft) {
-        const intensity = ((edgeLeft - viewportX) / edgeSize);
-        nextScrollX = (nextScrollX - (maxStep * intensity));
+        const intensity = (edgeLeft - viewportX) / edgeSize;
+        nextScrollX = nextScrollX - maxStep * intensity;
 
         // Should we scroll right?
       } else if (isInRightEdge && canScrollRight) {
-        const intensity = ((viewportX - edgeRight) / edgeSize);
-        nextScrollX = (nextScrollX + (maxStep * intensity));
+        const intensity = (viewportX - edgeRight) / edgeSize;
+        nextScrollX = nextScrollX + maxStep * intensity;
       }
       // Should we scroll up?
       if (isInTopEdge && canScrollUp) {
-        const intensity = ((edgeTop - viewportY) / edgeSize);
-        nextScrollY = (nextScrollY - (maxStep * intensity));
+        const intensity = (edgeTop - viewportY) / edgeSize;
+        nextScrollY = nextScrollY - maxStep * intensity;
 
         // Should we scroll down?
       } else if (isInBottomEdge && canScrollDown) {
-        const intensity = ((viewportY - edgeBottom) / edgeSize);
-        nextScrollY = (nextScrollY + (maxStep * intensity));
+        const intensity = (viewportY - edgeBottom) / edgeSize;
+        nextScrollY = nextScrollY + maxStep * intensity;
       }
 
       // Sanitize invalid maximums. An invalid scroll offset won't break the
@@ -154,131 +154,135 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
       nextScrollX = Math.max(0, Math.min(maxScrollX, nextScrollX));
       nextScrollY = Math.max(0, Math.min(maxScrollY, nextScrollY));
 
-      if ((nextScrollX !== currentScrollX) || (nextScrollY !== currentScrollY)) {
+      if (nextScrollX !== currentScrollX || nextScrollY !== currentScrollY) {
         containerRef.current.scrollTo(nextScrollX, nextScrollY);
-        return (true);
-      } else return (false);
-
+        return true;
+      } else return false;
     }
 
     (function checkForWindowScroll() {
-
       clearTimeout(timerRef.current);
 
       if (adjustWindowScroll()) {
-
         timerRef.current = setTimeout(checkForWindowScroll, 30);
-
       }
-
     })();
+  };
 
-  }
+  const handelMouseDown = (
+    event: MouseEvent | TouchEvent | any,
+    index: number
+  ) => {
+    if (!containerRef.current || !event.currentTarget) return;
 
-  const handelMouseDown = (event: MouseEvent | TouchEvent | any, index: number) => {
-    if (!containerRef.current || !event.currentTarget) return
+    const { clientX, clientY } = getClientXY(event);
 
-    const {clientX , clientY} = getClientXY(event)
-
-    const eleRect = (event.currentTarget as Element).getBoundingClientRect()
+    const eleRect = (event.currentTarget as Element).getBoundingClientRect();
 
     const thresholdCursor = {
-      left:clientX - eleRect.left,
+      left: clientX - eleRect.left,
       top: clientY - eleRect.top,
-    }
+    };
 
     const fixedEle = (
       <div
         ref={fixedElementRef}
-        className='inte-draggable__item inte-draggable__item--dummy'
+        className="inte-draggable__item inte-draggable__item--dummy"
         style={{
           top: eleRect.top,
           left: eleRect.left,
-          width: eleRect.width
+          width: eleRect.width,
         }}
       >
-        {
-          data[index].content
-        }
+        {data[index].content}
       </div>
-    )
+    );
 
     setDraggableData({
       dummyIndex: index,
       element: fixedEle,
       index: index,
-      thresholdCursor: thresholdCursor
-    })
+      thresholdCursor: thresholdCursor,
+    });
 
-    setDummyData([...data])
-  }
+    setDummyData([...data]);
+  };
 
   const handelMouseMove = (event: MouseEvent | TouchEvent | any) => {
-    if (!draggableData || !containerRef.current || !fixedElementRef.current) return;
+    if (!draggableData || !containerRef.current || !fixedElementRef.current)
+      return;
 
-    const {clientX , clientY} = getClientXY(event)
+    const { clientX, clientY } = getClientXY(event);
 
-    fixedElementRef.current.style.top = clientY - draggableData.thresholdCursor.top + 'px';
-    fixedElementRef.current.style.left = clientX - draggableData.thresholdCursor.left + 'px';
+    fixedElementRef.current.style.top =
+      clientY - draggableData.thresholdCursor.top + "px";
+    fixedElementRef.current.style.left =
+      clientX - draggableData.thresholdCursor.left + "px";
 
-    const { top, left } = containerRef.current.getBoundingClientRect()
+    const { top, left } = containerRef.current.getBoundingClientRect();
 
-    handelAutoScroll(event)
+    handelAutoScroll(event);
 
-    const latestIndex = pointInRangeArr(
-      originalRangeArray,
-      {
-        x: clientX + containerRef.current.scrollLeft - left,
-        y: clientY + containerRef.current.scrollTop - top
-      }
-    )
+    const latestIndex = pointInRangeArr(originalRangeArray, {
+      x: clientX + containerRef.current.scrollLeft - left,
+      y: clientY + containerRef.current.scrollTop - top,
+    });
 
     if (latestIndex !== -1) {
-      setDraggableData(prev => prev ? { ...prev, dummyIndex: latestIndex } : prev)
+      setDraggableData((prev) =>
+        prev ? { ...prev, dummyIndex: latestIndex } : prev
+      );
     }
-
-  }
+  };
 
   const handelMouseUp = () => {
     setDraggableData(undefined);
-    setDummyData([])
-    setTransitionArray([])
+    setDummyData([]);
+    setTransitionArray([]);
     if (draggableData) {
       onChange(swapArray(draggableData.index, draggableData.dummyIndex, data));
     }
-  }
+  };
 
   const handelResize = () => {
     if (containerRef.current) {
       let rangeArr = makeRangeArray(containerRef.current);
-      setOriginalRangeArray([...rangeArr])
+      setOriginalRangeArray([...rangeArr]);
     }
     if (dummyContainerRef.current) {
       let rangeArr = makeRangeArray(dummyContainerRef.current);
-      setDummyRangeArray([...rangeArr])
+      setDummyRangeArray([...rangeArr]);
     }
-  }
+  };
 
   useEffect(() => {
     if (!containerRef.current) return;
-    window.addEventListener("mousemove", handelMouseMove)
+    window.addEventListener("mousemove", handelMouseMove);
     window.addEventListener("mouseup", handelMouseUp);
 
-    window.addEventListener("touchmove" , handelMouseMove)
-    window.addEventListener("touchend" , handelMouseUp)
+    window.addEventListener("touchmove", handelMouseMove);
+    window.addEventListener("touchend", handelMouseUp);
     return () => {
-      window.removeEventListener("mousemove", handelMouseMove)
+      window.removeEventListener("mousemove", handelMouseMove);
       window.removeEventListener("mouseup", handelMouseUp);
 
-      window.removeEventListener("touchmove" , handelMouseMove)
-      window.removeEventListener("touchend" , handelMouseUp)
-    }
-  }, [draggableData])
+      window.removeEventListener("touchmove", handelMouseMove);
+      window.removeEventListener("touchend", handelMouseUp);
+    };
+  }, [draggableData]);
 
   useEffect(() => {
-    if (!originalRangeArray.length || !dummyRangeArray.length || !draggableData || !containerRef.current) return;
+    if (
+      !originalRangeArray.length ||
+      !dummyRangeArray.length ||
+      !draggableData ||
+      !containerRef.current
+    )
+      return;
 
-    const dArr = Array(containerRef.current.children.length).fill(0).map((item, ind) => ind);
+    const dArr = Array(containerRef.current.children.length)
+      .fill(0)
+      .map((item, ind) => ind);
 
     const originalIndexOfDummy = swapArray(
       draggableData.dummyIndex,
@@ -290,62 +294,61 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
       const currIndexInDummy = originalIndexOfDummy[i];
       const currTransition = {
         top: dummyRangeArray[currIndexInDummy].top - originalRangeArray[i].top,
-        left: dummyRangeArray[currIndexInDummy].left - originalRangeArray[i].left
-      }
-      return currTransition
-    })
+        left:
+          dummyRangeArray[currIndexInDummy].left - originalRangeArray[i].left,
+      };
+      return currTransition;
+    });
 
-    setTransitionArray([...res])
-
+    setTransitionArray([...res]);
   }, [originalRangeArray, dummyRangeArray, draggableData]);
 
   useEffect(() => {
     if (!containerRef.current) return;
     let rangeArr = makeRangeArray(containerRef.current);
-    setOriginalRangeArray([...rangeArr])
+    setOriginalRangeArray([...rangeArr]);
 
-    window.addEventListener("resize", handelResize)
+    window.addEventListener("resize", handelResize);
 
     return () => {
-      window.removeEventListener("resize", handelResize)
-    }
-  }, [data])
+      window.removeEventListener("resize", handelResize);
+    };
+  }, [data]);
 
   useEffect(() => {
     if (!dummyContainerRef.current) {
-      clearTimeout(timerRef.current)
-      return
+      clearTimeout(timerRef.current);
+      return;
     }
     let rangeArr = makeRangeArray(dummyContainerRef.current);
-    setDummyRangeArray([...rangeArr])
-  }, [draggableData])
+    setDummyRangeArray([...rangeArr]);
+  }, [draggableData]);
 
   return (
     <>
-      <div
-        ref={containerRef}
-        className='inte-draggable'
-        style={containerStyle}
-      >
+      <div ref={containerRef} className="inte-draggable" style={containerStyle}>
         {data.map((ele, ind) => {
           const currentTransition = transitionArray[ind]
-            ? `${transitionArray[ind].left ?? 0}px,${transitionArray[ind].top ?? 0
-            }px,0`
+            ? `${transitionArray[ind].left ?? 0}px,${
+                transitionArray[ind].top ?? 0
+              }px,0`
             : "(0 0  0)";
           return (
             <div
               key={ele.id}
               className="inte-draggable__item"
               onMouseDown={(event) => handelMouseDown(event, ind)}
-              onTouchStart={(event) => handelMouseDown(event , ind)}
+              onTouchStart={(event) => handelMouseDown(event, ind)}
               style={{
                 opacity: draggableData?.index === ind ? ".2" : "",
-                transition: draggableData ? `transform ${animationDuration}ms ` : "",
+                transition: draggableData
+                  ? `transform ${animationDuration}ms `
+                  : "",
                 transform: draggableData
                   ? `translate3d(${currentTransition})`
                   : "",
                 position: draggableData ? "relative" : undefined,
-                userSelect: draggableData ? "none" : undefined
+                userSelect: draggableData ? "none" : undefined,
               }}
             >
               {ele.content}
@@ -353,36 +356,27 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
           );
         })}
       </div>
-      {
-        !!dummyData.length && (
-          <div
-            ref={dummyContainerRef}
-            className='inte-draggable inte-draggable--dummy'
-            style={{
-              ...containerStyle,
-              width: containerRef.current?.getBoundingClientRect().width + "px"
-            }}
-          >
-            {
-              dummyData.map((ele) => {
-                return (
-                  <div
-                    key={ele.id}
-                    className="inte-draggable__item"
-                  >
-                    {ele.content}
-                  </div>
-                );
-              })
-            }
-          </div>
-        )
-      }
-      <PortalComponent>{
-        draggableData?.element
-      }</PortalComponent>
+      {!!dummyData.length && (
+        <div
+          ref={dummyContainerRef}
+          className="inte-draggable inte-draggable--dummy"
+          style={{
+            ...containerStyle,
+            width: containerRef.current?.getBoundingClientRect().width + "px",
+          }}
+        >
+          {dummyData.map((ele) => {
+            return (
+              <div key={ele.id} className="inte-draggable__item">
+                {ele.content}
+              </div>
+            );
+          })}
+        </div>
+      )}
+      <PortalComponent>{draggableData?.element}</PortalComponent>
     </>
-  )
-}
+  );
+};
 
-export default Draggable
+export default Draggable;

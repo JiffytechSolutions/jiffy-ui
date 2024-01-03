@@ -1,30 +1,30 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react'
-import './TextEditor.css'
-import Button from '../Button/Button'
+import React, { FormEvent, useEffect, useRef, useState } from "react";
+import "./TextEditor.css";
+import Button from "../Button/Button";
 
 export interface TextEditorI {
   placeholder?: string;
   initialText?: string;
 }
 
-
 const convertStringToHTML = (htmlString: string) => {
   const parser = new DOMParser();
-  const html = parser.parseFromString(htmlString, 'text/html');
+  const html = parser.parseFromString(htmlString, "text/html");
 
   return { __html: html.body.innerHTML } as { __html: string | TrustedHTML };
 };
 
 const setEndOfContenteditable = (contentEditableElement: Element) => {
   let range, selection;
-  range = document.createRange();//Create a range (a range is a like the selection but invisible)
-  range.selectNodeContents(contentEditableElement);//Select the entire contents of the element with the range
-  range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
-  selection = window.getSelection();//get the selection object (allows you to change selection)
-  selection?.removeAllRanges();//remove any selections already made
-  selection?.addRange(range);//make the range you have just created the visible selection
-}
+  range = document.createRange(); //Create a range (a range is a like the selection but invisible)
+  range.selectNodeContents(contentEditableElement); //Select the entire contents of the element with the range
+  range.collapse(false); //collapse the range to the end point. false means collapse to end rather than the start
+  selection = window.getSelection(); //get the selection object (allows you to change selection)
+  selection?.removeAllRanges(); //remove any selections already made
+  selection?.addRange(range); //make the range you have just created the visible selection
+};
 
+<<<<<<< HEAD
 const classList = {
   BOLD : 'bold',
   ITALIC : 'italic',
@@ -39,19 +39,26 @@ const TextEditor = ({
   placeholder,
   initialText
 }: TextEditorI) => {
+=======
+>>>>>>> 58d0f93628ccd6d0b93ca3655c46efa6a87ffaaf
 
   const selection = document.getSelection()
   const range = new Range
-
   const [currStyleApplied, setCurrStyleApplied] = useState({
     bold: false,
     italic: false,
     underline: false,
+<<<<<<< HEAD
   })
 
   const [inputType, setInputType] = useState<string>("")
 
   const editorRef = useRef<HTMLDivElement>(null)
+=======
+  });
+
+  const editorRef = useRef<HTMLDivElement>(null);
+>>>>>>> 58d0f93628ccd6d0b93ca3655c46efa6a87ffaaf
 
   const findAppliedStyleInRange = (range: Range) => {
     let currentContainer: Node | null = null
@@ -74,12 +81,20 @@ const TextEditor = ({
         if (appliedStyle.bold === null) appliedStyle.bold = false
       }
 
+<<<<<<< HEAD
       if ((currentContainer as HTMLElement).classList?.contains(classList.ITALIC)) {
         if (appliedStyle.italic === null) appliedStyle.italic = true;
       }
       if ((currentContainer as HTMLElement).classList?.contains(classList.NOTITALIC)) {
         if (appliedStyle.italic === null) appliedStyle.italic = false;
       }
+=======
+
+  const giveCurrentFormat = (selectedRange:Range , currentStyle : {bold:boolean , italic:boolean , underline:boolean}) => {
+    const treeWalker = document.createTreeWalker(selectedRange.startContainer)
+    console.log(selectedRange , currentStyle , treeWalker)
+  }
+>>>>>>> 58d0f93628ccd6d0b93ca3655c46efa6a87ffaaf
 
       if ((currentContainer as HTMLElement).classList?.contains(classList.UNDERLINE)) {
         if (appliedStyle.underline === null) appliedStyle.underline = true
@@ -176,14 +191,17 @@ const TextEditor = ({
       </div>
       <div
         ref={editorRef}
-        className='inte-textEditor__body'
+        className="inte-textEditor__body"
         contentEditable={true}
         onInput={handelOnInput}
       >
+<<<<<<< HEAD
+=======
+        {initialText}
+>>>>>>> 58d0f93628ccd6d0b93ca3655c46efa6a87ffaaf
       </div>
-
     </div>
-  )
-}
+  );
+};
 
-export default TextEditor
+export default TextEditor;
