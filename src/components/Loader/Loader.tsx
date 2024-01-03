@@ -3,16 +3,23 @@ import React from "react";
 import Progressbar from "../ProgressBar/Progressbar";
 import Text from "../Text/Text";
 import "./Loader.css";
+import getClassNames from "../../utilities/getClassnames";
 
 const Loader: React.FC<LoaderI> = ({
   title,
   subtitle,
   type = "L-1",
   percentage,
+  customClass = "",
 }: LoaderI) => {
   const items = {
     Loader1: (
-      <div className="inte-Loader">
+      <div
+        className={getClassNames({
+          "inte-Loader": true,
+          [customClass]: customClass,
+        })}
+      >
         <div className="inte-Loader--Items">
           <svg
             width="36"
@@ -68,7 +75,12 @@ const Loader: React.FC<LoaderI> = ({
       </div>
     ),
     Loader2: (
-      <div className="inte-pageLoader">
+      <div
+        className={getClassNames({
+          "inte-pageLoader": true,
+          [customClass]: customClass,
+        })}
+      >
         <div className="inte-loading"></div>
         <div className="inte-loading--Transform mt-10">
           <b>L</b>
@@ -82,7 +94,12 @@ const Loader: React.FC<LoaderI> = ({
       </div>
     ),
     Loader3: (
-      <div className="inte-Loader--TypeThree">
+      <div
+        className={getClassNames({
+          "inte-Loader--TypeThree": true,
+          [customClass]: customClass,
+        })}
+      >
         <div className="inte-Loader--TypeThreeInner">
           <div className="inte-Loader--Icon">
             <svg
@@ -129,6 +146,7 @@ export interface LoaderI {
   subtitle?: string;
   type?: "L-1" | "L-2" | "L-3";
   percentage?: number;
+  customClass?: string;
 }
 
 export default Loader;

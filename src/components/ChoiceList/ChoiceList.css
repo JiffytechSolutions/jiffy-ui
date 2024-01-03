@@ -5,6 +5,7 @@
 .inte-choiceList .inte-checkbox,
 .inte-choiceList .inte-radio {
   width: 100%;
+  padding: 1rem 1.6rem;
   cursor: pointer;
 }
 
@@ -12,13 +13,6 @@
 .inte-choiceList .inte-radio label {
   width: 100%;
   cursor: pointer;
-}
-
-.inte-choiceList .inte-checkboxGroup__listItem label,
-.inte-choiceList .inte-radioGroup__listItem label{
-  /* display: grid;
-  place-items: center; */
-  padding: 1rem 1.6rem;
 }
 
 .inte-choiceList

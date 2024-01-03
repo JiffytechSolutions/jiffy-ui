@@ -191,6 +191,13 @@ export default {
       },
       defaultValue: "Enter proper heading name",
     },
+    width: {
+      description:
+        "If you change select width the using width prop and then enter number",
+      control: {
+        type: "number",
+      },
+    },
     customClass: {
       description: "Add any desired custom class on dropdown",
       control: {
@@ -312,6 +319,7 @@ const Template = ({ ...rest }) => {
         accessibilityLabel={rest.accessibilityLabel}
         isCreatable={rest.isCreatable}
         heading={rest.heading}
+        width={rest.width}
       />
     </Card>
   );
