@@ -3,6 +3,8 @@ import React, { MouseEvent, useEffect, useRef, useState } from 'react'
 import "./SortableNew.css"
 import PortalComponent from '../../utilities/PoratalComponent';
 import { elementRect, makeRangeArray, pointInRangeArr, swapArray , getClientXY } from './DraggableUtilityFun';
+import useMobileDevice from '../../utilities/useMobileDevice';
+import useBodyLock from '../../utilities/UseBodyLock';
 
 export type dragableArray = {
   content: React.ReactNode;
@@ -51,6 +53,9 @@ const Draggable = ({ data, onChange, animationDuration = 300, containerStyle }: 
   const [originalRangeArray, setOriginalRangeArray] = useState<elementRect[]>([])
   const [dummyRangeArray, setDummyRangeArray] = useState<elementRect[]>([])
   const [transitionArray, setTransitionArray] = useState<{ top: number, left: number }[]>([])
+
+  const isMobile = useMobileDevice()
+  useBodyLock(isMobile && dummyData.length>0)
 
   const timerRef = useRef<NodeJS.Timeout>()
 

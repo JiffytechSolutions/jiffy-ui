@@ -25,6 +25,16 @@ const setEndOfContenteditable = (contentEditableElement: Element) => {
   selection?.addRange(range);//make the range you have just created the visible selection
 }
 
+const classList = {
+  BOLD : 'bold',
+  ITALIC : 'italic',
+  UNDERLINE : 'underline',
+  NOTBOLD : 'notBold',
+  NOTITALIC : 'notItalic',
+  NOTUNDERLINE : 'notUnderline'
+  
+}
+
 const TextEditor = ({
   placeholder,
   initialText
@@ -39,118 +49,130 @@ const TextEditor = ({
     underline: false,
   })
 
+  const [inputType, setInputType] = useState<string>("")
+
   const editorRef = useRef<HTMLDivElement>(null)
+
+  const findAppliedStyleInRange = (range: Range) => {
+    let currentContainer: Node | null = null
+    let appliedStyle: { [key: string]: null | boolean } = {
+      bold: null,
+      italic: null,
+      underline: null
+    }
+    if (range.endOffset - range.startOffset === 1) {
+      currentContainer = range.startContainer;
+    }
+    while (currentContainer && currentContainer !== editorRef.current) {
+
+      console.log((currentContainer as HTMLElement).classList)
+
+      if ((currentContainer as HTMLElement).classList?.contains(classList.BOLD)) {
+        if (appliedStyle.bold === null) appliedStyle.bold = true
+      }
+      if ((currentContainer as HTMLElement).classList?.contains(classList.NOTBOLD)) {
+        if (appliedStyle.bold === null) appliedStyle.bold = false
+      }
+
+      if ((currentContainer as HTMLElement).classList?.contains(classList.ITALIC)) {
+        if (appliedStyle.italic === null) appliedStyle.italic = true;
+      }
+      if ((currentContainer as HTMLElement).classList?.contains(classList.NOTITALIC)) {
+        if (appliedStyle.italic === null) appliedStyle.italic = false;
+      }
+
+      if ((currentContainer as HTMLElement).classList?.contains(classList.UNDERLINE)) {
+        if (appliedStyle.underline === null) appliedStyle.underline = true
+      }
+      if ((currentContainer as HTMLElement).classList?.contains(classList.NOTUNDERLINE)) {
+        if (appliedStyle.underline === null) appliedStyle.underline = false
+      }
+
+      currentContainer = currentContainer.parentElement
+    }
+
+    Object.keys(appliedStyle).forEach(i => {
+      if(!appliedStyle[i]) appliedStyle[i] = false
+    })
+
+    return appliedStyle
+  }
 
 
   const handelOnInput = (e: React.FormEvent) => {
-    console.log("onInputCalling");
-    if (!selection || !editorRef.current) return;
+    if (!selection) return
+    const currRange = selection.getRangeAt(0);
+    if (inputType === "insertText") {
+      currRange.setStart(currRange.startContainer, currRange.startOffset - 1)
+      const appliedStyle = findAppliedStyleInRange(currRange)
+      console.log(appliedStyle , currStyleApplied)
+      const container = document.createElement("span")
 
-    const parent = selection.anchorNode?.parentElement;
+      if (appliedStyle.italic !== currStyleApplied.italic) {
+        if (currStyleApplied.italic) {
+          container.classList.add(classList.ITALIC)
+        }
+        else container.classList.add(classList.NOTITALIC)
+      }
 
-    if (!parent) return;
+      if (appliedStyle.bold !== currStyleApplied.bold) {
+        if (currStyleApplied.bold) {
+          container.classList.add(classList.BOLD)
+        }
+        else container.classList.add(classList.NOTBOLD)
+      }
 
-    if (parent === editorRef.current) {
-      const currTag = document.createElement('p');
-      range.selectNode(selection.anchorNode)
-      range.surroundContents(currTag)
-      selection.removeAllRanges();
-      range.collapse(false)
-      selection.addRange(range);
+      if (appliedStyle.underline !== currStyleApplied.underline) {
+        if (currStyleApplied.underline) {
+          container.classList.add(classList.UNDERLINE)
+        }
+        else container.classList.add(classList.NOTUNDERLINE)
+      }
+
+      if (container.classList.length) currRange.surroundContents(container)
+
+      selection.removeAllRanges()
+      selection.addRange(currRange)
+      selection.collapseToEnd()
+
+      // console.clear()
+      // console.log(editorRef.current?.innerHTML)
     }
 
-    // Replace the zero-width character directly
-    else {
-      parent.innerHTML = parent.innerHTML.replace(/\u200B/g, '');
-
-      selection.removeAllRanges();
-      range.selectNode(parent);
-      range.collapse(false);
-      selection.addRange(range);
-    }
+    // currRange.set
   };
 
-  const giveCurrentFormat = (selectedRange:Range , currentStyle : {bold:boolean , italic:boolean , underline:boolean}) => {
-    const treeWalker = document.createTreeWalker(selectedRange.startContainer)
-    console.log(selectedRange , currentStyle , treeWalker)
+  const handelToolBarButtonClick = (type: "bold" | "italic" | "underline") => {
+    if(!selection)  return
+    setCurrStyleApplied(prev => ({
+      ...prev,
+      [type]: !prev[type]
+    }))
+    const currRange = selection.getRangeAt(0);
+    selection?.removeAllRanges()
+    selection?.addRange(currRange)
   }
 
-  const handelToolBarButtonClick = (type: "strong" | "i" | "u") => {
-    const currStyle = type === "strong" ? "bold" : type === "i" ? "italic" : "underline";
+  const handelBeforeInput = (e: InputEvent) => {
+    setInputType(e.inputType)
 
-    const currStyleToBeApplied = {
-      ...currStyleApplied,
-      [currStyle] : !currStyleApplied[currStyle]
-    }
-
-    if (!selection || !editorRef.current) return
-    const selectedRange = selection.getRangeAt(0).cloneRange()
-
-    const val = giveCurrentFormat(selectedRange , currStyleToBeApplied)
-
-    const currTag = document.createElement(type)
-
-    let currT;
-    if(currStyleToBeApplied.bold){
-      currT = document.createElement('strong')
-      currT.setAttribute('class' , 'bold')
-    }
-    if(currStyleToBeApplied.italic) {
-      if(!currT)  currT = document.createElement('i');
-      else {
-        console.log(currT , "beforeInsert")
-        
-        const t = document.createElement('i')
-        t.setAttribute('class' , 'italic')
-        t.insertAdjacentHTML("beforeend", '&#8203;')
-        currT.insertAdjacentElement('beforeend',t)
-        // currT.appendChild(t)
-        console.log(currT , "afterInser")
-      }
-    }
-    if(currStyleToBeApplied.underline)  {
-      if(!currT)  currT = document.createElement('u');
-      else currT.appendChild(document.createElement('u'))
-    }
-
-    console.log(currT , currStyleToBeApplied)
-
-    currT = currT ? currT : document.createElement('p')
-
-    if(selectedRange.startContainer !== selectedRange.endContainer) {
-      console.log("not same")
-      range.setStart(selectedRange.startContainer , selectedRange.startOffset)
-      range.setEnd(selectedRange.startContainer ,selectedRange.startContainer.textContent?.length ?? 0 )
-
-
-      const fragment = document.createDocumentFragment();
-
-      
-
-      range.surroundContents(currT)
-    }
-
-    else selectedRange.surroundContents(currT)
-
-    if (selection.type === "Caret") {
-      currT.insertAdjacentHTML("beforeend", '&#8203;')
-    }
-
-    selection.removeAllRanges()
-    range.selectNode(currT)
-    range.collapse(false)
-    selection.addRange(range)
-
-    setCurrStyleApplied(currStyleToBeApplied)
   }
+
+  useEffect(() => {
+    if (!editorRef.current) return
+    editorRef.current.addEventListener("beforeinput", handelBeforeInput);
+    return () => {
+      editorRef.current?.removeEventListener("beforeinput", handelBeforeInput)
+    }
+  }, [])
 
 
   return (
     <div className='inte-textEditor'>
       <div className='inte-textEditor__toolbar'>
-        <Button size='extraThin' onClick={() => handelToolBarButtonClick("strong")} type={currStyleApplied.bold ? "secondary" : "outlined"}><b>B</b></Button>
-        <Button size='extraThin' onClick={() => handelToolBarButtonClick("i")} type={currStyleApplied.italic ? "secondary" : "outlined"}><i>I</i></Button>
-        <Button size='extraThin' onClick={() => handelToolBarButtonClick("u")} type={currStyleApplied.underline ? "secondary" : "outlined"}><u>U</u></Button>
+        <Button size='extraThin' onClick={() => handelToolBarButtonClick("bold")} type={currStyleApplied.bold ? "secondary" : "outlined"}><b>B</b></Button>
+        <Button size='extraThin' onClick={() => handelToolBarButtonClick("italic")} type={currStyleApplied.italic ? "secondary" : "outlined"}><i>I</i></Button>
+        <Button size='extraThin' onClick={() => handelToolBarButtonClick("underline")} type={currStyleApplied.underline ? "secondary" : "outlined"}><u>U</u></Button>
       </div>
       <div
         ref={editorRef}
@@ -158,9 +180,6 @@ const TextEditor = ({
         contentEditable={true}
         onInput={handelOnInput}
       >
-        {
-          initialText
-        }
       </div>
 
     </div>
