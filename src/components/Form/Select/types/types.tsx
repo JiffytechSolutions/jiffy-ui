@@ -20,6 +20,7 @@ export type SelectI = {
   controlStates?: "success" | "warning" | "error" | "default";
   heading?: string;
   customClass?: string;
+  width?: number;
 };
 export interface SimpleObjI {
   label: string;

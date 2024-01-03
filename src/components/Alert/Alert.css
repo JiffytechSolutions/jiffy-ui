@@ -16,10 +16,6 @@
   margin-top: 1.5rem;
 }
 
-.inte-alert__animation + .inte-alert__animation {
-  margin-top: 1.5rem;
-}
-
 /* alert destroy  */
 .inte-alert--destroy {
   position: absolute;
