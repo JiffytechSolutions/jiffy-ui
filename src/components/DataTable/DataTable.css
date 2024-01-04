@@ -50,7 +50,7 @@
   top: 0;
 }
 
-.inte-dataTable__headerRow
+/* .inte-dataTable__headerRow
   > .inte-dataTable__cell:not(.inte-dataTable__cell--expand, .inte-dataTable__checkbox, :last-child)::before {
   position: absolute;
   top: 50%;
@@ -60,7 +60,7 @@
   transform: translateY(-50%);
   background-color: var(--inte-P50);
   content: "";
-}
+} */
 
 .inte-dataTable__cell--lastCell::before {
   width: 0 !important;
