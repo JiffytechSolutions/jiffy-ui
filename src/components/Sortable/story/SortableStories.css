@@ -1,7 +1,0 @@
-.inte-sortable.inte-sortable--horizontal li {
-  flex: 1 1 15rem;
-  min-width: 15rem;
-}
-.inte-sortable--horizontal .inte-sortable__item > *:first-child {
-  height: 100%;
-}
