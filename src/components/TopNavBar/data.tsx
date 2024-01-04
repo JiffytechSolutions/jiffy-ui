@@ -69,7 +69,8 @@ export const menu = [
     children: [
       {
         id: "FAQ1",
-        label: "FAQ",
+        label:
+          "FAQ  sfg;sdf lgsfkd;g sd ksf gskdfg sf gslfd gsdf gsdf gsfd g;sdfg l;fg sfdg sfd;g s",
         path: "/product1",
       },
       {
@@ -120,60 +121,60 @@ export const menu = [
     path: "/help6",
     icon: <HelpCircle size="20" />,
   },
-  {
-    id: "help7",
-    label: "Help7",
-    path: "/help7",
-    icon: <HelpCircle size="20" />,
-  },
-  {
-    id: "help8",
-    label: "Help8",
-    path: "/help8",
-    icon: <HelpCircle size="20" />,
-  },
-  {
-    id: "help9",
-    label: "Help9",
-    path: "/help9",
-    icon: <HelpCircle size="20" />,
-  },
-  {
-    id: "help10",
-    label: "Help10",
-    path: "/help10",
-    icon: <HelpCircle size="20" />,
-  },
-  {
-    id: "help11",
-    label: "Help11",
-    path: "/help11",
-    icon: <HelpCircle size="20" />,
-  },
-  {
-    id: "help12",
-    label: "Help12",
-    path: "/help12",
-    icon: <HelpCircle size="20" />,
-  },
-  {
-    id: "help13",
-    label: "Help13",
-    path: "/help13",
-    icon: <HelpCircle size="20" />,
-  },
-  {
-    id: "help14",
-    label: "Help14",
-    path: "/help14",
-    icon: <HelpCircle size="20" />,
-  },
-  {
-    id: "help15",
-    label: "Help15",
-    path: "/help15",
-    icon: <HelpCircle size="20" />,
-  },
+  // {
+  //   id: "help7",
+  //   label: "Help7",
+  //   path: "/help7",
+  //   icon: <HelpCircle size="20" />,
+  // },
+  // {
+  //   id: "help8",
+  //   label: "Help8",
+  //   path: "/help8",
+  //   icon: <HelpCircle size="20" />,
+  // },
+  // {
+  //   id: "help9",
+  //   label: "Help9",
+  //   path: "/help9",
+  //   icon: <HelpCircle size="20" />,
+  // },
+  // {
+  //   id: "help10",
+  //   label: "Help10",
+  //   path: "/help10",
+  //   icon: <HelpCircle size="20" />,
+  // },
+  // {
+  //   id: "help11",
+  //   label: "Help11",
+  //   path: "/help11",
+  //   icon: <HelpCircle size="20" />,
+  // },
+  // {
+  //   id: "help12",
+  //   label: "Help12",
+  //   path: "/help12",
+  //   icon: <HelpCircle size="20" />,
+  // },
+  // {
+  //   id: "help13",
+  //   label: "Help13",
+  //   path: "/help13",
+  //   icon: <HelpCircle size="20" />,
+  // },
+  // {
+  //   id: "help14",
+  //   label: "Help14",
+  //   path: "/help14",
+  //   icon: <HelpCircle size="20" />,
+  // },
+  // {
+  //   id: "help15",
+  //   label: "Help15",
+  //   path: "/help15",
+  //   icon: <HelpCircle size="20" />,
+  // },
 ];
 
 export const logo = (

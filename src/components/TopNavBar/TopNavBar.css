@@ -46,22 +46,21 @@
   white-space: nowrap;
 }
 /* active tab  */
-.inte-topNav--active {
-  background-color: var(--inte-P30);
+
+.inte-topNav--active,
+.inte-topNav--childActive,
+.inte-active {
+  background-color: var(--inte-P25);
 }
 
-.inte-top__listItem:not(.inte-topNav--active):hover:after {
-  content: "";
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 100%;
-  height: 0.2rem;
-  background-color: var(--inte-P60);
-  border-radius: 0.4rem 0.4rem 0 0;
+.inte-active,
+.inte-topNav--active,
+.inte-topNav--childActive {
+  color: var(--inte-P900);
 }
 
-.inte-topNav--active::after {
+.inte-topNav--active::after,
+.inte-active::after {
   content: "";
   position: absolute;
   bottom: -8px;
@@ -71,23 +70,7 @@
   background-color: var(--inte-P900);
   border-radius: 0.4rem 0.4rem 0 0;
 }
-/* popup */
-.inte-top__listPopup {
-  background-color: var(--inte-G0);
-  border-radius: var(--radius-rounded-6);
-  min-width: 10rem;
-  max-width: 35rem;
-  max-height: 25rem;
-  overflow: auto;
-  padding: 1.2rem;
-  box-shadow: var(--shadow-medium);
-  border: 0.1rem solid var(--inte-G40);
-  outline: none;
-  z-index: var(--inte-Z-8);
-  position: fixed;
-  will-change: left, top;
-  scroll-behavior: smooth;
-}
+
 .inte-top__itemPopup {
   padding: 1rem 1.2rem;
   border-radius: 0.6rem;
@@ -99,20 +82,15 @@
   border-radius: 50%;
 }
 
-/* popup animation */
-.inte-topNav--in {
-  animation: inteTopNavIn 0.1s linear forwards;
-}
-
-.inte-topNav--out {
-  animation: inteTopNavOut 0.1s linear forwards;
-}
 /* common css  */
-.inte-top__listItem:not(.inte-topNav--active):hover,
-.inte-top__itemPopup:hover {
+.inte-top__listItem:not(.inte-topNav--active, .inte-active):hover,
+.inte-top__itemPopup:hover,
+.inte-topNavBar--toggle {
   background-color: var(--inte-P20);
 }
-
+.inte-topNavBar--toggle {
+  color: var(--inte-P900);
+}
 .inte-top__listItem--label,
 .inte-top__itemPopup {
   font-size: 16px;
@@ -120,32 +98,16 @@
   font-weight: 600;
   line-height: 22px;
 }
-/* end  */
-
-@keyframes inteTopNavIn {
-  100% {
-    -webkit-transform: scale(1, 1);
-    transform: scale(1);
-    opacity: 1;
-  }
-
-  0% {
-    -webkit-transform: scale(0.95, 0.95);
-    transform: scale(0.95);
-    opacity: 0;
-  }
+/* arrow smoothly up down  */
+.inte-top__listItem
+  .inte-topNav__listItemWrapper
+  .inte-svgIcon:not(:first-child) {
+  transition: transform 0.35s;
+  transform: rotate(0deg);
 }
 
-@keyframes inteTopNavOut {
-  100% {
-    -webkit-transform: scale(0.95, 0.95);
-    transform: scale(0.95);
-    opacity: 0;
-  }
-
-  0% {
-    -webkit-transform: scale(1, 1);
-    transform: scale(1);
-    opacity: 1;
-  }
+.inte-top__listItem.inte-topNavBar--toggle
+  .inte-topNav__listItemWrapper
+  .inte-svgIcon:not(:first-child) {
+  transform: rotate(90deg);
 }
