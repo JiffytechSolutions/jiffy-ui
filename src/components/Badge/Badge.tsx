@@ -61,45 +61,42 @@ const Badge: React.FC<BadgeI> = ({
       className={getClassNames({
         "inte-badge__dot": props.dot,
         [sizeDotsValue]: sizeDotsValue && props.dot,
-        [typeValue]: typeValue && (variant == "filled"),
+        [typeValue]: typeValue && variant == "filled",
         [props.customClass as string]: props.customClass,
         "inte-badge": !props.dot && variant,
         [sizeValue]: !props.dot,
-        [accenttypeValue]: !props.dot && (variant == "accent"),
-        "inte-badge--onlyIcon": (children === undefined) && !props.dot,
-        "inte-badge--hasHelp": props.helpText
-
+        [accenttypeValue]: !props.dot && variant == "accent",
+        "inte-badge--onlyIcon": children === undefined && !props.dot,
+        "inte-badge--hasHelp": props.helpText,
       })}
     >
-      {
-        props.dot ? (
-          <></>
-        ) : (
-          variant && (
-            <>
-              {iconAlign === "left" && icon}
-              {children ? (
-                <div className="inte-badge__content">
-                  {!props.helpText ? (
-                    <span>{children}</span>
-                  ) : (
-                    <ToolTip
-                      isOpen={false}
-                      direction={helpPosition}
-                      helpText={props.helpText}
-                      activator={<span>{children}</span>}
-                    />
-                  )}
-                </div>
-              ) : (
-                ""
-              )}
-              {iconAlign === "right" && icon}
-            </>
-          )
+      {props.dot ? (
+        <></>
+      ) : (
+        variant && (
+          <>
+            {iconAlign === "left" && icon}
+            {children ? (
+              <div className="inte-badge__content">
+                {!props.helpText ? (
+                  <span>{children}</span>
+                ) : (
+                  <ToolTip
+                    isOpen={false}
+                    direction={helpPosition}
+                    helpText={props.helpText}
+                    activator={<span>{children}</span>}
+                  />
+                )}
+              </div>
+            ) : (
+              ""
+            )}
+            {iconAlign === "right" && icon}
+          </>
         )
-      }
-    </div >
+      )}
+    </div>
   );
 };
 export interface BadgeI {

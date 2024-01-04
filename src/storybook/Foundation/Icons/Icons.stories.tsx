@@ -107,7 +107,7 @@ const Template = ({ ...rest }: any) => {
       </div>
     ));
   });
-  console.log(data);
+
   return (
     <>
       <TextField

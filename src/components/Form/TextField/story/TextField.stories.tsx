@@ -64,8 +64,9 @@ export default {
       description: "Set status as per need",
       control: {
         type: "radio",
-        options: ["success", "warning", "error"],
+        options: ["success", "warning", "error", "default"],
       },
+      defaultValue: "default",
     },
     prefix: {
       description: "You can Use any Icon or ReactNode as Prefix",
@@ -348,9 +349,13 @@ const Template = ({ ...rest }) => {
           helpIcon={allIcons[rest.helpIcon]({
             size: 20,
             color: `${
-              rest.controlStates == "Error"
-                ? "var(--inte-R200)"
-                : "var(--inte-G90)"
+              rest.controlStates == "error"
+                ? "#C4281C"
+                : rest.controlStates === "success"
+                ? "var(--inte-GR300)"
+                : rest.controlStates === "warning"
+                ? "var(--inte-Y300)"
+                : "#616771"
             }`,
           })}
         />
@@ -402,6 +407,7 @@ Types.decorators = [
 ];
 // password
 export const hasStrengthPassword: any = Template.bind({});
+
 hasStrengthPassword.decorators = [
   () => {
     const [value, setValue] = useState("");

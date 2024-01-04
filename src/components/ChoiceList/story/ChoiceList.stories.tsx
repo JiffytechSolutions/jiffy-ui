@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import Button from "../../Button/Button";
-import ChoiceList from "../ChoiceList"; 
-import * as Icon from "../../../storybook/Foundation/Icons/Icons";
+import ChoiceList from "../ChoiceList";
 import { Card } from "../../Card";
-const allIcons: any = { ...Icon };
 
 export default {
   title: "Components/Actions/ChoiceList",
@@ -81,24 +79,23 @@ export default {
         disable: true,
       },
     },
-    value : {
-      description : "Value of Choicelist",
-      control : {
-        disable : true
-      }
+    value: {
+      description: "Value of Choicelist",
+      control: {
+        disable: true,
+      },
     },
-    onClose : {
-      description : "Give Function to close the choiceList",
-      control : {
-        disable : true
-      }
-    }
+    onClose: {
+      description: "Give Function to close the choiceList",
+      control: {
+        disable: true,
+      },
+    },
   },
 };
 
 const Template = ({ ...rest }) => {
   const [open, setOpen] = useState(false);
-
   const [value, setValue] = useState(["Choice 1"]);
 
   const toggleChoiceList = () => {
@@ -115,7 +112,7 @@ const Template = ({ ...rest }) => {
     {
       label: "Choice 1",
       value: "Choice 1",
-      description: "This is a description"
+      description: "This is a description",
     },
     {
       label: "Choice 2",
@@ -147,7 +144,13 @@ const Template = ({ ...rest }) => {
     },
   ];
 
-  const generateOptions = (length:any) => Array(length).fill(0).map((item , ind) => ({label : "Choice" + (ind+1) , value : "Choice" + (ind+1)}))
+  const generateOptions = (length: any) =>
+    Array(length)
+      .fill(0)
+      .map((item, ind) => ({
+        label: "Choice" + (ind + 1),
+        value: "Choice" + (ind + 1),
+      }));
 
   return (
     <Card>
@@ -171,3 +174,192 @@ const Template = ({ ...rest }) => {
 };
 
 export const Primary: any = Template.bind({});
+const onlyOptions = [
+  {
+    label: "Choice 1",
+    value: "Choice 1",
+  },
+  {
+    label: "Choice 2",
+    value: "Choice 2",
+  },
+  {
+    label: "Choice 3",
+    value: "Choice 3",
+  },
+  {
+    label: "Choice 4",
+    value: "Choice 4",
+  },
+  {
+    label: "Choice 5",
+    value: "Choice 5",
+  },
+  {
+    label: "Choice 6",
+    value: "Choice 6",
+  },
+  {
+    label: "Choice 7",
+    value: "Choice  7",
+  },
+  {
+    label: "Choice 8",
+    value: "Choice 8",
+  },
+];
+const options = [
+  {
+    label: "Choice 1",
+    value: "Choice 1",
+    description: "ChoiceList with description 1",
+  },
+  {
+    label: "Choice 2",
+    value: "Choice 2",
+  },
+  {
+    label: "Choice 3",
+    value: "Choice 3",
+    description: "ChoiceList with description 3",
+  },
+  {
+    label: "Choice 4",
+    value: "Choice 4",
+    description: "ChoiceList with description 4",
+  },
+  {
+    label: "Choice 5",
+    value: "Choice 5",
+  },
+  {
+    label: "Choice 6",
+    value: "Choice 6",
+  },
+  {
+    label: "Choice 7",
+    value: "Choice  7",
+  },
+  {
+    label: "Choice 8",
+    value: "Choice 8",
+    description: "ChoiceList with description 8",
+  },
+];
+
+// ChoiceList  CheckboxList format
+export const CheckboxList: any = () => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(["Choice 1"]);
+
+  return (
+    <Card title="ChoiceList CheckboxList format">
+      <ChoiceList
+        heading="ChoiceList Heading"
+        activator={
+          <Button
+            disclosure
+            type="outlined"
+            onClick={() => setOpen((prev) => !prev)}
+          >
+            ChoiceList
+          </Button>
+        }
+        value={value}
+        isMulti={true}
+        isOpen={open}
+        options={onlyOptions}
+        onChange={(val: any) => setValue(val)}
+        onClose={() => setOpen(false)}
+      />
+    </Card>
+  );
+};
+
+// ChoiceList  RadioList format
+export const RadioList: any = () => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(["Choice 1"]);
+
+  return (
+    <Card title="ChoiceList RadioList format">
+      <ChoiceList
+        heading="ChoiceList Heading"
+        activator={
+          <Button
+            disclosure
+            type="outlined"
+            onClick={() => setOpen((prev) => !prev)}
+          >
+            ChoiceList
+          </Button>
+        }
+        value={value}
+        isOpen={open}
+        options={onlyOptions}
+        onChange={(val: any) => setValue(val)}
+        onClose={() => setOpen(false)}
+      />
+    </Card>
+  );
+};
+
+// ChoiceList   With Title
+export const ChoiceListWithTitle: any = () => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(["Choice 1"]);
+
+  return (
+    <Card title="ChoiceList With Title">
+      <ChoiceList
+        title="ChoiceList title"
+        heading="ChoiceList Heading"
+        activator={
+          <Button
+            disclosure
+            type="outlined"
+            onClick={() => setOpen((prev) => !prev)}
+          >
+            ChoiceList
+          </Button>
+        }
+        value={value}
+        isOpen={open}
+        isMulti
+        options={onlyOptions}
+        onChange={(val: any) => setValue(val)}
+        onClose={() => setOpen(false)}
+      />
+    </Card>
+  );
+};
+
+// ChoiceList   With Title
+export const ChoiceListTitleWithDescription: any = () => {
+  const [open, setOpen] = useState(false);
+  const [value, setValue] = useState(["Choice 1"]);
+
+  return (
+    <Card title="ChoiceList Title With Description">
+      <ChoiceList
+        title="ChoiceList title"
+        heading="ChoiceList Heading"
+        activator={
+          <Button
+            disclosure
+            type="outlined"
+            onClick={() => setOpen((prev) => !prev)}
+          >
+            ChoiceList
+          </Button>
+        }
+        value={value}
+        isOpen={open}
+        isMulti
+        options={options}
+        onChange={(val: any) => setValue(val)}
+        onClose={() => setOpen(false)}
+      />
+    </Card>
+  );
+};

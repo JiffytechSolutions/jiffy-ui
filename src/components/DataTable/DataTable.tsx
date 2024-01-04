@@ -9,7 +9,7 @@ import { NoProducts } from "../../illustrations";
 export interface columnI {
   title: string | React.ReactNode;
   dataIndex?: string;
-  key: string;
+  key: string | number;
   width?: number;
   align?:
   | "start"
@@ -24,12 +24,13 @@ export interface columnI {
     onSort?: (clickedColumn: columnI, order: 'asec' | 'desc') => void;
     comparator?: (a: any, b: any, order: any) => number;
   };
-  render?: (item: any) => React.ReactNode;
+  render?: (item: any , wholeObj : DataSourceI) => React.ReactNode;
   onCell?: (rowNum: number) => any;
+  editor?:React.ReactNode
 }
 
 export interface DataSourceI {
-  key: any,
+  key: string | number,
   [key: string]: any
 }
 
@@ -47,8 +48,9 @@ export interface DataTableI {
   emptyTableUi?: React.ReactNode;
   customClass?: string;
   tableLayout?: "fixed" | "auto"
-  bulkEditRow?: bulkEditRowI[];
+  bulkEditTable?:boolean;
   stickyScrollBar?: boolean;
+  isCellEdited?:(columnKey : string | number , rowKey : string | number,cell : DataSourceI) => boolean;
 }
 
 export interface expandableI {
@@ -107,7 +109,8 @@ const DataTable = ({
   emptyTableUi,
   customClass,
   tableLayout,
-  bulkEditRow,
+  isCellEdited,
+  bulkEditTable,
   stickyScrollBar
 }: DataTableI) => {
   const [dataTableKey, setDataTableKey] = useState(1);
@@ -539,7 +542,7 @@ const DataTable = ({
           ) : null} */}
         </tr>
         {
-          !!bulkEditRow && (
+          !!bulkEditTable && (
             <tr className="inte-dataTable__bulkEditRow">
               {expandable && (
                 <th
@@ -570,7 +573,7 @@ const DataTable = ({
                 </th>
               )}
               {
-                bulkEditRow.map(item => (
+                columns.map(item => (
                   <th
                     ref={(cell) => makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)}
                     key={item.key}
@@ -579,21 +582,21 @@ const DataTable = ({
                       [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]: item.fixed,
 
                     })}
-                    colSpan={item.colSpan ?? 1}
+                    // colSpan={item.colSpan ?? 1}
                   >
                     {
-                      item.editior
+                      item.editor
                     }
                   </th>
                 ))
               }
-              {
+              {/* {
                 Array(columns.length - bulkEditRow.length).fill(0).map(item =>
                   <th
                     colSpan={0}
                     ref={(cell) => makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)}
                   ></th>)
-              }
+              } */}
 
             </tr>
           )
@@ -603,7 +606,7 @@ const DataTable = ({
   };
 
   const makeDataTableBodyRows = (item: any, index: number) => {
-    let rowNum = index + (hasHeader ? 1 + (!!bulkEditRow ? 1 : 0) : 0),
+    let rowNum = index + (hasHeader ? 1 + (!!bulkEditTable ? 1 : 0) : 0),
       columnNum = 0;
     const isRowSelected = selectedCheckbox[item.key];
     const isRowExpandable = expandable?.rowExpandable
@@ -690,7 +693,8 @@ const DataTable = ({
             let span = i.onCell ? i.onCell(rowNum) : "";
             if (span === -1) return null;
             let ele = i.dataIndex ? item[i.dataIndex] : item;
-            ele = i.render ? i.render(ele) : ele;
+            ele = i.render ? i.render(ele , item) : ele;
+            const isEdited = isCellEdited ?  isCellEdited(dataSource[index]?.key , columns[ind]?.key , i) : false;
             return (
               <td
                 {...span}
@@ -702,7 +706,8 @@ const DataTable = ({
                 ref={(cell) => makeCellRefsArray(rowNum, columnNum++, cell)}
                 className={getClassNames({
                   'inte-dataTable__cell': true,
-                  [`inte-dataTable__cell--Fixed` + i.fixed?.toLowerCase()]: i.fixed
+                  [`inte-dataTable__cell--Fixed` + i.fixed?.toLowerCase()]: i.fixed,
+                  'inte-dataTable__cell--edited' : isEdited
                 })}
               >
                 {ele}
@@ -755,9 +760,8 @@ const DataTable = ({
         </tr>
       ));
 
-  const makeDataTableEmptyRow = () => {
-    return (
-      <tr>
+  const DataTableEmptyRow =  (
+    <tr>
         <td
           colSpan={
             columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
@@ -765,9 +769,9 @@ const DataTable = ({
         >
           {emptyTableUi ? emptyTableUi : <NoProducts />}
         </td>
-      </tr>
-    );
-  };
+     </tr>
+  )
+  
 
   const scrollGrid = () => {
     const scrollLeft = stickyScrollBarRef.current?.scrollLeft
@@ -810,7 +814,7 @@ const DataTable = ({
     >
       {isFixedHeader && hasHeader && (
         <div className="inte-dataTable__fixHeader--handler">
-          <table className="inte-dataTable" style={{ tableLayout: tableLayout ? tableLayout : "fixed", width: scrollX ? scrollX / 10 + "rem" : "auto" }}>
+          <table className="inte-dataTable" style={{ tableLayout: tableLayout ? tableLayout : "fixed", width: scrollX ? scrollX / 10 + "rem" : "" }}>
             <colgroup ref={fixHeaderRef}>
               {
                 expandable ? <col style={{ width: "5.2rem" }} /> : null
@@ -842,7 +846,7 @@ const DataTable = ({
         <table className={`inte-dataTable`}
           style={{
             tableLayout: tableLayout ? tableLayout : isFixedHeader ? "fixed" : "auto",
-            width: scrollX ? scrollX / 10 + "rem" : "auto"
+            width: scrollX ? scrollX / 10 + "rem" : ""
           }}
         >
           <colgroup ref={tableColRef}>
@@ -876,7 +880,7 @@ const DataTable = ({
                 ? data.map((item: any, index: number) => {
                   return makeDataTableBodyRows(item, index);
                 })
-                : makeDataTableEmptyRow()}
+                : DataTableEmptyRow}
           </tbody>
         </table>
       </div>

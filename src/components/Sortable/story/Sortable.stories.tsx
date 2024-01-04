@@ -1,133 +1,306 @@
-import React from "react";
-import { Card, Text } from "../../..";
-import Sortable from "../Sortable";
-import "./SortableStories.css";
+import React, { useState } from "react";
+import { Card, Image, Text } from "../../..";
+import Sortable, { sortableArray } from "../Sortable";
 
 export default {
   title: "Components/Behaviour/Sortable",
   component: Sortable,
   argTypes: {
     data: {
-      description: "data is an array of object ",
+      description:
+        "Array of Object and every object have below properties <br><table><thead><tr><th>Key</th><th>Value</th></tr></thead><tbody><tr><td>id</td><td><code>string | number</code></td></tr><tr><td>content</td><td><code>React.ReactNode</code></td></tr></tbody></table>",
       control: {
-        type: true,
+        disable: true,
       },
     },
-    direction: {
-      description: "set sortable direction default value vertical",
+    containerStyle: {
+      description:
+        "Make layout of the sortable container ( how elements were arranged in the container)",
       control: {
-        type: "radio",
-        options: ["vertical", "horizontal"],
-      },
-      defaultValue: "vertical",
-    },
-    onSort: {
-      description: "onSort function return changes an array",
-      control: {
-        type: "function",
-      },
-    },
-    renderItem: {
-      description: "renderItem inside reactNode",
-      control: {
-        type: "function",
+        disable: true,
       },
     },
     animationDuration: {
-      description: "You can change Animation Duration",
+      description: "Duration of animation",
       control: {
         type: "number",
       },
-      defaultValue: 200,
-    },
-    customClass: {
-      description: "You can add extra class inside customClass props",
-      control: {
-        type: true,
-      },
+      defaultValue: 300,
     },
   },
 };
-const items = [
+
+const itemsData = [
+  { id: 1, imageUrl: "https://picsum.photos/id/254/200/300" },
+  { id: 2, imageUrl: "https://picsum.photos/id/239/200/300" },
+  { id: 3, imageUrl: "https://picsum.photos/id/233/200/300" },
+  { id: 4, imageUrl: "https://picsum.photos/id/235/200/300" },
+  { id: 5, imageUrl: "https://picsum.photos/id/231/200/300" },
+  { id: 6, imageUrl: "https://picsum.photos/id/230/200/300" },
+  { id: 7, imageUrl: "https://picsum.photos/id/220/200/300" },
+  { id: 8, imageUrl: "https://picsum.photos/id/221/200/300" },
+  { id: 9, imageUrl: "https://picsum.photos/id/222/200/300" },
+  { id: 10, imageUrl: "https://picsum.photos/id/223/200/300" },
+  { id: 11, imageUrl: "https://picsum.photos/id/227/200/300" },
+  { id: 12, imageUrl: "https://picsum.photos/id/225/200/300" },
+  { id: 13, imageUrl: "https://picsum.photos/id/255/200/300" },
+  { id: 14, imageUrl: "https://picsum.photos/id/256/200/300" },
+  { id: 15, imageUrl: "https://picsum.photos/id/247/200/300" },
+  { id: 16, imageUrl: "https://picsum.photos/id/249/200/300" },
+  { id: 17, imageUrl: "https://picsum.photos/id/250/200/300" },
+  { id: 18, imageUrl: "https://picsum.photos/id/251/200/300" },
+  { id: 19, imageUrl: "https://picsum.photos/id/252/200/300" },
+  { id: 20, imageUrl: "https://picsum.photos/id/253/200/300" },
+  { id: 21, imageUrl: "https://picsum.photos/id/237/200/300" },
+];
+const dragData = [
   {
-    title: `List Item`,
-    description: "Aenean aliquam molestie urna, vel aliquam.",
+    id: 1,
+    title: "Sortable Title",
   },
   {
-    title: `List Item`,
-    description: "Aenean aliquam molestie urna, vel aliquam.",
+    id: 2,
+    title: "Sortable Title",
   },
   {
-    title: `List Item`,
-    description: "Aenean aliquam molestie urna, vel aliquam.",
+    id: 3,
+    title: "Sortable Title",
   },
   {
-    title: `List Item`,
-    description: "Aenean aliquam molestie urna, vel aliquam.",
+    id: 4,
+    title: "Sortable Title",
   },
   {
-    title: `List Item`,
-    description:
-      "Aenean aliquam molestie urna, vel aliquam. gf df ghfg hdfgh dfh dfg h fg hjfhj fghj fghj fhgjd dfghdfg dgh dfgh dfgh dfgh fgd hdfgh fg fgh dfgh ghf ghjfghj fghjfghj fghjfgh jfghj fghj fhj fghj fghjfghjfgh jfghjfghjfghj fgh jfgh",
+    id: 5,
+    title: "Sortable Title",
+  },
+  {
+    id: 6,
+    title: "Sortable Title",
+  },
+  {
+    id: 7,
+    title: "Sortable Title",
+  },
+  {
+    id: 8,
+    title: "Sortable Title",
+  },
+  {
+    id: 9,
+    title: "Sortable Title",
+  },
+  {
+    id: 10,
+    title: "Sortable Title",
+  },
+  {
+    id: 11,
+    title: "Sortable Title",
+  },
+  {
+    id: 12,
+    title: "Sortable Title",
+  },
+  {
+    id: 13,
+    title: "Sortable Title",
+  },
+  {
+    id: 14,
+    title: "Sortable Title",
+  },
+  {
+    id: 15,
+    title: "Sortable Title",
+  },
+  {
+    id: 16,
+    title: "Sortable Title",
+  },
+  {
+    id: 17,
+    title: "Sortable Title",
+  },
+  {
+    id: 18,
+    title: "Sortable Title",
+  },
+  {
+    id: 19,
+    title: "Sortable Title",
+  },
+  {
+    id: 20,
+    title: "Sortable Title",
   },
 ];
+const sortableArr: sortableArray = itemsData.map((item) => ({
+  content: (
+    <img
+      style={{ aspectRatio: 1, borderRadius: "50%" }}
+      src={item.imageUrl}
+      alt="img"
+      width={150}
+      height={150}
+    />
+  ),
+  id: item.id,
+}));
 
 const Template = ({ ...rest }) => {
+  const [data, setData] = useState(sortableArr);
+
   return (
-    <Sortable
-      data={items}
-      onSort={(items: any) => {}}
-      animationDuration={rest.animationDuration}
-      renderItem={(item: any, index: number) => (
-        <Card title={`Card ${item[index].title} ${index}`} cardType="filled">
-          <Text>{item[index].description}</Text>
-        </Card>
-      )}
-      direction={rest.direction}
-    />
+    <Card>
+      <Sortable
+        data={data}
+        onChange={(newArr) => setData(newArr)}
+        animationDuration={rest.animationDuration}
+        containerStyle={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "20px",
+        }}
+      />
+    </Card>
   );
 };
 
 export const Primary = Template.bind({});
 
-// Sortable vertical
-export const vertical: any = Template.bind({});
-vertical.decorators = [
-  () => {
-    return (
-      <Card title="Sortable Vertical">
-        <Sortable
-          data={items}
-          onSort={(items: any) => {}}
-          direction="vertical"
-          renderItem={(item: any, index: number) => (
-            <Card title={`Card ${item[index].title}`} cardType="filled">
-              <Text>{item[index].description}</Text>
-            </Card>
-          )}
-        />
-      </Card>
-    );
-  },
-];
+// Sortable vertical card
+const verticalData: sortableArray = dragData.map((item) => ({
+  content: (
+    <Card title={item.title + " " + item.id}>
+      <Text>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro iste
+        libero asperiores velit possimus. Ab fugiat veniam possimus perspiciatis
+        qui id voluptates magnam nemo quos aspernatur, tenetur, consequatur
+        minima est?
+      </Text>
+    </Card>
+  ),
+  id: item.id,
+}));
+export const SortableVertical = ({ ...rest }) => {
+  const [data, setData] = useState(verticalData);
 
-// Sortable  horizontal
-export const horizontal: any = Template.bind({});
-horizontal.decorators = [
-  () => {
-    return (
-      <Card title="Sortable Horizontal">
-        <Sortable
-          data={items}
-          onSort={(items: any) => {}}
-          direction="horizontal"
-          renderItem={(item: any, index: number) => (
-            <Card title={`Card ${item[index].title}`} cardType="filled">
-              <Text>{item[index].description}</Text>
-            </Card>
-          )}
-        />
-      </Card>
-    );
-  },
-];
+  return (
+    <Card title="Sortable Vertical">
+      <Sortable
+        data={data}
+        onChange={(newArr) => setData(newArr)}
+        containerStyle={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "10px",
+          overflowY: "auto",
+          maxHeight: "600px",
+          margin: "auto",
+        }}
+      />
+    </Card>
+  );
+};
+
+// Sortable horizontal card
+const horizontalData: sortableArray = dragData.map((item) => ({
+  content: (
+    <Card title={item.title + " " + item.id}>
+      <Text>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro iste
+        libero asperiores
+      </Text>
+      <Image
+        src="https://picsum.photos/id/251/200/300"
+        height={150}
+        width={150}
+      />
+    </Card>
+  ),
+  id: item.id,
+}));
+export const SortableHorizontal = ({ ...rest }) => {
+  const [data, setData] = useState(horizontalData);
+
+  return (
+    <Card title="Sortable Horizontal">
+      <Sortable
+        data={data}
+        onChange={(newArr) => setData(newArr)}
+        containerStyle={{
+          display: "flex",
+          gap: "20px",
+          overflowX: "auto",
+        }}
+      />
+    </Card>
+  );
+};
+
+//  Sortable Vertical With Images
+export const SortableVerticalWithImages = ({ ...rest }) => {
+  const [data, setData] = useState(sortableArr);
+
+  return (
+    <Card title="Sortable Vertical With Images">
+      <Sortable
+        data={data}
+        onChange={(newArr) => setData(newArr)}
+        animationDuration={rest.animationDuration}
+        containerStyle={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "20px",
+          overflowY: "auto",
+          maxHeight: "600px",
+          margin: "auto",
+        }}
+      />
+    </Card>
+  );
+};
+
+// Sortable Horizontal With Images
+export const SortableHorizontalWithImages = ({ ...rest }) => {
+  const [data, setData] = useState(sortableArr);
+  return (
+    <Card title="Sortable Horizontal With Images">
+      <Sortable
+        data={data}
+        onChange={(newArr) => setData(newArr)}
+        animationDuration={rest.animationDuration}
+        containerStyle={{
+          display: "flex",
+          gap: "20px",
+          overflowX: "auto",
+        }}
+      />
+    </Card>
+  );
+};
+
+// Sortable  Images Grid
+const gridData: sortableArray = itemsData.map((item) => ({
+  content: <Image src={item.imageUrl} width={200} height={200} />,
+  id: item.id,
+}));
+export const SortableGrid = () => {
+  const [data, setData] = useState(gridData);
+  return (
+    <Card title="Sortable Grid">
+      <Sortable
+        data={data}
+        onChange={(newArr) => setData(newArr)}
+        containerStyle={{
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "15px",
+          overflow: "auto",
+          maxHeight: "600px",
+        }}
+      />
+    </Card>
+  );
+};

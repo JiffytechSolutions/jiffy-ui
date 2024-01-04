@@ -8,7 +8,7 @@
   left: 10rem;
 }
 
-.inte-appWrapper .inte-dataTable__fixHeader--handler ,
+.inte-appWrapper .inte-dataTable__fixHeader--handler,
 .inte-appWrapper .inte-tabs--hasScrollSpy .inte-tabs {
   top: calc(
     var(--anouncementBarHeight) + var(--appBarHeight) + var(--pageHeaderHeight)
@@ -52,14 +52,14 @@
 
 .inte-appWrapper.inte-sideBar--active .inte-sideBar__closeButton {
   transform: translateX(0);
-  top : calc(var(--anouncementBarHeight) + 1rem);
+  top: calc(var(--anouncementBarHeight) + 1rem);
   z-index: 9999;
 }
 
 .inte-main {
   margin-top: var(--anouncementBarHeight);
   transition: all 0.3s ease-in-out;
-  padding:3.2rem;
+  padding: 3.2rem;
   margin-bottom: var(--pageBottomAction);
 }
 
@@ -78,9 +78,7 @@ body.inte-bodyHasSheetBackdrop {
 }
 
 @media screen and (min-width: 992px) {
-  .inte-appWrapper.inte-sideBar--active:not(
-      .inte-appWrapper--embeddedView
-    )::before {
+  .inte-appWrapper.inte-sideBar--active:not(.inte-appWrapper--embeddedView)::before {
     content: none;
   }
 
@@ -101,11 +99,10 @@ body.inte-bodyHasSheetBackdrop {
     transform: none;
   }
 
-  .inte-appWrapper:not(.inte-appWrapper--embeddedView) .inte-sideBar ,
+  .inte-appWrapper:not(.inte-appWrapper--embeddedView) .inte-sideBar,
   .inte-appWrapper.inte-sideBar--active:not(.inte-appWrapper--embeddedView)::after {
-    top:var(--anouncementBarHeight)
+    top: var(--anouncementBarHeight);
   }
-
 }
 
 @media screen and (max-width: 991px) {

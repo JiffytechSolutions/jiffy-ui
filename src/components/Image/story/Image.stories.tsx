@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, FlexChild, FlexLayout, Text } from "../..";
-import { Info, Star } from "../../../icons";
+import { Eye, Info, Star } from "../../../icons";
 import Image from "../Image";
 
 export default {
@@ -70,14 +70,14 @@ export default {
       control: {
         type: "number",
       },
-      defaultValue: 300,
+      defaultValue: 200,
     },
     width: {
       description: "Add custom image width",
       control: {
         type: "number",
       },
-      defaultValue: 300,
+      defaultValue: 200,
     },
     objectFit: {
       description: "Set fill nature of image inside box",
@@ -97,13 +97,13 @@ export default {
     title: {
       description: "You can  add title on image",
       control: {
-        type: "text",
+        type: false,
       },
     },
     titleBar: {
       description: "You can  add title bar on image",
       control: {
-        type: "text",
+        type: false,
       },
     },
     fallback: {
@@ -111,10 +111,11 @@ export default {
       control: {
         type: "text",
       },
+      defaultValue:
+        "data:image/png;base64,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",
     },
     multipleImage: {
-      // description: "multipleImage is an array of object",
-      description: `<div><strong>multipleImage is an array of object:-</strong></div><table bgcolor="#f5f5f5"><tbody><tr><td><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>src<span style="color:red">*</span></td><td>string</td></tr><tr><td>alt</td><td>string</td></tr><tr><td>fallback</td><td>string</td></tr><tr><td>onClick</td><td>function</td></tr><tr><td>onLoad</td><td>function</td></tr><tr><td>onError</td><td>function</td></tr></tbody></table></td></tr></tbody></table>`,
+      description: `<div><strong>multipleImage is an array of object:-</strong></div><table bgcolor="#f5f5f5"><tbody><tr><td><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>src<span style="color:red">*</span></td><td>string</td></tr><tr><td>alt</td><td>string</td></tr><tr><td>fallback</td><td>string</td></tr><tr><td>onClick</td><td>function</td></tr><tr><td>onLoad</td><td>function</td></tr><tr><td>onError</td><td>function</td></tr><tr><td>height</td><td>number</td></tr><tr><td>width</td><td>number</td></tr><tr><td>objectFit</td><td>"fill" | "contain" | "cover" | "none"</td></tr>  </tbody></table></td></tr></tbody></table>`,
       control: {
         type: "array",
       },
@@ -151,6 +152,7 @@ export default {
       control: {
         type: false,
       },
+      defaultValue: <Eye size="18" />,
     },
     previewText: {
       description: "You can change Preview Text",
@@ -164,10 +166,12 @@ export default {
 
 const Template = ({ ...rest }) => {
   const [showAllImg, setShowAllImg] = useState(rest.isOpen);
+
   return (
     <Card>
       <Image
         src={rest.src}
+        fallback={rest.fallback}
         multipleImage={rest.multipleImage}
         alt={rest.alt}
         isOpen={showAllImg}
@@ -178,6 +182,7 @@ const Template = ({ ...rest }) => {
         onClick={() => setShowAllImg(true)}
         onClose={() => setShowAllImg(false)}
         objectFit={rest.objectFit}
+        customClass={rest.customClass}
         title={rest.title}
         titleBar={rest.titleBar}
       />
@@ -187,15 +192,40 @@ const Template = ({ ...rest }) => {
 
 export const Primary = Template.bind({});
 
+//  image Fallback
+export const Image_Alt: any = Template.bind({});
+Image_Alt.decorators = [
+  () => (
+    <Card title="Image alt">
+      <Image src="" alt="Image address not found" width={200} height={200} />
+    </Card>
+  ),
+];
+
+//  image Fallback
+export const Image_Fallback: any = Template.bind({});
+Image_Fallback.decorators = [
+  () => (
+    <Card title="Iamge Fallback">
+      <Image
+        src=""
+        width={200}
+        height={200}
+        fallback="data:image/png;base64,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"
+      />
+    </Card>
+  ),
+];
+
 //  image height and width
 export const Image_Height_and_width: any = Template.bind({});
 Image_Height_and_width.decorators = [
   () => (
-    <Card title="Iamge height and width (400px X 400px)">
+    <Card title="Iamge height and width (200px X 200px)">
       <Image
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLbGl6F4yiUwbvYnfIgQ90UGysLVu480Zs5Q&usqp=CAU"
-        width={400}
-        height={400}
+        src="https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c?w=242&h=121&fit=crop&auto=format"
+        width={200}
+        height={200}
       />
     </Card>
   ),
@@ -267,6 +297,72 @@ Image_Border_Radius.decorators = [
   ),
 ];
 
+// Image preview text with preview icon
+export const Image_previewText_with_previewIcon: any = Template.bind({});
+Image_previewText_with_previewIcon.decorators = [
+  () => {
+    return (
+      <Card title="Image preview text with preview icon">
+        <Image
+          src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg"
+          width={200}
+          height={200}
+          onClick={() => alert("clicked")}
+          preview
+          previewText="Preview"
+          previewIcon={<Eye size={18} />}
+          alt="Image not found or error 404"
+        />
+      </Card>
+    );
+  },
+];
+
+//  Multiple_Image_Zoom
+export const Multiple_Images_With_Scroll: any = Template.bind({});
+Multiple_Images_With_Scroll.decorators = [
+  () => {
+    const [storeData, setStoreData] = useState([
+      {
+        src: "",
+      },
+    ]);
+    const [showAllImg, setShowAllImg] = useState(false);
+
+    useEffect(() => {
+      let hold: any = [];
+      fetch("https://dummyjson.com/products")
+        .then((res) => res.json())
+        .then((json) => {
+          json.products.map((item: any, index: number) => {
+            return hold.push({
+              src: item.thumbnail,
+            });
+          });
+          setStoreData(hold);
+        });
+    }, []);
+
+    return (
+      <Card title="Multiple Images With Scroll">
+        <Image
+          isOpen={showAllImg}
+          src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg"
+          multipleImage={storeData}
+          width={250}
+          height={250}
+          onClose={() => setShowAllImg(false)}
+          onClick={() => setShowAllImg(!showAllImg)}
+          preview
+          previewText="Preview"
+          previewIcon={<Eye size={18} />}
+          alt="Image not found or error 404"
+        />
+      </Card>
+    );
+  },
+];
+
 //  Image with Title
 export const Image_with_title: any = Template.bind({});
 Image_with_title.decorators = [
@@ -318,7 +414,7 @@ Image_With_Title_Bar.decorators = [
   ),
 ];
 
-// Image_With_Title_Bar
+// Image With Title Bar With Clickable
 export const Image_With_Title_Bar_With_Clickable: any = Template.bind({});
 Image_With_Title_Bar_With_Clickable.decorators = [
   () => (
@@ -347,7 +443,7 @@ Image_With_Title_Bar_With_Clickable.decorators = [
   ),
 ];
 
-// Image Title and Title_Bar
+// Image Title With Title Bar
 export const Image_Title_With_Title_Bar: any = Template.bind({});
 Image_Title_With_Title_Bar.decorators = [
   () => (
@@ -436,7 +532,7 @@ Image_List.decorators = [
   ),
 ];
 
-// Image_List_With_Title
+// Image List With Title
 export const Image_List_With_Title: any = Template.bind({});
 Image_List_With_Title.decorators = [
   () => (
@@ -585,7 +681,7 @@ Image_List_With_Title.decorators = [
   ),
 ];
 
-// Image_List_With_Title_Bar
+// Image List With Title Bar
 export const Image_List_With_Title_Bar: any = Template.bind({});
 Image_List_With_Title_Bar.decorators = [
   () => (
@@ -771,84 +867,32 @@ Image_List_With_Title_Bar.decorators = [
   ),
 ];
 
-// Title_Below_Image
+// Title Below Image
 export const Title_Below_Image: any = Template.bind({});
 Title_Below_Image.decorators = [
   () => {
-    const [storeData, setStoreData] = useState([]);
-    useEffect(() => {
-      fetch("https://dummyjson.com/products")
-        .then((res) => res.json())
-        .then((json) => {
-          setStoreData(json.products);
-        });
-    }, []);
     return (
       <Card>
         <FlexLayout
+          direction="vertical"
           desktopWidth="33"
           tabWidth="33"
-          mobileWidth="50"
-          spacing="loose"
+          mobileWidth="100"
         >
-          {storeData?.map((item: any) => {
-            return item.images.map((url: any) => {
-              return (
-                <FlexLayout direction="vertical">
-                  <Image src={url} height={300} />
-                  <FlexLayout valign="center" halign="fill">
-                    <>
-                      <Text type="T-7" fontweight="bold">
-                        {item.title}
-                      </Text>
-                      <Text>{item.brand}</Text>
-                    </>
-                    <Info size="20" color="#000" />
-                  </FlexLayout>
-                </FlexLayout>
-              );
-            });
-          })}
+          <Image
+            src="https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c?w=242&h=121&fit=crop&auto=format"
+            height={250}
+          />
+          <FlexLayout valign="center" halign="fill">
+            <>
+              <Text type="T-7" fontweight="bold">
+                Image Title
+              </Text>
+              <Text>Image Title Bar</Text>
+            </>
+            <Info size="20" color="#000" />
+          </FlexLayout>
         </FlexLayout>
-      </Card>
-    );
-  },
-];
-
-//  Multiple_Image_Zoom
-export const Multiple_Images_With_Scroll: any = Template.bind({});
-Multiple_Images_With_Scroll.decorators = [
-  () => {
-    const [storeData, setStoreData] = useState([]);
-    const [showAllImg, setShowAllImg] = useState(false);
-
-    useEffect(() => {
-      let hold: any = [];
-      fetch("https://dummyjson.com/products")
-        .then((res) => res.json())
-        .then((json) => {
-          json.products.map((item: any) => {
-            return hold.push({
-              src: item.thumbnail,
-            });
-          });
-          setStoreData(hold);
-        });
-    }, []);
-
-    return (
-      <Card title="Multiple Images With Scroll">
-        <Image
-          isOpen={showAllImg}
-          src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg"
-          multipleImage={storeData}
-          width={250}
-          height={250}
-          onClose={() => setShowAllImg(false)}
-          onClick={() => setShowAllImg(!showAllImg)}
-          preview
-          alt="Image not found or error 404"
-        />
       </Card>
     );
   },

@@ -37,11 +37,12 @@ input:placeholder-shown {
 
 /* Helper text */
 .inte-formElement__itemHelp {
-  font-size: 1.6rem;
-  color: var(--inte-G300);
   margin-top: 0.8rem;
   display: block;
-  line-height: 2.2rem;
+  color: var(--inte-G300);
+  font-weight: var(--weight-normal);
+  line-height: var(--inte-LH2-0);
+  font-size: var(--inte-FS1-4);
 }
 
 .inte-formElement__itemHelp--hasHelpIcon {
@@ -118,7 +119,6 @@ input:placeholder-shown {
 /* Warning case end */
 
 /* Success case */
-
 .inte-formElement--success .inte-formElement__control {
   border: 1px solid var(--inte-GR300) !important;
 }
@@ -154,21 +154,35 @@ input:placeholder-shown {
   pointer-events: none;
 }
 
-.inte-formElement--disabled .inte-formElement__inner .inte-formElement__control {
+.inte-formElement--disabled
+  .inte-formElement__inner
+  .inte-formElement__control {
   border-color: var(--inte-G40);
   color: var(--inte-G50);
 }
 
-.inte-formElement--disabled .inte-formElement__inner .inte-formElement__innericPrefix,
-.inte-formElement--disabled .inte-formElement__inner .inte-formElement__innericSuffix {
+.inte-formElement--disabled
+  .inte-formElement__inner
+  .inte-formElement__innericPrefix,
+.inte-formElement--disabled
+  .inte-formElement__inner
+  .inte-formElement__innericSuffix {
   color: var(--inte-G50);
 }
 
-.inte-formElement--disabled .inte-formElement__inner .inte-formElement--clear svg path {
+.inte-formElement--disabled
+  .inte-formElement__inner
+  .inte-formElement--clear
+  svg
+  path {
   fill: var(--inte-G30);
 }
 
-.inte-formElement--disabled .inte-formElement__inner .inte-formElement--clear svg rect {
+.inte-formElement--disabled
+  .inte-formElement__inner
+  .inte-formElement--clear
+  svg
+  rect {
   fill: var(--inte-G50);
 }
 
@@ -179,7 +193,6 @@ input:placeholder-shown {
 
 /* Animations */
 @keyframes movehelp {
-
   10%,
   90% {
     transform: translate3d(-2px, 0, 0);
@@ -203,7 +216,6 @@ input:placeholder-shown {
 }
 
 @-webkit-keyframes movehelp {
-
   10%,
   90% {
     transform: translate3d(-2px, 0, 0);

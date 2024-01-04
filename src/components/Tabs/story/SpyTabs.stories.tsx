@@ -161,22 +161,19 @@ const data = generateSpyTabsData(10);
 
 const Template = ({ ...rest }) => {
   const [tabArr, setTabArr] = useState(data);
-
-  console.log(tabArr);
-
-  return (
-      <SpyTabs spacing="mediumLoose" {...rest}  tabs={tabArr} />
-  );
+  return <SpyTabs spacing="mediumLoose" {...rest} tabs={tabArr} />;
 };
 
 export const Primary = Template.bind({});
 
-export const SpyTabsVertical =  ({ ...rest }) => {
+export const SpyTabsVertical = ({ ...rest }) => {
   const [tabArr, setTabArr] = useState(data);
-
-  console.log(tabArr);
-
   return (
-      <SpyTabs spacing="mediumLoose" {...rest} direction="vertical" tabs={tabArr} />
+    <SpyTabs
+      spacing="mediumLoose"
+      {...rest}
+      direction="vertical"
+      tabs={tabArr}
+    />
   );
 };

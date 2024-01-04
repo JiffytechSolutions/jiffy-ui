@@ -144,9 +144,8 @@ const options = [
   },
   {
     label: "UR",
-    icon:US
+    icon: US,
   },
-
 ];
 const Template = ({ ...rest }) => {
   const [value, setValue] = useState<any>(options[0]);
@@ -186,7 +185,7 @@ DisabledSwitcher.decorators = [
           <Switcher
             isDisabled
             options={options}
-            onChange={() => { }}
+            onChange={() => {}}
             value={options[0]}
           />
         </FlexLayout>

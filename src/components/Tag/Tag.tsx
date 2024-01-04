@@ -1,12 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// eslint-disable @typescript-eslint/no-explicit-any /
 import React from "react";
 import Badge from "../Badge/Badge";
 import { ChevronDown, ChevronUp } from "../../storybook/Foundation/Icons/Icons";
 import getClassNames from "../../utilities/getClassnames";
+import useDelayUnmount from "../../utilities/useDelayTimeout";
 import "./Tag.css";
+
 const Tag: React.FC<TagI> = ({
-  onDestroy, // This function destroy  or remove  cross icon in tag
+  onDestroy = false, // This function destroy  or remove  cross icon in tag
+  isAnimation = false,
   children,
   hasPopover = false,
   count,
@@ -15,7 +16,10 @@ const Tag: React.FC<TagI> = ({
   size = "small",
   customClass = "",
   onTogglePopup = () => {},
+  isOpen = true,
 }: TagI): JSX.Element => {
+  const animation =
+    onDestroy && isAnimation ? useDelayUnmount(isOpen, 200) : true;
   const checkSize = () => {
     if (size === "small" && (count === undefined || !hasPopover)) {
       return "inte-tag--small";
@@ -63,64 +67,73 @@ const Tag: React.FC<TagI> = ({
     return null;
   };
   return (
-    <div
-      {...(hasPopover && {
-        role: "button",
-      })}
-      className={getClassNames({
-        "inte-tag": true,
-        "inte-tag--hasPopover": hasPopover,
-        "inte-tag--activePopover": isActive,
-        "inte-tag--disabled": isDisabled,
-        [sizeValue]: sizeValue,
-        [customClass]: customClass,
-      })}
-      onClick={() => !isDisabled && onTogglePopup()}
-      {...(hasPopover ? { tabIndex: 0 } : {})}
-      aria-disabled={isDisabled ? "true" : "false"}
-    >
-      <div className="inte-tag__body">
-        <div className="inte-tag__content">
-          <span>{children}</span>
-        </div>
-        {checkOnDismiss()}
-        {hasPopover && (
-          <div className="inte-tag__popover">
-            {count && (
-              <Badge
-                size="small"
-                children={count}
-                customBgColor={
-                  isDisabled ? "var(--inte-G90)" : "var(--inte-G800)"
-                }
-              />
-            )}
-            {isActive ? (
-              <ChevronUp
-                size={20}
-                color={isDisabled ? "var(--inte-G50)" : "var(--inte-G800)"}
-              />
-            ) : (
-              <ChevronDown
-                size={20}
-                color={isDisabled ? "var(--inte-G50)" : "var(--inte-G800)"}
-              />
+    <React.Fragment>
+      {animation && (
+        <div
+          {...(hasPopover && {
+            role: "button",
+          })}
+          className={getClassNames({
+            "inte-tag": true,
+            "inte-tag--hasPopover": hasPopover,
+            "inte-tagAnimation--in":
+              isOpen && !hasPopover && !isActive && onDestroy && isAnimation,
+            "inte-tagAnimation--out":
+              !isOpen && !hasPopover && !isActive && onDestroy && isAnimation,
+            "inte-tag--disabled": isDisabled,
+            [sizeValue]: sizeValue,
+            [customClass]: customClass,
+          })}
+          onClick={() => !isDisabled && onTogglePopup()}
+          {...(hasPopover ? { tabIndex: 0 } : {})}
+          aria-disabled={isDisabled ? "true" : "false"}
+        >
+          <div className="inte-tag__body">
+            <div className="inte-tag__content">
+              <span>{children}</span>
+            </div>
+            {checkOnDismiss()}
+            {hasPopover && (
+              <div className="inte-tag__popover">
+                {count && (
+                  <Badge
+                    size="small"
+                    children={count}
+                    customBgColor={
+                      isDisabled ? "var(--inte-G90)" : "var(--inte-G800)"
+                    }
+                  />
+                )}
+                {isActive ? (
+                  <ChevronUp
+                    size={20}
+                    color={isDisabled ? "var(--inte-G50)" : "var(--inte-G800)"}
+                  />
+                ) : (
+                  <ChevronDown
+                    size={20}
+                    color={isDisabled ? "var(--inte-G50)" : "var(--inte-G800)"}
+                  />
+                )}
+              </div>
             )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </React.Fragment>
   );
 };
 export interface TagI {
   children: React.ReactNode | string;
   onTogglePopup?: () => void;
-  onDestroy?: () => void;
+  onDestroy?: any;
   size?: "small" | "large";
   isDisabled?: boolean;
   hasPopover?: boolean;
   count?: string | number;
   isActive?: boolean;
+  isOpen?: boolean;
+  isAnimation?: boolean;
   customClass?: string;
 }
 

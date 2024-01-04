@@ -1,0 +1,58 @@
+.inte-textEditor {
+    /* border : 0.1rem solid var(--inte-G40); */
+}
+
+.inte-textEditor__toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1rem 1.2rem;
+    border : 0.1rem solid var(--inte-G40);
+    border-bottom: 0;
+}
+
+.inte-textEditor__toolbar > button {
+    border: 0.1rem solid var(--inte-G50);
+}
+
+.inte-textEditor__body {
+    padding: 1rem 1.2rem;
+    outline: none;
+    min-height : 200px;
+    border : 0.1rem solid var(--inte-G40);
+}
+
+.inte-textEditor__placeholder {
+    color: #70747E;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic{
+    font-style: italic;
+}
+
+.underline {
+   text-decoration: underline;
+}
+
+.notBold {
+    font-weight: normal;
+}
+
+.notItalic {
+    font-style: normal;
+}
+
+.notUnderline {
+    border-bottom:1px solid white;
+    text-decoration: none;
+}
+
+[contenteditable=true]:empty:not(:focus):before{
+    content:attr(data-placeholder);
+    color:grey;
+    font-style:italic;
+}

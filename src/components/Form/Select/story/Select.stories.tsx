@@ -5,6 +5,7 @@ import { Card } from "../../../Card";
 import * as Icon from "../../../../storybook/Foundation/Icons/Icons";
 import { GroupedObjI, SimpleObjI } from "../types/types";
 import Select from "../Select";
+import { FlexLayout } from "../../../FlexLayout";
 const allIcons: any = { ...Icon };
 export default {
   title: "Components/Form/Select",
@@ -80,8 +81,9 @@ export default {
         "Select Control states from below mentioned options as per requirement like success , danger",
       control: {
         type: "radio",
-        options: ["success", "warning", "error", "none"],
+        options: ["success", "warning", "error", "default"],
       },
+      defaultValue: "default",
     },
     isDisabled: {
       description: "Disable select",
@@ -188,6 +190,13 @@ export default {
         type: "text",
       },
       defaultValue: "Enter proper heading name",
+    },
+    width: {
+      description:
+        "If you change select width the using width prop and then enter number",
+      control: {
+        type: "number",
+      },
     },
     customClass: {
       description: "Add any desired custom class on dropdown",
@@ -310,11 +319,42 @@ const Template = ({ ...rest }) => {
         accessibilityLabel={rest.accessibilityLabel}
         isCreatable={rest.isCreatable}
         heading={rest.heading}
+        width={rest.width}
       />
     </Card>
   );
 };
 export const Primary = Template.bind({});
+
+// Select controlStates
+export const controlStates: any = Template.bind({});
+controlStates.decorators = [
+  () => {
+    const [value1, setValue] = useState([]);
+    function onSelectChange(val: React.SetStateAction<never[]>) {
+      setValue(val);
+    }
+    return (
+      <Card title="Select Control States">
+        <FlexLayout direction="vertical" spacing="loose">
+          {["success", "warning", "error", "defaulr"].map((item: any) => {
+            return (
+              <Select
+                options={simpleOptions}
+                value={value1}
+                placeholder={"Select"}
+                controlStates={item}
+                onChange={(e) => {
+                  onSelectChange(e);
+                }}
+              />
+            );
+          })}
+        </FlexLayout>
+      </Card>
+    );
+  },
+];
 
 // Select With Loading
 export const SelectWithLoading: any = Template.bind({});

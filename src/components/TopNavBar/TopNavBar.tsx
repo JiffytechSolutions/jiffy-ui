@@ -1,406 +1,233 @@
 import React, {
-  useCallback,
-  useContext,
   useEffect,
   useId,
-  useMemo,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
-import { Menu, Minus, X } from "../../storybook/Foundation/Icons/Icons";
-import { AppContext } from "../../utilities/context/AppContext";
-import getClassNames from "../../utilities/getClassnames";
-import handleClickOutside from "../../utilities/handelClickOutside";
+import { ArrowLeft, ArrowRight, ChevronRight } from "../../icons";
 import Button from "../Button/Button";
-import SideBar from "../SideBar/SideBar";
-// import "./TopNavBar.css";
-import Popover from "../Popover/Popover";
+import getClassNames from "../../utilities/getClassnames";
 import AppBar from "../AppBar/AppBar";
-import Carousel from "../Carousel/Carousel";
+import useWindowResize from "../../utilities/useWindowResize";
+import Popover from "../Popover/Popover";
+import "./TopNavBar.css";
 
-export interface SideBarI {
+export interface TopNavBarI {
+  menu: any;
   onChange: (newPath: string) => void;
-  logo?: React.ReactNode;
-  children?:
-    | React.ReactElement<SectionI>[]
-    | React.ReactElement<SectionI>
-    | any;
+  customClass?: string;
+  stickyTop?: boolean;
   connectLeft?: React.ReactNode;
   connectRight?: React.ReactNode;
-  customClass?: string;
-  isCloseOnEsc?: boolean;
-  topBar?: boolean;
-  stickyTop?: boolean;
 }
 
-export interface MenuI {
-  id: string | number;
-  label: string;
-  path: string;
-  icon?: React.ReactNode;
-  badge?: React.ReactNode;
-  children?: MenuI[];
-}
-
-export interface SectionI {
-  menu: MenuI[];
-  onChange?: (newPath: string) => void;
-  type?: string;
-  expandedItem?: any;
-  expandIconClickHandler?: Function;
-}
-
-export interface AppBarI {
-  connectLeft?: React.ReactNode;
-  connectRight?: React.ReactNode;
-  stickyTop?: boolean;
-  topBar?: boolean;
-  customClass?: string;
-  children?: any;
-}
-
-const NavBar = ({
+const TopNavBar = ({
+  menu,
   onChange,
+  customClass = "",
   connectLeft,
   connectRight,
-  logo,
   stickyTop = true,
-  children,
-  customClass,
-  isCloseOnEsc = true,
-  topBar = false,
-}: SideBarI) => {
-  const context = useContext(AppContext);
-  const toggleSideBar = () => {
-    context.sideBar[1](!context.sideBar[0]);
-  };
-  const [expandedItem, setExpandedItem] = useState<any>({});
-  const expandIconClickHandler = useCallback(
-    (e: React.MouseEvent, path: string, flag: boolean) => {
-      e.stopPropagation();
-      setExpandedItem({ [path]: !flag });
-    },
-    []
-  );
-
-  const sideBarRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    setExpandedItem({ [window.location.pathname]: true });
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-    return () => {
-      setExpandedItem({});
-    };
-  }, [window.location.pathname]);
-
-  useEffect(() => {
-    const handleEscapeClose = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        closeSideBar();
-      }
-    };
-    if (isCloseOnEsc) {
-      window.addEventListener("keydown", handleEscapeClose, true);
-    }
-    return () => {
-      window.removeEventListener("keydown", handleEscapeClose, true);
-    };
-  }, [isCloseOnEsc]);
-
-  const closeSideBar = () => {
-    context.sideBar[1](false);
-  };
-
-  const handelRouteChange = (newPath: string) => {
-    onChange(newPath);
-    closeSideBar();
-  };
-
-  useEffect(() => {
-    const clickOutside = handleClickOutside(
-      sideBarRef,
-      sideBarRef,
-      closeSideBar
-    );
-    if (context.sideBar[0]) {
-      document.addEventListener("click", clickOutside, true);
-    }
-    return () => {
-      document.removeEventListener("click", clickOutside, true);
-    };
-  }, [context.sideBar[0]]);
-
-  const footerHeight = useMemo(() => {
-    if (sideBarRef.current) {
-      let footer = sideBarRef.current.getElementsByClassName(
-        "inte-sideBar__section--footer"
-      );
-      if (footer.length) {
-        return footer[0].clientHeight + "px";
-      }
-    }
-    return "0";
-  }, [children, sideBarRef.current]);
-
-  const containerStyle = {
-    "--footerHeight": footerHeight,
-  } as React.CSSProperties;
-
-  const AppBar = ({
-    connectLeft,
-    connectRight,
-    stickyTop = true,
-    customClass = "",
-    topBar = false,
-    children,
-  }: AppBarI) => {
-    const context = useContext(AppContext);
-    const toggleSideBar = () => {
-      context.sideBar[1](!context.sideBar[0]);
-    };
-
-    return (
-      <header
-        className={getClassNames({
-          "inte-appBar--container": true,
-          "inte-appBar--stickyTop": stickyTop,
-          [customClass]: customClass,
-        })}
-      >
-        <div className="inte-appBar__connectLeft">
-          <div className="inte-appBar__toggleButton">
-            <Button
-              accessibilityLabel="toggle-button"
-              icon={<Menu size={20} />}
-              type={"outlined"}
-              onClick={toggleSideBar}
-            />
-          </div>
-          {connectLeft ?? null}
-        </div>
-
-        {children}
-        {connectRight && topBar && (
-          <div className="inte-appBar__connectRight">{connectRight}</div>
-        )}
-      </header>
-    );
-  };
-
-  return (
-    <div
-      className={`inte-top__navBar ${
-        topBar ? "inte-top__Bar" : "inte-nav__bar"
-      }`}
-    >
-      {topBar && (
-        <>
-          <AppBar
-            topBar={true}
-            customClass="inte-topBar"
-            connectLeft={connectLeft}
-            connectRight={connectRight}
-          />
-        </>
-      )}
-      <header
-        className={getClassNames({
-          "inte-appBar--container": true,
-          "inte-appBar--stickyTop": stickyTop,
-          "inte-navBar": true,
-          [customClass ?? ""]: customClass,
-        })}
-      >
-        {!topBar && (
-          <div className="inte-appBar__connectLeft">
-            <div className="inte-appBar__toggleButton">
-              <Button
-                accessibilityLabel="toggle-button"
-                icon={<Menu size={20} />}
-                type={"outlined"}
-                onClick={toggleSideBar}
-              />
-            </div>
-            {connectLeft ?? null}
-          </div>
-        )}
-
-        <div
-          className={getClassNames({
-            "inte-sideBar": true,
-          })}
-          style={containerStyle}
-          ref={sideBarRef}
-        >
-          {logo && <div className="inte-sideBar__logo">{logo}</div>}
-
-          <div className="inte-sideBar__sectionList">
-            {Array.isArray(children)
-              ? children?.map((item, index) => {
-                  return (
-                    <React.Fragment key={index}>
-                      <Section
-                        {...item?.props}
-                        onChange={handelRouteChange}
-                        expandedItem={expandedItem}
-                        expandIconClickHandler={expandIconClickHandler}
-                      />
-                    </React.Fragment>
-                  );
-                })
-              : children?.props.menu && (
-                  <Section
-                    {...children?.props}
-                    onChange={handelRouteChange}
-                    expandedItem={expandedItem}
-                    expandIconClickHandler={expandIconClickHandler}
-                  />
-                )}
-          </div>
-        </div>
-
-        {connectRight && !topBar && (
-          <div className="inte-appBar__connectRight">{connectRight}</div>
-        )}
-      </header>
-    </div>
-  );
-};
-
-const checkIndex = (str: string, searchStr: string, ind: number) => {
-  let i = 0;
-  for (i; i < searchStr.length; i++) {
-    if (!str[ind + i] || str[ind + i] !== searchStr[i]) return false;
-  }
-  if (str[i + ind] && str[i + ind] !== "/") return false;
-  return true;
-};
-
-const searchWordInString = (str: string, searchStr: string): boolean => {
-  if (str.length < searchStr.length) return false;
-  for (let i = 0; i <= str.length - searchStr.length; i++) {
-    if (str[i] === searchStr[0]) {
-      if (checkIndex(str, searchStr, i)) return true;
-    }
-  }
-  return false;
-};
-
-const Section = ({
-  menu,
-  onChange = () => {},
-  type,
-  expandedItem,
-  expandIconClickHandler = () => {},
-}: SectionI) => {
-  const currentPath = window.location.pathname;
+}: TopNavBarI) => {
+  const { width } = useWindowResize();
+  const [path, setPath] = useState("/");
+  const [toggle, setToggle] = useState(-1);
   const id = useId();
-  const makeMenuList = (item: MenuI, parent = "") => {
-    let active = searchWordInString(currentPath, parent + item.path);
-    if (currentPath !== "/" && parent + item.path === "/") active = false;
-    return (
-      <li
-        key={item.id}
-        className={getClassNames({
-          "inte-sideBar__listItem": true,
-          "inte-sideBar__listItem--active": active,
-        })}
-      >
-        <div
-          className="inte-sideBar__itemBody"
-          onClick={() => onChange(parent + item.path)}
-        >
-          <div className="inte-sideBar__linkBody">
-            {item.icon && <div className="inte-sideBar__Icon">{item.icon}</div>}
-            <div className="inte-sideBar__label">{item.label}</div>
-          </div>
-          {item.badge && (
-            <div className="inte-sideBar__badge">{item.badge}</div>
-          )}
-        </div>
-      </li>
-    );
+  const listRef = useRef<HTMLUListElement>(null);
+  const [scrollLeft, setScrollLeft] = useState(0);
+  const [showLeftButton, setShowLeftButton] = useState(false);
+  const [showRightButton, setShowRightButton] = useState(false);
+  const [storewidth, setStoreWidth] = useState(100);
+  const popoverItemRef = useRef<any>(null);
+
+  useLayoutEffect(() => {
+    setStoreWidth(popoverItemRef?.current?.offsetWidth);
+  }, [path]);
+
+  // button click scroll
+  useEffect(() => {
+    if (listRef.current) {
+      const containerWidth = listRef.current.clientWidth;
+      const contentWidth = listRef.current.scrollWidth;
+      const isOverflowing = contentWidth > containerWidth;
+
+      setShowLeftButton(isOverflowing && scrollLeft > 0);
+      setShowRightButton(
+        isOverflowing && scrollLeft < contentWidth - containerWidth
+      );
+    }
+  }, [scrollLeft, menu]);
+
+  const handleScroll = (scrollAmount: number) => {
+    if (listRef.current) {
+      const newScrollLeft = scrollLeft + scrollAmount;
+      listRef.current.scrollLeft = newScrollLeft;
+      setScrollLeft(newScrollLeft);
+    }
   };
+  // get parent path
+  function getParentAndChildPaths(fullPath: any) {
+    const pathSegments = fullPath
+      .split("/")
+      .filter((segment: any) => segment !== "");
 
-  const [open, setOpen] = useState(false);
-  const MakeExpandableItem = (parentItem: MenuI) => {
-    const active =
-      Object.keys(expandedItem)[0]?.includes(parentItem.path) &&
-      Object.values(expandedItem)[0];
-    return (
-      <li
-        key={parentItem.id}
-        className={getClassNames({
-          "inte-sideBar__listItem": true,
-          "inte-sideBar__listItem--expandable": true,
-          "inte-sideBar__listItem--active": searchWordInString(
-            currentPath,
-            parentItem.path
-          ),
-          "inte-sideBar__listItem--expandable--active": active,
-        })}
-      >
-        <Popover
-          // direction="right"
-          isOpen={open}
-          onClose={() => setOpen(!open)}
-          activator={
-            <div
-              className="inte-sideBar__itemBody"
-              onClick={(e) => {
-                setOpen(!open);
-                expandIconClickHandler(e, parentItem.path, active);
-              }}
-            >
-              <div className="inte-sideBar__linkBody">
-                {parentItem.icon && (
-                  <div className="inte-sideBar__Icon">{parentItem.icon}</div>
-                )}
-                <div className="inte-sideBar__label">{parentItem.label}</div>
-              </div>
+    if (pathSegments.length === 0) {
+      return { parent: null, child: null };
+    }
 
-              <div
-                className={getClassNames({
-                  "inte-sideBar__expandIcon": true,
-                  "inte-sideBar__expandIcon--active": active,
-                })}
-              >
-                <Minus size="20" color="#1c2433" />
-                <Minus size="20" color="#1c2433" />
-              </div>
-            </div>
-          }
-        >
-          <ul className="inte-sideBar__childList">
-            {parentItem.children?.map((item) => {
-              return makeMenuList(item, parentItem.path);
-            })}
-          </ul>
-        </Popover>
-      </li>
-    );
-  };
+    const parentPath = "/" + pathSegments.slice(0, -1).join("/");
+    const childPath = "/" + pathSegments[pathSegments.length - 1];
 
+    return { parent: parentPath, child: childPath };
+  }
+
+  const { parent, child } = getParentAndChildPaths(path);
+
+  // console.log("Parent: ", parent);
+  // console.log("Child: ", child);
   return (
     <div
       className={getClassNames({
-        "inte-sideBar__section": true,
-        "inte-sideBar__section--footer": type === "footer",
+        "inte-TopNav__wrapper": true,
+        "inte-TopNav--stickyTop": stickyTop,
+        [customClass]: customClass,
       })}
     >
-      <nav aria-label={id}>
-        <ul className="inte-sideBar__list">
-          {menu.map((item) => {
-            if (item.children) return MakeExpandableItem(item);
-            return makeMenuList(item);
+      <AppBar
+        connectLeft={connectLeft}
+        connectRight={connectRight}
+        stickyTop={false}
+      />
+      {width > 991 && (
+        <div
+          id={id}
+          className={getClassNames({
+            "inte-TopNav": true,
           })}
-        </ul>
-      </nav>
+        >
+          {showLeftButton && (
+            <div>
+              <Button
+                onClick={() => {
+                  handleScroll(-100);
+                }}
+                type="outlined"
+                icon={<ArrowLeft />}
+                customClass="inte-arrowLeft__scroll"
+              />
+            </div>
+          )}
+
+          <ul className="inte-top__list" ref={listRef}>
+            {menu?.map((item: any, Pindex: number) => (
+              <>
+                {item?.children ? (
+                  <Popover
+                    key={Pindex}
+                    popoverWidth={storewidth}
+                    isOpen={toggle === Pindex}
+                    onClose={() => setToggle(-1)}
+                    activator={
+                      <li
+                        className={getClassNames({
+                          "inte-top__listItem": true,
+                          "inte-active": path === item.path + child,
+                          "inte-topNavBar--toggle": Pindex === toggle,
+                        })}
+                        onClick={() => {
+                          Pindex === toggle ? setToggle(-1) : setToggle(Pindex);
+                        }}
+                        ref={popoverItemRef}
+                      >
+                        <div className="inte-topNav__listItemWrapper">
+                          {item?.icon && (
+                            <div className="inte-top__listItem--icon">
+                              {item.icon}
+                            </div>
+                          )}
+                          <div className="inte-top__listItem--label">
+                            {item.label}
+                          </div>
+
+                          {item.badge && (
+                            <span className="badge">{item.badge}</span>
+                          )}
+                          {item.children && <ChevronRight size={20} />}
+                        </div>
+                      </li>
+                    }
+                  >
+                    <ul>
+                      {item?.children?.map((child: any, Cindex: number) => {
+                        return (
+                          <li
+                            key={Cindex}
+                            className={getClassNames({
+                              "inte-top__itemPopup": true,
+                              "inte-topNav--childActive":
+                                path === item.path + child.path,
+                            })}
+                            onClick={() => {
+                              onChange(item.path + child.path);
+                              setPath(item.path + child.path);
+                              setToggle(-1);
+                            }}
+                          >
+                            {child.label}
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </Popover>
+                ) : (
+                  <li
+                    key={Pindex}
+                    className={getClassNames({
+                      "inte-top__listItem": true,
+                      "inte-topNav--active": path === item.path,
+                    })}
+                    onClick={() => {
+                      if (!item?.children) {
+                        onChange(item.path);
+                        setPath(item.path);
+                      }
+                    }}
+                  >
+                    <div className="inte-topNav__listItemWrapper">
+                      {item?.icon && (
+                        <div className="inte-top__listItem--icon">
+                          {item.icon}
+                        </div>
+                      )}
+                      <div className="inte-top__listItem--label">
+                        {item.label}
+                      </div>
+
+                      {item.badge && (
+                        <span className="badge">{item.badge}</span>
+                      )}
+                      {item.children && <ChevronRight size={20} />}
+                    </div>
+                  </li>
+                )}
+              </>
+            ))}
+          </ul>
+          {showRightButton && (
+            <div>
+              <Button
+                onClick={() => handleScroll(100)}
+                type="outlined"
+                icon={<ArrowRight />}
+                customClass="inte-arrowRight__scroll"
+              />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };
 
-SideBar.Section = Section;
-
-export default NavBar;
+export default TopNavBar;

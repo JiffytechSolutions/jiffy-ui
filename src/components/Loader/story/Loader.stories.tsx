@@ -34,6 +34,12 @@ export default {
       },
       defaultValue: "L-1",
     },
+    customClass: {
+      description: "Using customClass prop when need change the design",
+      control: {
+        type: "text",
+      },
+    },
   },
 };
 
@@ -41,6 +47,7 @@ const Template = ({ ...rest }) => {
   return (
     <>
       <Loader
+        {...rest}
         percentage={rest.percentage}
         type={rest.type}
         title={rest.title}
