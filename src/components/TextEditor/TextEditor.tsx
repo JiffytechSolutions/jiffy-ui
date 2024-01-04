@@ -7,31 +7,20 @@ export interface TextEditorI {
   initialText?: string;
 }
 
-const convertStringToHTML = (htmlString: string) => {
-  const parser = new DOMParser();
-  const html = parser.parseFromString(htmlString, "text/html");
-
-  return { __html: html.body.innerHTML } as { __html: string | TrustedHTML };
-};
-
-const setEndOfContenteditable = (contentEditableElement: Element) => {
-  let range, selection;
-  range = document.createRange(); //Create a range (a range is a like the selection but invisible)
-  range.selectNodeContents(contentEditableElement); //Select the entire contents of the element with the range
-  range.collapse(false); //collapse the range to the end point. false means collapse to end rather than the start
-  selection = window.getSelection(); //get the selection object (allows you to change selection)
-  selection?.removeAllRanges(); //remove any selections already made
-  selection?.addRange(range); //make the range you have just created the visible selection
-};
-
 const classList = {
-  BOLD : 'bold',
-  ITALIC : 'italic',
-  UNDERLINE : 'underline',
-  NOTBOLD : 'notBold',
-  NOTITALIC : 'notItalic',
-  NOTUNDERLINE : 'notUnderline'
-  
+  BOLD: 'bold',
+  ITALIC: 'italic',
+  UNDERLINE: 'underline',
+  NOTBOLD: 'notBold',
+  NOTITALIC: 'notItalic',
+  NOTUNDERLINE: 'notUnderline'
+
+}
+
+type appliedStyle = {
+  bold: boolean,
+  italic: boolean,
+  underline: boolean,
 }
 
 const TextEditor = ({
@@ -42,7 +31,7 @@ const TextEditor = ({
   const selection = document.getSelection()
   const range = new Range
 
-  const [currStyleApplied, setCurrStyleApplied] = useState({
+  const [currStyleApplied, setCurrStyleApplied] = useState<appliedStyle>({
     bold: false,
     italic: false,
     underline: false,
@@ -51,95 +40,99 @@ const TextEditor = ({
   const [inputType, setInputType] = useState<string>("")
 
   const editorRef = useRef<HTMLDivElement>(null)
-  const findAppliedStyleInRange = (range: Range) => {
-    let currentContainer: Node | null = null
-    let appliedStyle: { [key: string]: null | boolean } = {
-      bold: null,
-      italic: null,
-      underline: null
+
+
+  // const findAppliedStyleInRange = (range: Range) => {
+  //   let currentContainer: Node | null = null
+  //   let appliedStyle: { [key: string]: null | boolean } = {
+  //     bold: null,
+  //     italic: null,
+  //     underline: null
+  //   }
+  //   if (range.endOffset - range.startOffset === 1) {
+  //     currentContainer = range.startContainer;
+  //   }
+  //   while (currentContainer && currentContainer !== editorRef.current) {
+  //     if ((currentContainer as HTMLElement).classList?.contains(classList.BOLD)) {
+  //       if (appliedStyle.bold === null) appliedStyle.bold = true
+  //     }
+  //     if ((currentContainer as HTMLElement).classList?.contains(classList.NOTBOLD)) {
+  //       if (appliedStyle.bold === null) appliedStyle.bold = false
+  //     }
+
+  //     if ((currentContainer as HTMLElement).classList?.contains(classList.ITALIC)) {
+  //       if (appliedStyle.italic === null) appliedStyle.italic = true;
+  //     }
+  //     if ((currentContainer as HTMLElement).classList?.contains(classList.NOTITALIC)) {
+  //       if (appliedStyle.italic === null) appliedStyle.italic = false;
+  //     }
+
+  //     if ((currentContainer as HTMLElement).classList?.contains(classList.UNDERLINE)) {
+  //       if (appliedStyle.underline === null) appliedStyle.underline = true
+  //     }
+  //     if ((currentContainer as HTMLElement).classList?.contains(classList.NOTUNDERLINE)) {
+  //       if (appliedStyle.underline === null) appliedStyle.underline = false
+  //     }
+
+  //     currentContainer = currentContainer.parentElement
+  //   }
+
+  //   Object.keys(appliedStyle).forEach(i => {
+  //     if(!appliedStyle[i]) appliedStyle[i] = false
+  //   })
+
+  //   return appliedStyle
+  // }
+
+  const findAppliedStyle = (node: Node):appliedStyle => {
+    const res = {
+      bold: node.parentElement?.classList.contains('bold') ?? false,
+      italic: node.parentElement?.classList.contains('italic') ?? false,
+      underline: node.parentElement?.classList.contains('underline') ?? false
     }
-    if (range.endOffset - range.startOffset === 1) {
-      currentContainer = range.startContainer;
-    }
-    while (currentContainer && currentContainer !== editorRef.current) {
-      console.log((currentContainer as HTMLElement).classList)
 
-      if ((currentContainer as HTMLElement).classList?.contains(classList.BOLD)) {
-        if (appliedStyle.bold === null) appliedStyle.bold = true
-      }
-      if ((currentContainer as HTMLElement).classList?.contains(classList.NOTBOLD)) {
-        if (appliedStyle.bold === null) appliedStyle.bold = false
-      }
-
-      if ((currentContainer as HTMLElement).classList?.contains(classList.ITALIC)) {
-        if (appliedStyle.italic === null) appliedStyle.italic = true;
-      }
-      if ((currentContainer as HTMLElement).classList?.contains(classList.NOTITALIC)) {
-        if (appliedStyle.italic === null) appliedStyle.italic = false;
-      }
-
-      if ((currentContainer as HTMLElement).classList?.contains(classList.UNDERLINE)) {
-        if (appliedStyle.underline === null) appliedStyle.underline = true
-      }
-      if ((currentContainer as HTMLElement).classList?.contains(classList.NOTUNDERLINE)) {
-        if (appliedStyle.underline === null) appliedStyle.underline = false
-      }
-
-      currentContainer = currentContainer.parentElement
-    }
-
-    Object.keys(appliedStyle).forEach(i => {
-      if(!appliedStyle[i]) appliedStyle[i] = false
-    })
-
-    return appliedStyle
+    return res
   }
-
 
   const handelOnInput = (e: React.FormEvent) => {
     if (!selection) return
     const currRange = selection.getRangeAt(0);
     if (inputType === "insertText") {
       currRange.setStart(currRange.startContainer, currRange.startOffset - 1)
-      const appliedStyle = findAppliedStyleInRange(currRange)
-      console.log(appliedStyle , currStyleApplied)
-      const container = document.createElement("span")
+      const appliedStyle = findAppliedStyle(currRange.startContainer)
+      let makeNewNode = false;
+      Object.keys(appliedStyle).map(i => {
+        if (appliedStyle[i as keyof appliedStyle] !== currStyleApplied[i as keyof appliedStyle]) makeNewNode = true
+      })
 
-      if (appliedStyle.italic !== currStyleApplied.italic) {
-        if (currStyleApplied.italic) {
-          container.classList.add(classList.ITALIC)
-        }
-        else container.classList.add(classList.NOTITALIC)
+      if(makeNewNode){
+        const container = document.createElement('span');
+        let classListArr : string[] = []
+        Object.keys(currStyleApplied).map(i => {
+          if(currStyleApplied[i as keyof appliedStyle]) classListArr.push(i)
+        })
+        container.classList.add(...classListArr)
+        console.clear()
+        console.log( selection.getRangeAt(0) , range)
+        container.appendChild(currRange.extractContents())
+        
+        currRange.endContainer.parentElement?.insertAdjacentElement("afterend" , container)
+
+        selection.removeAllRanges()
+        range.selectNode(container)
+        selection.addRange(range)
+        selection.collapseToEnd()
       }
-
-      if (appliedStyle.bold !== currStyleApplied.bold) {
-        if (currStyleApplied.bold) {
-          container.classList.add(classList.BOLD)
-        }
-        else container.classList.add(classList.NOTBOLD)
+      else {
+        selection.removeAllRanges()
+        selection.addRange(currRange)
+        selection.collapseToEnd()
       }
-
-      if (appliedStyle.underline !== currStyleApplied.underline) {
-        if (currStyleApplied.underline) {
-          container.classList.add(classList.UNDERLINE)
-        }
-        else container.classList.add(classList.NOTUNDERLINE)
-      }
-
-      if (container.classList.length) currRange.surroundContents(container)
-      selection.removeAllRanges()
-      selection.addRange(currRange)
-      selection.collapseToEnd()
-
-      // console.clear()
-      // console.log(editorRef.current?.innerHTML)
     }
-
-    // currRange.set
   };
 
   const handelToolBarButtonClick = (type: "bold" | "italic" | "underline") => {
-    if(!selection)  return
+    if (!selection) return
     setCurrStyleApplied(prev => ({
       ...prev,
       [type]: !prev[type]
@@ -172,8 +165,11 @@ const TextEditor = ({
       </div>
       <div
         ref={editorRef}
+        data-placeholder={placeholder}
+        spellCheck={false}
         className="inte-textEditor__body"
         contentEditable={true}
+        dangerouslySetInnerHTML={{__html : "<p><span>a</span></p>"}}
         onInput={handelOnInput}
       >
       </div>
