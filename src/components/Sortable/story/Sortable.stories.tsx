@@ -3,7 +3,7 @@ import { Card, Image, Text } from "../../..";
 import Sortable, { sortableArray } from "../Sortable";
 
 export default {
-  title: "Components/Sortable",
+  title: "Components/Behaviour/Sortable",
   component: Sortable,
   argTypes: {
     data: {

@@ -10,11 +10,11 @@ import PageFooter from "../../PageFooter/PageFooter";
 import AnnouncementBar from "../../AnnouncementBar/AnnouncementBar";
 import AppProvider from "../../../utilities/context/AppContext";
 import useWindowResize from "../../../utilities/useWindowResize";
-import "./TopNavStory.css";
 import getClassNames from "../../../utilities/getClassnames";
+import "./TopNavStory.css";
 
 export default {
-  title: "Components/TopNavBar",
+  title: "Components/Layout/TopNavBar",
   component: TopNavBar,
 };
 
@@ -22,7 +22,7 @@ const Template = ({ ...rest }) => {
   return (
     <TopNavBar
       menu={menu}
-      onChange={() => {}}
+      onChange={(e) => console.log(e)}
       connectLeft={logo}
       connectRight={
         <ButtonGroup>
