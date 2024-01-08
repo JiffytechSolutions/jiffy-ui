@@ -15,12 +15,12 @@ const EditorTheme = {
       nested: {
         listitem: "editor-nested-listitem"
       },
-      ol: "editor-list-ol",
-      ul: "editor-list-ul",
-      listitem: "editor-listitem"
+      ol: "inte-TextEditor__list--ol",
+      ul: "inte-TextEditor__list--ul",
+      listitem: "inte-TextEditor__li"
     },
     image: "editor-image",
-    link: "editor-link",
+    link: "inte-TextEditor__link",
     text: {
       bold: "editor-text-bold",
       italic: "editor-text-italic",

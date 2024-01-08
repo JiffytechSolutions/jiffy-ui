@@ -17,7 +17,11 @@ import EditorTheme from './EditorTheme';
 import './TextEditor.css'
 import ToolbarPlugin from './plugin/ToolBarPulgin';
 import {ListPlugin} from '@lexical/react/LexicalListPlugin';
+import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
+import { EditorState } from 'lexical';
+import OnChangePlugin from './plugin/OnChangePlugin';
+import ToolBarPlugin1 from './plugin/ToolBarPlugin1';
 
 function Placeholder() {
     return <div className="inte-textEditor__placeholder"></div>;
@@ -44,31 +48,27 @@ const editorConfig = {
     ]
 };
 
-function OnChangePlugin({ onChange }) {
-    const [editor] = useLexicalComposerContext();
-    useEffect(() => {
-      return editor.registerUpdateListener(({editorState}) => {
-        onChange(editorState);
-      });
-    }, [editor, onChange]);
-  }
+
 
 const TextEditor = () => {
-    const onChange = (e:any) => {
-        console.clear()
-        console.log(e.toJSON())
+    const onChange = (e:EditorState) => {
+        e.read(() => {
+
+        })
     }
+
     return (
         <div className='inte-TextEditor'>
             <LexicalComposer initialConfig={editorConfig}>
-                <ToolbarPlugin />
+                <ToolBarPlugin1 />
                 <RichTextPlugin
-                    contentEditable={<ContentEditable className="inte-textEditor__body" />}
+                    contentEditable={<ContentEditable spellCheck={false} className="inte-textEditor__body" />}
                     placeholder={<Placeholder />}
                     ErrorBoundary={LexicalErrorBoundary}
                 />
                 <HistoryPlugin />
                 <ListPlugin />
+                <LinkPlugin />
                 <OnChangePlugin onChange={onChange}/>
             </LexicalComposer>
         </div>
