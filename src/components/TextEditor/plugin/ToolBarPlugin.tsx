@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import Button from '../../Button/Button';
-import { AlignCenter, AlignLeft, AlignRight, Bold, Italic, Link, List, ListIcon, Underline } from '../../../icons';
+import { AlignCenter, AlignLeft, AlignRight, Bold, Image, Italic, Link, List, ListIcon, Table, Underline } from '../../../icons';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
-import { $getSelection, $isRangeSelection, FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND } from 'lexical';
+import { $getSelection, $isRangeSelection, DEPRECATED_$isGridSelection, FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, LexicalEditor, PASTE_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND } from 'lexical';
 import { mergeRegister } from "@lexical/utils";
 import { $isLinkNode, TOGGLE_LINK_COMMAND } from "@lexical/link";
 import { $isAtNodeEnd } from "@lexical/selection";
@@ -14,6 +14,14 @@ import {
   $isListNode,
   ListNode
 } from "@lexical/list";
+
+import {
+  $getHtmlContent,
+  $getLexicalContent,
+  $insertDataTransferForRichText,
+} from '@lexical/clipboard';
+import { INSERT_TABLE_COMMAND } from './TablePlugin';
+import { Select } from '../../Form';
 
 const LowPriority = 1;
 
@@ -33,7 +41,7 @@ function getSelectedNode(selection: RangeSelection) {
   }
 }
 
-const ToolBarPlugin1 = () => {
+const ToolBarPlugin = () => {
   const toolbarRef = useRef<HTMLDivElement>(null)
   const [editor] = useLexicalComposerContext();
 
@@ -42,6 +50,7 @@ const ToolBarPlugin1 = () => {
   const [isUnderline, setIsUnderline] = useState(false);
   const [isList, setIsList] = useState<undefined | "number" | "bullet">();
   const [isLink, setIsLink] = useState(false);
+  const [blockType , setBlockType] = useState("paragraph")
 
   const updateToolBar = useCallback(() => {
     const selection = $getSelection();
@@ -62,6 +71,24 @@ const ToolBarPlugin1 = () => {
     }
   }, [editor])
 
+  function onPasteForRichText(
+    event: ClipboardEvent,
+    editor: LexicalEditor,
+  ): void {
+    event.preventDefault();
+    editor.update(() => {
+      const selection = $getSelection();
+      const clipboardData = event.clipboardData;
+      console.log(event)
+      if (
+        clipboardData != null &&
+        ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection))
+      ) {
+        $insertDataTransferForRichText(clipboardData, selection, editor);
+      }
+    });
+  }
+
   useEffect(() => {
     return mergeRegister(
       editor.registerUpdateListener(({ editorState }) => {
@@ -77,13 +104,25 @@ const ToolBarPlugin1 = () => {
         },
         LowPriority
       ),
+      editor.registerCommand<ClipboardEvent>(
+        PASTE_COMMAND,
+        (event) => {
+          const selection = $getSelection();
+          if ($isRangeSelection(selection) || DEPRECATED_$isGridSelection(selection)) {
+            onPasteForRichText(event, editor);
+            return true;
+          }
+          return false;
+        },
+        LowPriority,
+      ),
     )
   })
 
   const insertLink = useCallback(() => {
     if (!isLink) {
-      console.log("made link");
-      
+      console.log(editor , "------------");
+
       editor.dispatchCommand(TOGGLE_LINK_COMMAND, "https://");
     } else {
       console.log("remove Link")
@@ -93,6 +132,9 @@ const ToolBarPlugin1 = () => {
 
   return (
     <div className="inte-TextEditor__toolbar" ref={toolbarRef}>
+      {/* <Select 
+        
+      /> */}
       <Button
         onClick={() => {
           editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
@@ -101,7 +143,7 @@ const ToolBarPlugin1 = () => {
         size='extraThin'
         aria-label="Format Bold"
       >
-        <Bold size="16" color="#1c2433" />
+        <Bold size="16" color="var(--inte-G450)" />
       </Button>
       <Button
         onClick={() => {
@@ -111,7 +153,7 @@ const ToolBarPlugin1 = () => {
         size='extraThin'
         aria-label="Format Bold"
       >
-        <Italic size="16" color="#1c2433" />
+        <Italic size="16" color="var(--inte-G450)" />
       </Button>
       <Button
         onClick={() => {
@@ -121,7 +163,7 @@ const ToolBarPlugin1 = () => {
         size='extraThin'
         aria-label="Format Bold"
       >
-        <Underline size="16" color="#1c2433" />
+        <Underline size="16" color="var(--inte-G450)" />
       </Button>
       <Button
         onClick={() => {
@@ -131,7 +173,7 @@ const ToolBarPlugin1 = () => {
         aria-label="Format Unordered List"
         size='extraThin'
       >
-        <ListIcon size="16" color="#1c2433" />
+        <ListIcon size="16" color="var(--inte-G450)" />
       </Button>
 
       <Button
@@ -140,7 +182,17 @@ const ToolBarPlugin1 = () => {
         aria-label="Insert Link"
         size='extraThin'
       >
-        <Link size="16" color="#1c2433"/>
+        <Link size="16" color="var(--inte-G450)"/>
+      </Button>
+      <Button
+      onClick={() => {
+        editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
+      }}
+        aria-label="Align Right"
+        size='extraThin'
+        type={false ? "secondary" : "outlined"}
+      >
+        <Image size="16" color="var(--inte-G450)"/>
       </Button>
 
       <Button
@@ -151,31 +203,41 @@ const ToolBarPlugin1 = () => {
         size='extraThin'
         type={false ? "secondary" : "outlined"}
       >
-        <AlignLeft size="16" color="#1c2433"/>
+        <AlignLeft size="16" color="var(--inte-G450)"/>
       </Button>
       <Button
-      onClick={() => {
-        editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
-      }}
+        onClick={() => {
+          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "center");
+        }}
         aria-label="Align Center"
         size='extraThin'
         type={false ? "secondary" : "outlined"}
       >
-        <AlignCenter size="16" color="#1c2433"/>
+        <AlignCenter size="16" color="var(--inte-G450)"/>
       </Button>
       <Button
-      onClick={() => {
-        editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
-      }}
+        onClick={() => {
+          editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, "right");
+        }}
         aria-label="Align Right"
         size='extraThin'
         type={false ? "secondary" : "outlined"}
       >
-        <AlignRight size="16" color="#1c2433"/>
+        <AlignRight size="16" color="var(--inte-G450)"/>
       </Button>
 
+      <Button
+        onClick={() => {
+          editor.dispatchCommand(INSERT_TABLE_COMMAND, {columns : "4" , rows : "4"});
+        }}
+        aria-label="Insert Table"
+        size='extraThin'
+        type={false ? "secondary" : "outlined"}
+      >
+        <Table size="24" color="var(--inte-G450)" />
+      </Button>
     </div>
   )
 }
 
-export default ToolBarPlugin1
+export default ToolBarPlugin

@@ -1,0 +1,47 @@
+.inte-TextEditor__toolBar {
+  display: flex;
+  gap: 1.4rem;
+  align-items: center;
+}
+
+.inte-textEditor__fontSizeToggle {
+    gap: 0.8rem;
+}
+
+.inte-textEditor__fontSizeToggle .inte-customSmallInput {
+  width: 5.6rem;
+  & input {
+    text-align: center;
+  }
+}
+
+.inte-TextEditor__toolBar .inte-formElement__select {
+  max-width: 16.7rem;
+  min-width: 14rem;
+}
+
+.inte-TextEditor__toolBar > div {
+  display: flex;
+}
+
+.inte-TextEditor__fontFormat {
+  gap: 0.8rem;
+}
+
+.inte-line {
+  width: 1px;
+  height: 26px;
+  background: #e0e1e3;
+}
+
+.inte-TextEditor__toolBar .custom-width-btn {
+    width: 6.8rem !important;
+}
+
+.inte-TextEditor__toolBar .inte-btn--textButton.inte-btn.inte-btn--hasIcon {
+    gap: 0.4rem;
+}
+
+.inte-TextEditor__toolBar .inte-btn:hover {
+    background-color: var(--inte-G40);;
+}

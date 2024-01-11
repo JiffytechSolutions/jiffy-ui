@@ -7,7 +7,7 @@
     display: flex;
     gap:8px;
     padding: 15px 10px;
-    border:1px solid grey;
+    border:1px solid var(--inte-G40);
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
 }
@@ -29,7 +29,7 @@
     outline: 0;
     padding: 15px 10px;
     caret-color: #444;
-    border:1px solid grey;
+    border:1px solid var(--inte-G40);
     border-radius:5px;
     border-top: 0;
     border-top-right-radius: 0;
@@ -59,4 +59,8 @@
 .inte-TextEditor__link:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+
+.inte-textEditor-underline {
+  text-decoration: underline;
 }

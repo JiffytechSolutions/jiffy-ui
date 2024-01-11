@@ -22,6 +22,7 @@ export interface MenuI {
   icon?: React.ReactNode;
   badge?: React.ReactNode;
   children?: MenuI[];
+  isDisabled?: boolean;
 }
 
 export interface SectionI {
@@ -167,7 +168,8 @@ const Section = ({ title, menu, onChange = () => { }, type, expandedItem, expand
         key={item.id}
         className={getClassNames({
           "inte-sideBar__listItem": true,
-          "inte-sideBar__listItem--active": active
+          "inte-sideBar__listItem--active": active,
+          "inte-sideBar__listItem--disabled":item.isDisabled
         })}
       >
         <div
@@ -203,7 +205,8 @@ const Section = ({ title, menu, onChange = () => { }, type, expandedItem, expand
           "inte-sideBar__listItem": true,
           "inte-sideBar__listItem--expandable": true,
           'inte-sideBar__listItem--active': searchWordInString(currentPath , parentItem.path),
-          'inte-sideBar__listItem--expandable--active': active
+          'inte-sideBar__listItem--expandable--active': active,
+          "inte-sideBar__listItem--disabled":parentItem.isDisabled
         })}
       >
         <div

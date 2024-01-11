@@ -26,7 +26,7 @@ const EditorTheme = {
       italic: "editor-text-italic",
       overflowed: "editor-text-overflowed",
       hashtag: "editor-text-hashtag",
-      underline: "editor-text-underline",
+      underline: "inte-textEditor-underline",
       strikethrough: "editor-text-strikethrough",
       underlineStrikethrough: "editor-text-underlineStrikethrough",
       code: "editor-text-code"
