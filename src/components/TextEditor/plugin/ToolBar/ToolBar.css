@@ -2,6 +2,8 @@
   display: flex;
   gap: 1.4rem;
   align-items: center;
+  border:1px solid var(--inte-G40);
+  padding: 10px;
 }
 
 .inte-textEditor__fontSizeToggle {

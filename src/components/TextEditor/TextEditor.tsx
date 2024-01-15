@@ -8,23 +8,24 @@ import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
 import { HistoryPlugin } from "@lexical/react/LexicalHistoryPlugin";
 
 import { HeadingNode, QuoteNode } from "@lexical/rich-text";
-import { TableCellNode, TableNode, TableRowNode , TablePlugin } from "@lexical/table";
+import { TableCellNode, TableNode, TableRowNode } from "@lexical/table";
 import { ListItemNode, ListNode } from "@lexical/list";
 import { CodeHighlightNode, CodeNode } from "@lexical/code";
 import { AutoLinkNode, LinkNode } from "@lexical/link";
 import EditorTheme from './EditorTheme';
 import './TextEditor.css'
-import ToolbarPlugin from './plugin/ToolBarPlugin';
 import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { EditorState } from 'lexical';
-import OnChangePlugin from './plugin/OnChangePlugin';
 import CustomLinkPlugin from './plugin/CustomLinkPlugin';
-import { TableContext } from './plugin/TablePlugin';
-import TableCellResizerPlugin from './plugin/TableCellResizerPlugin';
 import ToolBar from './plugin/ToolBar/ToolBar';
+import { ImageNode } from './nodes/ImageNode';
+import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
+import { TableContext } from './plugin/Table/TablePlugin';
+import TableCellResizerPlugin from './plugin/Table/TableCellResizer';
+import ImagesPlugin from './plugin/ImagesPulgin';
 
 function Placeholder() {
-  return <div className="inte-textEditor__placeholder"></div>;
+  return <div className="inte-TextEditor__placeholder"></div>;
 }
 
 const editorConfig = {
@@ -44,7 +45,8 @@ const editorConfig = {
     TableCellNode,
     TableRowNode,
     AutoLinkNode,
-    LinkNode
+    LinkNode,
+    ImageNode
   ]
 };
 
@@ -63,17 +65,17 @@ const TextEditor = () => {
         <TableContext>
           <>
             <ToolBar />
-            {/* <TablePlugin />
-            <TableCellResizerPlugin /> */}
             <RichTextPlugin
-              contentEditable={<ContentEditable spellCheck={false} className="inte-textEditor__body" />}
+              contentEditable={<ContentEditable spellCheck={false} className="inte-TextEditor__body" />}
               placeholder={<Placeholder />}
               ErrorBoundary={LexicalErrorBoundary}
             />
+            <TablePlugin />
+            <TableCellResizerPlugin />
             <HistoryPlugin />
             <ListPlugin />
             <CustomLinkPlugin />
-            <OnChangePlugin onChange={onChange} />
+            <ImagesPlugin />
           </>
         </TableContext>
       </LexicalComposer>

@@ -19,7 +19,7 @@
     outline :none
 } */
 
-.inte-textEditor__body {
+.inte-TextEditor__body {
     min-height: 150px;
     resize: none;
     font-size: 15px;
@@ -36,7 +36,7 @@
     border-top-left-radius: 0;
 }
 
-.inte-textEditor__placeholder {
+.inte-TextEditor__placeholder {
     position: absolute;
     top : 15px;
     left:10px
@@ -61,6 +61,60 @@
   cursor: pointer;
 }
 
-.inte-textEditor-underline {
+.inte-TextEditor-underline {
   text-decoration: underline;
+}
+
+.inte-TextEditor__italic {
+  font-style: italic;
+}
+
+.inte-TextEditor__bold {
+  font-weight: bold;
+}
+
+.inte-TextEditor__table {
+  border-collapse: collapse;
+}
+
+.inte-TextEditor__tableCell {
+  width : 7rem;
+  height: 5rem;
+  padding: 0.8rem;
+  border: 0.1rem solid var(--inte-G40);
+  text-align: left;
+}
+
+.inte-TableCellResizer__resizer {
+  position: absolute;
+}
+
+.inte-TextEditor__heading--h1 span{
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.inte-TextEditor__heading--h2 span{
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.inte-TextEditor__heading--h3 span{
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.inte-TextEditor__fileInput {
+  display: flex;
+  flex-direction: column;
+}
+
+.inte-TextEditor__fileInput__label {
+  line-height: 2rem;
+    margin-bottom: 0.8rem !important;
+    font-size: 1.6rem !important;
+    font-weight: var(--weight-normal) !important;
+    color: var(--inte-G800) !important;
+    display: inline-block;
+    word-break: break-word;
 }

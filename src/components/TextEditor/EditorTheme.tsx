@@ -5,11 +5,11 @@ const EditorTheme = {
     paragraph: "editor-paragraph",
     quote: "editor-quote",
     heading: {
-      h1: "editor-heading-h1",
-      h2: "editor-heading-h2",
-      h3: "editor-heading-h3",
-      h4: "editor-heading-h4",
-      h5: "editor-heading-h5"
+      h1: "inte-TextEditor__heading--h1",
+      h2: "inte-TextEditor__heading--h2",
+      h3: "inte-TextEditor__heading--h3",
+      h4: "inte-TextEditor__heading--h4",
+      h5: "inte-TextEditor__heading--h5"
     },
     list: {
       nested: {
@@ -20,13 +20,13 @@ const EditorTheme = {
       listitem: "inte-TextEditor__li"
     },
     image: "editor-image",
-    link: "inte-TextEditor__link",
+    link: "lexical/LexicalUtils__link",
     text: {
-      bold: "editor-text-bold",
-      italic: "editor-text-italic",
+      bold: "inte-TextEditor__bold",
+      italic: "inte-TextEditor__italic",
       overflowed: "editor-text-overflowed",
       hashtag: "editor-text-hashtag",
-      underline: "inte-textEditor-underline",
+      underline: "inte-TextEditor-underline",
       strikethrough: "editor-text-strikethrough",
       underlineStrikethrough: "editor-text-underlineStrikethrough",
       code: "editor-text-code"
@@ -63,7 +63,10 @@ const EditorTheme = {
       tag: "editor-tokenProperty",
       url: "editor-tokenOperator",
       variable: "editor-tokenVariable"
-    }
+    },
+    table : "inte-TextEditor__table",
+    tableCell: 'inte-TextEditor__tableCell',
+    tableRow : 'inte-TextEditor__tableRow',
   };
   
   export default EditorTheme;
