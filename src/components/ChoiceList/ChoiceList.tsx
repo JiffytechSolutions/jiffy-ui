@@ -91,7 +91,7 @@ const ChoiceList = ({
     (ele: HTMLElement) => {
       const liTags = Array.from(ele.querySelectorAll("li") ?? []);
       if (curr === 0) {
-        liTags[curr].scrollIntoView({ block: "center" });
+        liTags[curr]?.scrollIntoView({ block: "center" });
       } else liTags[curr]?.scrollIntoView({ block: "nearest" });
       (liTags[curr]?.getElementsByTagName("input")[0] as HTMLElement)?.focus();
     },
