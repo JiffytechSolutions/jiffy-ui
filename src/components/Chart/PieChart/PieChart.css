@@ -1,0 +1,67 @@
+.inte-pieChart {
+  position: relative;
+  width: fit-content;
+  display: flex;
+  /* border: 1px solid silver; */
+}
+/* precentage  */
+
+.inte-pieChart__percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 10px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 30px;
+  color: var(--inte-P900);
+  transform: translate(-50%, -50%);
+  background-color: var(--inte-P20);
+}
+/* tooltip  */
+.inte-pieChart__tooltip {
+  position: absolute;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); */
+  background-color: black;
+  color: white;
+  height: 44px;
+  padding: 12px;
+  border-radius: 6px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 16px;
+  width: 130px;
+  font-weight: 600;
+}
+.inte-pieChart__tooltip::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* At the bottom of the tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: black transparent transparent transparent;
+}
+/* ***********old******************** */
+
+/* .inte-chart {
+  position: relative;
+  width: fit-content;
+}
+.inte-chart__precentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--inte-G20);
+  color: var(--inte-P900);
+  padding: 0.6rem 1.6rem;
+  border-radius: 1.6rem;
+  font-weight: 700;
+  line-height: 22px;
+} */
