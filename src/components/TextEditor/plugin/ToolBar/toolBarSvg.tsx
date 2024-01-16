@@ -2,7 +2,7 @@ import React from "react"
 
 export const TextColorSvg = () => {
   return <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-    <g clip-path="url(#clip0_16773_4117)">
+    <g clipPath="url(#clip0_16773_4117)">
       <path d="M4.16948 12.8333L8.61354 1.91036C8.75837 1.68333 8.9623 1.49563 9.20565 1.36536C9.449 1.23509 9.72355 1.16666 10.0028 1.16666C10.2821 1.16666 10.5566 1.23509 10.8 1.36536C11.0433 1.49563 11.2473 1.68333 11.3921 1.91036L15.8361 12.8333M6.05522 8.19841H13.9504" stroke="black" strokeWidth="1.16375" strokeLinecap="round" strokeLinejoin="round" />
     </g>
     <rect x="0.00280762" y="16" width="4" height="4" fill="#FE0000" />

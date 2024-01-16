@@ -73,6 +73,10 @@
   font-weight: bold;
 }
 
+.inte-TextEditor__strikethrough {
+  text-decoration: line-through;
+}
+
 .inte-TextEditor__table {
   border-collapse: collapse;
 }
@@ -102,6 +106,39 @@
 .inte-TextEditor__heading--h3 span{
   font-size: 20px;
   font-weight: bold;
+}
+
+.inte-TextEditor-textCode {
+  background-color: #f0f2f5;
+  padding: 1px 0.25rem;
+  font-family: Menlo,Consolas,Monaco,monospace;
+  font-size: 94%;
+}
+
+.inte-TextEditor-blockCode {
+  background-color: #f0f2f5;
+  font-family: Menlo,Consolas,Monaco,monospace;
+  display: block;
+  padding: 8px 8px 8px 52px;
+  line-height: 1.53;
+  font-size: 14px;
+  margin: 8px 0;
+  overflow-x: auto;
+  position: relative;
+  tab-size: 2;
+  &::before {
+    content: attr(data-gutter);
+    position: absolute;
+    background-color: #eee;
+    left: 0;
+    top: 0;
+    border-right: 1px solid #ccc;
+    padding: 8px;
+    color: #777;
+    white-space: pre-wrap;
+    text-align: right;
+    min-width: 25px;
+  }
 }
 
 .inte-TextEditor__fileInput {

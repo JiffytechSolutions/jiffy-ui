@@ -6,8 +6,8 @@ import Button from '../../../Button/Button'
 
 import { TextColorSvg } from './toolBarSvg'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import {$getSelection, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
-import { $isAtNodeEnd , $wrapNodes, } from "@lexical/selection"
+import {$INTERNAL_isPointSelection, $getSelection, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
+import { $isAtNodeEnd , $wrapNodes,$setBlocksType,$getSelectionStyleValueForProperty } from "@lexical/selection"
 import { $isLinkNode } from "@lexical/link";
 import { mergeRegister , $getNearestNodeOfType , $findMatchingParent } from "@lexical/utils";
 import TextAlignBox from './TextAlignBox'
@@ -22,25 +22,10 @@ import {
   ListNode,
 } from '@lexical/list';
 import InsertBlock from './InsertBlock'
+import FontSizeToggle from './FontSizeToggle'
+import FontStyle from './FontStyle'
 
-const FontSizeToggle = () => {
 
-  const [value , setValue] = useState(11)
-
-  return <div className='inte-textEditor__fontSizeToggle'>
-    <Button
-      icon={<Minus size="24" color='#1C2433' />}
-      type='textButton'
-      onClick={() => setValue(prev => prev === 1 ? 1 : prev -1)}
-    />
-    <TextField value={value}  customClass='inte-customSmallInput'/>
-    <Button
-      icon={<Plus size="24" color='#1C2433' />}
-      type='textButton'
-      onClick={() => setValue(prev => prev+1)}
-    />
-  </div>
-}
 
 const rootTypeToRootName = {
   root: 'Root',
@@ -97,6 +82,7 @@ const ToolBar = () => {
   const [isLink, setIsLink] = useState(false);
   const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');
   const [currAlign , setCurrAlign] = useState<"center" | "justify" | "right" | "left">('left')
+  const [fontSize , setFontSize] = useState('14px')
 
   const [selectedText , setSelectedText] = useState("");
 
@@ -118,9 +104,6 @@ const ToolBar = () => {
       const listType = selection.anchor.getNode().getTopLevelElementOrThrow().__listType
       setSelectedText(selection.getTextContent())
       setIsList(listType)
-      setIsBold(selection.hasFormat("bold"))
-      setIsItalic(selection.hasFormat("italic"))
-      setIsUnderline(selection.hasFormat('underline'))
 
       const node = getSelectedNode(selection);
 
@@ -150,6 +133,10 @@ const ToolBar = () => {
           }
         }
       }
+
+      setFontSize(
+        $getSelectionStyleValueForProperty(selection, 'font-size', '14px'),
+      );
     }
   }, [editor])
 
@@ -176,12 +163,21 @@ const ToolBar = () => {
   }
 
   const formatCode = () => {
-    if (blockType !== "code") {
+    if (blockType !== 'code') {
       editor.update(() => {
-        const selection = $getSelection();
+        let selection = $getSelection();
 
-        if ($isRangeSelection(selection)) {
-          $wrapNodes(selection, () => $createCodeNode());
+        if ($INTERNAL_isPointSelection(selection)) {
+          if (selection.isCollapsed()) {
+            $setBlocksType(selection, () => $createCodeNode());
+          } else {
+            const textContent = selection.getTextContent();
+            const codeNode = $createCodeNode();
+            selection.insertNodes([codeNode]);
+            selection = $getSelection();
+            if ($isRangeSelection(selection))
+              selection.insertRawText(textContent);
+          }
         }
       });
     }
@@ -203,40 +199,9 @@ const ToolBar = () => {
           value={"Arial"}
         />
       </div>
-      <div className='inte-textEditor__fontStyle'>
-        <Button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-          }}
-          icon={<Bold size="20" color='#1C2433' />}
-          type={isBold ? "secondary" : 'textButton'}
-        />
-        <Button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-          }}
-          icon={<Italic size="20" color='#1C2433' />}
-          type={isItalic ? "secondary" : 'textButton'}
-        />
-        <Button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-          }}
-          icon={<Underline size="20" color='#1C2433' />}
-          type={isUnderline ? "secondary" : 'textButton'}
-        />
-        <Button
-          icon={<TextColorSvg />}
-          type='textButton'
-        />
-
-        <Button
-          icon={<MoreVertical size="20" color='#1C2433' />}
-          type='textButton'
-        />
-      </div>
+      <FontStyle editor={editor} />
       <Line />
-      <FontSizeToggle />
+      <FontSizeToggle editor={editor} value={fontSize}/>
       <Line />
       <div className='inte-textEditor__blockStyle'>
         <ListSelectBox editor={editor} currListType={isList}/>

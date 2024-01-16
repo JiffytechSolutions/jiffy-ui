@@ -23,6 +23,7 @@ import { TablePlugin } from '@lexical/react/LexicalTablePlugin';
 import { TableContext } from './plugin/Table/TablePlugin';
 import TableCellResizerPlugin from './plugin/Table/TableCellResizer';
 import ImagesPlugin from './plugin/ImagesPulgin';
+import CodeHighlightPlugin from './plugin/CodeHighlightPlugin';
 
 function Placeholder() {
   return <div className="inte-TextEditor__placeholder"></div>;
@@ -76,6 +77,7 @@ const TextEditor = () => {
             <ListPlugin />
             <CustomLinkPlugin />
             <ImagesPlugin />
+            <CodeHighlightPlugin />
           </>
         </TableContext>
       </LexicalComposer>

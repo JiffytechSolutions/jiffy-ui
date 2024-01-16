@@ -27,11 +27,11 @@ const EditorTheme = {
       overflowed: "editor-text-overflowed",
       hashtag: "editor-text-hashtag",
       underline: "inte-TextEditor-underline",
-      strikethrough: "editor-text-strikethrough",
+      strikethrough: "inte-TextEditor__strikethrough",
       underlineStrikethrough: "editor-text-underlineStrikethrough",
-      code: "editor-text-code"
+      code: "inte-TextEditor-textCode",
     },
-    code: "editor-code",
+    code: "inte-TextEditor-blockCode",
     codeHighlight: {
       atrule: "editor-tokenAttr",
       attr: "editor-tokenAttr",
