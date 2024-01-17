@@ -175,7 +175,7 @@ const SimpleSelect = ({
       inputBoxRef.current?.addEventListener("input", resizeInputBox);
       isSearchable && resizeInputBox.call(inputBoxRef.current);
     }
-    isSearchable && searchHandler();
+    isSearchable ? searchHandler() : setOptionsToShow(options);
   }, [inputValue, options]);
   useEffect(() => {
     if (!dropdownActive || isMobile || isLoading || optionsToShow.length < 1)
