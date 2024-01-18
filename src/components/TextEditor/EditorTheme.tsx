@@ -1,0 +1,73 @@
+const EditorTheme = {
+    ltr: "ltr",
+    rtl: "rtl",
+    placeholder: "editor-placeholder",
+    paragraph: "editor-paragraph",
+    quote: "editor-quote",
+    heading: {
+      h1: "inte-TextEditor__heading--h1",
+      h2: "inte-TextEditor__heading--h2",
+      h3: "inte-TextEditor__heading--h3",
+      h4: "inte-TextEditor__heading--h4",
+      h5: "inte-TextEditor__heading--h5"
+    },
+    list: {
+      nested: {
+        listitem: "editor-nested-listitem"
+      },
+      ol: "inte-TextEditor__list--ol",
+      ul: "inte-TextEditor__list--ul",
+      listitem: "inte-TextEditor__li"
+    },
+    image: "editor-image",
+    link: "inte-TextEditor__link",
+    text: {
+      bold: "inte-TextEditor__bold",
+      italic: "inte-TextEditor__italic",
+      overflowed: "editor-text-overflowed",
+      hashtag: "editor-text-hashtag",
+      underline: "inte-TextEditor-underline",
+      strikethrough: "inte-TextEditor__strikethrough",
+      underlineStrikethrough: "editor-text-underlineStrikethrough",
+      code: "inte-TextEditor-textCode",
+    },
+    code: "inte-TextEditor-blockCode",
+    codeHighlight: {
+      atrule: "editor-tokenAttr",
+      attr: "editor-tokenAttr",
+      boolean: "editor-tokenProperty",
+      builtin: "editor-tokenSelector",
+      cdata: "editor-tokenComment",
+      char: "editor-tokenSelector",
+      class: "editor-tokenFunction",
+      "class-name": "editor-tokenFunction",
+      comment: "editor-tokenComment",
+      constant: "editor-tokenProperty",
+      deleted: "editor-tokenProperty",
+      doctype: "editor-tokenComment",
+      entity: "editor-tokenOperator",
+      function: "editor-tokenFunction",
+      important: "editor-tokenVariable",
+      inserted: "editor-tokenSelector",
+      keyword: "editor-tokenAttr",
+      namespace: "editor-tokenVariable",
+      number: "editor-tokenProperty",
+      operator: "editor-tokenOperator",
+      prolog: "editor-tokenComment",
+      property: "editor-tokenProperty",
+      punctuation: "editor-tokenPunctuation",
+      regex: "editor-tokenVariable",
+      selector: "editor-tokenSelector",
+      string: "editor-tokenSelector",
+      symbol: "editor-tokenProperty",
+      tag: "editor-tokenProperty",
+      url: "editor-tokenOperator",
+      variable: "editor-tokenVariable"
+    },
+    table : "inte-TextEditor__table",
+    tableCell: 'inte-TextEditor__tableCell',
+    tableRow : 'inte-TextEditor__tableRow',
+  };
+  
+  export default EditorTheme;
+  
