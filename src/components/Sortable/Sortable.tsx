@@ -21,6 +21,7 @@ type SortableDataI = {
   element: React.ReactNode;
   thresholdCursor: { top: number; left: number };
   dummyIndex: number;
+  isMouseMove: boolean;
 };
 
 export interface SortableI {
@@ -29,22 +30,6 @@ export interface SortableI {
   animationDuration?: number;
   containerStyle?: React.CSSProperties;
 }
-
-// const pointInRangeArr = (arr: elementRect[], point: { x: number; y: number }) => {
-//   const { x, y } = point;
-//   for (let i = 0; i < arr.length; i++) {
-//     const currRect = arr[i]
-//     if (
-//       currRect.top <= y &&
-//       currRect.bottom >= y &&
-//       currRect.left <= x &&
-//       currRect.right >= x
-//     )
-//       return i;
-//   }
-
-//   return -1
-// };
 
 const Sortable = ({
   data,
@@ -216,21 +201,24 @@ const Sortable = ({
       element: fixedEle,
       index: index,
       thresholdCursor: thresholdCursor,
+      isMouseMove:false
     });
 
     setDummyData([...data]);
   };
 
   const handelMouseMove = (event: MouseEvent | TouchEvent | any) => {
-    if (!sortableData || !containerRef.current || !fixedElementRef.current)
+    if (!sortableData || !containerRef.current)
       return;
 
     const { clientX, clientY } = getClientXY(event);
 
-    fixedElementRef.current.style.top =
+    if(fixedElementRef.current) {
+      fixedElementRef.current.style.top =
       clientY - sortableData.thresholdCursor.top + "px";
     fixedElementRef.current.style.left =
       clientX - sortableData.thresholdCursor.left + "px";
+    }
 
     const { top, left } = containerRef.current.getBoundingClientRect();
 
@@ -241,9 +229,9 @@ const Sortable = ({
       y: clientY + containerRef.current.scrollTop - top,
     });
 
-    if (latestIndex !== -1) {
+    if (latestIndex !== -1) { 
       setSortableData((prev) =>
-        prev ? { ...prev, dummyIndex: latestIndex } : prev
+        prev ? { ...prev, dummyIndex: latestIndex, isMouseMove : true } : prev
       );
     }
   };
@@ -387,7 +375,7 @@ const Sortable = ({
           })}
         </div>
       )}
-      <PortalComponent>{sortableData?.element}</PortalComponent>
+      <PortalComponent>{sortableData?.isMouseMove ? sortableData?.element : null}</PortalComponent>
     </>
   );
 };

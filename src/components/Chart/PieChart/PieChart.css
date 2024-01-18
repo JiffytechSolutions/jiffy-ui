@@ -46,6 +46,25 @@
   border-color: black transparent transparent transparent;
 }
 
+/* @keyframes rotateAnimation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+.inte-pieChart__path {
+  transition: transform 0.3s ease, fill 0.3s ease;
+  transform-origin: center;
+  transform: scale(1);
+}
+
+.inte-pieChart__path:hover {
+  transform: scale(1.03);
+}
+
 /* ***********old******************** */
 
 /* .inte-chart {

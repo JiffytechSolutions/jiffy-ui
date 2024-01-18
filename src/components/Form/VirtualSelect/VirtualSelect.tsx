@@ -289,8 +289,9 @@ const VirtualSelect = ({
   }, [dropdownActive, selectedOptions, inputValue, optionsToShow]);
   // Calling search function
   useEffect(() => {
-    isSearchable && searchHandler();
-  }, [inputValue, isSearchable]);
+    isSearchable ? searchHandler() : setOptionsToShow(memoizedConvertOptions(options))
+    
+  }, [inputValue, isSearchable,options]);
   // on outside click
   const onClose = () => {
     setIsFocused(false);

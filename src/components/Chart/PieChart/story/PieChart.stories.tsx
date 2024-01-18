@@ -50,22 +50,22 @@ export default {
 const Template = ({ ...rest }) => {
   const chartData: PieChartData[] = [
     { value: 25, label: "Series A", color: "#F0EDFA" },
-    { value: 20, label: "Series B", color: "#C5B8EA" },
-    { value: 15, label: "Series C", color: "#9984DB" },
-    { value: 15, label: "Series D", color: "#D1E9FF" },
-    { value: 15, label: "Series E", color: "#B2DDFF" },
-    { value: 10, label: "Series F", color: "#53B1FD" },
+    { value: 50, label: "Series B", color: "#C5B8EA" },
+    { value: 25, label: "Series C", color: "#9984DB" },
+
+    // { value: 25, label: "Series A", color: "#F0EDFA" },
+    // { value: 20, label: "Series B", color: "#C5B8EA" },
+    // { value: 15, label: "Series C", color: "#9984DB" },
+    // { value: 15, label: "Series D", color: "#D1E9FF" },
+    // { value: 15, label: "Series E", color: "#B2DDFF" },
+    // { value: 10, label: "Series F", color: "#53B1FD" },
   ];
 
   return (
     <Card>
-      <FlexLayout halign="center">
-        <PieChart
-          chartData={chartData}
-          height={rest.height}
-          width={rest.width}
-        />
-      </FlexLayout>
+      {/* <FlexLayout halign="center"> */}
+      <PieChart chartData={chartData} height={rest.height} width={rest.width} />
+      {/* </FlexLayout> */}
     </Card>
   );
 };

@@ -252,3 +252,13 @@
   transform: translateX(10rem);
   transition: transform 0.3s ease-in-out;
 }
+
+.inte-sideBar__listItem--disabled {
+  cursor: not-allowed;
+}
+
+.inte-sideBar__listItem--disabled > div {
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}

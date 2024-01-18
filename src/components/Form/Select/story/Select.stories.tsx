@@ -829,24 +829,23 @@ SelectWithRealTimeFetch.decorators = [
       setOption(renamedData);
     };
     useEffect(() => {
-      fetchApi();
+      setTimeout(() => {
+        fetchApi();
+      }, 2000);
     }, []);
 
     return (
       <Card title="Select with real time fetch">
-        {option.length > 0 && (
-          <Select
-            options={option}
-            value={value1}
-            placeholder={"Select"}
-            onChange={(e) => {
-              onSelectChange(e);
-            }}
-            onInputChange={(e) => {}}
-            isSearchable
-            helpText="Select With Help Text"
-          />
-        )}
+        <Select
+          isLoading={option.length === 0}
+          options={option}
+          value={value1}
+          placeholder={"Select"}
+          onChange={(e) => {
+            onSelectChange(e);
+          }}
+          helpText="Select With Help Text"
+        />
       </Card>
     );
   },
