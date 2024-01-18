@@ -73,6 +73,11 @@ export default {
           <td>The badge to display next to the menu item label.</td>
         </tr>
         <tr>
+          <td><code>isDisabled</code></td>
+          <td>Boolean</td>
+          <td>To Disable the tab.</td>
+        </tr>
+        <tr>
           <td><code>children</code></td>
           <td>MenuI[]</td>
           <td>An array of child menu items to display under this menu item.</td>
@@ -334,6 +339,7 @@ const logo = (
 );
 
 const Template = ({ ...rest }) => {
+
   return (
     <SideBar
       {...rest}
@@ -354,6 +360,38 @@ const Template = ({ ...rest }) => {
 };
 
 export const Primary = Template.bind({});
+
+export const SideBarWithDisableTabs = ({ ...rest }) => {
+  const menuD = menu.map((item) => {
+    if(item.id === 'help') return ({...item , isDisabled: true});
+
+    if(item.id === "proList"){
+      let children = item.children?.map(i => i.id === "pro1" ? {...i , isDisabled : true} : i )
+      return {...item , children : children}
+    }
+    return item
+  })
+
+  const menuD2 = menu2.map((item) => item.id === "get" ? {...item, isDisabled : true} : item)
+  return (
+    <SideBar
+      {...rest}
+      logo={logo}
+      connectTop={makeStore()}
+      onChange={handelMenuChange}
+    >
+      <SideBar.Section title="General" menu={menuD} />
+      <SideBar.Section title="Support" menu={menuD2} />
+
+      <SideBar.Section
+        type="footer"
+        // title="Footer"
+        menu={menu3}
+      />
+    </SideBar>
+  )
+}
+
 export function Documentation() {
   return <SideBarDoc />;
 }
