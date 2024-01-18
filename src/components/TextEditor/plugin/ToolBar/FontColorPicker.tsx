@@ -1,4 +1,4 @@
-import { $createParagraphNode, $getSelection, $isRangeSelection, $isTextNode, FORMAT_TEXT_COMMAND, LexicalEditor, SELECTION_CHANGE_COMMAND } from 'lexical'
+import { $INTERNAL_isPointSelection, $createParagraphNode, $getSelection, $isRangeSelection, $isTextNode, FORMAT_TEXT_COMMAND, LexicalEditor, SELECTION_CHANGE_COMMAND } from 'lexical'
 import React, { useCallback, useEffect, useState } from 'react'
 import Button from '../../../Button/Button'
 import { Bold, Italic, MoreVertical, Underline } from '../../../../icons'
@@ -9,6 +9,8 @@ import { $isHeadingNode, $isQuoteNode } from '@lexical/rich-text';
 import { $isDecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 import Popover from '../../../Popover/Popover'
 import { FlexLayout } from '../../../FlexLayout'
+import { $patchStyleText , $getSelectionStyleValueForProperty} from '@lexical/selection';
+import ColorPicker from '../../ui/color-picker/ColorPicker'
 
 interface FontStyleI {
   editor: LexicalEditor
@@ -24,6 +26,7 @@ const FontStyle = ({ editor }: FontStyleI) => {
   const [isStrikeThrough, setIsStrikeThrough] = useState(false)
   const [isSubscript, setIsSubscript] = useState(false)
   const [isSuperscript, setIsSuperscript] = useState(false)
+  const [fontColor , setFontColor] = useState('')
 
   const updateToolBar = () => {
     const selection = $getSelection();
@@ -34,6 +37,9 @@ const FontStyle = ({ editor }: FontStyleI) => {
       setIsStrikeThrough(selection.hasFormat('strikethrough'))
       setIsSubscript(selection.hasFormat('subscript'))
       setIsSuperscript(selection.hasFormat('superscript'))
+      setFontColor(
+        $getSelectionStyleValueForProperty(selection, 'color', '#000'),
+      );
     }
   }
 
@@ -107,7 +113,14 @@ const FontStyle = ({ editor }: FontStyleI) => {
   }, [editor]);
 
   const handelColorChange = (newColor:string) => {
-    console.log(newColor , "-------------")
+    editor.update(
+      () => {
+        const selection = $getSelection();
+        if ($INTERNAL_isPointSelection(selection)) {
+          $patchStyleText(selection, {color : newColor});
+        }
+      }
+    );
   }
 
   return (
@@ -133,7 +146,7 @@ const FontStyle = ({ editor }: FontStyleI) => {
         icon={<Underline size="20" color='#1C2433' />}
         type={isUnderline ? "secondary" : 'textButton'}
       />
-      <FontColorPicker onChange={handelColorChange} />
+      <FontColorPicker onChange={handelColorChange} color={fontColor} />
 
       <ActionList
         isOpen={open}
@@ -171,11 +184,11 @@ const FontStyle = ({ editor }: FontStyleI) => {
 
 interface FontColorPickerI {
   onChange : (colorValue:string) => void
+  color : string
 }
 
-const FontColorPicker = ({onChange}:FontColorPickerI) => {
+const FontColorPicker = ({onChange , color}:FontColorPickerI) => {
   const [open, setOpen] = useState(false)
-  const [colorVal , setColorVal] = useState('')
   const onClose = () => setOpen(false)
 
   const activator = <Button
@@ -183,27 +196,15 @@ const FontColorPicker = ({onChange}:FontColorPickerI) => {
     type='textButton'
     onClick={() => setOpen(prev => !prev)}
   />
+
   return (
     <Popover
       isOpen={open}
       onClose={onClose}
       activator={activator}
+      customClass='inte-textEditor--customHeight'
     >
-     <FlexLayout spacing='loose' direction='vertical'>
-      <input type='color' onChange={(e) => setColorVal(e.target.value)} />
-
-      <div className='inte-FontColorPicker__footer' style={{
-        display : 'flex',
-        gap : "20px",
-        justifyContent : "end",
-        paddingTop : "10px",
-        borderTop:"0.1rem solid var(--inte-G40)"
-      }}>
-        <Button onClick={onClose} type='outlined'>Cancel</Button>
-        <Button onClick={() => onChange(colorVal)} type='primary'>Done</Button>
-      </div>
-
-     </FlexLayout>
+     <ColorPicker color={color} onChange={(value) => onChange(value)}/>
     </Popover>
   )
 }

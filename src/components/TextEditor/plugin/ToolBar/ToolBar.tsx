@@ -6,7 +6,7 @@ import Button from '../../../Button/Button'
 
 import { TextColorSvg } from './toolBarSvg'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import {$INTERNAL_isPointSelection, $getSelection, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
+import {$INTERNAL_isPointSelection, $getSelection, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
 import { $isAtNodeEnd , $wrapNodes,$setBlocksType,$getSelectionStyleValueForProperty } from "@lexical/selection"
 import { $isLinkNode } from "@lexical/link";
 import { mergeRegister , $getNearestNodeOfType , $findMatchingParent } from "@lexical/utils";
@@ -23,7 +23,8 @@ import {
 } from '@lexical/list';
 import InsertBlock from './InsertBlock'
 import FontSizeToggle from './FontSizeToggle'
-import FontStyle from './FontStyle'
+import FontStyle from './FontColorPicker'
+import FontFamilyChanger from './FontFamilyChanger'
 
 
 
@@ -81,7 +82,7 @@ const ToolBar = () => {
   const [isList, setIsList] = useState<undefined | "number" | "bullet">();
   const [isLink, setIsLink] = useState(false);
   const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');
-  const [currAlign , setCurrAlign] = useState<"center" | "justify" | "right" | "left">('left')
+  const [currAlign , setCurrAlign] = useState<ElementFormatType>('left')
   const [fontSize , setFontSize] = useState('14px')
 
   const [selectedText , setSelectedText] = useState("");
@@ -134,6 +135,22 @@ const ToolBar = () => {
         }
       }
 
+      let matchingParent;
+      if ($isLinkNode(parent)) {
+        // If node is a link, we need to fetch the parent paragraph node to set format
+        matchingParent = $findMatchingParent(
+          node,
+          (parentNode) => $isElementNode(parentNode) && !parentNode.isInline(),
+        );
+      }
+      
+      setCurrAlign(
+        $isElementNode(matchingParent)
+          ? matchingParent.getFormatType()
+          : $isElementNode(node)
+          ? node.getFormatType()
+          : parent?.getFormatType() || 'left',
+      );
       setFontSize(
         $getSelectionStyleValueForProperty(selection, 'font-size', '14px'),
       );
@@ -156,7 +173,7 @@ const ToolBar = () => {
         LowPriority
       ),
     )
-  })
+  },[editor])
 
   const changeElementFormat  = (align:ElementFormatType) => {
     editor.dispatchCommand(FORMAT_ELEMENT_COMMAND , align);
@@ -189,15 +206,7 @@ const ToolBar = () => {
     <div className='inte-TextEditor__toolBar'>
       <div className='inte-TextEditor__fontFormat'>
         <InsertBlock editor={editor} blockType={blockType}/>
-        <Select
-          options={[
-            { label: "Arial", value: "Arial" },
-            { label: 'Heading 1', value: "Heading 1" },
-            { label: 'Heading 2', value: "Heading 2" },
-            { label: 'Heading 3', value: "Heading 3" },
-          ]}
-          value={"Arial"}
-        />
+        <FontFamilyChanger editor={editor} />
       </div>
       <FontStyle editor={editor} />
       <Line />

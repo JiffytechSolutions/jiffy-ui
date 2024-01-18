@@ -1,54 +1,50 @@
 import React, { useState } from 'react'
-import Button from '../../../Button/Button'
 import { ListIcon } from '../../../../icons'
-import ActionList from '../../../ActionList/ActionList'
 import { LexicalEditor } from 'lexical'
 
 import {
   INSERT_ORDERED_LIST_COMMAND,
   INSERT_UNORDERED_LIST_COMMAND,
   REMOVE_LIST_COMMAND,
-  $isListNode,
-  ListNode
 } from "@lexical/list";
+import Switcher, { SwitcherI } from '../../../Switcher/Switcher'
+import { NumberedListSvg } from './toolBarSvg';
 
 interface ListSelectBoxI {
-  editor : LexicalEditor
-  currListType : undefined | "number" | "bullet"
+  editor: LexicalEditor
+  currListType: undefined | "number" | "bullet"
 }
 
-const ListSelectBox = ({editor , currListType}:ListSelectBoxI) => {
-  const [open, setOpen] = useState(false)
+const ListSelectBox = ({ editor, currListType }: ListSelectBoxI) => {
+  const [value, setValue] = useState<any>({
+    icon: <ListIcon size="20" color='#1C2433' />,
+    label: "",
+  })
 
-  const activator = (
-    <Button
-      customClass='custom-width-btn'
-      icon={<ListIcon size="20" color='#1C2433' />}
-      onClick={() => setOpen(prev => !prev)}
-      type={open ? "secondary" : 'textButton'}
-      disclosure
-    />
-  )
+  const handelValueChange = (newValue: SwitcherI["value"]) => {
+    setValue(newValue)
+    if (newValue.label === "Bullet List") {
+      currListType === "bullet" ? editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined) : editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined)
+    }
+    else {
+      currListType === "number" ? editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined) : editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined)
+    }
+  }
 
   return (
-    <ActionList
-      isOpen={open}
-      onClose={() => setOpen(false)}
-      activator={activator}
-      options={[{
-        items: [
-          {
-            content: "Bullet List",
-            prefixIcon: <ListIcon size="20" color='#1C2433' />,
-            onClick:() =>currListType === "bullet" ? editor.dispatchCommand(REMOVE_LIST_COMMAND , undefined) : editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND , undefined)
-          },
-          {
-            content: "Number List",
-            prefixIcon: <ListIcon size="20" color='#1C2433' />,
-            onClick:() =>currListType === "number" ? editor.dispatchCommand(REMOVE_LIST_COMMAND , undefined) : editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND , undefined)
-          }
-        ]
-      }]}
+    <Switcher
+      onChange={handelValueChange}
+      value={{ ...value, label: "" }}
+      options={[
+        {
+          icon: <ListIcon size="20" color='#1C2433' />,
+          label: "Bullet List",
+        },
+        {
+          icon: <NumberedListSvg />,
+          label: "Number List",
+        }
+      ]}
     />
   )
 }

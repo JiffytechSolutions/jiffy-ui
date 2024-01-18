@@ -47,3 +47,7 @@
 .inte-TextEditor__toolBar .inte-btn:hover {
     background-color: var(--inte-G40);;
 }
+
+.inte-textEditor--customHeight {
+  max-height: unset;
+}

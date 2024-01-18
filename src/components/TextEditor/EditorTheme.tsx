@@ -20,7 +20,7 @@ const EditorTheme = {
       listitem: "inte-TextEditor__li"
     },
     image: "editor-image",
-    link: "lexical/LexicalUtils__link",
+    link: "inte-TextEditor__link",
     text: {
       bold: "inte-TextEditor__bold",
       italic: "inte-TextEditor__italic",

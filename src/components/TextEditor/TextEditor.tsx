@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
@@ -24,6 +24,7 @@ import { TableContext } from './plugin/Table/TablePlugin';
 import TableCellResizerPlugin from './plugin/Table/TableCellResizer';
 import ImagesPlugin from './plugin/ImagesPulgin';
 import CodeHighlightPlugin from './plugin/CodeHighlightPlugin';
+import FloatingLinkEditorPlugin from './plugin/FloatingLinkEditorPlugin';
 
 function Placeholder() {
   return <div className="inte-TextEditor__placeholder"></div>;
@@ -54,11 +55,21 @@ const editorConfig = {
 
 
 const TextEditor = () => {
+
+  const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
+  const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
+
   const onChange = (e: EditorState) => {
     e.read(() => {
       console.log(e)
     })
   }
+
+  const onRef = (_floatingAnchorElem: HTMLDivElement) => {
+    if (_floatingAnchorElem !== null) {
+      setFloatingAnchorElem(_floatingAnchorElem);
+    }
+  };
 
   return (
     <div className='inte-TextEditor'>
@@ -67,7 +78,7 @@ const TextEditor = () => {
           <>
             <ToolBar />
             <RichTextPlugin
-              contentEditable={<ContentEditable spellCheck={false} className="inte-TextEditor__body" />}
+              contentEditable={<div ref={onRef}><ContentEditable spellCheck={false} className="inte-TextEditor__body" /></div>}
               placeholder={<Placeholder />}
               ErrorBoundary={LexicalErrorBoundary}
             />
@@ -78,6 +89,13 @@ const TextEditor = () => {
             <CustomLinkPlugin />
             <ImagesPlugin />
             <CodeHighlightPlugin />
+            {
+              !!floatingAnchorElem && <FloatingLinkEditorPlugin
+                anchorElem={floatingAnchorElem}
+                isLinkEditMode={isLinkEditMode}
+                setIsLinkEditMode={setIsLinkEditMode}
+              />
+            }
           </>
         </TableContext>
       </LexicalComposer>
