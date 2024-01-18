@@ -1,10 +1,9 @@
-import React, { useState } from "react";
-import "./PieChart.css";
-import { Percent } from "../../../icons";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import getClassNames from "../../../utilities/getClassnames";
+import "./PieChart.css";
 
 export interface PieChartI {
-  data: PieChartData[];
+  chartData: PieChartData[];
   height?: number;
   width?: number;
   tooltip?: boolean;
@@ -18,105 +17,142 @@ export interface PieChartData {
   color?: string;
 }
 
-const getTotalPercentage = (data: PieChartData[]) =>
-  data.reduce((sum, item) => sum + Number(item.value), 0);
+const getTotalPercentage = (chartData: PieChartData[]) =>
+  chartData.reduce((sum, item) => sum + Number(item.value), 0);
 
 const PieChart: React.FC<PieChartI> = ({
-  data,
+  chartData,
   height = 250,
   width = 250,
-  percentage = false,
-  tooltip = false,
+  percentage = true,
+  tooltip = true,
   customClass = "",
 }) => {
-  const totalPercentage = getTotalPercentage(data);
+  const moveRef = useRef<any>(null);
+  const toolTipRef = useRef<any>(null);
+  const totalPercentage = getTotalPercentage(chartData);
   let cumulativePercentage = 0;
   const [tooltipText, setTooltipText] = useState({ label: "", value: "" });
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+  const [hoveredSlice, setHoveredSlice] = useState<number | null>(null);
+  const [tooltipWidth, setTooltipWidth] = useState<number>(130);
 
-  const handleMouseOver = (label: any, value: any, event: any) => {
+  const handleMouseOver = (
+    label: any,
+    value: any,
+    index: number,
+    event: any
+  ) => {
     setTooltipText({ label: label, value: value });
-    setTooltipPosition({ x: event.clientX, y: event.clientY });
+    const left = event.clientX - moveRef?.current?.getBoundingClientRect().left;
+    const top = event.clientY - moveRef?.current?.getBoundingClientRect().top;
+    setTooltipPosition({ x: left - tooltipWidth, y: top - 65 });
+    setHoveredSlice(index);
   };
 
   const handleMouseLeave = () => {
     setTooltipText({ label: "", value: "" });
+    setHoveredSlice(null);
   };
 
   const handleMouseMove = (event: any) => {
-    setTooltipPosition({ x: event.clientX - 20, y: event.clientY - 55 });
+    const left = event.clientX - moveRef?.current?.getBoundingClientRect().left;
+    const top = event.clientY - moveRef?.current?.getBoundingClientRect().top;
+    setTooltipPosition({ x: left - tooltipWidth, y: top - 65 });
   };
 
+  useLayoutEffect(() => {
+    const toolTipWidth =
+      toolTipRef?.current?.getBoundingClientRect()?.width / 2;
+    setTooltipWidth(toolTipWidth);
+    console.log(toolTipWidth, "move");
+  }, [tooltip, tooltipText, toolTipRef?.current]);
+
   return (
-    <div
-      className={getClassNames({
-        "inte-pieChart": true,
-        [customClass]: customClass,
-      })}
-      onMouseMove={handleMouseMove}
-    >
-      <svg
-        width={width}
-        height={height}
-        viewBox={`0 0 ${width} ${height}`}
-        xmlns="http://www.w3.org/2000/svg"
+    <>
+      <div
+        className={getClassNames({
+          "inte-pieChart": true,
+          [customClass]: customClass,
+        })}
+        onMouseMove={handleMouseMove}
+        ref={moveRef}
       >
-        {data.map((item, index) => {
-          const startAngle = (cumulativePercentage / totalPercentage) * 360;
-          const endAngle =
-            ((cumulativePercentage + Number(item.value)) / totalPercentage) *
-            360;
+        <svg
+          width={width}
+          height={height}
+          viewBox={`0 0 ${width} ${height}`}
+          style={{ overflow: "visible" }}
+        >
+          {chartData.map((item, index: number) => {
+            const startAngle = (cumulativePercentage / totalPercentage) * 360;
+            const endAngle =
+              ((cumulativePercentage + Number(item.value)) / totalPercentage) *
+              360;
 
-          cumulativePercentage += Number(item.value);
+            cumulativePercentage += Number(item.value);
 
-          const pathData = `
+            const isHovered = index === hoveredSlice;
+            const scaleFactor = isHovered ? 1.03 : 1; // Increase size when hovered
+
+            const pathData = `
             M ${width / 2} ${height / 2}
             L ${
               width / 2 +
               Math.cos((startAngle - 90) * (Math.PI / 180)) * (width / 2)
             } ${
-            height / 2 +
-            Math.sin((startAngle - 90) * (Math.PI / 180)) * (height / 2)
-          }
+              height / 2 +
+              Math.sin((startAngle - 90) * (Math.PI / 180)) * (height / 2)
+            }
             A ${width / 2} ${height / 2} 0 ${
-            Number(item.value) / totalPercentage > 0.5 ? 1 : 0
-          } 1
+              Number(item.value) / totalPercentage >= 0.5 ? 1 : 0
+            } 1
             ${
               width / 2 +
               Math.cos((endAngle - 90) * (Math.PI / 180)) * (width / 2)
             } ${
-            height / 2 +
-            Math.sin((endAngle - 90) * (Math.PI / 180)) * (height / 2)
-          }
+              height / 2 +
+              Math.sin((endAngle - 90) * (Math.PI / 180)) * (height / 2)
+            }
             Z
           `;
 
-          return (
-            <path
-              key={index}
-              d={pathData}
-              fill={item.color || ""}
-              onMouseOver={(e) => handleMouseOver(item.label, item.value, e)}
-              onMouseLeave={handleMouseLeave}
-            />
-          );
-        })}
-      </svg>
-      {percentage && (
-        <div className="inte-pieChart__percentage">{totalPercentage}%</div>
-      )}
-      {tooltipText.label && tooltipText.value && tooltip && (
-        <div
-          className="inte-pieChart__tooltip"
-          style={{
-            left: `${tooltipPosition.x}px`,
-            top: `${tooltipPosition.y}px`,
-          }}
-        >
-          {tooltipText.label}: {tooltipText.value}
-        </div>
-      )}
-    </div>
+            return (
+              <path
+                key={index}
+                className="inte-pieChart__path"
+                d={pathData}
+                fill={item.color || ""}
+                onMouseOver={(e) =>
+                  handleMouseOver(item.label, item.value, index, e)
+                }
+                onMouseLeave={handleMouseLeave}
+                style={{
+                  transition: "transform 0.3s ease, fill 0.3s ease",
+                  transformOrigin: "center",
+                  transform: `scale(${scaleFactor})`,
+                }}
+              />
+            );
+          })}
+        </svg>
+        {percentage && (
+          <div className="inte-pieChart__percentage">{totalPercentage}%</div>
+        )}
+        {tooltipText.label && tooltipText.value && tooltip && (
+          <div
+            className="inte-pieChart__tooltip"
+            style={{
+              left: `${tooltipPosition.x}px`,
+              top: `${tooltipPosition.y}px`,
+            }}
+            ref={toolTipRef}
+          >
+            {tooltipText.label}: {tooltipText.value}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

@@ -23,9 +23,7 @@
 /* tooltip  */
 .inte-pieChart__tooltip {
   position: absolute;
-  /* top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%); */
+
   background-color: black;
   color: white;
   height: 44px;
@@ -47,6 +45,7 @@
   border-style: solid;
   border-color: black transparent transparent transparent;
 }
+
 /* ***********old******************** */
 
 /* .inte-chart {
