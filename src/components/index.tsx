@@ -123,6 +123,7 @@ export { default as VirtualSelect } from "./Form/VirtualSelect/VirtualSelect";
 export { default as AnimatingIllustration } from "./AnimationingIllustration/Illustration";
 export { default as useMobileDevice } from "../utilities/useMobileDevice";
 export { default as useWindowResize } from "../utilities/useWindowResize";
+export { default as useDebounceWindowResize } from "../utilities/useDebounceWindowResize";
 export { default as isTouchDevice } from "../utilities/isTouchDevice";
 export * from "./Card";
 export * from "./FlexLayout";
