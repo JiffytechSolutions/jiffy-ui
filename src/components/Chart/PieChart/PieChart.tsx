@@ -36,7 +36,7 @@ const PieChart: React.FC<PieChartI> = ({
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [hoveredSlice, setHoveredSlice] = useState<number | null>(null);
   const [tooltipWidth, setTooltipWidth] = useState<number>(130);
-  const [initialAnimationPlayed, setInitialAnimationPlayed] = useState(false);
+  const [rotateP, setRotateP] = useState<any>([]);
 
   const handleMouseOver = (
     label: any,
@@ -62,41 +62,39 @@ const PieChart: React.FC<PieChartI> = ({
     setTooltipPosition({ x: left - tooltipWidth, y: top - 65 });
   };
 
-  useLayoutEffect(() => {
-    const toolTipWidth =
-      toolTipRef?.current?.getBoundingClientRect()?.width / 2;
-    setTooltipWidth(toolTipWidth);
-  }, [tooltip, tooltipText, toolTipRef?.current]);
-
-  // animation effect
-
-  const [rotateP, setRotateP] = useState<any>([]);
-
+  // getting tool tip pisition width
   useEffect(() => {
-    // Trigger the rotation animation when the component mounts
-    if (!initialAnimationPlayed) {
+    if (toolTipRef?.current) {
+      const toolTipWidth = toolTipRef.current.getBoundingClientRect();
+      setTooltipWidth(toolTipWidth.width / 2);
+    }
+  }, [tooltip, tooltipText.label, tooltipText.value, toolTipRef?.current]);
+
+  // Rotation animation effect
+  useEffect(() => {
+    if (true) {
       const paths = document.querySelectorAll(".inte-pieChart__path");
       const totalPercentage = getTotalPercentage(chartData);
       let currTot = 0;
       const pointArr = Array.from(paths).map((path, index) => {
         const currentSlicePercentage =
-          (Number(chartData[index].value) / totalPercentage) * 100;
+          (Number(chartData[index]?.value) / totalPercentage) * 100;
 
         const degreeOfRotation = (currentSlicePercentage / 100) * 360;
         currTot = currTot + degreeOfRotation;
 
         return -currTot;
       });
-      console.log(pointArr);
 
+      const newArray = Array.from({ length: chartData.length }, () => 0);
       setRotateP(pointArr);
       setTimeout(() => {
-        setRotateP([0, 0, 0, 0]);
+        setRotateP(newArray);
       }, 100);
     }
-  }, [initialAnimationPlayed, chartData]);
+  }, [chartData]);
+
   const allNegative = rotateP.every((value: any) => value < 0);
-  console.log(allNegative);
 
   return (
     <>
@@ -169,7 +167,7 @@ const PieChart: React.FC<PieChartI> = ({
                   opacity: `${allNegative ? 0 : 1}`,
                   transformOrigin: "center",
                   transform: `scale(${scaleFactor}) rotate(${
-                    rotateP.length == 0 ? 0 : rotateP[index]
+                    rotateP.length > 0 ? rotateP[index] : 0
                   }deg)`,
                 }}
               />
@@ -188,7 +186,7 @@ const PieChart: React.FC<PieChartI> = ({
             }}
             ref={toolTipRef}
           >
-            {tooltipText.label}: {tooltipText.value}
+            {tooltipText.label}: {tooltipText.value}%
           </div>
         )}
       </div>

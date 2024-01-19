@@ -28,7 +28,7 @@ export default {
       control: {
         type: "boolean",
       },
-      defaultValue: true,
+      defaultValue: false,
     },
     percentage: {
       description:
@@ -36,7 +36,7 @@ export default {
       control: {
         type: "boolean",
       },
-      defaultValue: true,
+      defaultValue: false,
     },
     customClass: {
       description: "Add custom class",
@@ -55,8 +55,8 @@ const chartData: PieChartData[] = [
   // { value: 5, label: "Series F", color: "#53B1FD" },
   // { value: 15, label: "Series E", color: "#B2DDFF" },
 
-  { value: 25, label: "Series A", color: "#F0EDFA" },
-  { value: 20, label: "Series B", color: "#C5B8EA" },
+  { value: 24.5, label: "Series A", color: "#F0EDFA" },
+  { value: 20.5, label: "Series B", color: "#C5B8EA" },
   { value: 15, label: "Series C", color: "#9984DB" },
   { value: 15, label: "Series D", color: "#D1E9FF" },
   { value: 15, label: "Series E", color: "#B2DDFF" },
@@ -80,7 +80,7 @@ const Template = ({ ...rest }) => {
 export const Primary = Template.bind({});
 
 // Pie Chart Percentage
-export const PieChartPercentage = ({ ...rest }) => {
+export const PieChartPercentage = () => {
   return (
     <Card title="Pie Chart with showing total percentage">
       <FlexLayout halign="center">
@@ -89,8 +89,9 @@ export const PieChartPercentage = ({ ...rest }) => {
     </Card>
   );
 };
+
 // Pie Chart with tooltip
-export const PieChartTooltip = ({ ...rest }) => {
+export const PieChartTooltip = () => {
   return (
     <Card title="Pie Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout halign="center">
@@ -101,18 +102,30 @@ export const PieChartTooltip = ({ ...rest }) => {
 };
 
 // Pie Chart with All
-export const PieChartAll = ({ ...rest }) => {
+export const PieChartAll = () => {
   return (
     <Card title="Pie Chart with tooltip (Mouse hover any particular area then showing tooltip)">
-      <FlexLayout spacing="loose">
+      <FlexLayout spacing="loose" wrap="wrap">
         <PieChart tooltip chartData={chartData} height={200} width={200} />
+        <PieChart
+          tooltip
+          chartData={[
+            { value: 25, label: "Series A", color: "#F0EDFA" },
+            { value: 15, label: "Series B", color: "#C5B8EA" },
+            { value: 20, label: "Series C", color: "#9984DB" },
+            { value: 5, label: "Series D", color: "#D1E9FF" },
+            { value: 25, label: "Series E", color: "#B2DDFF" },
+          ]}
+          height={200}
+          width={200}
+        />
         <PieChart
           tooltip
           chartData={[
             { value: 25, label: "Series A", color: "#53B1FD" },
             { value: 25, label: "Series B", color: "#D1E9FF" },
             { value: 25, label: "Series C", color: "#9984DB" },
-            { value: 25, label: "Series  ghdfgh dfgh d D", color: "#B2DDFF" },
+            { value: 25, label: "Series D", color: "#B2DDFF" },
           ]}
           height={200}
           width={200}
