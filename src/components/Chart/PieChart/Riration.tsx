@@ -67,6 +67,46 @@ const Riration = () => {
   //   }
   // }, [initialAnimationPlayed]);
 
+  ///
+
+  // const [rotateP, setRotateP] = useState([0, 0, 0, 0, 0, 0]);
+  // useEffect(() => {
+  //   // Trigger the rotation animation when the component mounts
+  //   if (!initialAnimationPlayed) {
+  //     const paths = document.querySelectorAll(".inte-pieChart__path");
+  //     const totalPercentage = getTotalPercentage(chartData);
+  //     let currTot = 0;
+  //     const pointArr = Array.from(paths).map((path: any, index) => {
+  //       //  path.style.animation = `rotateAnimation 0.5s ease-out ${index * 0.1}s`;
+
+  //       // Calculate the percentage for each path area
+  //       const currentSlicePercentage =
+  //         (Number(chartData[index].value) / totalPercentage) * 100;
+
+  //       currTot = currTot + currentSlicePercentage;
+
+  //       return currTot;
+  //     });
+
+  //     // setRotateP(pointArr);
+  //     const a = pointArr.map((val) => {
+  //       return -((360 * val) / 100);
+  //     });
+
+  //     setRotateP(a);
+
+  //     setTimeout(() => {
+  //       setRotateP([0, 0, 0, 0, 0, 0]);
+  //     }, 500);
+
+  //     const isPageLoading = !document.hidden;
+
+  //     // Set rotateP based on whether the page is loading or not
+  //     setRotateP(isPageLoading ? a : [0, 0, 0, 0, 0, 0]);
+  //   }
+  // }, [initialAnimationPlayed]);
+  // console.log(rotateP);
+
   return <div>Riration</div>;
 };
 

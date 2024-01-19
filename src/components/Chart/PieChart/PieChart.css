@@ -32,28 +32,20 @@
   text-align: center;
   line-height: 20px;
   font-size: 16px;
-  width: 130px;
+  width: max-content;
   font-weight: 600;
+  z-index: var(--inte-Z-10);
 }
 .inte-pieChart__tooltip::after {
   content: " ";
   position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
+  top: 100%;
   left: 50%;
   margin-left: -5px;
   border-width: 5px;
   border-style: solid;
   border-color: black transparent transparent transparent;
 }
-
-/* @keyframes rotateAnimation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
 
 .inte-pieChart__path {
   transition: transform 0.3s ease, fill 0.3s ease;
@@ -63,23 +55,5 @@
 
 .inte-pieChart__path:hover {
   transform: scale(1.03);
+  transition: "transform 0.5s ease, fill 0.5s ease";
 }
-
-/* ***********old******************** */
-
-/* .inte-chart {
-  position: relative;
-  width: fit-content;
-}
-.inte-chart__precentage {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: var(--inte-G20);
-  color: var(--inte-P900);
-  padding: 0.6rem 1.6rem;
-  border-radius: 1.6rem;
-  font-weight: 700;
-  line-height: 22px;
-} */
