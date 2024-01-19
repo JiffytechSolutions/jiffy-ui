@@ -1,22 +1,19 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { Select, TextField } from '../../../Form'
 import './ToolBar.css'
-import { Bold, Code, Italic, Minus, MoreVertical, Plus, RotateCcw, RotateCw, Underline } from '../../../../icons'
+import { Code, RotateCcw, RotateCw } from '../../../../icons'
 import Button from '../../../Button/Button'
-
-import { TextColorSvg } from './toolBarSvg'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import {$INTERNAL_isPointSelection, $getSelection, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, FORMAT_TEXT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
-import { $isAtNodeEnd , $wrapNodes,$setBlocksType,$getSelectionStyleValueForProperty } from "@lexical/selection"
+import { $INTERNAL_isPointSelection, $getSelection, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
+import { $isAtNodeEnd, $setBlocksType, $getSelectionStyleValueForProperty } from "@lexical/selection"
 import { $isLinkNode } from "@lexical/link";
-import { mergeRegister , $getNearestNodeOfType , $findMatchingParent } from "@lexical/utils";
+import { mergeRegister, $getNearestNodeOfType, $findMatchingParent } from "@lexical/utils";
 import TextAlignBox from './TextAlignBox'
 import InsertLink from './InsertLink'
 import ListSelectBox from './ListBox'
-import {$createCodeNode} from "@lexical/code";
+import { $createCodeNode } from "@lexical/code";
 import { InsertTableModal } from '../Table/TablePlugin'
 import { InsertImageDialog } from '../ImagesPulgin'
-import {$isHeadingNode} from '@lexical/rich-text';
+import { $isHeadingNode } from '@lexical/rich-text';
 import {
   $isListNode,
   ListNode,
@@ -25,6 +22,7 @@ import InsertBlock from './InsertBlock'
 import FontSizeToggle from './FontSizeToggle'
 import FontStyle from './FontColorPicker'
 import FontFamilyChanger from './FontFamilyChanger'
+import ToolTip from '../../../ToolTip/ToolTip'
 
 
 
@@ -70,28 +68,21 @@ const blockTypeToBlockName = {
 };
 
 const ToolBar = () => {
-
-  const toolbarRef = useRef<HTMLDivElement>(null)
   const [editor] = useLexicalComposerContext();
-  const [rootType, setRootType] =
-    useState<keyof typeof rootTypeToRootName>('root');
-
-  const [isBold, setIsBold] = useState(false);
-  const [isItalic, setIsItalic] = useState(false);
-  const [isUnderline, setIsUnderline] = useState(false);
+  const [rootType, setRootType] = useState<keyof typeof rootTypeToRootName>('root');
   const [isList, setIsList] = useState<undefined | "number" | "bullet">();
   const [isLink, setIsLink] = useState(false);
   const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');
-  const [currAlign , setCurrAlign] = useState<ElementFormatType>('left')
-  const [fontSize , setFontSize] = useState('14px')
+  const [currAlign, setCurrAlign] = useState<ElementFormatType>('left')
+  const [fontSize, setFontSize] = useState('14px')
 
-  const [selectedText , setSelectedText] = useState("");
+  const [selectedText, setSelectedText] = useState("");
 
   const updateToolBar = useCallback(() => {
     const selection = $getSelection();
     if ($isRangeSelection(selection)) {
       const anchorNode = selection.anchor.getNode();
-      let element = anchorNode.getKey() === 'root'? anchorNode : $findMatchingParent(anchorNode, (e) => {
+      let element = anchorNode.getKey() === 'root' ? anchorNode : $findMatchingParent(anchorNode, (e) => {
         const parent = e.getParent();
         return parent !== null && $isRootOrShadowRoot(parent);
       });
@@ -143,13 +134,13 @@ const ToolBar = () => {
           (parentNode) => $isElementNode(parentNode) && !parentNode.isInline(),
         );
       }
-      
+
       setCurrAlign(
         $isElementNode(matchingParent)
           ? matchingParent.getFormatType()
           : $isElementNode(node)
-          ? node.getFormatType()
-          : parent?.getFormatType() || 'left',
+            ? node.getFormatType()
+            : parent?.getFormatType() || 'left',
       );
       setFontSize(
         $getSelectionStyleValueForProperty(selection, 'font-size', '14px'),
@@ -173,10 +164,10 @@ const ToolBar = () => {
         LowPriority
       ),
     )
-  },[editor])
+  }, [editor])
 
-  const changeElementFormat  = (align:ElementFormatType) => {
-    editor.dispatchCommand(FORMAT_ELEMENT_COMMAND , align);
+  const changeElementFormat = (align: ElementFormatType) => {
+    editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, align);
   }
 
   const formatCode = () => {
@@ -192,6 +183,7 @@ const ToolBar = () => {
             const codeNode = $createCodeNode();
             selection.insertNodes([codeNode]);
             selection = $getSelection();
+            console.log(textContent)
             if ($isRangeSelection(selection))
               selection.insertRawText(textContent);
           }
@@ -200,44 +192,68 @@ const ToolBar = () => {
     }
   };
 
-  
+
 
   return (
     <div className='inte-TextEditor__toolBar'>
       <div className='inte-TextEditor__fontFormat'>
-        <InsertBlock editor={editor} blockType={blockType}/>
+        <InsertBlock editor={editor} blockType={blockType} />
         <FontFamilyChanger editor={editor} />
       </div>
       <FontStyle editor={editor} />
       <Line />
-      <FontSizeToggle editor={editor} value={fontSize}/>
+      <FontSizeToggle editor={editor} value={fontSize} />
       <Line />
       <div className='inte-textEditor__blockStyle'>
-        <ListSelectBox editor={editor} currListType={isList}/>
-        <TextAlignBox onClick={changeElementFormat} currAlign={currAlign}/>
+        <ToolTip 
+          activator={<ListSelectBox editor={editor} currListType={isList} />}
+          helpText={"Insert List"}
+        />
+        <ToolTip 
+          activator={<TextAlignBox onClick={changeElementFormat} currAlign={currAlign} />}
+          helpText={"Change Text Align"}
+        />
       </div>
       <Line />
       <div className='inte-textEditor__specialNodes'>
-        <InsertLink editor={editor} isLink={isLink} selectedText={selectedText}/>
-        <InsertImageDialog editor={editor}/>
-        <InsertTableModal editor={editor}/>
-        <Button
-          onClick={formatCode}
-          icon={<Code size="20" color='#1C2433' />}
-          type='textButton'
+        <ToolTip 
+          activator={<InsertLink editor={editor} isLink={isLink} selectedText={selectedText} />}
+          helpText={"Insert Link"}
+        />
+        <ToolTip 
+          activator={<InsertImageDialog editor={editor} />}
+          helpText={"Insert Image"}
+        />
+        <ToolTip 
+          activator={<InsertTableModal editor={editor} />}
+          helpText={"Insert Table"}
+        />
+        <ToolTip 
+          activator={<Button
+            onClick={formatCode}
+            icon={<Code size="20" color='#1C2433' />}
+            type='textButton'
+          />}
+          helpText="Insert Code Block"
         />
       </div>
       <Line />
       <div className="inte-textEditor__history">
-        <Button
-          icon={<RotateCcw size="20" color='#1C2433' />}
-          type='textButton'
-          onClick={() => editor.dispatchCommand(UNDO_COMMAND , undefined)}
+        <ToolTip
+          activator={<Button
+            icon={<RotateCcw size="20" color='#1C2433' />}
+            type='textButton'
+            onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}
+          />}
+          helpText="Undo"
         />
-        <Button
-          icon={<RotateCw size="20" color='#1C2433' />}
-          type='textButton'
-          onClick={() => editor.dispatchCommand(REDO_COMMAND , undefined)}
+        <ToolTip
+          activator={<Button
+            icon={<RotateCw size="20" color='#1C2433' />}
+            type='textButton'
+            onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}
+          />}
+          helpText="Redo"
         />
       </div>
     </div>

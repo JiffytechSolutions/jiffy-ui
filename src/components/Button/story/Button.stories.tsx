@@ -68,6 +68,7 @@ export default {
           "outlined",
           "dangerPlain",
           "textButton",
+          "plainSecondary"
         ],
       },
       defaultValue: "primary",
@@ -258,7 +259,7 @@ const Template = (rest: NewI) => {
               ? "var(--inte-R200)"
               : rest.type == "dangerOutlined" && rest.isDisabled
               ? "var(--inte-R55)"
-              : rest.type == "secondary" && !rest.isDisabled
+              : (rest.type == "secondary" || rest.type === "plainSecondary") && !rest.isDisabled
               ? "var(--inte-G800)"
               : rest.type == "secondary" && rest.isDisabled
               ? "var(--inte-G50)"
@@ -296,6 +297,7 @@ const types = [
   "outlined",
   "dangerPlain",
   "textButton",
+  "plainSecondary"
 ];
 
 export const Types: any = Template.bind({});
@@ -489,7 +491,7 @@ Only_Icon.decorators = [
                         : variant == "dangerOutlined" ||
                           variant == "dangerPlain"
                         ? "#DF5146"
-                        : variant == "secondary" || variant == "outlined"
+                        : variant == "secondary" || variant == "outlined" || variant == "plainSecondary"
                         ? "#1C2433"
                         : variant == "textButton"
                         ? "#70747e"
@@ -518,7 +520,7 @@ Only_Icon.decorators = [
                         : variant == "dangerOutlined" ||
                           variant == "dangerPlain"
                         ? "#DF5146"
-                        : variant == "secondary" || variant == "outlined"
+                        : variant == "secondary" || variant == "outlined" || variant == "plainSecondary"
                         ? "#1C2433"
                         : variant == "textButton"
                         ? "#70747e"
@@ -547,7 +549,7 @@ Only_Icon.decorators = [
                         : variant == "dangerOutlined" ||
                           variant == "dangerPlain"
                         ? "#DF5146"
-                        : variant == "secondary" || variant == "outlined"
+                        : variant == "secondary" || variant == "outlined" || variant == "plainSecondary"
                         ? "#1C2433"
                         : variant == "textButton"
                         ? "#70747e"

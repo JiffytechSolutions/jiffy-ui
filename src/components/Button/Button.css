@@ -445,3 +445,18 @@
     opacity: 0;
   }
 }
+
+.inte-btn--plainSecondary {
+  background-color: transparent;
+  color: var(--inte-G800);
+  &:hover {
+    background-color: var(--inte-G30);
+  }
+  &:active {
+    background-color: var(--inte-G40);
+  }
+  &:disabled {
+    background-color: var(--inte-G0);
+    color: var(--inte-G40);
+  }
+}
