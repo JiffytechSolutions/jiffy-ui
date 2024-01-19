@@ -34,8 +34,6 @@ const TextAlignBox = ({ onClick, currAlign }: TextAlignBoxI) => {
     }))
   }, [])
 
-  console.log(currAlign)
-
   return (
     <Switcher
       onChange={handelValueChange}

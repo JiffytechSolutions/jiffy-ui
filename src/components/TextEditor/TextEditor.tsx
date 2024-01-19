@@ -25,6 +25,7 @@ import TableCellResizerPlugin from './plugin/Table/TableCellResizer';
 import ImagesPlugin from './plugin/ImagesPulgin';
 import CodeHighlightPlugin from './plugin/CodeHighlightPlugin';
 import FloatingLinkEditorPlugin from './plugin/FloatingLinkEditorPlugin';
+import DragDropPaste from './plugin/DragDropPastePlugin';
 
 function Placeholder() {
   return <div className="inte-TextEditor__placeholder"></div>;
@@ -77,6 +78,7 @@ const TextEditor = () => {
         <TableContext>
           <>
             <ToolBar />
+            <DragDropPaste />
             <RichTextPlugin
               contentEditable={<div ref={onRef}><ContentEditable spellCheck={false} className="inte-TextEditor__body" /></div>}
               placeholder={<Placeholder />}

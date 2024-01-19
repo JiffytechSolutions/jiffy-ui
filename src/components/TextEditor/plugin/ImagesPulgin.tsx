@@ -26,12 +26,15 @@ import { $createImageNode, $isImageNode, ImageNode, ImagePayload } from '../node
 import { Image } from '../../../icons';
 import Modal from '../../Modal/Modal';
 import FileInput from '../ui/FileInput';
+import Seprator from '../../Seprator/Seprator';
+import { TextField } from '../../Form';
+import { FlexLayout } from '../../FlexLayout';
 
 export type InsertImagePayload = Readonly<ImagePayload>;
 
 const getDOMSelection = (targetWindow: Window | null): Selection | null => CAN_USE_DOM ? (targetWindow || window).getSelection() : null;
 
-export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> =  createCommand('INSERT_IMAGE_COMMAND');
+export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> = createCommand('INSERT_IMAGE_COMMAND');
 
 export function InsertImageDialog({
   editor,
@@ -95,12 +98,17 @@ export function InsertImageDialog({
           onClick: onClose
         }}
       >
-        <FileInput
-          label="Image Upload"
-          onChange={loadImage}
-          accept="image/*"
-          data-test-id="image-modal-file-upload"
-        />
+        <FlexLayout direction='vertical' spacing='loose'>
+          <FileInput
+            label="Image Upload"
+            onChange={loadImage}
+            accept="image/*"
+            data-test-id="image-modal-file-upload"
+          />
+
+          <Seprator text='OR' />
+          <TextField label="Image URL" value={src} onChange={(newValue) => setSrc(newValue)}/>
+        </FlexLayout>
       </Modal>
     </>
   );
