@@ -11,6 +11,7 @@ import Popover from '../../../Popover/Popover'
 import { FlexLayout } from '../../../FlexLayout'
 import { $patchStyleText , $getSelectionStyleValueForProperty} from '@lexical/selection';
 import ColorPicker from '../../ui/color-picker/ColorPicker'
+import ToolTip from '../../../ToolTip/ToolTip'
 
 interface FontStyleI {
   editor: LexicalEditor
@@ -125,28 +126,40 @@ const FontStyle = ({ editor }: FontStyleI) => {
 
   return (
     <div className='inte-textEditor__fontStyle'>
-      <Button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-        }}
-        icon={<Bold size="20" color='#1C2433' />}
-        type={isBold ? "secondary" : 'textButton'}
+      <ToolTip 
+        activator={<Button
+          onClick={() => {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+          }}
+          icon={<Bold size="20" color='#1C2433' />}
+          type={isBold ? "secondary" : 'textButton'}
+        />}
+        helpText="Bold"
       />
-      <Button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-        }}
-        icon={<Italic size="20" color='#1C2433' />}
-        type={isItalic ? "secondary" : 'textButton'}
+      <ToolTip 
+        activator={<Button
+          onClick={() => {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
+          }}
+          icon={<Italic size="20" color='#1C2433' />}
+          type={isItalic ? "secondary" : 'textButton'}
+        />}
+        helpText={"Italic"}
       />
-      <Button
-        onClick={() => {
-          editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-        }}
-        icon={<Underline size="20" color='#1C2433' />}
-        type={isUnderline ? "secondary" : 'textButton'}
+      <ToolTip 
+        activator={<Button
+          onClick={() => {
+            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
+          }}
+          icon={<Underline size="20" color='#1C2433' />}
+          type={isUnderline ? "secondary" : 'textButton'}
+        />}
+        helpText={"Underline"}
       />
-      <FontColorPicker onChange={handelColorChange} color={fontColor} />
+      <ToolTip 
+        activator={<FontColorPicker onChange={handelColorChange} color={fontColor} />}
+        helpText={"Change Text Color"}
+      />
 
       <ActionList
         isOpen={open}
