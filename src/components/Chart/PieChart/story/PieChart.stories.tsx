@@ -8,6 +8,12 @@ export default {
   component: PieChart,
 
   argTypes: {
+    chartData: {
+      description: "chartData is an array of object",
+      control: {
+        type: false,
+      },
+    },
     height: {
       description: "You can change pie chart height",
       control: {
@@ -39,7 +45,7 @@ export default {
       defaultValue: false,
     },
     customClass: {
-      description: "Add custom class",
+      description: "Add custom class if need to change the design",
       control: {
         type: "text",
       },
