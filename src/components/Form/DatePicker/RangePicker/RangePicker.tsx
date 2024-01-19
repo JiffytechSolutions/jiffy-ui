@@ -325,8 +325,11 @@ const RangePicker = ({
       nD.setMonth(nD.getMonth() - 1);
       setCalendarDate(nD);
     }
+  }, []);
+
+  useEffect(() => {
     setHoveredDate(undefined);
-  }, [selectedDate]);
+  },[selectedDate])
 
   useEffect(() => {
     setTime(selectedTime);
@@ -382,8 +385,14 @@ const RangePicker = ({
                 onPrevMonth={() => goToPreviousMonth()}
                 onPrevYear={() => goToPreviousYear()}
                 onPrevYearSlot={() => goToPreviousYearSlot()}
-                onStartDateClick={() => setCurrControl("start")}
-                onEndDateClick={() => setCurrControl("end")}
+                onStartDateClick={() => {
+                  setCurrControl("start")
+                  if(selectedDate[0]) setCalendarDate(selectedDate[0])
+                }}
+                onEndDateClick={() => {
+                  setCurrControl("end");
+                  if(selectedDate[1]) setCalendarDate(selectedDate[1])
+                }}
                 onMonthClick={handelMonthClick}
                 onYearClick={handelYearClick}
                 onBack={handelBack}

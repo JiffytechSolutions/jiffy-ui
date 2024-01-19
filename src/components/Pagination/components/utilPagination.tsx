@@ -33,8 +33,6 @@ export const utilPagination = ({
     const firstPageIndex = 1;
     const lastPageIndex = totalPageCount;
 
-    console.log(leftSiblingIndex , "leftSiblingIndex" , rightSiblingIndex , "rightSiblingIndex" , shouldShowLeftDots , "shouldShowLeftDots" , shouldShowRightDots , "shouldShowRightDots" , firstPageIndex , "firstPageIndex" , lastPageIndex , "lastPageIndex")
-
     if (!shouldShowLeftDots && shouldShowRightDots) {
       const leftItemCount = 2 + 2 * siblingCount;
       const leftRange = range(1, leftItemCount);

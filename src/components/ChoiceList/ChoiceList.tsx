@@ -50,7 +50,7 @@ const ChoiceList = ({
   const [checkClass, setCheckClass] = useState(false);
   const [curr, setCurr] = useState(0);
   const parentRef = useRef<any>(null);
-  const isMobileDevice = useMobileDevice()
+  const isMobileDevice = useMobileDevice();
 
   const handleRadioGroupChange = useCallback((val: string | number) => {
     onChange(val);
@@ -91,7 +91,7 @@ const ChoiceList = ({
     (ele: HTMLElement) => {
       const liTags = Array.from(ele.querySelectorAll("li") ?? []);
       if (curr === 0) {
-        liTags[curr].scrollIntoView({ block: "center" });
+        liTags[curr]?.scrollIntoView({ block: "center" });
       } else liTags[curr]?.scrollIntoView({ block: "nearest" });
       (liTags[curr]?.getElementsByTagName("input")[0] as HTMLElement)?.focus();
     },

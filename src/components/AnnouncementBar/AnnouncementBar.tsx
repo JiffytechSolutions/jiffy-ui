@@ -16,7 +16,7 @@ const AnnouncementBar: React.FC<AnnouncementBarI> = ({
   onClose,
   bgImage,
   action,
-  active = true,
+  isOpen = true,
 }: AnnouncementBarI) => {
   const { width } = useWindowResize();
   const checkAnnouncementType: { [key: string]: string } = {
@@ -35,7 +35,7 @@ const AnnouncementBar: React.FC<AnnouncementBarI> = ({
   };
   return (
     <>
-      {active && (
+      {isOpen && (
         <div
           {...(bgImage && width >= 768 ? { style: styleBg } : {})}
           className={getClassNames({
@@ -79,7 +79,7 @@ export interface AnnouncementBarI {
   children?: any;
   onClose?: () => void;
   destroy?: boolean;
-  active?: boolean;
+  isOpen?: boolean;
   customClass?: string;
   bgImage?: string;
   action?: ButtonI;

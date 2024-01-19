@@ -65,7 +65,8 @@ export default {
       defaultValue: false,
     },
     isActive: {
-      description: "Toggle the popover",
+      description:
+        "This prop is working when tag with popover (Toggle the popover)",
       control: {
         type: "boolean",
       },
@@ -77,6 +78,22 @@ export default {
         type: "text",
       },
       defaultValue: "",
+    },
+    isAnimation: {
+      description:
+        "If you are Show and hide Tag component with animation then use isAnimation prop and sent the value true",
+      control: {
+        type: "boolean",
+      },
+      defaultValue: false,
+    },
+    isOpen: {
+      description:
+        "This prop is working when  isAnimation is true (Show and hide tag component)",
+      control: {
+        type: "boolean",
+      },
+      defaultValue: true,
     },
   },
 };
@@ -92,6 +109,8 @@ const Template = ({ ...rest }) => {
         hasPopover={rest.hasPopover}
         count={rest.count}
         customClass={rest.customClass}
+        isAnimation={rest.isAnimation}
+        isOpen={rest.isOpen}
       >
         {rest.children}
       </Tag>
@@ -258,6 +277,71 @@ tag_with_popover_and_count.decorators = [
             </Tag>
           </FlexLayout>
         </Popover>
+      </Card>
+    );
+  },
+];
+
+// animation tags
+export const tag_with_animation: any = Template.bind({});
+tag_with_animation.decorators = [
+  () => {
+    const arr = [1, 2, 3, 4, 5];
+    const [openStates, setOpenStates] = useState(arr.map(() => true));
+
+    const handleDestroy = (index: any) => {
+      setOpenStates((prevStates) =>
+        prevStates.map((state, i) => (i === index ? false : state))
+      );
+    };
+
+    return (
+      <Card>
+        {arr.map((value, index) => (
+          <Tag
+            key={index}
+            onDestroy={() => handleDestroy(index)}
+            isOpen={openStates[index]}
+            isAnimation={true}
+          >
+            Tag {value}
+          </Tag>
+        ))}
+      </Card>
+    );
+  },
+];
+
+export const tag_with_animation_with_remiveItem: any = Template.bind({});
+tag_with_animation_with_remiveItem.decorators = [
+  () => {
+    const initialArr = [1, 2, 3, 4, 5];
+    const [arr, setArr] = useState(initialArr);
+    const [openStates, setOpenStates] = useState(initialArr.map(() => true));
+
+    const handleDestroy = (index: any) => {
+      setOpenStates((prevStates) =>
+        prevStates.map((state, i) => (i === index ? false : state))
+      );
+      // Remove the item from the array
+      setTimeout(() => {
+        const newArr = arr.filter((_, i) => i !== index);
+        setArr(newArr);
+      }, 200);
+    };
+
+    return (
+      <Card>
+        {arr.map((value, index) => (
+          <Tag
+            key={index}
+            onDestroy={() => handleDestroy(index)}
+            isOpen={openStates[index]}
+            isAnimation={true}
+          >
+            Tag {value}
+          </Tag>
+        ))}
       </Card>
     );
   },

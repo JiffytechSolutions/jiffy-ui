@@ -32,7 +32,7 @@
 .inte-announcementBar__destroy button {
   background-color: unset;
   border: 0 !important;
-  box-shadow: unset!important;
+  box-shadow: unset !important;
 }
 .inte-announcementBar__destroy button:hover {
   background-color: rgba(0, 0, 0, 0.1);
@@ -46,23 +46,26 @@
 .inte-announcementBar--hasAction {
   gap: 1.2rem;
 }
-.inte-announcementBar__action > button{
-  box-shadow: unset!important;
+.inte-announcementBar__action > button {
+  box-shadow: unset !important;
 }
-.inte-announcement--warning .inte-announcementBar__action > button{
+.inte-announcement--warning .inte-announcementBar__action > button {
   border-color: var(--inte-G800);
 }
 .inte-announcementBar__action > button .inte-btn__text {
   color: var(--inte-G0);
 }
-.inte-announcement--warning .inte-announcementBar__action > button .inte-btn__text{
-  color:var(--inte-G800)
+.inte-announcement--warning
+  .inte-announcementBar__action
+  > button
+  .inte-btn__text {
+  color: var(--inte-G800);
 }
 .inte-announcementBar__action > button:hover {
-  background-color: rgba(0,0,0,0.1);
+  background-color: rgba(0, 0, 0, 0.1);
 }
 .inte-announcementBar__action > button:active {
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 /* Action Button End */
 
@@ -90,11 +93,9 @@
 }
 /* Types End */
 
-
 @media screen and (max-width: 768px) {
   .inte-announcementBar__content {
     font-weight: var(--weight-bold);
     font-size: 1.4rem;
+  }
 }
-}
-

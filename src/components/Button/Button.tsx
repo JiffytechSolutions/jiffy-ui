@@ -32,6 +32,7 @@ const Button = ({
     dangerOutlined: "inte-btn--dangerOutlined",
     dangerPlain: "inte-btn--dangerPlain",
     secondary: "inte-btn--secondary",
+    plainSecondary: "inte-btn--plainSecondary"
   };
 
   const getSize: { [key: string]: string } = {
@@ -184,7 +185,8 @@ export interface ButtonI {
     | "secondary"
     | "outlined"
     | "dangerPlain"
-    | "textButton";
+    | "textButton"
+    | "plainSecondary";
   status?: "primary" | "secondary" | "success" | "error" | "warning";
   size?: "extraThin" | "thin" | "large";
   iconAlign?: "left" | "right";

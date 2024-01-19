@@ -29,14 +29,14 @@
 }
 
 .inte-rangePicker--control-end
-  .inte-calendar__cell--inHoverRange:not(.inte-calendar__cell--inSelectedRange , .inte-calendar__cell--selected--end , .inte-calendar__cell--selected--start):hover
+  .inte-calendar__cell--inHoverRange:not(.inte-calendar__cell--inSelectedRange, .inte-calendar__cell--selected--end, .inte-calendar__cell--selected--start):hover
   .inte-calendar__cell__inner {
   border-right: 0.1rem dashed var(--inte-P900);
   border-radius: unset;
 }
 
 .inte-rangePicker--control-start
-  .inte-calendar__cell--inHoverRange:not(.inte-calendar__cell--inSelectedRange , .inte-calendar__cell--selected--end , .inte-calendar__cell--selected--start):hover
+  .inte-calendar__cell--inHoverRange:not(.inte-calendar__cell--inSelectedRange, .inte-calendar__cell--selected--end, .inte-calendar__cell--selected--start):hover
   .inte-calendar__cell__inner {
   border-left: 0.1rem dashed var(--inte-P900);
   border-radius: unset;
@@ -48,7 +48,7 @@
   padding: 2rem 2rem 0.8rem;
   font-weight: var(--weight-bolder);
   font-size: var(--inte-FS2-6);
-  color:var(--inte-G400);
+  color: var(--inte-G400);
   line-height: var(--inte-LH2-4);
 }
 
@@ -60,12 +60,23 @@
   border-top: 0;
 }
 
-.inte-calander__cell--rangeStart:not(.inte-calendar__cell--inSelectedRange , .inte-calendar__cell--selected--end , .inte-calendar__cell--selected--start) .inte-calendar__cell__inner {
+.inte-calander__cell--rangeStart:not(.inte-calendar__cell--inSelectedRange, .inte-calendar__cell--selected--end, .inte-calendar__cell--selected--start)
+  .inte-calendar__cell__inner {
   border-left: 0.1rem dashed var(--inte-P900) !important;
   border-right: 0 !important;
 }
 
-.inte-calander__cell--rangeEnd:not(.inte-calendar__cell--inSelectedRange , .inte-calendar__cell--selected--end , .inte-calendar__cell--selected--start) .inte-calendar__cell__inner {
+.inte-calander__cell--rangeEnd:not(.inte-calendar__cell--inSelectedRange, .inte-calendar__cell--selected--end, .inte-calendar__cell--selected--start)
+  .inte-calendar__cell__inner {
   border-right: 0.1rem dashed var(--inte-P900) !important;
   border-left: 0 !important;
+}
+
+@media screen and (max-width: 390px) {
+  .inte-rangePicker--popover {
+    width: 100%;
+  }
+  .inte-textField__clearBtn {
+    margin-left: unset;
+  }
 }

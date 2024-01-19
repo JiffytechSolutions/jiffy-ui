@@ -1,152 +1,122 @@
-import React from "react";
+import React, { useState } from "react";
+import { logo, menu, sideBarLogo } from "../data";
 import TopNavBar from "../TopNavBar";
 import Button from "../../Button/Button";
-import { Bell, Info } from "../../../icons";
+import ButtonGroup from "../../ButtonGroup/ButtonGroup";
+import { Bell, User } from "../../../icons";
+import AppWrapper from "../../AppWrapper/AppWrapper";
 import SideBar from "../../SideBar/SideBar";
-import NavBar from "../TopNavBar";
-import {
-  Home,
-  Phone,
-  Settings,
-  ShoppingBag,
-} from "../../../storybook/Foundation/Icons/Icons";
-import Badge from "../../Badge/Badge";
-import { FlexLayout } from "../../FlexLayout";
-import { fullLogo, logo } from "./logo";
-import { menu, menu2 } from "./data";
-import { Logo } from "../../../storybook/Foundation/Logo/Logo";
-import Carousel from "../../Carousel/Carousel";
-import { Card } from "../../Card";
-import NewTop from "../NewTop";
-import Alert from "../../Alert/Alert";
+import PageFooter from "../../PageFooter/PageFooter";
+import AnnouncementBar from "../../AnnouncementBar/AnnouncementBar";
+import AppProvider from "../../../utilities/context/AppContext";
+import useWindowResize from "../../../utilities/useWindowResize";
+import getClassNames from "../../../utilities/getClassnames";
+import "./TopNavStory.css";
 
 export default {
   title: "Components/Layout/TopNavBar",
   component: TopNavBar,
-  parameters: {
-    design: {
-      type: "figma",
-      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-3.0-(Production)?node-id=5984-312505&t=vybTUvZSW4IIqAUa-0",
-    },
-  },
-  argTypes: {
-    connectLeft: {
-      name: "connectLeft",
-      description: "Placed on left side of App Bar",
-      control: {
-        type: "text",
-        disable: true,
-      },
-    },
-    connectRight: {
-      name: "connectRight",
-      description: "Placed on right side of App Bar",
-      control: {
-        type: "text",
-        disable: true,
-      },
-    },
-    customClass: {
-      description: "Add custom class",
-      control: {
-        type: "text",
-      },
-      defaultValue: "custom_class",
-    },
-    stickyTop: {
-      description: "Fix at the top",
-      control: {
-        type: "boolean",
-      },
-      defaultValue: true,
-    },
-  },
 };
 
 const Template = ({ ...rest }) => {
-  const handelMenuChange = (newPath: string) => {
-    console.log("newPath => ", newPath);
-  };
-
   return (
-    <>
-      <NewTop
-        menu={menu}
-        connectLeft={logo}
-        connectRight={
-          <FlexLayout spacing="tight">
-            <Button
-              type="outlined"
-              icon={<Info size="20" color="#1c2433" />}
-              size="large"
-            />
-            <Button
-              type="outlined"
-              icon={<Bell size="20" color="#1c2433" />}
-              size="large"
-            />
-          </FlexLayout>
-        }
-      />
-
-      {/* <NavBar
-        topBar={true}
-        onChange={handelMenuChange}
-        connectLeft={fullLogo}
-        connectRight={
-          <FlexLayout spacing="tight">
-            <Button
-              type="outlined"
-              icon={<Info size="20" color="#1c2433" />}
-              size="large"
-            />
-            <Button
-              type="outlined"
-              icon={<Bell size="20" color="#1c2433" />}
-              size="large"
-            />
-          </FlexLayout>
-        }
-      >
-        <SideBar.Section menu={menu} />
-      </NavBar> */}
-    </>
+    <TopNavBar
+      menu={menu}
+      onChange={(e) => console.log(e)}
+      connectLeft={logo}
+      connectRight={
+        <ButtonGroup>
+          <Button type="outlined" icon={<Bell />} size="thin" />
+          <Button type="outlined" icon={<User />} size="thin" />
+        </ButtonGroup>
+      }
+    />
   );
 };
 
 export const Primary = Template.bind({});
 
-// Tooltip direction
-export const Nav_Bar: any = Template.bind({});
-Nav_Bar.decorators = [
+// AppWrapper with Top Nav Bar
+const sideBar = () => {
+  const handelMenuChange = (newPath: string) => {
+    // console.log("newPath => ", newPath);
+  };
+
+  return (
+    <SideBar logo={sideBarLogo} onChange={handelMenuChange}>
+      <SideBar.Section title="General" menu={menu} />
+    </SideBar>
+  );
+};
+
+// TopNav Bar AppWrapper
+export const TopNavBarAppWrapper: any = Template.bind({});
+TopNavBarAppWrapper.decorators = [
   () => {
-    const handelMenuChange = (newPath: string) => {
-      console.log("newPath => ", newPath);
-    };
+    const { width } = useWindowResize();
+    const [announcementBar, setAnnouncementBar] = useState(true);
+
+    const announce = (
+      <AnnouncementBar
+        bgImage="https://i.imgur.com/zpGUiXt.png"
+        children={
+          "Update available, click on download button to get the best out of our app"
+        }
+        onClose={() => setAnnouncementBar(false)}
+        destroy
+      />
+    );
     return (
-      <>
-        <NavBar
-          onChange={handelMenuChange}
-          connectLeft={logo}
-          connectRight={
-            <FlexLayout spacing="tight">
-              <Button
-                type="outlined"
-                icon={<Info size="24" color="#1c2433" />}
-                size="thin"
-              />
-              <Button
-                type="outlined"
-                icon={<Bell size="24" color="#1c2433" />}
-                size="thin"
-              />
-            </FlexLayout>
+      <AppProvider>
+        <AppWrapper
+          customClass={getClassNames({
+            "inte-TopNav__customClass": width > 991,
+          })}
+          appBar={
+            <TopNavBar
+              menu={menu}
+              onChange={() => {}}
+              connectLeft={logo}
+              connectRight={
+                <ButtonGroup>
+                  <Button type="outlined" icon={<Bell />} size="thin" />
+
+                  <Button type="outlined" icon={<User />} size="thin" />
+                </ButtonGroup>
+              }
+            />
           }
+          sideBar={sideBar()}
+          appFooter={
+            <PageFooter>
+              <div>&copy; Cedcommerc 4.0 Ounce UI</div>
+            </PageFooter>
+          }
+          announcementBar={announcementBar ? announce : undefined}
         >
-          <SideBar.Section menu={menu} />
-          <SideBar.Section menu={menu2} />
-        </NavBar>
-      </>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nobis
+            dolores recusandae a libero? Fuga fugit soluta, iste ullam facere
+            aperiam deserunt quas rem praesentium unde rerum sit illo commodi
+            deleniti aliquid id, quidem odio similique! Quisquam doloribus
+            corporis voluptatem blanditiis ad exercitationem voluptas libero
+            reprehenderit ducimus eveniet vero, sint maxime quidem veritatis
+            saepe quasi impedit voluptatum adipisci recusandae illum unde
+            dolores beatae laudantium aspernatur. Perspiciatis aspernatur
+            officiis ad, ducimus praesentium facilis obcaecati aut similique
+            provident accusamus blanditiis ratione quae minus dolores inventore
+            culpa? Iusto incidunt commodi veniam tempora eligendi itaque? Dicta
+            eius porro voluptate quam ratione nostrum sunt quae id inventore non
+            natus, corporis vero fuga eum accusamus unde possimus. Consequatur,
+            optio eaque est amet architecto, exercitationem laborum dicta harum
+            magni dolorum quod soluta nisi autem eum illo quidem sapiente
+            blanditiis. Tempora iste iure, facere voluptatibus cupiditate odit
+            quod molestiae tempora. Odio fuga porro cum voluptatibus? Dolorem
+            fuga doloribus molestias facere rerum, exercitationem, sint id non
+            eaque tempore, soluta fugiat?
+          </p>
+        </AppWrapper>
+      </AppProvider>
     );
   },
 ];

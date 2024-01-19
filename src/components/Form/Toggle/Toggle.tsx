@@ -33,6 +33,7 @@ export default function Toggle({
         "inte-toggle--required": required,
         "inte-toggle--disabled": isDisabled,
         "inte-toggle--hasHelp": helpText,
+        "inte-toggle__noDescription": !description,
         [customClass]: customClass,
       })}
     >
@@ -51,7 +52,7 @@ export default function Toggle({
         {label && (
           <span className="inte-toggle__text">
             {!helpText || isDisabled ? (
-              `${label}`
+              <>{label}</>
             ) : (
               <ToolTip
                 isOpen={false}

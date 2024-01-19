@@ -49,15 +49,16 @@ Segmented.decorators = [
     <Card title={"Segmenetd Buttons"}>
       <FlexLayout direction="vertical" spacing="loose">
         {typessize.map((variant: any, index) => (
-          < FlexLayout direction="vertical" spacing="extraTight">
-          <Text fontweight="bolder" type="T-7">{variant}</Text>
-          <ButtonGroup segmented key={index}>
-            <Button type={variant}>Button</Button>
-            <Button type={variant}>Button</Button>
-            <Button type={variant}>Button</Button>
-          </ButtonGroup>
+          <FlexLayout direction="vertical" spacing="extraTight" key={index}>
+            <Text fontweight="bolder" type="T-7">
+              {variant}
+            </Text>
+            <ButtonGroup segmented key={index}>
+              <Button type={variant}>Button</Button>
+              <Button type={variant}>Button</Button>
+              <Button type={variant}>Button</Button>
+            </ButtonGroup>
           </FlexLayout>
-          
         ))}
       </FlexLayout>
     </Card>
@@ -113,7 +114,5 @@ SegmentedWithActionList.decorators = [
   },
 ];
 export function Documentation() {
-  return (
-    <ButtonGroupDoc />
-  );
+  return <ButtonGroupDoc />;
 }

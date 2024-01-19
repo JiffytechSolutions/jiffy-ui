@@ -228,8 +228,7 @@ const TextField = React.forwardRef(
                         ? 0
                         : props.min
                       : Number(props.value as string) || 0;
-                  const returnvalue =
-                    Number(temp) + Number(step.toString());
+                  const returnvalue = Number(temp) + Number(step.toString());
                   if (
                     props.value === "" &&
                     !isNaN(parseInt(String(props.min)))
@@ -306,7 +305,7 @@ const TextField = React.forwardRef(
         {props.connectLeft && (
           <div className="inte-form--connectLeft">{props.connectLeft}</div>
         )}
-        <div className="inte-formElement__inner">
+        <div className="inte-formElement__inner" ref={handleRef}>
           {getInput()}
           {innerSufIconClass != "" ? (
             <span
@@ -444,7 +443,7 @@ export interface TextfieldI {
   customClass?: string;
   IsReadOnly?: boolean;
   id?: string;
-  controlStates?: "success" | "warning" | "error";
+  controlStates?: "success" | "warning" | "error" | "default";
   isLoading?: boolean;
   autocomplete?: "on" | "off" | "new-password";
   isClearable?: boolean;

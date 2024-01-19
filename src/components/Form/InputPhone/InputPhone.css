@@ -1,14 +1,42 @@
 .inte-inputPhone .inte-form--connectedField {
   gap: 0;
 }
-.inte-inputPhone .inte-form--connectLeft .inte-formElement__select {
+.inte-inputPhone .inte-form--connectedField .inte-formElement__select {
   border-top-right-radius: unset;
   border-bottom-right-radius: unset;
+  border-right: 0.1rem solid var(--inte-G0);
 }
 .inte-inputPhone .inte-formElement__inner .inte-formElement__textField {
   border-top-left-radius: unset;
   border-bottom-left-radius: unset;
 }
+/* new  */
+.inte-inputPhone
+  .inte-form--connectedField
+  .inte-formElement.inte-formElement--select-focused
+  .inte-formElement__select {
+  border-right: 0.1rem solid var(--inte-P900);
+}
+
+.inte-inputPhone
+  .inte-formElement--success
+  .inte-form--connectedField
+  .inte-form--connectLeft
+  .inte-formElement__control,
+.inte-inputPhone
+  .inte-formElement--warning
+  .inte-form--connectedField
+  .inte-form--connectLeft
+  .inte-formElement__control,
+.inte-inputPhone
+  .inte-formElement--error
+  .inte-form--connectedField
+  .inte-form--connectLeft
+  .inte-formElement__control {
+  border-right: unset !important;
+}
+
+/* new  */
 .inte-inputPhone .inte-formElement--spinner {
   display: none;
 }

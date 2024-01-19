@@ -13,15 +13,17 @@
   transition: all 0.3s ease;
   background-color: var(--inte-G90);
   overflow: hidden;
-  margin:0;
+  margin: 0;
 }
 
-.inte-toggle__wrapper>label {
+.inte-toggle__wrapper > label {
   display: inline-flex;
   justify-content: flex-start;
   gap: 1.2rem;
 }
-
+.inte-toggle__noDescription {
+  display: flex;
+}
 .inte-toggle__text {
   font-weight: var(--weight-normal);
   font-size: 1.6rem;
@@ -43,7 +45,7 @@
   font-size: 1.6rem;
   line-height: 2.2rem;
   margin-left: 5rem;
-  margin-top: .4rem;
+  margin-top: 0.4rem;
 }
 
 .inte-toggle:checked:hover {
@@ -85,7 +87,6 @@
   user-select: none;
 }
 
-
 .inte-toggle--disabled .inte-toggle__text,
 .inte-toggle--disabled .inte-toggle__description {
   color: var(--inte-G70);
@@ -110,7 +111,6 @@
   background-color: var(--inte-G0);
   box-shadow: -0.5px 0.5px 8px rgba(0, 0, 0, 0.5);
 }
-
 
 .inte-toggle--hasHelp .inte-toggle__text .inte-toolTip span {
   font-size: 1.6rem;

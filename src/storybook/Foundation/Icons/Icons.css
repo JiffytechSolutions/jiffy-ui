@@ -3,11 +3,19 @@
   z-index: 1;
   padding: 2rem 1.7rem;
   background: white;
-  width: 100%;
   top: 0;
+  left: 0;
+  right: 0;
+}
+.css-1gh4yjl .inte-icon-search-bar {
+  max-width: 1040px;
+  margin: auto;
 }
 .inte-icons__wrapper {
   margin-top: 10rem;
+}
+.css-1gh4yjl .inte-icons__wrapper {
+  margin-top: unset;
 }
 .inte-icons__wrapper > div {
   border: unset;

@@ -40,15 +40,18 @@
 /* Disabled State end */
 
 /* Control States */
-.inte-formElement--success.inte-formElement--focus .inte-formElement__select {
+.inte-formElement--success.inte-formElement--select-focused
+  .inte-formElement__select {
   background-color: var(--inte-GR40) !important;
   box-shadow: 0 0 0 0.4rem var(--inte-GR50) !important;
 }
-.inte-formElement--warning.inte-formElement--focus .inte-formElement__select {
+.inte-formElement--warning.inte-formElement--select-focused
+  .inte-formElement__select {
   background-color: var(--inte-Y45) !important;
   box-shadow: 0 0 0 0.4rem var(--inte-Y50) !important;
 }
-.inte-formElement--error.inte-formElement--focus .inte-formElement__select {
+.inte-formElement--error.inte-formElement--select-focused
+  .inte-formElement__select {
   background-color: var(--inte-R30) !important;
   box-shadow: 0 0 0 0.4rem var(--inte-R50) !important;
 }
@@ -117,13 +120,14 @@
 }
 /* MultiSelect End */
 
-/* Select Focus Design */
+/* Select Focus Design primary*/
 .inte-formElement--focus .inte-formElement__select,
 .inte-formElement.inte-formElement--select-focused .inte-formElement__select {
   box-shadow: 0 0 0 3px var(--inte-P30);
   border-color: var(--inte-P900);
   background-color: var(--inte-P20);
 }
+
 /* Select Focus Design end */
 
 /* Searchable Field */

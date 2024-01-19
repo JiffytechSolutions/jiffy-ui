@@ -1,395 +1,383 @@
-import React, {
-  FC,
-  useState,
-  useEffect,
-  useCallback,
-  useRef,
-  ReactNode,
-} from "react";
-
+import React, { MouseEvent, useEffect, useRef, useState } from "react";
+import PortalComponent from "../../utilities/PoratalComponent";
+import {
+  elementRect,
+  makeRangeArray,
+  pointInRangeArr,
+  swapArray,
+  getClientXY,
+} from "./SortableUtilityFun";
+import useMobileDevice from "../../utilities/useMobileDevice";
+import useBodyLock from "../../utilities/UseBodyLock";
 import "./Sortable.css";
+
+export type sortableArray = {
+  content: React.ReactNode;
+  id: number | string;
+}[];
+
+type SortableDataI = {
+  index: number;
+  element: React.ReactNode;
+  thresholdCursor: { top: number; left: number };
+  dummyIndex: number;
+  isMouseMove: boolean;
+};
+
 export interface SortableI {
-  data: any;
-  direction?: "vertical" | "horizontal";
-  onSort: (data: any) => void;
+  data: sortableArray;
+  onChange: (newAlignedData: sortableArray) => void;
   animationDuration?: number;
-  renderItem: (data: any, index: number) => void | any;
-  customClass?: string;
+  containerStyle?: React.CSSProperties;
 }
 
-const Sortable: FC<SortableI> = ({
+const Sortable = ({
   data,
-  renderItem = () => {},
-  onSort = () => {},
-  animationDuration = 200,
-  direction = "vertical",
-  customClass = "",
-}) => {
-  const list = useRef<any>();
-  const [dragging, setDragging] = useState<any>();
-  const [willEndDragging, setWillEndDragging] = useState<any>();
-  const touchId = useRef();
-  const dragMoveHandler: any = useRef();
-  const draggedItemPosition: any = useRef();
-  const itemShifts: any = useRef();
-  const itemsOrder: any = useRef();
-  const prevItems: any = useRef();
+  onChange,
+  animationDuration = 300,
+  containerStyle,
+}: SortableI) => {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const dummyContainerRef = useRef<HTMLDivElement>(null);
+  const fixedElementRef = useRef<HTMLDivElement>(null);
 
-  if (data !== prevItems.current) {
-    prevItems.current = data;
-    itemsOrder.current = data.map((_: any, index: number) => index);
-  }
+  const [dummyData, setDummyData] = useState<sortableArray>([]);
+  const [sortableData, setSortableData] = useState<SortableDataI>();
 
-  useEffect(() => {
-    const onTouchMove = () => {};
-    window.addEventListener("touchmove", onTouchMove);
-    return () => {
-      window.removeEventListener("touchmove", onTouchMove);
-    };
-  }, []);
-
-  const onDragStart: any = useCallback(
-    (node: ReactNode, x: number, touch: any) => {
-      const item: any = getItem(list.current, node);
-      const [itemNode, position] = item;
-      if (direction == "vertical" && list?.current) {
-        setDragging({
-          touch,
-          initialPosition: position,
-          itemHeights: Array.prototype.map.call(
-            list.current.childNodes,
-            (node) => node.getBoundingClientRect().height
-          ),
-          itemTopOffset:
-            itemNode.getBoundingClientRect().top -
-            list.current.childNodes[0].getBoundingClientRect().top,
-          itemSpacing:
-            list.current.childNodes[1].getBoundingClientRect().top -
-            list.current.childNodes[0].getBoundingClientRect().bottom,
-          dragStartY: x,
-        });
-        draggedItemPosition.current = {
-          previous: position,
-          new: position,
-          shiftY: 0,
-        };
-      } else {
-        setDragging({
-          touch,
-          initialPosition: position,
-          itemHeights: Array.prototype.map.call(
-            list.current.childNodes,
-            (node) => node.getBoundingClientRect().width
-          ),
-          itemSpacing:
-            list.current.childNodes[1].getBoundingClientRect().left -
-            list.current.childNodes[0].getBoundingClientRect().right,
-
-          itemoffsetLeft:
-            itemNode.getBoundingClientRect().left -
-            list.current.childNodes[0].getBoundingClientRect().left,
-
-          dragStartX: x,
-        });
-
-        draggedItemPosition.current = {
-          previous: position,
-          new: position,
-          shiftX: 0,
-        };
-      }
-
-      itemShifts.current = data.map(() => 0);
-    },
-    [dragging, direction]
+  const [originalRangeArray, setOriginalRangeArray] = useState<elementRect[]>(
+    []
   );
+  const [dummyRangeArray, setDummyRangeArray] = useState<elementRect[]>([]);
+  const [transitionArray, setTransitionArray] = useState<
+    { top: number; left: number }[]
+  >([]);
 
-  const onMouseDown = useCallback(
-    (event: any) => {
-      const d = direction == "vertical" ? event.pageY : event.pageX;
-      onDragStart(event.target, d);
-    },
-    [onDragStart, direction]
-  );
+  const isMobile = useMobileDevice();
+  useBodyLock(isMobile && dummyData.length > 0);
 
-  const onDragMove = useCallback(
-    (event: any) => {
-      let x;
-      if (dragging.touch !== undefined) {
-        for (const touch of event.changedTouches) {
-          if (touch.identifier === dragging.touch) {
-            direction == "vertical" ? touch.pageY : touch.pageX;
-            break;
-          }
-        }
-      } else {
-        x = direction == "vertical" ? event.pageY : event.pageX;
-      }
+  const timerRef = useRef<NodeJS.Timeout>();
 
-      event.preventDefault();
-      const a =
-        direction == "vertical" ? dragging.dragStartY : dragging.dragStartX;
-      const moved = x - a;
-      const draggedItemOffsetTop =
-        direction == "vertical"
-          ? dragging.itemTopOffset + moved
-          : dragging.itemoffsetLeft + moved;
-      const position = getDraggedItemPosition(
-        dragging.itemHeights,
-        dragging.itemSpacing,
-        draggedItemOffsetTop,
-        dragging.initialPosition
-      );
-      const draggedItemHeight = dragging.itemHeights[dragging.initialPosition];
-      // Update list items' positions.
-      itemShifts.current = data.map((_: any, index: number) => {
-        if (index < dragging.initialPosition) {
-          if (index >= position) {
-            return draggedItemHeight + dragging.itemSpacing;
-          } else {
-            return 0;
-          }
-        } else if (index > dragging.initialPosition) {
-          if (index <= position) {
-            return -1 * (draggedItemHeight + dragging.itemSpacing);
-          } else {
-            return 0;
-          }
-        } else {
-          return moved;
-        }
-      });
-      // Apply item shifts Y.
-      let i = 0;
-      while (i < data.length && list?.current) {
-        list.current.childNodes[i].style.transform =
-          direction == "vertical"
-            ? `translateY(${itemShifts.current[i]}px)`
-            : `translateX(${itemShifts.current[i]}px)`;
-        i++;
-      }
+  const handelAutoScroll = (event: MouseEvent | TouchEvent) => {
+    const edgeSize = 50;
+    if (!containerRef.current) return;
 
-      draggedItemPosition.current = {
-        previous: dragging.initialPosition,
-        new: position,
-        shiftX:
-          getDraggedItemPositionY(
-            dragging.itemHeights,
-            dragging.itemSpacing,
-            dragging.initialPosition,
-            position
-          ) -
-          getDraggedItemPositionY(
-            dragging.itemHeights,
-            dragging.itemSpacing,
-            dragging.initialPosition,
-            dragging.initialPosition
-          ),
-      };
-    },
-    [dragging, direction]
-  );
+    const containerRect = containerRef.current.getBoundingClientRect();
+    const { clientX, clientY } = getClientXY(event);
 
-  const onDragEnd = useCallback(() => {
-    setDragging("");
-    setWillEndDragging(true);
-    const newItemsOrder = getNewItemsOrder(
-      itemsOrder.current,
-      draggedItemPosition.current.previous,
-      draggedItemPosition.current.new
+    const viewportX = clientX;
+    const viewportY = clientY;
+    const viewportWidth = containerRef.current.clientWidth;
+    const viewportHeight = containerRef.current.clientHeight;
+
+    const edgeTop = edgeSize + containerRect.top;
+    const edgeLeft = edgeSize + containerRect.left;
+    const edgeBottom = viewportHeight + containerRect.top - edgeSize;
+    const edgeRight = viewportWidth + containerRect.left - edgeSize;
+
+    const isInLeftEdge = viewportX < edgeLeft;
+    const isInRightEdge = viewportX > edgeRight;
+    const isInTopEdge = viewportY < edgeTop;
+    const isInBottomEdge = viewportY > edgeBottom;
+
+    if (!(isInLeftEdge || isInRightEdge || isInTopEdge || isInBottomEdge)) {
+      clearTimeout(timerRef.current);
+      return;
+    }
+
+    const containerWidth = Math.max(
+      containerRef.current.scrollWidth,
+      containerRef.current.offsetWidth,
+      containerRef.current.clientWidth
     );
-    setTimeout(() => {
-      setWillEndDragging(false);
-      itemsOrder.current = newItemsOrder;
-      onSort(newItemsOrder.map((index: number) => data[index]));
-    }, animationDuration);
-  }, [itemsOrder.current]);
 
-  useEffect(() => {
-    if (dragging) {
-      dragMoveHandler.current = onDragMove;
-      if (dragging.touch !== undefined) {
-        touchId.current = dragging.touch;
-        window.addEventListener("touchmove", dragMoveHandler.current, {
-          passive: false,
-        });
-      } else {
-        window.addEventListener("mousemove", dragMoveHandler.current, {
-          passive: false,
-        });
-        window.addEventListener("mouseup", onDragEnd);
+    const containerHeight = Math.max(
+      containerRef.current.scrollHeight,
+      containerRef.current.offsetHeight,
+      containerRef.current.clientHeight
+    );
+
+    const maxScrollX = containerWidth - viewportWidth;
+    const maxScrollY = containerHeight - viewportHeight;
+
+    function adjustWindowScroll() {
+      if (!containerRef.current) return false;
+
+      const currentScrollX = containerRef.current.scrollLeft;
+      const currentScrollY = containerRef.current.scrollTop;
+
+      const canScrollUp = currentScrollY > 0;
+      const canScrollDown = currentScrollY < maxScrollY;
+      const canScrollLeft = currentScrollX > 0;
+      const canScrollRight = currentScrollX < maxScrollX;
+
+      // Since we can potentially scroll in two directions at the same time,
+      // let's keep track of the next scroll, starting with the current scroll.
+      // Each of these values can then be adjusted independently in the logic
+      // below.
+      let nextScrollX = currentScrollX;
+      let nextScrollY = currentScrollY;
+
+      // As we examine the mouse position within the edge, we want to make the
+      // incremental scroll changes more "intense" the closer that the user
+      // gets the viewport edge. As such, we'll calculate the percentage that
+      // the user has made it "through the edge" when calculating the delta.
+      // Then, that use that percentage to back-off from the "max" step value.
+      const maxStep = 50;
+
+      // Should we scroll left?
+      if (isInLeftEdge && canScrollLeft) {
+        const intensity = (edgeLeft - viewportX) / edgeSize;
+        nextScrollX = nextScrollX - maxStep * intensity;
+
+        // Should we scroll right?
+      } else if (isInRightEdge && canScrollRight) {
+        const intensity = (viewportX - edgeRight) / edgeSize;
+        nextScrollX = nextScrollX + maxStep * intensity;
       }
-    } else {
-      if (touchId.current !== undefined) {
-        touchId.current = undefined;
-        window.removeEventListener("touchmove", dragMoveHandler.current, false);
-      } else {
-        window.removeEventListener("mousemove", dragMoveHandler.current, false);
-        window.removeEventListener("mouseup", onDragEnd);
+      // Should we scroll up?
+      if (isInTopEdge && canScrollUp) {
+        const intensity = (edgeTop - viewportY) / edgeSize;
+        nextScrollY = nextScrollY - maxStep * intensity;
+
+        // Should we scroll down?
+      } else if (isInBottomEdge && canScrollDown) {
+        const intensity = (viewportY - edgeBottom) / edgeSize;
+        nextScrollY = nextScrollY + maxStep * intensity;
       }
-      dragMoveHandler.current = undefined;
-    }
-  }, [dragging]);
 
-  useEffect(() => {
-    if (willEndDragging) {
-      // Reset dragged item position.
-      list.current.childNodes[
-        draggedItemPosition.current.previous
-      ].style.transform =
-        direction == "vertical"
-          ? `translateY(${draggedItemPosition.current.shiftY}px)`
-          : `translateX(${draggedItemPosition.current.shiftX}px)`;
-    }
-  }, [willEndDragging, direction]);
+      // Sanitize invalid maximums. An invalid scroll offset won't break the
+      // subsequent .scrollTo() call; however, it will make it harder to
+      // determine if the .scrollTo() method should have been called in the
+      // first place.
+      nextScrollX = Math.max(0, Math.min(maxScrollX, nextScrollX));
+      nextScrollY = Math.max(0, Math.min(maxScrollY, nextScrollY));
 
-  const getItemStyle = (
-    isDragged: boolean,
-    willEndDragging: any | boolean,
-    shift: number,
-    animationDuration: number
+      if (nextScrollX !== currentScrollX || nextScrollY !== currentScrollY) {
+        containerRef.current.scrollTo(nextScrollX, nextScrollY);
+        return true;
+      } else return false;
+    }
+
+    (function checkForWindowScroll() {
+      clearTimeout(timerRef.current);
+
+      if (adjustWindowScroll()) {
+        timerRef.current = setTimeout(checkForWindowScroll, 30);
+      }
+    })();
+  };
+
+  const handelMouseDown = (
+    event: MouseEvent | TouchEvent | any,
+    index: number
   ) => {
-    const style: any = {
-      position: "relative",
-      transition: `all ${animationDuration}ms ease`,
+    if (!containerRef.current || !event.currentTarget) return;
+
+    const { clientX, clientY } = getClientXY(event);
+
+    const eleRect = (event.currentTarget as Element).getBoundingClientRect();
+
+    const thresholdCursor = {
+      left: clientX - eleRect.left,
+      top: clientY - eleRect.top,
     };
-    if (isDragged) {
-      style.zIndex = 99999999999999999999;
-      if (!willEndDragging) {
-        style.transition = undefined;
-      }
-    } else {
-      style.transform =
-        direction == "vertical"
-          ? `translateY(${shift}px)`
-          : `translateX(${shift}px)`;
-    }
-    return style;
+
+    const fixedEle = (
+      <div
+        ref={fixedElementRef}
+        className="inte-sortable__item inte-sortable__item--dummy"
+        style={{
+          top: eleRect.top,
+          left: eleRect.left,
+          width: eleRect.width,
+        }}
+      >
+        {data[index].content}
+      </div>
+    );
+
+    setSortableData({
+      dummyIndex: index,
+      element: fixedEle,
+      index: index,
+      thresholdCursor: thresholdCursor,
+      isMouseMove:false
+    });
+
+    setDummyData([...data]);
   };
 
-  const getItem = (list: ReactNode, node: any) => {
-    let childNode;
-    while (node) {
-      if (childNode && node === list) {
-        let i = 0;
-        while (i < node.childNodes.length) {
-          if (node.childNodes[i] === childNode) {
-            return [childNode, i];
-          }
-          i++;
-        }
-      }
-      childNode = node;
-      node = node.parentElement;
+  const handelMouseMove = (event: MouseEvent | TouchEvent | any) => {
+    if (!sortableData || !containerRef.current)
+      return;
+
+    const { clientX, clientY } = getClientXY(event);
+
+    if(fixedElementRef.current) {
+      fixedElementRef.current.style.top =
+      clientY - sortableData.thresholdCursor.top + "px";
+    fixedElementRef.current.style.left =
+      clientX - sortableData.thresholdCursor.left + "px";
+    }
+
+    const { top, left } = containerRef.current.getBoundingClientRect();
+
+    handelAutoScroll(event);
+
+    const latestIndex = pointInRangeArr(originalRangeArray, {
+      x: clientX + containerRef.current.scrollLeft - left,
+      y: clientY + containerRef.current.scrollTop - top,
+    });
+
+    if (latestIndex !== -1) { 
+      setSortableData((prev) =>
+        prev ? { ...prev, dummyIndex: latestIndex, isMouseMove : true } : prev
+      );
     }
   };
 
-  const getDraggedItemPosition = (
-    itemHeights: Array<number>,
-    itemSpacing: number,
-    draggedItemOffsetTop: number,
-    initialPosition: number
-  ) => {
-    const scanLineY =
-      draggedItemOffsetTop + itemHeights[initialPosition] / 2 + itemSpacing / 2;
-    let y = 0;
-    let i = 0;
-    while (i < itemHeights.length) {
-      y += itemHeights[i] + itemSpacing;
-      if (scanLineY <= y) {
-        return i;
-      }
-      i++;
+  const handelMouseUp = () => {
+    setSortableData(undefined);
+    setDummyData([]);
+    setTransitionArray([]);
+    if (sortableData) {
+      onChange(swapArray(sortableData.index, sortableData.dummyIndex, data));
     }
-    return itemHeights.length - 1;
   };
 
-  const getDraggedItemPositionY = (
-    itemHeights: Array<number>,
-    itemSpacing: number,
-    initialPosition: number,
-    position: number
-  ) => {
-    let top = 0;
-    let j = 0;
-    while (j < position) {
-      if (j === initialPosition) {
-        position++;
-      } else {
-        top += itemHeights[j] + itemSpacing;
-      }
-      j++;
+  const handelResize = () => {
+    if (containerRef.current) {
+      let rangeArr = makeRangeArray(containerRef.current);
+      setOriginalRangeArray([...rangeArr]);
     }
-    return top;
+    if (dummyContainerRef.current) {
+      let rangeArr = makeRangeArray(dummyContainerRef.current);
+      setDummyRangeArray([...rangeArr]);
+    }
   };
 
-  const getNewItemsOrder = (
-    itemsOrder: Array<number>,
-    fromPosition: number,
-    toPosition: number
-  ) => {
-    if (toPosition < fromPosition) {
-      return itemsOrder
-        .slice(0, toPosition)
-        .concat(itemsOrder[fromPosition])
-        .concat(itemsOrder.slice(toPosition, fromPosition))
-        .concat(itemsOrder.slice(fromPosition + 1));
+  useEffect(() => {
+    if (!containerRef.current) return;
+    window.addEventListener("mousemove", handelMouseMove);
+    window.addEventListener("mouseup", handelMouseUp);
+
+    window.addEventListener("touchmove", handelMouseMove);
+    window.addEventListener("touchend", handelMouseUp);
+    return () => {
+      window.removeEventListener("mousemove", handelMouseMove);
+      window.removeEventListener("mouseup", handelMouseUp);
+
+      window.removeEventListener("touchmove", handelMouseMove);
+      window.removeEventListener("touchend", handelMouseUp);
+    };
+  }, [sortableData]);
+
+  useEffect(() => {
+    if (
+      !originalRangeArray.length ||
+      !dummyRangeArray.length ||
+      !sortableData ||
+      !containerRef.current
+    )
+      return;
+
+    const dArr = Array(containerRef.current.children.length)
+      .fill(0)
+      .map((item, ind) => ind);
+
+    const originalIndexOfDummy = swapArray(
+      sortableData.dummyIndex,
+      sortableData.index,
+      dArr
+    );
+
+    const res = originalRangeArray.map((item, i) => {
+      const currIndexInDummy = originalIndexOfDummy[i];
+      const currTransition = {
+        top: dummyRangeArray[currIndexInDummy].top - originalRangeArray[i].top,
+        left:
+          dummyRangeArray[currIndexInDummy].left - originalRangeArray[i].left,
+      };
+      return currTransition;
+    });
+
+    setTransitionArray([...res]);
+  }, [originalRangeArray, dummyRangeArray, sortableData]);
+
+  useEffect(() => {
+    if (!containerRef.current) return;
+    let rangeArr = makeRangeArray(containerRef.current);
+    setOriginalRangeArray([...rangeArr]);
+
+    window.addEventListener("resize", handelResize);
+
+    return () => {
+      window.removeEventListener("resize", handelResize);
+    };
+  }, [data]);
+
+  useEffect(() => {
+    if (!dummyContainerRef.current) {
+      clearTimeout(timerRef.current);
+      return;
     }
-    if (toPosition > fromPosition) {
-      return itemsOrder
-        .slice(0, fromPosition)
-        .concat(itemsOrder.slice(fromPosition + 1, toPosition + 1))
-        .concat(itemsOrder[fromPosition])
-        .concat(itemsOrder.slice(toPosition + 1));
-    }
-    return itemsOrder.slice();
-  };
+    let rangeArr = makeRangeArray(dummyContainerRef.current);
+    setDummyRangeArray([...rangeArr]);
+  }, [sortableData]);
 
   return (
-    <div
-      className={`inte-sortable ${customClass}`.replace(/\s\s+/g, " ").trim()}
-    >
-      <ul
-        tabIndex={0}
-        ref={list}
-        className={`inte-sortable__wrapper ${
-          direction === "vertical"
-            ? "inte-sortable--vertical"
-            : "inte-sortable--horizontal"
-        }`
-          .replace(/\s\s+/g, " ")
-          .trim()}
-      >
-        {itemsOrder.current.map(
-          (changesIndex: number, currentIndex: number) => (
-            <li
-              key={currentIndex}
-              className={` inte-sortable__item  ${
-                dragging &&
-                currentIndex === draggedItemPosition.current.previous
-                  ? "inte-sortable__item--active"
-                  : ""
-              }`
-                .replace(/\s\s+/g, " ")
-                .trim()}
-              style={
-                dragging || willEndDragging
-                  ? getItemStyle(
-                      currentIndex === draggedItemPosition.current.previous,
-                      willEndDragging,
-                      itemShifts.current[currentIndex],
-                      animationDuration
-                    )
-                  : { transform: "none" }
-              }
-              onMouseDown={onMouseDown}
+    <>
+      <div ref={containerRef} className="inte-sortable" style={containerStyle}>
+        {data.map((ele, ind) => {
+          const currentTransition = transitionArray[ind]
+            ? `${transitionArray[ind].left ?? 0}px,${
+                transitionArray[ind].top ?? 0
+              }px,0`
+            : "(0 0  0)";
+          return (
+            <div
+              key={ele.id}
+              className="inte-sortable__item"
+              onMouseDown={(event) => handelMouseDown(event, ind)}
+              onTouchStart={(event) => handelMouseDown(event, ind)}
+              style={{
+                opacity: sortableData?.index === ind ? ".2" : "",
+                transition: sortableData
+                  ? `transform ${animationDuration}ms `
+                  : "",
+                transform: sortableData
+                  ? `translate3d(${currentTransition})`
+                  : "",
+                position: sortableData ? "relative" : undefined,
+                userSelect: sortableData ? "none" : undefined,
+              }}
             >
-              {renderItem(data, changesIndex)}
-            </li>
-          )
-        )}
-      </ul>
-    </div>
+              {ele.content}
+            </div>
+          );
+        })}
+      </div>
+      {!!dummyData.length && (
+        <div
+          ref={dummyContainerRef}
+          className="inte-sortable inte-sortable--dummy"
+          style={{
+            ...containerStyle,
+            width: containerRef.current?.getBoundingClientRect().width + "px",
+          }}
+        >
+          {dummyData.map((ele) => {
+            return (
+              <div key={ele.id} className="inte-sortable__item">
+                {ele.content}
+              </div>
+            );
+          })}
+        </div>
+      )}
+      <PortalComponent>{sortableData?.isMouseMove ? sortableData?.element : null}</PortalComponent>
+    </>
   );
 };
+
 export default Sortable;

@@ -314,7 +314,7 @@ const sideBar = () => {
   ];
 
   const handelMenuChange = (newPath: string) => {
-    console.log("newPath => ", newPath);
+    // console.log("newPath => ", newPath);
   };
 
   const makeStore = () => {
@@ -455,7 +455,6 @@ const dataTable = () => {
   };
 
   const handelSelectChange = (newSelectedKeys: any) => {
-    console.log(newSelectedKeys);
     let newKeys = { ...selectedRowKey };
     Object.keys(newSelectedKeys).map((item) => {
       newKeys[item] = newSelectedKeys[item];
@@ -484,32 +483,30 @@ const dataTable = () => {
   ];
 
   return (
-    <Card>
-      <DataTable
-        columns={TemplateColumnsT}
-        isFixedHeader
-        stickyScrollBar
-        scrollX={1800}
-        dataSource={currTableData}
-        rowSelection={{
-          selectedRowKeys: currentSelectedRowKeys,
-          onSelectChange: handelSelectChange,
-        }}
-        pagination={
-          <Pagination
-            type="fullLength"
-            currentPage={currentPage}
-            totalitem={5000}
-            onPageChange={onPageChange}
-            onEnter={onEnter}
-            onPrevious={onPrevious}
-            onNext={onNext}
-            onCountChange={onCountChange}
-            countPerPage={itemPerPage}
-          />
-        }
-      />
-    </Card>
+    <DataTable
+      columns={TemplateColumnsT}
+      isFixedHeader
+      stickyScrollBar
+      scrollX={1800}
+      dataSource={currTableData}
+      rowSelection={{
+        selectedRowKeys: currentSelectedRowKeys,
+        onSelectChange: handelSelectChange,
+      }}
+      pagination={
+        <Pagination
+          type="fullLength"
+          currentPage={currentPage}
+          totalitem={5000}
+          onPageChange={onPageChange}
+          onEnter={onEnter}
+          onPrevious={onPrevious}
+          onNext={onNext}
+          onCountChange={onCountChange}
+          countPerPage={itemPerPage}
+        />
+      }
+    />
   );
 };
 
@@ -584,8 +581,10 @@ const Template = ({ ...rest }) => {
         announcementBar={announcementBar ? announce : undefined}
       >
         {pageHeader}
-        {features}
-        {dataTable()}
+        <Card>
+          {features}
+          {dataTable()}
+        </Card>
         <Modal
           modalSize="large"
           isOpen={open}

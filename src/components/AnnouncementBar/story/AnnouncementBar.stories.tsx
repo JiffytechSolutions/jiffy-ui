@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import AnnouncementBar from "../AnnouncementBar";
-import "./story.css";
 import AnnouncementBarDoc from "../Doument/AnnouncementBarDoc";
 import Carousel from "../../Carousel/Carousel";
 import Marquee from "../../Marquee/Marquee";
 import { Card } from "../../Card";
+import "./story.css";
 
 export default {
   title: "Components/Feedback/AnnouncementBar",
@@ -40,7 +40,7 @@ export default {
         type: "function",
       },
     },
-    active: {
+    isOpen: {
       description: "Show and hide Announcement",
       control: {
         type: "boolean",
@@ -66,7 +66,6 @@ export default {
       control: {
         disable: true,
       },
-      
     },
   },
 };
@@ -81,7 +80,7 @@ const Template = ({ ...rest }) => {
   return (
     <AnnouncementBar
       type={rest.type}
-      active={rest.active && active}
+      isOpen={rest.active && active}
       destroy={rest.destroy}
       onClose={destroyf}
       children={rest.children}
@@ -180,12 +179,11 @@ announcmentbar_with_marquee.decorators = [
   () => (
     <Card>
       <AnnouncementBar type="primary" destroy={false}>
-      <Marquee
-        content="
-    Update available, click on download button to get the best out of our
-    app!"
-      />
-    </AnnouncementBar>
+        <Marquee
+          align="center"
+          content="Update available, click on download button to get the best out of our  app!"
+        />
+      </AnnouncementBar>
     </Card>
   ),
 ];
