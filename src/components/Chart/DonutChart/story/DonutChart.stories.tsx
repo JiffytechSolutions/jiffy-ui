@@ -3,7 +3,7 @@ import { Card } from "../../../Card";
 import DonutChart from "../DonutChart";
 
 export default {
-  title: "Components/DonutChart",
+  title: "Components/Chart/DonutChart",
   component: DonutChart,
 
   argTypes: {
@@ -13,15 +13,9 @@ export default {
         type: false,
       },
     },
-    height: {
-      description: "You can change pie chart height",
-      control: {
-        type: "number",
-      },
-      defaultValue: 250,
-    },
-    width: {
-      description: "You can change pie chart width",
+
+    size: {
+      description: "You can change pie chart size",
       control: {
         type: "number",
       },
@@ -62,9 +56,18 @@ export default {
 };
 
 const Template = ({ ...rest }) => {
+  const chartData = [
+    { value: 250, label: "Series A", color: "rgb(154, 111, 176)" },
+    { value: 250, label: "Series B", color: "rgb(224, 172, 43)" },
+    { value: 150, label: "Series C", color: "rgb(102, 137, 198)" },
+    // { value: 105, label: "Series D", color: "rgb(165, 50, 83)" },
+    // { value: 50, label: "Series E", color: "rgb(232, 82, 82)" },
+    // { value: 300, label: "Series F", color: "pink" },
+  ];
+
   return (
     <Card>
-      <DonutChart />
+      <DonutChart {...rest} chartData={chartData} />
     </Card>
   );
 };

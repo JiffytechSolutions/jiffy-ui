@@ -4,7 +4,7 @@ import PieChart, { PieChartData } from "../PieChart";
 import { FlexLayout } from "../../../FlexLayout";
 
 export default {
-  title: "Components/PieChart",
+  title: "Components/Chart/PieChart",
   component: PieChart,
 
   argTypes: {

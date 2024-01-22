@@ -1,9 +1,4 @@
-.inte-donutChart {
-  width: max-content;
-}
-
-/* tooltip  css*/
-.inte-pieChart__tooltip {
+.inte-ChartTooltip {
   position: absolute;
   color: var(--inte-G0);
   height: 4.4rem;
@@ -17,7 +12,7 @@
   z-index: var(--inte-Z-10);
   background-color: var(--inte-G800);
 }
-.inte-pieChart__tooltip::after {
+.inte-ChartTooltip::after {
   content: " ";
   position: absolute;
   top: 100%;
