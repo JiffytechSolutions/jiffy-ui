@@ -9,7 +9,7 @@ export default {
 
   argTypes: {
     chartData: {
-      description: "chartData is an array of object",
+      description: `<div><strong>chartData is an array of object:-</strong></div><i>Accepted key value pairs:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>value<span style="color:red">*</span></td><td>Number</td></tr><tr><td>label<span style="color:red">*</span></td><td>String</td></tr><tr><td>color<span style="color:red">*</span></td><td>String</td></tr></tbody></table>`,
       control: {
         type: false,
       },
@@ -36,6 +36,15 @@ export default {
       },
       defaultValue: false,
     },
+    tooltipValue: {
+      description:
+        "If you can showing tooltip value percentage or value then use tooltipValue prop and select inside options",
+      control: {
+        type: "radio",
+        options: ["percentage", "value"],
+      },
+      defaultValue: "percentage",
+    },
     percentage: {
       description:
         "If you can showing total percentage value then use percentage prop and pass the value true",
@@ -53,16 +62,8 @@ export default {
   },
 };
 const chartData: PieChartData[] = [
-  // { value: 20, label: "Series A", color: "#F0EDFA" },
-  // { value: 35, label: "Series B", color: "#C5B8EA" },
-  // { value: 20, label: "Series C", color: "#9984DB" },
-  // { value: 5, label: "Series D", color: "#D1E9FF" },
-  // { value: 15, label: "Series E", color: "#B2DDFF" },
-  // { value: 5, label: "Series F", color: "#53B1FD" },
-  // { value: 15, label: "Series E", color: "#B2DDFF" },
-
-  { value: 24.5, label: "Series A", color: "#F0EDFA" },
-  { value: 20.5, label: "Series B", color: "#C5B8EA" },
+  { value: 25, label: "Series A", color: "#F0EDFA" },
+  { value: 20, label: "Series B", color: "#C5B8EA" },
   { value: 15, label: "Series C", color: "#9984DB" },
   { value: 15, label: "Series D", color: "#D1E9FF" },
   { value: 15, label: "Series E", color: "#B2DDFF" },
@@ -86,40 +87,73 @@ const Template = ({ ...rest }) => {
 export const Primary = Template.bind({});
 
 // Pie Chart Percentage
-export const PieChartPercentage = () => {
+export const PieChartPercentage = ({ ...rest }) => {
   return (
     <Card title="Pie Chart with showing total percentage">
       <FlexLayout halign="center">
-        <PieChart percentage chartData={chartData} height={200} width={200} />
+        <PieChart percentage chartData={chartData} height={250} width={250} />
       </FlexLayout>
     </Card>
   );
 };
 
 // Pie Chart with tooltip
-export const PieChartTooltip = () => {
+export const PieChartTooltip = ({ ...rest }) => {
   return (
     <Card title="Pie Chart with tooltip (Mouse hover any particular area then showing tooltip)">
-      <FlexLayout halign="center">
-        <PieChart tooltip chartData={chartData} height={200} width={200} />
+      <FlexLayout spacing="mediumLoose" wrap="wrap" halign="center">
+        <PieChart
+          tooltip
+          chartData={[
+            { value: 250, label: "Series A", color: "#F0EDFA" },
+            { value: 400, label: "Series B", color: "#C5B8EA" },
+            { value: 550, label: "Series C", color: "#9984DB" },
+            { value: 310, label: "Series D", color: "#D1E9FF" },
+            { value: 100, label: "Series E", color: "#B2DDFF" },
+          ]}
+          height={250}
+          width={250}
+          tooltipValue="percentage"
+        />
+
+        <PieChart
+          tooltip
+          chartData={[
+            { value: 250, label: "Series A", color: "#F0EDFA" },
+            { value: 400, label: "Series B", color: "#C5B8EA" },
+            { value: 550, label: "Series C", color: "#9984DB" },
+            { value: 310, label: "Series D", color: "#D1E9FF" },
+            { value: 100, label: "Series E", color: "#B2DDFF" },
+          ]}
+          height={250}
+          width={250}
+          tooltipValue="value"
+        />
       </FlexLayout>
     </Card>
   );
 };
 
 // Pie Chart with All
-export const PieChartAll = () => {
+export const PieChartAll = ({ ...rest }) => {
   return (
     <Card title="Pie Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="loose" wrap="wrap">
-        <PieChart tooltip chartData={chartData} height={200} width={200} />
         <PieChart
           tooltip
+          percentage
+          chartData={chartData}
+          height={200}
+          width={200}
+        />
+        <PieChart
+          tooltip
+          percentage
           chartData={[
             { value: 25, label: "Series A", color: "#F0EDFA" },
             { value: 15, label: "Series B", color: "#C5B8EA" },
             { value: 20, label: "Series C", color: "#9984DB" },
-            { value: 5, label: "Series D", color: "#D1E9FF" },
+            { value: 15, label: "Series D", color: "#D1E9FF" },
             { value: 25, label: "Series E", color: "#B2DDFF" },
           ]}
           height={200}
@@ -127,6 +161,7 @@ export const PieChartAll = () => {
         />
         <PieChart
           tooltip
+          percentage
           chartData={[
             { value: 25, label: "Series A", color: "#53B1FD" },
             { value: 25, label: "Series B", color: "#D1E9FF" },
@@ -138,6 +173,7 @@ export const PieChartAll = () => {
         />
         <PieChart
           tooltip
+          percentage
           chartData={[
             { value: 50, label: "Series A", color: "#53B1FD" },
             { value: 25, label: "Series B", color: "#D1E9FF" },
@@ -148,6 +184,7 @@ export const PieChartAll = () => {
         />
         <PieChart
           tooltip
+          percentage
           chartData={[
             { value: 50, label: "Series A", color: "#9984DB" },
             { value: 50, label: "Series B", color: "#D1E9FF" },
@@ -157,6 +194,7 @@ export const PieChartAll = () => {
         />
         <PieChart
           tooltip
+          percentage
           chartData={[{ value: 100, label: "Series A", color: "#9984DB" }]}
           height={200}
           width={200}

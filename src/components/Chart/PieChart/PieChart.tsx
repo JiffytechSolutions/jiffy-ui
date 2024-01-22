@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import getClassNames from "../../../utilities/getClassnames";
 import "./PieChart.css";
 
@@ -7,14 +7,15 @@ export interface PieChartI {
   height?: number;
   width?: number;
   tooltip?: boolean;
+  tooltipValue?: "percentage" | "value";
   percentage?: boolean;
   customClass?: string;
 }
 
 export interface PieChartData {
-  value: number | string;
+  value: number;
   label: string;
-  color?: string;
+  color: string;
 }
 
 const getTotalPercentage = (chartData: PieChartData[]) =>
@@ -27,16 +28,25 @@ const PieChart: React.FC<PieChartI> = ({
   percentage = false,
   tooltip = false,
   customClass = "",
+  tooltipValue = "percentage",
 }) => {
   const moveRef = useRef<any>(null);
   const toolTipRef = useRef<any>(null);
   const totalPercentage = getTotalPercentage(chartData);
   let cumulativePercentage = 0;
-  const [tooltipText, setTooltipText] = useState({ label: "", value: "" });
+  const [tooltipText, setTooltipText] = useState({ label: "", value: 0 });
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
   const [hoveredSlice, setHoveredSlice] = useState<number | null>(null);
   const [tooltipWidth, setTooltipWidth] = useState<number>(130);
   const [rotateP, setRotateP] = useState<any>([]);
+
+  const totalValue = chartData.reduce(
+    (sum, item) => sum + Number(item.value) / 100,
+    0
+  );
+
+  const result = chartData.map((value: any) => value.value / totalValue); // Divide each element of b by a
+  const totalP = result.reduce((sum, value) => sum + value, 0); // Get the sum of the results
 
   const handleMouseOver = (
     label: any,
@@ -52,7 +62,7 @@ const PieChart: React.FC<PieChartI> = ({
   };
 
   const handleMouseLeave = () => {
-    setTooltipText({ label: "", value: "" });
+    setTooltipText({ label: "", value: 0 });
     setHoveredSlice(null);
   };
 
@@ -95,6 +105,13 @@ const PieChart: React.FC<PieChartI> = ({
   }, [chartData]);
 
   const allNegative = rotateP.every((value: any) => value < 0);
+
+  // percentage format
+  const formatPercentage = (value: number) => {
+    const formattedValue =
+      value % 1 === 0 ? value.toFixed(0) : value.toFixed(2);
+    return `${formattedValue}%`;
+  };
 
   return (
     <>
@@ -175,7 +192,9 @@ const PieChart: React.FC<PieChartI> = ({
           })}
         </svg>
         {percentage && (
-          <div className="inte-pieChart__percentage">{totalPercentage}%</div>
+          <div className="inte-pieChart__percentage">
+            {formatPercentage(totalP)}
+          </div>
         )}
         {tooltipText.label && tooltipText.value && tooltip && (
           <div
@@ -186,7 +205,11 @@ const PieChart: React.FC<PieChartI> = ({
             }}
             ref={toolTipRef}
           >
-            {tooltipText.label}: {tooltipText.value}%
+            {`${tooltipText.label}:  ${
+              tooltipValue === "percentage"
+                ? formatPercentage(tooltipText.value / totalValue)
+                : tooltipText.value
+            }`}
           </div>
         )}
       </div>
@@ -195,4 +218,3 @@ const PieChart: React.FC<PieChartI> = ({
 };
 
 export default PieChart;
-// added animation
