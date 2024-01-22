@@ -29,6 +29,7 @@ import FileInput from '../ui/FileInput';
 import Seprator from '../../Seprator/Seprator';
 import { TextField } from '../../Form';
 import { FlexLayout } from '../../FlexLayout';
+import ToolTip from '../../ToolTip/ToolTip';
 
 export type InsertImagePayload = Readonly<ImagePayload>;
 
@@ -83,7 +84,10 @@ export function InsertImageDialog({
 
   return (
     <>
-      {activator}
+      <ToolTip 
+        activator={activator}
+        helpText="Insert image"
+      />
       <Modal
         isOpen={open}
         onClose={onClose}

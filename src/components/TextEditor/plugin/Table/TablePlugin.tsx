@@ -1,11 +1,3 @@
-/**
- * Copyright (c) Meta Platforms, Inc. and affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- *
- */
-
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
   $createTableNodeWithDimensions,
@@ -32,6 +24,7 @@ import Text from '../../../Text/Text';
 import { TextField } from '../../../Form';
 import { GridSvg } from '../ToolBar/toolBarSvg';
 import { FlexLayout } from '../../../FlexLayout';
+import ToolTip from '../../../ToolTip/ToolTip';
 
 export type InsertTableCommandPayload = Readonly<{
   columns: string;
@@ -126,7 +119,10 @@ export const InsertTableModal = ({ editor }: { editor: LexicalEditor }) => {
 
   return (
     <>
-      {activator}
+      <ToolTip
+        activator={activator}
+        helpText="Insert Table"
+      />
       <Modal
         heading='Add Table'
         modalSize='small'

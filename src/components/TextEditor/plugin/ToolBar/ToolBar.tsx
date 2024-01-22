@@ -216,18 +216,9 @@ const ToolBar = () => {
       </div>
       <Line />
       <div className='inte-textEditor__specialNodes'>
-        <ToolTip 
-          activator={<InsertLink editor={editor} isLink={isLink} selectedText={selectedText} />}
-          helpText={"Insert Link"}
-        />
-        <ToolTip 
-          activator={<InsertImageDialog editor={editor} />}
-          helpText={"Insert Image"}
-        />
-        <ToolTip 
-          activator={<InsertTableModal editor={editor} />}
-          helpText={"Insert Table"}
-        />
+        <InsertLink editor={editor} isLink={isLink} selectedText={selectedText} />
+        <InsertImageDialog editor={editor} />
+        <InsertTableModal editor={editor} />
         <ToolTip 
           activator={<Button
             onClick={formatCode}

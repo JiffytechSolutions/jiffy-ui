@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import { InitialConfigType, LexicalComposer } from "@lexical/react/LexicalComposer";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
 import { ContentEditable } from "@lexical/react/LexicalContentEditable";
 import LexicalErrorBoundary from "@lexical/react/LexicalErrorBoundary";
@@ -28,11 +28,8 @@ import FloatingLinkEditorPlugin from './plugin/FloatingLinkEditorPlugin';
 import DragDropPaste from './plugin/DragDropPastePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 
-function Placeholder() {
-  return <div className="inte-TextEditor__placeholder"></div>;
-}
 
-const editorConfig = {
+const editorConfig : InitialConfigType = {
   namespace: "TextEditor",
   theme: EditorTheme,
   onError(error: Error) {
@@ -54,9 +51,11 @@ const editorConfig = {
   ]
 };
 
+export interface TextEditorI {
+  placeholder?: string
+}
 
-
-const TextEditor = () => {
+const TextEditor = ({ placeholder }: TextEditorI) => {
 
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
@@ -81,11 +80,13 @@ const TextEditor = () => {
             <ToolBar />
             <AutoFocusPlugin />
             <DragDropPaste />
-            <RichTextPlugin
-              contentEditable={<div ref={onRef}><ContentEditable spellCheck={false} className="inte-TextEditor__body" /></div>}
-              placeholder={<Placeholder />}
-              ErrorBoundary={LexicalErrorBoundary}
-            />
+            <div className='inte-TextEditor__body--wrapper'>
+              <RichTextPlugin
+                contentEditable={<div ref={onRef}><ContentEditable spellCheck={false} className="inte-TextEditor__body" /></div>}
+                placeholder={<div className="inte-TextEditor__placeholder">{placeholder}</div>}
+                ErrorBoundary={LexicalErrorBoundary}
+              />
+            </div>
             <TablePlugin />
             <TableCellResizerPlugin />
             <HistoryPlugin />
