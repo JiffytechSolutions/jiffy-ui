@@ -1,41 +1,30 @@
 import React from "react";
 import {
   AlertCircle,
-  ChevronDown,
   HelpCircle,
   Home,
-  Logout,
-  Phone,
   Settings,
   ShoppingBag,
-} from "../../storybook/Foundation/Icons/Icons";
+} from "../../../storybook/Foundation/Icons/Icons";
+
 export const menu = [
   {
-    id: "home",
-    label: "Home",
+    id: "dashboard",
+    label: "Dashboard",
     path: "/",
     icon: <Home size="20" />,
-    // badge: (
-    //   <Badge type="success" variant="accent" size="small">
-    //     New
-    //   </Badge>
-    // ),
   },
   {
     id: "proList",
-    label: "Product List",
+    label: "Product",
     path: "/productList",
     icon: <ShoppingBag size="20" />,
+
     children: [
       {
         id: "pro1",
-        label: "pro1",
+        label: "Product List Data Table   ",
         path: "/product1",
-        // badge: (
-        //   <Badge type="success" size="small">
-        //     54
-        //   </Badge>
-        // ),
       },
       {
         id: "pro2",
@@ -50,10 +39,22 @@ export const menu = [
     ],
   },
   {
-    id: "setting",
-    label: "Setting",
-    path: "/setting",
+    id: "order",
+    label: "Order",
+    path: "/order",
     icon: <Settings size="20" />,
+    children: [
+      {
+        id: "viewOrder",
+        label: "View Order",
+        path: "/viewOrder",
+      },
+      {
+        id: "editOrder",
+        label: "Edit Order",
+        path: "/editOrder",
+      },
+    ],
   },
   {
     id: "help",
@@ -69,19 +70,33 @@ export const menu = [
     children: [
       {
         id: "FAQ1",
-        label:
-          "FAQ  sfg;sdf lgsfkd;g sd ksf gskdfg sf gslfd gsdf gsdf gsfd g;sdfg l;fg sfdg sfd;g s",
-        path: "/product1",
+        label: "FAQ 1",
+        path: "/FAQ1",
       },
       {
         id: "FAQ2",
         label: "FAQ2",
-        path: "/FAQ",
+        path: "/FAQ2",
       },
       {
-        id: "pro3",
-        label: "pro3",
+        id: "faq3",
+        label: "FAQ3",
         path: "/FAQ3",
+      },
+      {
+        id: "faq4",
+        label: "FAQ 4",
+        path: "/faq4",
+      },
+      {
+        id: "faq5",
+        label: "FAQ 5",
+        path: "/faq5",
+      },
+      {
+        id: "faq6",
+        label: "FAQ 6",
+        path: "/faq6",
       },
     ],
   },
@@ -121,60 +136,6 @@ export const menu = [
     path: "/help6",
     icon: <HelpCircle size="20" />,
   },
-  // {
-  //   id: "help7",
-  //   label: "Help7",
-  //   path: "/help7",
-  //   icon: <HelpCircle size="20" />,
-  // },
-  // {
-  //   id: "help8",
-  //   label: "Help8",
-  //   path: "/help8",
-  //   icon: <HelpCircle size="20" />,
-  // },
-  // {
-  //   id: "help9",
-  //   label: "Help9",
-  //   path: "/help9",
-  //   icon: <HelpCircle size="20" />,
-  // },
-  // {
-  //   id: "help10",
-  //   label: "Help10",
-  //   path: "/help10",
-  //   icon: <HelpCircle size="20" />,
-  // },
-  // {
-  //   id: "help11",
-  //   label: "Help11",
-  //   path: "/help11",
-  //   icon: <HelpCircle size="20" />,
-  // },
-  // {
-  //   id: "help12",
-  //   label: "Help12",
-  //   path: "/help12",
-  //   icon: <HelpCircle size="20" />,
-  // },
-  // {
-  //   id: "help13",
-  //   label: "Help13",
-  //   path: "/help13",
-  //   icon: <HelpCircle size="20" />,
-  // },
-  // {
-  //   id: "help14",
-  //   label: "Help14",
-  //   path: "/help14",
-  //   icon: <HelpCircle size="20" />,
-  // },
-  // {
-  //   id: "help15",
-  //   label: "Help15",
-  //   path: "/help15",
-  //   icon: <HelpCircle size="20" />,
-  // },
 ];
 
 export const logo = (
