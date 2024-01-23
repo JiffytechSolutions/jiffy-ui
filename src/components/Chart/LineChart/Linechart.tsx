@@ -24,7 +24,7 @@ const LineChart: React.FC<LineChartProps> = ({ datasets }) => {
       // Clear the canvas
       context.clearRect(0, 0, canvas.width, canvas.height);
 
-      drawGrid(context, canvas.width, canvas.height, 50);
+      drawGrid(context, canvas.width, canvas.height, 25);
 
       // Find the maximum value in the datasets to scale the chart
       const maxDataValue = Math.max(...datasets.flat());
@@ -74,7 +74,7 @@ const LineChart: React.FC<LineChartProps> = ({ datasets }) => {
 
   const drawGrid = (context: CanvasRenderingContext2D, width: number, height: number, gridSize: number) => {
     context.strokeStyle = '#ccc';
-    context.lineWidth = 0.5;
+    context.lineWidth = 2;
 
     for (let x = 0; x <= width; x += gridSize) {
       context.beginPath();
