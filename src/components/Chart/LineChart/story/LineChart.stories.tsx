@@ -1,30 +1,32 @@
 import React from "react";
-import Linechart from "../Linechart";
+import LineChart from "../LineChart";
 import LineChart2, { dataSetLineChart } from "../LineChart2";
+import { Card } from "../../../Card";
 
 export default {
     title : "Components/Chart/LineChart",
-    component : Linechart
+    component : LineChart,
+    parameters: {
+      design: {
+        type: "figma",
+        url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=16798-42618&mode=design&t=IDeG69ZTIEmrpP9x-0",
+      },
+    },
 }
 
 const Template = ({...rest}) => {
-    const chartData = [
-        Array(5).fill(0).map(i => Math.floor(Math.random()*2000)),
-        Array(5).fill(0).map(i => Math.floor(Math.random()*2000)),
-        Array(5).fill(0).map(i => Math.floor(Math.random()*2000))
-    ];
-
     const demoDataSetLineChart: dataSetLineChart = {
-        labels: ["January", "February", "March", "April", "May" , "June", "July" , "August", "September", "October", "November", "December"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May" , "Jun", "Jul" , "Aug", "Sep", "Oct", "Nov", "Dec"],
         dataSet: [
           {
             color: "#a83232",
-            points: Array(12).fill(0).map(i => Math.floor(Math.random()*1000)),
+            // points: Array(12).fill(0).map(i => Math.floor(Math.random()*100)),
+            points : [95 , 0 , 0 , 0 , 95 , 20 , 50 , 20 , 70 , 60]
           },
-          {
-            color: "#40a832",
-            points:Array(12).fill(0).map(i => Math.floor(Math.random()*1000)),
-          },
+          // {
+          //   color: "#40a832",
+          //   points:Array(12).fill(0).map(i => Math.floor(Math.random()*100)),
+          // },
         //   {
         //     color: "#a832a2",
         //     points: Array(12).fill(0).map(i => Math.floor(Math.random()*1000)),
@@ -33,7 +35,9 @@ const Template = ({...rest}) => {
       };
 
     return (
-        <LineChart2 {...demoDataSetLineChart}/>
+        <Card>
+          <LineChart {...demoDataSetLineChart}/>
+        </Card>
     )
 }
 

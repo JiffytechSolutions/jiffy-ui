@@ -1,6 +1,5 @@
-
 .inte-TextEditor {
-    position: relative;
+  position: relative;
 }
 
 .inte-TextEditor__body--wrapper {
@@ -13,38 +12,38 @@
 }
 
 .inte-TextEditor__toolbar {
-    display: flex;
-    gap:8px;
-    padding: 15px 10px;
-    border:1px solid var(--inte-G40);
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
+  display: flex;
+  gap: 8px;
+  padding: 15px 10px;
+  border: 1px solid var(--inte-G40);
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
 }
 
 .inte-TextEditor__body {
-    min-height: 150px;
-    resize: none;
-    font-size: 15px;
-    caret-color: rgb(5, 5, 5);
-    position: relative;
-    tab-size: 1;
-    outline: 0;
-    padding: 15px 10px;
-    caret-color: #444;
-    border:1px solid var(--inte-G40);
-    border-radius:5px;
-    border-top: 0;
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
+  min-height: 150px;
+  resize: none;
+  font-size: 15px;
+  caret-color: rgb(5, 5, 5);
+  position: relative;
+  tab-size: 1;
+  outline: 0;
+  padding: 15px 10px;
+  caret-color: #444;
+  border: 1px solid var(--inte-G40);
+  border-radius: 5px;
+  border-top: 0;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
 }
 
 .inte-TextEditor__placeholder {
-    position: absolute;
-    top : 15px;
-    left:10px
+  position: absolute;
+  top: 15px;
+  left: 10px;
 }
 
-.inte-TextEditor__list--ol , 
+.inte-TextEditor__list--ol,
 .inte-TextEditor__list--ul {
   margin: unset;
   padding: 0 15px;
@@ -92,7 +91,7 @@
 }
 
 .inte-TextEditor__tableCell {
-  width : 7rem;
+  width: 7rem;
   height: 5rem;
   padding: 0.8rem;
   border: 0.1rem solid var(--inte-G40);
@@ -103,17 +102,17 @@
   position: absolute;
 }
 
-.inte-TextEditor__heading--h1 span{
+.inte-TextEditor__heading--h1 span {
   font-size: 28px;
   font-weight: bold;
 }
 
-.inte-TextEditor__heading--h2 span{
+.inte-TextEditor__heading--h2 span {
   font-size: 24px;
   font-weight: bold;
 }
 
-.inte-TextEditor__heading--h3 span{
+.inte-TextEditor__heading--h3 span {
   font-size: 20px;
   font-weight: bold;
 }
@@ -121,13 +120,13 @@
 .inte-TextEditor-textCode {
   background-color: #f0f2f5;
   padding: 1px 0.25rem;
-  font-family: Menlo,Consolas,Monaco,monospace;
+  font-family: Menlo, Consolas, Monaco, monospace;
   font-size: 94%;
 }
 
 .inte-TextEditor-blockCode {
   background-color: #f0f2f5;
-  font-family: Menlo,Consolas,Monaco,monospace;
+  font-family: Menlo, Consolas, Monaco, monospace;
   display: block;
   padding: 8px 8px 8px 52px;
   line-height: 1.53;
@@ -158,12 +157,12 @@
 
 .inte-TextEditor__fileInput__label {
   line-height: 2rem;
-    margin-bottom: 0.8rem !important;
-    font-size: 1.6rem !important;
-    font-weight: var(--weight-normal) !important;
-    color: var(--inte-G800) !important;
-    display: inline-block;
-    word-break: break-word;
+  margin-bottom: 0.8rem !important;
+  font-size: 1.6rem !important;
+  font-weight: var(--weight-normal) !important;
+  color: var(--inte-G800) !important;
+  display: inline-block;
+  word-break: break-word;
 }
 
 .inte-TextEditor .inte-switcher__current {
@@ -178,20 +177,6 @@
     align-items: center;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .link-editor {
   display: flex;
@@ -209,7 +194,7 @@
   will-change: transform;
 }
 
-.link-view ,
+.link-view,
 .link-changer {
   display: flex;
   gap: 12px;
@@ -220,4 +205,3 @@
     margin-left: auto !important;
   }
 }
-
