@@ -134,6 +134,7 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
           }__svg`}
           viewBox={`0 0 ${width} ${height}`}
           style={{ overflow: "visible" }}
+          xmlns="http://www.w3.org/2000/svg"
         >
           {chartData.map((item, index: number) => {
             let startAngle = 0;
