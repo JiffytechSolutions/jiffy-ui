@@ -1,16 +1,28 @@
-.inte-pieChart {
+.inte-pieChart,
+.inte-donutChart {
   position: relative;
-  width: fit-content;
-  display: flex;
 }
-/* pie chart css   */
-.inte-pieChart__path {
+.inte-pieChart:hover,
+.inte-donutChart:hover {
+  overflow: visible;
+}
+/* sgv css  */
+.inte-pieChart__svg,
+.inte-donutChart__svg {
+  height: 100%;
+  width: 100%;
+}
+
+/* path css   */
+.inte-pieChart__path,
+.inte-donutChart__path {
   transition: transform 0.3s ease, fill 0.3s ease;
   transform-origin: center;
   transform: scale(1);
 }
 
-.inte-pieChart__path:hover {
+.inte-pieChart__path:hover,
+.inte-donutChart__path:hover {
   transform: scale(1.03);
   transition: "transform 0.5s ease, fill 0.5s ease";
 }
