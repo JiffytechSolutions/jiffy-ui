@@ -22,10 +22,9 @@ export default {
       },
       defaultValue: 250,
     },
-
-    tooltip: {
+    showTooltip: {
       description:
-        "If you can showing tooltip when mouse hover then use tooltip prop and pass the value true",
+        "If you can showing tooltip when mouse hover then use showTooltip prop and pass the value true",
       control: {
         type: "boolean",
       },
@@ -93,7 +92,7 @@ export const PieChartTooltip = ({ ...rest }) => {
     <Card title="Pie Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="mediumLoose" wrap="wrap" halign="center">
         <PieChart
-          tooltip
+          showTooltip
           chartData={[
             { value: 250, label: "Series A", color: "#F0EDFA" },
             { value: 400, label: "Series B", color: "#C5B8EA" },
@@ -106,7 +105,7 @@ export const PieChartTooltip = ({ ...rest }) => {
         />
 
         <PieChart
-          tooltip
+          showTooltip
           chartData={[
             { value: 250, label: "Series A", color: "#F0EDFA" },
             { value: 400, label: "Series B", color: "#C5B8EA" },
@@ -127,9 +126,14 @@ export const PieChartAll = ({ ...rest }) => {
   return (
     <Card title="Pie Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="loose" wrap="wrap">
-        <PieChart tooltip totalPercentage chartData={chartData} size={250} />
         <PieChart
-          tooltip
+          showTooltip
+          totalPercentage
+          chartData={chartData}
+          size={250}
+        />
+        <PieChart
+          showTooltip
           totalPercentage
           chartData={[
             { value: 25, label: "Series A", color: "#F0EDFA" },
@@ -141,7 +145,7 @@ export const PieChartAll = ({ ...rest }) => {
           size={250}
         />
         <PieChart
-          tooltip
+          showTooltip
           totalPercentage
           chartData={[
             { value: 25, label: "Series A", color: "#53B1FD" },
@@ -152,7 +156,7 @@ export const PieChartAll = ({ ...rest }) => {
           size={200}
         />
         <PieChart
-          tooltip
+          showTooltip
           totalPercentage
           chartData={[
             { value: 50, label: "Series A", color: "#53B1FD" },
@@ -162,7 +166,7 @@ export const PieChartAll = ({ ...rest }) => {
           size={200}
         />
         <PieChart
-          tooltip
+          showTooltip
           totalPercentage
           chartData={[
             { value: 50, label: "Series A", color: "#9984DB" },
@@ -171,7 +175,7 @@ export const PieChartAll = ({ ...rest }) => {
           size={200}
         />
         <PieChart
-          tooltip
+          showTooltip
           totalPercentage
           chartData={[{ value: 100, label: "Series A", color: "#9984DB" }]}
           size={200}

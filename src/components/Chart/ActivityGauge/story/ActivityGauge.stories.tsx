@@ -59,12 +59,12 @@ export default {
 
 const Template = ({ ...rest }) => {
   const chartData = [
-    { value: 800, total: "900", label: "Series A", color: "#C5B8EA" },
-    // { value: 700, total: "800", label: "Series B", color: "#F0EDFA" },
-    // { value: 600, total: "700", label: "Series C", color: "#9984DB" },
-    // { value: 500, total: "600", label: "Series D", color: "#D1E9FF" },
-    // { value: 400, total: "500", label: "Series E", color: "#B2DDFF" },
-    // { value: "500", total: "700", label: "Series F", color: "#53B1FD" },
+    { value: 800, total: "900", label: "Series A", color: "rgb(44, 175, 254)" },
+    { value: 700, total: "800", label: "Series B", color: "rgb(84, 79, 197)" },
+    { value: 600, total: "700", label: "Series C", color: "rgb(0, 226, 114)" },
+    { value: 500, total: "600", label: "Series D", color: "#4000ff" },
+    { value: 400, total: "500", label: "Series E", color: "#bf00ff" },
+    { value: 500, total: "700", label: "Series F", color: "#ff0080" },
   ];
   return (
     <Card>

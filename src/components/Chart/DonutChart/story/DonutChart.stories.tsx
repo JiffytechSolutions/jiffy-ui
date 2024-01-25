@@ -21,10 +21,9 @@ export default {
       },
       defaultValue: 250,
     },
-
-    tooltip: {
+    showTooltip: {
       description:
-        "If you can showing tooltip when mouse hover then use tooltip prop and pass the value true",
+        "If you can showing tooltip when mouse hover then use showTooltip prop and pass the value true",
       control: {
         type: "boolean",
       },
@@ -92,7 +91,7 @@ export const DonutChartTooltip = ({ ...rest }) => {
     <Card title="Donut Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="mediumLoose" wrap="wrap" halign="center">
         <DonutChart
-          tooltip
+          showTooltip
           chartData={[
             { value: 250, label: "Series A", color: "#F0EDFA" },
             { value: 400, label: "Series B", color: "#C5B8EA" },
@@ -105,7 +104,7 @@ export const DonutChartTooltip = ({ ...rest }) => {
         />
 
         <DonutChart
-          tooltip
+          showTooltip
           chartData={[
             { value: 250, label: "Series A", color: "#F0EDFA" },
             { value: 400, label: "Series B", color: "#C5B8EA" },
@@ -126,9 +125,14 @@ export const DonutChartAll = ({ ...rest }) => {
   return (
     <Card title="Donut Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="loose" wrap="wrap">
-        <DonutChart tooltip totalPercentage chartData={chartData} size={250} />
         <DonutChart
-          tooltip
+          showTooltip
+          totalPercentage
+          chartData={chartData}
+          size={250}
+        />
+        <DonutChart
+          showTooltip
           totalPercentage
           chartData={[
             { value: 25, label: "Series A", color: "#F0EDFA" },
@@ -140,7 +144,7 @@ export const DonutChartAll = ({ ...rest }) => {
           size={250}
         />
         <DonutChart
-          tooltip
+          showTooltip
           totalPercentage
           chartData={[
             { value: 25, label: "Series A", color: "#53B1FD" },
@@ -151,7 +155,7 @@ export const DonutChartAll = ({ ...rest }) => {
           size={250}
         />
         <DonutChart
-          tooltip
+          showTooltip
           totalPercentage
           chartData={[
             { value: 50, label: "Series A", color: "#53B1FD" },
@@ -161,7 +165,7 @@ export const DonutChartAll = ({ ...rest }) => {
           size={250}
         />
         <DonutChart
-          tooltip
+          showTooltip
           totalPercentage
           chartData={[
             { value: 50, label: "Series A", color: "#9984DB" },
@@ -170,7 +174,7 @@ export const DonutChartAll = ({ ...rest }) => {
           size={250}
         />
         <DonutChart
-          tooltip
+          showTooltip
           totalPercentage
           chartData={[{ value: 100, label: "Series A", color: "#9984DB" }]}
           size={250}

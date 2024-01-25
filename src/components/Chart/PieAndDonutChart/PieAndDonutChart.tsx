@@ -6,7 +6,7 @@ export interface PieChartI {
   chartData: PieChartData[];
   height?: number;
   width?: number;
-  tooltip?: boolean;
+  showTooltip?: boolean;
   tooltipValue?: "percentage" | "value";
   type?: "piechart" | "donutchart";
   percentage?: boolean;
@@ -27,7 +27,7 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
   height = 250,
   width = 250,
   percentage = false,
-  tooltip = false,
+  showTooltip = false,
   customClass = "",
   tooltipValue = "percentage",
   type = "piechart",
@@ -80,7 +80,7 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
       const toolTipWidth = toolTipRef.current.getBoundingClientRect();
       setTooltipWidth(toolTipWidth.width / 2);
     }
-  }, [tooltip, tooltipText.label, tooltipText.value, toolTipRef?.current]);
+  }, [showTooltip, tooltipText.label, tooltipText.value, toolTipRef?.current]);
 
   // Rotation animation effect
   useEffect(() => {
@@ -126,10 +126,12 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
         })}
         onMouseMove={handleMouseMove}
         ref={moveRef}
+        style={{ height: height, width: width }}
       >
         <svg
-          width={width}
-          height={height}
+          className={`inte-${
+            type === "piechart" ? "pieChart" : "donutChart"
+          }__svg`}
           viewBox={`0 0 ${width} ${height}`}
           style={{ overflow: "visible" }}
         >
@@ -212,7 +214,7 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
             {formatPercentage(totalP)}
           </div>
         )}
-        {tooltipText.label && tooltipText.value && tooltip && (
+        {tooltipText.label && tooltipText.value && showTooltip && (
           <div
             className="inte-pieChart__tooltip"
             style={{

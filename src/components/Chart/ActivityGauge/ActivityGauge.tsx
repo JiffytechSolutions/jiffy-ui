@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./ActivityGauge.css";
+import Text from "../../Text/Text";
 
 export interface ActivityGaugeI {
   chartData: SegmentData[];
@@ -16,11 +17,14 @@ export interface SegmentData {
 const ActivityGauge: React.FC<ActivityGaugeI> = ({ size = 200, chartData }) => {
   const [showTooltip, setShowValue] = useState({ label: "", value: "" });
   const calculateValue: any = (index: number) =>
-    index === 0 ? 5 : calculateValue(index - 1) + 15;
+    index === 0 ? 4 : calculateValue(index - 1) + 10;
 
   return (
-    <div className="inte-activityGauge">
-      <svg height={size} width={size} className="inte-activityGauge__svg">
+    <div className="inte-activityGauge" style={{ height: size, width: size }}>
+      <svg
+        className="inte-activityGauge__svg"
+        xmlns="http://www.w3.org/2000/svg"
+      >
         {chartData.map((item: any, index: number) => {
           const circleRef = useRef<SVGCircleElement>(null);
 
@@ -58,12 +62,12 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({ size = 200, chartData }) => {
                 cx={size / 2}
                 cy={size / 2}
                 r={size / 2 - calculateValue(index)}
-                strokeWidth={10}
+                strokeWidth={4}
                 fill="none"
                 style={{
-                  stroke: "#ededed",
+                  stroke: "var(--inte-G40)",
                 }}
-                className="inte-activityGauge__circle"
+                className="inte-activityGauge__background"
               />
               <circle
                 ref={circleRef}
@@ -71,7 +75,7 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({ size = 200, chartData }) => {
                 cy={size / 2}
                 r={size / 2 - calculateValue(index)}
                 fill="none"
-                strokeWidth={15}
+                strokeWidth={8}
                 stroke={item.color}
                 strokeDasharray="0 100"
                 strokeDashoffset="0"
@@ -80,15 +84,18 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({ size = 200, chartData }) => {
                   setShowValue({ label: item.label, value: item.value })
                 }
                 onMouseOut={() => setShowValue({ label: "", value: "" })}
+                className="inte-activityGauge__circle"
               />
             </g>
           );
         })}
       </svg>
       {showTooltip.label !== "" && (
-        <div className="inte-activityGauge__labelValue">
-          <div>{showTooltip.label}</div>
-          <div>{showTooltip.value}</div>
+        <div className="inte-activityGauge__info">
+          <Text textcolor="secondary">{showTooltip.label} </Text>
+          <Text fontweight="bold" type="T-6">
+            {showTooltip.value}
+          </Text>
         </div>
       )}
     </div>

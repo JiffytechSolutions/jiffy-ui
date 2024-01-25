@@ -3,7 +3,7 @@ import PieAndDonutChart from "../PieAndDonutChart/PieAndDonutChart";
 export interface PieChartI {
   chartData: PieChartData[];
   size?: number;
-  tooltip?: boolean;
+  showTooltip?: boolean;
   tooltipValue?: "percentage" | "value";
   totalPercentage?: boolean;
   customClass?: string;
@@ -18,7 +18,7 @@ const PieChart: React.FC<PieChartI> = ({
   chartData,
   size = 250,
   totalPercentage = false,
-  tooltip = false,
+  showTooltip = false,
   customClass = "",
   tooltipValue = "percentage",
 }) => {
@@ -29,7 +29,7 @@ const PieChart: React.FC<PieChartI> = ({
         height={size}
         width={size}
         percentage={totalPercentage}
-        tooltip={tooltip}
+        showTooltip={showTooltip}
         tooltipValue={tooltipValue}
         customClass={customClass}
       />
