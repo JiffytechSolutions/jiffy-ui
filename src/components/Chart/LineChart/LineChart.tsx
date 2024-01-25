@@ -1,5 +1,7 @@
 import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 import './LineChart.css'
+import { cubicSplineInterpolation } from './Curve';
+// import { bezierCurveThroughPoints } from './Curve';
 export interface dataSetLineChart {
   labels: string[],
   dataSet: { color: string, points: number[] }[],
@@ -16,6 +18,7 @@ const cutSize = 9
 const verticalBlockCount = 10;
 const cutGap = 12
 
+type Point = { x: number, y: number}
 
 const LineChart = ({ labels, dataSet }: dataSetLineChart) => {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -81,7 +84,7 @@ const LineChart = ({ labels, dataSet }: dataSetLineChart) => {
 
   const getYLength = (totalPoints:number, currPoint:number , totalLength:number , origin:number) => {
     const blockDistance = totalLength/totalPoints;
-    console.log(blockDistance , "block distance" , totalLength , totalPoints)
+    console.log(blockDistance)
     return origin - (currPoint * blockDistance)
   }
 
@@ -90,23 +93,36 @@ const LineChart = ({ labels, dataSet }: dataSetLineChart) => {
       x: xPadding,
       y: canvas.height - yPadding,
     }
-    ctx.strokeStyle = data.color
 
     
     ctx.beginPath();
     ctx.strokeStyle = data.color
     ctx.lineWidth = 1;
     ctx.moveTo(xPadding , canvas.height - yPadding)
+    let points:Point[] = []
     for(let i = 0;i<data.points.length;i++){
       const xPoint = getXPoint(canvas , labels.length , i , origin)
       const yPoint = getYLength(maxY , data.points[i] ,canvas.height - (2 * yPadding) , origin.y)
-      ctx.lineTo(xPoint,yPoint )
+      // const yPoint = getYPoint(canvas , labels.length , i , origin)
+      points.push({x:xPoint , y:yPoint})
+    }
+    const smoothLine = cubicSplineInterpolation(points , xPadding , yPadding ,canvas.width - xPadding , canvas.height - yPadding)
+
+    const curvePoints:Point[] = []
+    for(let i = xPadding; i < canvas.width - xPadding; i++){
+      curvePoints.push({x:i,y:smoothLine(i)})
+    }
+    console.log(points)
+    console.log(curvePoints , canvas.width - (2*xPadding))
+
+    ctx.moveTo(curvePoints[0].x, curvePoints[0].y)
+    ctx.lineWidth = 2;
+    for(let i = 1;i<curvePoints.length;i++){
+      ctx.lineTo(curvePoints[i].x, curvePoints[i].y)
     }
     ctx.stroke()
-
   }
 
-  console.log(maxY,"console.log")
 
   const drawScale = (ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) => {
     ctx.strokeStyle = lineColor;
@@ -123,6 +139,7 @@ const LineChart = ({ labels, dataSet }: dataSetLineChart) => {
     for (let i = 0; i < labels.length; i++) {
       const currPoint = getXPoint(canvas , labels.length , i , origin);
       ctx.moveTo(currPoint , origin.y);
+      // ctx.moveTo(currPoint , yPadding);
       ctx.lineTo(currPoint, origin.y + cutSize);
       scaleLable({x : currPoint, y : origin.y + cutSize} , labels[i] , ctx , "horizontal" , yPadding - (cutGap + cutSize))
     }
@@ -130,7 +147,8 @@ const LineChart = ({ labels, dataSet }: dataSetLineChart) => {
     for (let i = 0; i < verticalBlockCount; i++) {
       const currPoint = getYPoint(canvas , verticalBlockCount, i , origin);
       const currLabel = ((i+1) * (maxY/verticalBlockCount)) - ((maxY/verticalBlockCount)/2);
-      ctx.moveTo(origin.x, currPoint);
+      // ctx.moveTo(canvas.width - xPadding, currPoint);
+      ctx.moveTo(xPadding, currPoint);
       ctx.lineTo(origin.x - cutSize, currPoint);
       scaleLable({x : origin.x - cutSize, y : currPoint} , `${currLabel}` , ctx , "vertical" , xPadding - (cutSize + cutGap))
     }

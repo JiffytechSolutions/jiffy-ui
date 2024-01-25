@@ -21,16 +21,17 @@ const Template = ({...rest}) => {
           {
             color: "#a83232",
             // points: Array(12).fill(0).map(i => Math.floor(Math.random()*100)),
-            points : [95 , 0 , 0 , 0 , 95 , 20 , 50 , 20 , 70 , 60]
+            points : [10 , 20 , 30 , 20 , 10 , 60 , 70 , 80 , 90, 91 , 92 , 93],
+            // points:Array(12).fill(0).map(i => Math.ceil(Math.floor(Math.random()*100))),
           },
           // {
           //   color: "#40a832",
-          //   points:Array(12).fill(0).map(i => Math.floor(Math.random()*100)),
+          //   points:Array(12).fill(0).map(i => Math.ceil(Math.random()*100)),
           // },
-        //   {
-        //     color: "#a832a2",
-        //     points: Array(12).fill(0).map(i => Math.floor(Math.random()*1000)),
-        //   },
+          // {
+          //   color: "#a832a2",
+          //   points: Array(12).fill(0).map(i => Math.ceil(Math.random()*100)),
+          // },
         ],
       };
 
