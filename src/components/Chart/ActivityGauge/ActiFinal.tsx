@@ -1,28 +1,21 @@
 import React, { useEffect, useRef, useState } from "react";
-import Text from "../../Text/Text";
 import "./ActivityGauge.css";
-import getClassNames from "../../../utilities/getClassnames";
+import Text from "../../Text/Text";
+
 export interface ActivityGaugeI {
-  chartData: activityGaugeData[];
-  size?: "small" | "medium" | "large";
-  animationDuration?: number;
-  customClass?: string;
+  chartData: SegmentData[];
+  size?: number;
 }
 
-export interface activityGaugeData {
+export interface SegmentData {
   value: number | string;
   total: number | string;
   label: string;
   color: string;
 }
 
-const ActivityGauge: React.FC<ActivityGaugeI> = ({
-  size = "large",
-  chartData,
-  customClass = "",
-  animationDuration = 2,
-}) => {
-  const [showValue, setShowValue] = useState({ label: "", value: "" });
+const ActivityGauge: React.FC<ActivityGaugeI> = ({ size = 200, chartData }) => {
+  const [showTooltip, setShowValue] = useState({ label: "", value: "" });
   const calculateValue: any = (index: number) =>
     index === 0 ? 4 : calculateValue(index - 1) + 10;
 
@@ -31,34 +24,15 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
     const desiredLength = (percentage / 100) * circumference;
     return circumference - desiredLength;
   };
-
-  const sizeFun = () => {
-    if (size === "medium") {
-      return 200;
-    } else if (size == "small") {
-      return 150;
-    } else {
-      return 250;
-    }
-  };
-
   return (
-    <div
-      className={getClassNames({
-        "inte-activityGauge": true,
-        "inte-activityGauge--small": size === "small",
-        "inte-activityGauge--medium": size === "medium",
-        "inte-activityGauge--large": size === "large",
-        [customClass]: customClass,
-      })}
-      style={{ height: sizeFun(), width: sizeFun() }}
-    >
+    <div className="inte-activityGauge" style={{ height: size, width: size }}>
       <svg
         className="inte-activityGauge__svg"
         xmlns="http://www.w3.org/2000/svg"
       >
         {chartData.map((item: any, index: number) => {
           const circleRef = useRef<SVGCircleElement>(null);
+
           const percentage =
             typeof item.value === "string" && item.value.includes("%")
               ? parseFloat(item.value)
@@ -72,9 +46,12 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                 circleRef.current.style.transition = "none";
                 circleRef.current.style.strokeDasharray = `${totalLength} ${totalLength}`;
                 circleRef.current.style.strokeDashoffset = `${totalLength}`;
+
                 // Trigger reflow
                 circleRef.current.getBoundingClientRect();
-                circleRef.current.style.transition = `stroke-dashoffset ${animationDuration}s linear`;
+
+                circleRef.current.style.transition =
+                  "stroke-dashoffset 2s linear";
                 circleRef.current.style.strokeDashoffset = `${
                   ((100 - percentage) / 100) * totalLength
                 }`;
@@ -85,16 +62,16 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
           }, [percentage]);
 
           const strokeDashOffset = calculateStrokeDashOffset(
-            sizeFun() / 2 - calculateValue(index),
+            size / 2 - calculateValue(index),
             percentage
           );
-
+          console.log(strokeDashOffset);
           return (
             <g key={index} className="inte-activityGauge__path">
               <circle
-                cx={sizeFun() / 2}
-                cy={sizeFun() / 2}
-                r={sizeFun() / 2 - calculateValue(index)}
+                cx={size / 2}
+                cy={size / 2}
+                r={size / 2 - calculateValue(index)}
                 strokeWidth={4}
                 fill="none"
                 style={{
@@ -104,24 +81,17 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
               />
               <circle
                 ref={circleRef}
-                cx={sizeFun() / 2}
-                cy={sizeFun() / 2}
-                r={sizeFun() / 2 - calculateValue(index)}
+                cx={size / 2}
+                cy={size / 2}
+                r={size / 2 - calculateValue(index)}
                 fill="none"
                 strokeWidth={8}
                 stroke={item.color}
                 strokeDasharray={`${strokeDashOffset} ,${
-                  2 * 3.14159265359 * (sizeFun() / 2 - calculateValue(index))
+                  2 * 3.14159265359 * (size / 2 - calculateValue(index))
                 }`}
                 strokeDashoffset="0"
                 strokeLinecap="round"
-                opacity={
-                  showValue.value === ""
-                    ? 1
-                    : showValue.value == item.value
-                    ? 1
-                    : 0.7
-                }
                 onMouseOver={() =>
                   setShowValue({ label: item.label, value: item.value })
                 }
@@ -132,11 +102,11 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
           );
         })}
       </svg>
-      {showValue.label !== "" && (
+      {showTooltip.label !== "" && (
         <div className="inte-activityGauge__info">
-          <Text textcolor="secondary">{showValue.label} </Text>
+          <Text textcolor="secondary">{showTooltip.label} </Text>
           <Text fontweight="bold" type="T-6">
-            {showValue.value}
+            {showTooltip.value}
           </Text>
         </div>
       )}

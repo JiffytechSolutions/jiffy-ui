@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "../../../Card";
-import DonutChart, { DonutChartData } from "../DonutChart";
+import DonutChart, { donutChartData } from "../DonutChart";
 import { FlexLayout } from "../../../FlexLayout";
 
 export default {
@@ -54,7 +54,7 @@ export default {
     },
   },
 };
-const chartData: DonutChartData[] = [
+const chartData: donutChartData[] = [
   { value: 25, label: "Series A", color: "#F0EDFA" },
   { value: 20, label: "Series B", color: "#C5B8EA" },
   { value: 15, label: "Series C", color: "#9984DB" },

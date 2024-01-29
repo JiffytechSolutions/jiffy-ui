@@ -1,14 +1,14 @@
 import React from "react";
 import PieAndDonutChart from "../PieAndDonutChart/PieAndDonutChart";
 export interface DonutChartI {
-  chartData: DonutChartData[];
+  chartData: donutChartData[];
   size?: number;
   showTooltip?: boolean;
   tooltipValue?: "percentage" | "value";
   totalPercentage?: boolean;
   customClass?: string;
 }
-export interface DonutChartData {
+export interface donutChartData {
   value: number;
   label: string;
   color: string;
