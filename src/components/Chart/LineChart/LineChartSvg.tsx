@@ -2,11 +2,12 @@ import { createUID } from 'lexical/LexicalUtils'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { cubicSplineInterpolation } from './Curve'
 import './LineChart.css'
+import ToolTip from '../../ToolTip/ToolTip'
 
 export interface LineChartI {
   width?: number,
   height?: number,
-  lineType?:'straight' | 'curved'
+  lineType?: 'straight' | 'curved'
   labels: {
     x: string[] | number,
     y: string[] | number
@@ -50,8 +51,10 @@ const LineChartSvg = ({
 
   const [curvesEquations, setCurveEquations] = useState<((x: number) => number)[]>([])
   const [curveLines, setCurveLines] = useState<React.JSX.Element[]>([])
-  const [graphScaleLine , setGraphScaleLine] = useState<React.JSX.Element>()
+  const [graphScaleLine, setGraphScaleLine] = useState<React.JSX.Element>()
   const [mousePosition, setMousePosition] = useState<Point>()
+  const [currentHoveredBlock, setCurrentHoveredBlock] = useState<Point | undefined>()
+  const [toolTipDiv, setToolTipDiv] = useState<React.JSX.Element>()
   const chartRef = useRef<SVGSVGElement>(null)
 
   const origin = {
@@ -74,6 +77,20 @@ const LineChartSvg = ({
     return (maxY - (maxY % 10)) + 10;
   }, [dataSet])
 
+  const maxX = width - (2 * xPadding)
+
+  const getYPixels = (y: number) => {
+    const takesBlock = y / (maxY / yBlockCount)
+    return origin.y - (takesBlock * yBlockWidth)
+  }
+
+  const getXPixels = (x: number) => {
+    const takesBlock = x / (maxX / xBlockCount)
+    return origin.x + (takesBlock * xBlockWidth)
+  }
+
+
+
   const getPointsFromIndex = (index: number, line: "horizontal" | "vertical") => {
     const blockWidth = line === "vertical" ? yBlockWidth : xBlockWidth;
     const currSize = (blockWidth * (index + 1)) - (graphScale.cutPosition === "center" ? blockWidth / 2 : graphScale.cutPosition === "left" ? blockWidth : 0);
@@ -87,11 +104,11 @@ const LineChartSvg = ({
     const makeScaleLabel = (point: Point, label: string, line: "horizontal" | "vertical") => {
       return (
         <text
-          className={`inte-scaleLabel--${line}`}
+          className={`inte-scaleLabel inte-scaleLabel--${line}`}
           x={line === 'vertical' ? point.x - (graphScale.cutGap ?? 0) : point.x}
           y={line === 'horizontal' ? point.y + (graphScale.cutGap ?? 0) : point.y}
           stroke={graphScale.textColor}
-          strokeWidth={0.10}
+          strokeWidth={graphScale.lineWidth / 4}
         >
           {label}
         </text>
@@ -138,10 +155,10 @@ const LineChartSvg = ({
           fill='none'
         />
         {
-          xLabels
+          xLabels.map((label, ind) => <React.Fragment key={ind}>{label}</React.Fragment>)
         }
         {
-          ylabels
+          ylabels.map((label, ind) => <React.Fragment key={ind}>{label}</React.Fragment>)
         }
       </>
     )
@@ -150,15 +167,11 @@ const LineChartSvg = ({
   const drawCurve = () => {
     const equations: Function[] = [];
     const xPoints = Array(xBlockCount).fill(0).map((item, index) => getPointsFromIndex(index, "horizontal"))
-    const getYPoints = (y: number) => {
-      return origin.y - ((y / yBlockCount) * yBlockWidth)
-    }
-
     const curvesEquations = dataSet.map((item, index) => {
       const currPoints = xPoints.map((x, index) => {
         return ({
           x: x,
-          y: getYPoints(item.points[index])
+          y: getYPixels(item.points[index])
         })
       })
       return cubicSplineInterpolation(
@@ -172,7 +185,7 @@ const LineChartSvg = ({
 
     setCurveEquations(curvesEquations)
 
-    const curvesPoint =lineType === "curved" ? curvesEquations.map((equation, index) => {
+    const curvesPoint = lineType === "curved" ? curvesEquations.map((equation, index) => {
       const points: Point[] = []
       for (let i = xPadding; i < width - xPadding; i++) {
         points.push({
@@ -181,12 +194,12 @@ const LineChartSvg = ({
         })
       }
       return points
-    }) : dataSet.map((item,index) => {
+    }) : dataSet.map((item, index) => {
       const points: Point[] = [];
-      for(let i = 0; i < xPoints.length;i++){
+      for (let i = 0; i < xPoints.length; i++) {
         points.push({
-          x : xPoints[i],
-          y : getYPoints(item.points[i])
+          x: xPoints[i],
+          y: getYPixels(item.points[i])
         })
       }
       return points
@@ -198,7 +211,7 @@ const LineChartSvg = ({
       return (
         <path
           d={`M ${path}`}
-          strokeWidth={graphScale.lineWidth * 2}
+          strokeWidth={graphScale.lineWidth * 3}
           stroke={dataSet[index].color}
           fill="none"
         />
@@ -209,12 +222,22 @@ const LineChartSvg = ({
   }
 
   const handelMouseOver = (e: MouseEvent) => {
+    console.log('first')
     const currPoint = {
       x: e.clientX - (chartRef.current?.getBoundingClientRect().left ?? 0),
       y: e.clientY - (chartRef.current?.getBoundingClientRect().top ?? 0)
     }
-    if(currPoint.x < xPadding || currPoint.y < yPadding || currPoint.x > width - xPadding || currPoint.y > height - yPadding) setMousePosition(undefined)
-    else setMousePosition(currPoint)
+    if (currPoint.x < xPadding || currPoint.y < yPadding || currPoint.x > width - xPadding || currPoint.y > height - yPadding) {
+      setMousePosition(undefined)
+      setCurrentHoveredBlock(undefined)
+    }
+    else {
+      setMousePosition(currPoint)
+      setCurrentHoveredBlock({
+        x: Math.floor((currPoint.x - origin.x) / xBlockWidth),
+        y: Math.floor((origin.y - currPoint.y) / yBlockWidth),
+      })
+    }
   }
 
   useEffect(() => {
@@ -227,6 +250,52 @@ const LineChartSvg = ({
     }
   }, [dataSet])
 
+  const handelCurvePointHover = (datasetIndex: number) => {
+    if (!currentHoveredBlock) return
+    const hoveredDataSet = dataSet[datasetIndex]
+    const currentYvalue = hoveredDataSet.points[currentHoveredBlock.x]
+    const currentHoveredPoints = dataSet.filter(item => currentYvalue === item.points[currentHoveredBlock.x])
+
+    const div = (
+      <div
+        className='inte-LineChart__toolTipBox'
+        style={{
+          top: getYPixels(currentYvalue) + "px",
+          left: getXPixels(currentHoveredBlock.x * xBlockWidth) + (graphScale.cutPosition === "center" ? xBlockWidth / 2 : graphScale.cutPosition === "right" ? xBlockWidth : 0) + "px",
+        }}
+      >
+        {
+          currentHoveredPoints.map((item, index) => {
+            const label = typeof labels.x !== "number" ? labels.x[currentHoveredBlock.x] : "customLabel"
+            return (
+              <ToolTip
+                activator={<div
+                  key={index}
+                  className='inte-LineChart__tooltip-circle'
+                  style={{
+                    width: graphScale.lineWidth * 12 + "px",
+                    height: graphScale.lineWidth * 12 + "px",
+                    borderRadius: "50%",
+                    border: "1px solid #ffffff",
+                    backgroundColor: item.color,
+                  }}
+                />}
+                helpText={
+                  <div className='inte-LineChart__toolTipData'>
+                    <span>{label}</span>
+                    <span>{currentYvalue}</span>
+                  </div>
+                }
+              />
+            )
+          })
+        }
+      </div>
+    )
+
+    setToolTipDiv(div)
+  }
+
   return (
     <div className='inte-LineChart' >
       <svg
@@ -238,26 +307,42 @@ const LineChartSvg = ({
           graphScaleLine
         }
         {
-          curveLines
+          curveLines.map((line, ind) => <React.Fragment key={ind}>{line}</React.Fragment>)
         }
-        {/* {
-          hoveredLine
-        } */}
+        {
+          (!!currentHoveredBlock) && (
+            dataSet.map((item, ind) => (
+              <circle
+                key={ind}
+                cx={getXPixels(currentHoveredBlock.x * xBlockWidth) + (graphScale.cutPosition === "center" ? xBlockWidth / 2 : graphScale.cutPosition === "right" ? xBlockWidth : 0)}
+                cy={getYPixels(item.points[currentHoveredBlock.x])}
+                fill={item.color}
+                strokeWidth={graphScale.lineWidth * 2}
+                stroke='#ffffff'
+                r={graphScale.lineWidth * 6}
+                style={{
+                  cursor: 'pointer'
+                }}
+                onMouseOver={() => handelCurvePointHover(ind)}
+              />
+            ))
+          )
+        }
       </svg>
       {
         mousePosition ? (
           <>
             <div
-            className='hovered-line vertical'
-            style={{
-              borderWidth: `${graphScale.lineWidth}px`,
-              width : `1px`,
-              height : `${origin.y - mousePosition.y}px`,
-              top : `${mousePosition.y}px`,
-              left : `${mousePosition.x}px`,
-            }}
-          />
-          <div 
+              className='hovered-line vertical'
+              style={{
+                borderWidth: `${graphScale.lineWidth}px`,
+                width: `1px`,
+                height: `${origin.y  - mousePosition.y}px`,
+                top: `${mousePosition.y}px`,
+                left: `${mousePosition.x}px`,
+              }}
+            />
+            {/* <div 
             className='hovered-line horizontal'
             style={{
               borderWidth: `${graphScale.lineWidth}px`,
@@ -266,9 +351,12 @@ const LineChartSvg = ({
               top : `${mousePosition.y}px`,
               left : `${origin.x}px`
             }}
-          />
+          /> */}
           </>
         ) : null
+      }
+      {
+        toolTipDiv && toolTipDiv
       }
     </div>
   )
