@@ -9,10 +9,13 @@ All notable changes to this project will be documented in this file. See [standa
 ## [Version 4.0.95] - 5 Sep 2023
 
 ### Added
+
 - Thins are added
 
 ### Changed
+
 - Updated something
 
 ### Fixed
+
 - Bug 1

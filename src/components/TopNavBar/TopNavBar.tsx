@@ -14,12 +14,20 @@ import Popover from "../Popover/Popover";
 import "./TopNavBar.css";
 
 export interface TopNavBarI {
-  menu: any;
   onChange: (newPath: string) => void;
-  customClass?: string;
   stickyTop?: boolean;
   connectLeft?: React.ReactNode;
   connectRight?: React.ReactNode;
+  customClass?: string;
+  menu: MenuI[];
+}
+export interface MenuI {
+  id: string | number;
+  label: string;
+  path: string;
+  icon?: React.ReactNode;
+  badge?: React.ReactNode;
+  children?: MenuI[];
 }
 
 const TopNavBar = ({
@@ -31,19 +39,21 @@ const TopNavBar = ({
   stickyTop = true,
 }: TopNavBarI) => {
   const { width } = useWindowResize();
-  const [path, setPath] = useState("/");
+  const [path, setPath] = useState("");
   const [toggle, setToggle] = useState(-1);
   const id = useId();
   const listRef = useRef<HTMLUListElement>(null);
   const [scrollLeft, setScrollLeft] = useState(0);
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
-  const [storewidth, setStoreWidth] = useState(100);
   const popoverItemRef = useRef<any>(null);
+  const [storewidth, setStoreWidth] = useState();
 
-  useLayoutEffect(() => {
-    setStoreWidth(popoverItemRef?.current?.offsetWidth);
-  }, [path]);
+  useEffect(() => {
+    if (storewidth !== "undefined" && toggle !== -1) {
+      setStoreWidth(popoverItemRef?.current?.offsetWidth);
+    }
+  }, [popoverItemRef?.current, toggle]);
 
   // button click scroll
   useEffect(() => {
@@ -57,7 +67,7 @@ const TopNavBar = ({
         isOverflowing && scrollLeft < contentWidth - containerWidth
       );
     }
-  }, [scrollLeft, menu]);
+  }, [scrollLeft, menu, width]);
 
   const handleScroll = (scrollAmount: number) => {
     if (listRef.current) {
@@ -84,8 +94,13 @@ const TopNavBar = ({
 
   const { parent, child } = getParentAndChildPaths(path);
 
-  // console.log("Parent: ", parent);
-  // console.log("Child: ", child);
+  useLayoutEffect(() => {
+    const appEle = document.querySelector(".inte-appWrapper");
+    if (!appEle?.classList?.contains("inte-topNavBar--active")) {
+      appEle?.classList?.add("inte-topNavBar--active");
+    }
+  }, [width]);
+
   return (
     <div
       className={getClassNames({
@@ -107,112 +122,115 @@ const TopNavBar = ({
           })}
         >
           {showLeftButton && (
-            <div>
-              <Button
-                onClick={() => {
-                  handleScroll(-100);
-                }}
-                type="outlined"
-                icon={<ArrowLeft />}
-                customClass="inte-arrowLeft__scroll"
-              />
-            </div>
+            <Button
+              onClick={() => {
+                handleScroll(-100);
+              }}
+              type="outlined"
+              icon={<ArrowLeft />}
+              customClass="inte-arrowLeft__scroll"
+            />
           )}
 
           <ul className="inte-top__list" ref={listRef}>
-            {menu?.map((item: any, Pindex: number) => (
-              <>
-                {item?.children ? (
-                  <Popover
-                    key={Pindex}
-                    popoverWidth={storewidth}
-                    isOpen={toggle === Pindex}
-                    onClose={() => setToggle(-1)}
-                    activator={
-                      <li
-                        className={getClassNames({
-                          "inte-top__listItem": true,
-                          "inte-active": path === item.path + child,
-                          "inte-topNavBar--toggle": Pindex === toggle,
-                        })}
-                        onClick={() => {
-                          Pindex === toggle ? setToggle(-1) : setToggle(Pindex);
-                        }}
-                        ref={popoverItemRef}
-                      >
-                        <div className="inte-topNav__listItemWrapper">
-                          {item?.icon && (
-                            <div className="inte-top__listItem--icon">
-                              {item.icon}
+            {menu?.map((item: any, Pindex: number) => {
+              return (
+                <>
+                  {item?.children ? (
+                    <Popover
+                      key={Pindex}
+                      direction="left"
+                      popoverWidth={storewidth}
+                      isOpen={toggle === Pindex}
+                      onClose={() => setToggle(-1)}
+                      activator={
+                        <li
+                          className={getClassNames({
+                            "inte-top__listItem": true,
+                            "inte-active": path === item.path + child,
+                            "inte-topNavBar--toggle": Pindex === toggle,
+                          })}
+                          onClick={() => {
+                            Pindex === toggle
+                              ? setToggle(-1)
+                              : setToggle(Pindex);
+                          }}
+                          ref={toggle === Pindex ? popoverItemRef : null}
+                        >
+                          <div className="inte-topNav__listItemWrapper">
+                            {item?.icon && (
+                              <div className="inte-top__listItem--icon">
+                                {item.icon}
+                              </div>
+                            )}
+                            <div className="inte-top__listItem--label">
+                              {item.label}
                             </div>
-                          )}
-                          <div className="inte-top__listItem--label">
-                            {item.label}
+
+                            {item.badge && (
+                              <span className="badge">{item.badge}</span>
+                            )}
+                            {item.children && <ChevronRight size={20} />}
                           </div>
-
-                          {item.badge && (
-                            <span className="badge">{item.badge}</span>
-                          )}
-                          {item.children && <ChevronRight size={20} />}
-                        </div>
-                      </li>
-                    }
-                  >
-                    <ul>
-                      {item?.children?.map((child: any, Cindex: number) => {
-                        return (
-                          <li
-                            key={Cindex}
-                            className={getClassNames({
-                              "inte-top__itemPopup": true,
-                              "inte-topNav--childActive":
-                                path === item.path + child.path,
-                            })}
-                            onClick={() => {
-                              onChange(item.path + child.path);
-                              setPath(item.path + child.path);
-                              setToggle(-1);
-                            }}
-                          >
-                            {child.label}
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </Popover>
-                ) : (
-                  <li
-                    key={Pindex}
-                    className={getClassNames({
-                      "inte-top__listItem": true,
-                      "inte-topNav--active": path === item.path,
-                    })}
-                    onClick={() => {
-                      if (!item?.children) {
-                        onChange(item.path);
-                        setPath(item.path);
+                        </li>
                       }
-                    }}
-                  >
-                    <div className="inte-topNav__listItemWrapper">
-                      {item?.icon && (
-                        <div className="inte-top__listItem--icon">
-                          {item.icon}
+                    >
+                      <ul>
+                        {item?.children?.map((child: any, Cindex: number) => {
+                          return (
+                            <li
+                              key={Cindex}
+                              className={getClassNames({
+                                "inte-top__itemPopup": true,
+                                "inte-topNav--childActive":
+                                  path === item.path + child.path,
+                              })}
+                              onClick={() => {
+                                onChange(item.path + child.path);
+                                setPath(item.path + child.path);
+                                setToggle(-1);
+                              }}
+                            >
+                              {child.label}
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </Popover>
+                  ) : (
+                    <li
+                      key={Pindex}
+                      className={getClassNames({
+                        "inte-top__listItem": true,
+                        "inte-topNav--active": path === item.path,
+                      })}
+                      onClick={() => {
+                        if (!item?.children) {
+                          onChange(item.path);
+                          setPath(item.path);
+                        }
+                      }}
+                    >
+                      <div className="inte-topNav__listItemWrapper">
+                        {item?.icon && (
+                          <div className="inte-top__listItem--icon">
+                            {item.icon}
+                          </div>
+                        )}
+                        <div className="inte-top__listItem--label">
+                          {item.label}
                         </div>
-                      )}
-                      <div className="inte-top__listItem--label">
-                        {item.label}
-                      </div>
 
-                      {item.badge && (
-                        <span className="badge">{item.badge}</span>
-                      )}
-                      {item.children && <ChevronRight size={20} />}
-                    </div>
-                  </li>
-                )}
-              </>
-            ))}
+                        {item.badge && (
+                          <span className="badge">{item.badge}</span>
+                        )}
+                        {item.children && <ChevronRight size={20} />}
+                      </div>
+                    </li>
+                  )}
+                </>
+              );
+            })}
           </ul>
           {showRightButton && (
             <div>
