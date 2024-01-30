@@ -7,15 +7,14 @@
   width: 100%;
 }
 
-.inte-activityGauge__info {
-  position: absolute;
-}
-
 .inte-activityGauge__circle {
   transform: rotate(271deg);
   transform-origin: center;
 }
-
+.inte-activityGauge__hoverAnimation .inte-activityGauge__circle,
+.inte-activityGauge__hoverAnimation .inte-activityGauge__background {
+  transition: 300ms all linear !important;
+}
 .inte-activityGauge__info {
   position: absolute;
   top: 50%;

@@ -2,9 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import Text from "../../Text/Text";
 import "./ActivityGauge.css";
 import getClassNames from "../../../utilities/getClassnames";
+import useDelayUnmount from "../../../utilities/useDelayTimeout";
 export interface ActivityGaugeI {
   chartData: activityGaugeData[];
   size?: "small" | "medium" | "large";
+  enableValue?: "number" | "percentage";
   animationDuration?: number;
   customClass?: string;
 }
@@ -21,10 +23,25 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
   chartData,
   customClass = "",
   animationDuration = 2,
+  enableValue = "number",
 }) => {
-  const [showValue, setShowValue] = useState({ label: "", value: "" });
-  const calculateValue: any = (index: number) =>
-    index === 0 ? 4 : calculateValue(index - 1) + 10;
+  const [showValue, setShowValue] = useState({
+    label: "",
+    value: "",
+    percentage: 0,
+  });
+  const [toggleAnimationClass, setToggleAnimationClass] = useState(false);
+  const animateData = useDelayUnmount(toggleAnimationClass, 200);
+
+  const calculateValue: any = (index: number) => {
+    if (size === "small") {
+      return index === 0 ? 4 : calculateValue(index - 1) + 10; // Small space 2px
+    } else if (size === "medium") {
+      return index === 0 ? 5 : calculateValue(index - 1) + 15; // Medium space 5px
+    } else {
+      return index === 0 ? 6 : calculateValue(index - 1) + 15; // Large space 3px
+    }
+  };
 
   const calculateStrokeDashOffset = (r: number, percentage: number) => {
     const circumference = 2 * Math.PI * r;
@@ -41,7 +58,11 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
       return 250;
     }
   };
-
+  const formatPercentage = (value: number) => {
+    const formattedValue =
+      value % 1 === 0 ? value.toFixed(0) : value.toFixed(2);
+    return value === 0 ? "" : `${formattedValue}%`;
+  };
   return (
     <div
       className={getClassNames({
@@ -49,9 +70,12 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
         "inte-activityGauge--small": size === "small",
         "inte-activityGauge--medium": size === "medium",
         "inte-activityGauge--large": size === "large",
+        "inte-activityGauge__hoverAnimation": toggleAnimationClass,
         [customClass]: customClass,
       })}
       style={{ height: sizeFun(), width: sizeFun() }}
+      onMouseEnter={() => setToggleAnimationClass(true)}
+      onMouseLeave={() => setToggleAnimationClass(false)}
     >
       <svg
         className="inte-activityGauge__svg"
@@ -95,7 +119,14 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                 cx={sizeFun() / 2}
                 cy={sizeFun() / 2}
                 r={sizeFun() / 2 - calculateValue(index)}
-                strokeWidth={4}
+                strokeWidth={size == "small" ? 4 : size == "medium" ? 6 : 8}
+                opacity={
+                  showValue.value === ""
+                    ? 1
+                    : showValue.value == item.value
+                    ? 1
+                    : 0.4
+                }
                 fill="none"
                 style={{
                   stroke: "var(--inte-G40)",
@@ -108,7 +139,7 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                 cy={sizeFun() / 2}
                 r={sizeFun() / 2 - calculateValue(index)}
                 fill="none"
-                strokeWidth={8}
+                strokeWidth={size == "small" ? 8 : size == "medium" ? 10 : 12}
                 stroke={item.color}
                 strokeDasharray={`${strokeDashOffset} ,${
                   2 * 3.14159265359 * (sizeFun() / 2 - calculateValue(index))
@@ -122,24 +153,46 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                     ? 1
                     : 0.7
                 }
-                onMouseOver={() =>
-                  setShowValue({ label: item.label, value: item.value })
+                onMouseOver={() => {
+                  setShowValue({
+                    label: item.label,
+                    value: item.value,
+                    percentage: percentage,
+                  });
+                }}
+                onMouseOut={() =>
+                  setShowValue({ label: "", value: "", percentage: 0 })
                 }
-                onMouseOut={() => setShowValue({ label: "", value: "" })}
                 className="inte-activityGauge__circle"
               />
             </g>
           );
         })}
       </svg>
-      {showValue.label !== "" && (
+      {animateData && (
+        <div
+          className={getClassNames({
+            "inte-activityGauge__info": true,
+            "inte-activityGauge--in": showValue.label !== "",
+            "inte-activityGauge--out": showValue.label == "",
+          })}
+        >
+          <Text textcolor="secondary">{showValue.label} </Text>
+          <Text fontweight="bold" type="T-6">
+            {enableValue === "percentage"
+              ? formatPercentage(showValue.percentage)
+              : showValue.value}
+          </Text>
+        </div>
+      )}
+      {/* {showValue.label !== "" && (
         <div className="inte-activityGauge__info">
           <Text textcolor="secondary">{showValue.label} </Text>
           <Text fontweight="bold" type="T-6">
             {showValue.value}
           </Text>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
