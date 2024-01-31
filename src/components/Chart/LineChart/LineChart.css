@@ -1,56 +1,67 @@
 .inte-LineChart {
-    /* border: 1px solid #ccc; */
+  position: relative;
+}
 
-    position: relative;
-    &svg {
-      z-index: 1;
-    }
+.inte-scaleLabel {
+  font-family: "Averta-CY", "Inter", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.inte-scaleLabel--vertical {
+  text-anchor: end;
+  alignment-baseline: central;
+}
+
+.inte-scaleLabel--horizontal {
+  text-anchor: middle;
+  alignment-baseline: hanging;
+}
+
+.inte-LineChart__toolTipBox {
+  display: flex;
+  gap: 2px;
+  position: absolute;
+  transform-origin: center;
+  transform: translate(-50%, -50%);
+  cursor: pointer;
+  padding: 1px;
+}
+
+.inte-LineChart__toolTipBox::after {
+  content: "";
+  height: var(--height);
+  border-left: var(--lineWidth) dashed var(--color);
+  position: absolute;
+  top: 100%;
+  left: calc(50% - calc(var(--lineWidth) / 2));
+}
+
+.inte-LineChart__toolTipData {
+  display: flex;
+  gap: 30px;
+}
+
+.inte-lineChart__circle:hover {
+  visibility: hidden;
+}
+
+.inte-LineChart__dataLine {
+  animation: lineAnimation 500ms linear;
+  transform-origin: center calc(100% - 50px);
+}
+
+@keyframes lineAnimation {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
   }
-
-  .inte-scaleLabel {
-    font-family: "Averta-CY", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px;
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
   }
-
-  .inte-scaleLabel--vertical {
-    text-anchor: end;
-    alignment-baseline: central;
-  }
-
-  .inte-scaleLabel--horizontal {
-    text-anchor: middle;
-    alignment-baseline: hanging;
-  }
-
-  .hovered-line {
-    z-index: 0;
-    position: absolute;
-    pointer-events: none;
-    &.vertical {
-      border-left:dashed grey ;
-    }
-    &.horizontal {
-      border-top:dashed grey ;
-    }
-  }
-
-  .inte-LineChart__toolTipBox {
-    display: flex;
-    gap: 2px;
-    position: absolute;
-    transform-origin: center;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-  }
-
-  .inte-LineChart__tooltip-circle {
-
-  }
-
-  .inte-LineChart__toolTipData {
-    display: flex;
-    gap: 30px;
-  }
+}

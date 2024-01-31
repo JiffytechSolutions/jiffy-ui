@@ -1,4 +1,3 @@
-import { createUID } from 'lexical/LexicalUtils'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { cubicSplineInterpolation } from './Curve'
 import './LineChart.css'
@@ -16,14 +15,6 @@ export interface LineChartI {
     color: string,
     points: number[]
   }[],
-  graphScale?: {
-    textColor: string
-    color: string,
-    lineWidth: number,
-    cutSize: number,
-    cutGap: number,
-    cutPosition: "center" | "left" | "right"
-  },
   xPadding?: number,
   yPadding?: number
 
@@ -31,28 +22,27 @@ export interface LineChartI {
 
 type Point = { x: number, y: number }
 
+const graphScale = {
+  color: "#9B9EA5",
+  lineWidth: 1,
+  cutGap: 12,
+  cutSize: 9,
+  cutPosition: "center",
+  textColor: "#1C2433"
+}
+
 const LineChartSvg = ({
   width = 600,
   height = 450,
   labels,
   dataSet,
   lineType = "curved",
-  graphScale = {
-    color: "#9B9EA5",
-    lineWidth: 1,
-    cutGap: 12,
-    cutSize: 9,
-    cutPosition: "center",
-    textColor: "#1C2433"
-  },
   xPadding = 60,
   yPadding = 50,
 }: LineChartI) => {
 
-  const [curvesEquations, setCurveEquations] = useState<((x: number) => number)[]>([])
   const [curveLines, setCurveLines] = useState<React.JSX.Element[]>([])
   const [graphScaleLine, setGraphScaleLine] = useState<React.JSX.Element>()
-  const [mousePosition, setMousePosition] = useState<Point>()
   const [currentHoveredBlock, setCurrentHoveredBlock] = useState<Point | undefined>()
   const [toolTipDiv, setToolTipDiv] = useState<React.JSX.Element>()
   const chartRef = useRef<SVGSVGElement>(null)
@@ -165,7 +155,6 @@ const LineChartSvg = ({
   }
 
   const drawCurve = () => {
-    const equations: Function[] = [];
     const xPoints = Array(xBlockCount).fill(0).map((item, index) => getPointsFromIndex(index, "horizontal"))
     const curvesEquations = dataSet.map((item, index) => {
       const currPoints = xPoints.map((x, index) => {
@@ -182,8 +171,6 @@ const LineChartSvg = ({
         height - yPadding
       )
     })
-
-    setCurveEquations(curvesEquations)
 
     const curvesPoint = lineType === "curved" ? curvesEquations.map((equation, index) => {
       const points: Point[] = []
@@ -210,6 +197,7 @@ const LineChartSvg = ({
       item.forEach(p => path += `${p.x},${p.y} `)
       return (
         <path
+          className='inte-LineChart__dataLine'
           d={`M ${path}`}
           strokeWidth={graphScale.lineWidth * 3}
           stroke={dataSet[index].color}
@@ -222,17 +210,14 @@ const LineChartSvg = ({
   }
 
   const handelMouseOver = (e: MouseEvent) => {
-    console.log('first')
     const currPoint = {
       x: e.clientX - (chartRef.current?.getBoundingClientRect().left ?? 0),
       y: e.clientY - (chartRef.current?.getBoundingClientRect().top ?? 0)
     }
     if (currPoint.x < xPadding || currPoint.y < yPadding || currPoint.x > width - xPadding || currPoint.y > height - yPadding) {
-      setMousePosition(undefined)
       setCurrentHoveredBlock(undefined)
     }
     else {
-      setMousePosition(currPoint)
       setCurrentHoveredBlock({
         x: Math.floor((currPoint.x - origin.x) / xBlockWidth),
         y: Math.floor((origin.y - currPoint.y) / yBlockWidth),
@@ -248,7 +233,7 @@ const LineChartSvg = ({
     return () => {
       chartRef.current?.removeEventListener('mousemove', handelMouseOver)
     }
-  }, [dataSet])
+  }, [dataSet , lineType])
 
   const handelCurvePointHover = (datasetIndex: number) => {
     if (!currentHoveredBlock) return
@@ -256,13 +241,19 @@ const LineChartSvg = ({
     const currentYvalue = hoveredDataSet.points[currentHoveredBlock.x]
     const currentHoveredPoints = dataSet.filter(item => currentYvalue === item.points[currentHoveredBlock.x])
 
+    const style: React.CSSProperties = {
+      ['--color' as any] : graphScale.color,
+      ["--height" as any]: `${origin.y  - getYPixels(currentYvalue) - (graphScale.lineWidth * 6)}px`,
+      ["--lineWidth" as any] :2 * graphScale.lineWidth + "px",
+      top: getYPixels(currentYvalue) + "px",
+      left: getXPixels(currentHoveredBlock.x * xBlockWidth) + (graphScale.cutPosition === "center" ? xBlockWidth / 2 : graphScale.cutPosition === "right" ? xBlockWidth : 0) + "px",
+    }
+
     const div = (
       <div
         className='inte-LineChart__toolTipBox'
-        style={{
-          top: getYPixels(currentYvalue) + "px",
-          left: getXPixels(currentHoveredBlock.x * xBlockWidth) + (graphScale.cutPosition === "center" ? xBlockWidth / 2 : graphScale.cutPosition === "right" ? xBlockWidth : 0) + "px",
-        }}
+        style={style}
+        onMouseLeave={() => setToolTipDiv(undefined)}
       >
         {
           currentHoveredPoints.map((item, index) => {
@@ -283,7 +274,7 @@ const LineChartSvg = ({
                 helpText={
                   <div className='inte-LineChart__toolTipData'>
                     <span>{label}</span>
-                    <span>{currentYvalue}</span>
+                    <span>{typeof labels.y !== "number" ? labels.y[currentHoveredBlock.y] : currentYvalue}</span>
                   </div>
                 }
               />
@@ -310,9 +301,10 @@ const LineChartSvg = ({
           curveLines.map((line, ind) => <React.Fragment key={ind}>{line}</React.Fragment>)
         }
         {
-          (!!currentHoveredBlock) && (
+          (!!currentHoveredBlock && !toolTipDiv) && (
             dataSet.map((item, ind) => (
               <circle
+                className='inte-lineChart__circle'
                 key={ind}
                 cx={getXPixels(currentHoveredBlock.x * xBlockWidth) + (graphScale.cutPosition === "center" ? xBlockWidth / 2 : graphScale.cutPosition === "right" ? xBlockWidth : 0)}
                 cy={getYPixels(item.points[currentHoveredBlock.x])}
@@ -329,32 +321,6 @@ const LineChartSvg = ({
           )
         }
       </svg>
-      {
-        mousePosition ? (
-          <>
-            <div
-              className='hovered-line vertical'
-              style={{
-                borderWidth: `${graphScale.lineWidth}px`,
-                width: `1px`,
-                height: `${origin.y  - mousePosition.y}px`,
-                top: `${mousePosition.y}px`,
-                left: `${mousePosition.x}px`,
-              }}
-            />
-            {/* <div 
-            className='hovered-line horizontal'
-            style={{
-              borderWidth: `${graphScale.lineWidth}px`,
-              width : `${mousePosition.x - origin.x}px`,
-              height : '1px',
-              top : `${mousePosition.y}px`,
-              left : `${origin.x}px`
-            }}
-          /> */}
-          </>
-        ) : null
-      }
       {
         toolTipDiv && toolTipDiv
       }
