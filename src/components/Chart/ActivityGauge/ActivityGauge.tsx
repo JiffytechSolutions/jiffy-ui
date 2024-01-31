@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Text from "../../Text/Text";
-import "./ActivityGauge.css";
 import getClassNames from "../../../utilities/getClassnames";
 import useDelayUnmount from "../../../utilities/useDelayTimeout";
+import "./ActivityGauge.css";
 export interface ActivityGaugeI {
   chartData: activityGaugeData[];
   size?: "small" | "medium" | "large";
@@ -12,8 +12,8 @@ export interface ActivityGaugeI {
 }
 
 export interface activityGaugeData {
-  value: number | string;
-  total: number | string;
+  value: number;
+  total: number;
   label: string;
   color: string;
 }
@@ -22,10 +22,14 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
   size = "large",
   chartData,
   customClass = "",
-  animationDuration = 2,
+  animationDuration = 1,
   enableValue = "number",
 }) => {
-  const [showValue, setShowValue] = useState({
+  const [showValue, setShowValue] = useState<{
+    label: number | string;
+    value: number | string;
+    percentage: number;
+  }>({
     label: "",
     value: "",
     percentage: 0,
@@ -84,9 +88,13 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
         {chartData.map((item: any, index: number) => {
           const circleRef = useRef<SVGCircleElement>(null);
           const percentage =
-            typeof item.value === "string" && item.value.includes("%")
-              ? parseFloat(item.value)
-              : (parseFloat(item.value) / parseFloat(item.total)) * 100;
+            typeof item.value === "string" && String(item.value).includes("%")
+              ? parseFloat(item.value) <= 100
+                ? parseFloat(item.value)
+                : 100
+              : parseInt(item.value) <= parseInt(item.total)
+              ? (parseFloat(item.value) / parseFloat(item.total)) * 100
+              : 100;
 
           // Animation
           useEffect(() => {
@@ -96,12 +104,17 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                 circleRef.current.style.transition = "none";
                 circleRef.current.style.strokeDasharray = `${totalLength} ${totalLength}`;
                 circleRef.current.style.strokeDashoffset = `${totalLength}`;
+
                 // Trigger reflow
                 circleRef.current.getBoundingClientRect();
                 circleRef.current.style.transition = `stroke-dashoffset ${animationDuration}s linear`;
-                circleRef.current.style.strokeDashoffset = `${
-                  ((100 - percentage) / 100) * totalLength
-                }`;
+                if (((100 - percentage) / 100) * totalLength >= 0) {
+                  circleRef.current.style.strokeDashoffset = `${
+                    ((100 - percentage) / 100) * totalLength
+                  }`;
+                } else {
+                  circleRef.current.style.strokeDashoffset = "0";
+                }
               }
             };
 
@@ -156,8 +169,11 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                 onMouseOver={() => {
                   setShowValue({
                     label: item.label,
-                    value: item.value,
-                    percentage: percentage,
+                    value:
+                      parseFloat(item.value) <= parseFloat(item.total)
+                        ? item.value
+                        : item.total,
+                    percentage: percentage <= 100 ? percentage : 100,
                   });
                 }}
                 onMouseOut={() =>
@@ -185,14 +201,6 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
           </Text>
         </div>
       )}
-      {/* {showValue.label !== "" && (
-        <div className="inte-activityGauge__info">
-          <Text textcolor="secondary">{showValue.label} </Text>
-          <Text fontweight="bold" type="T-6">
-            {showValue.value}
-          </Text>
-        </div>
-      )} */}
     </div>
   );
 };

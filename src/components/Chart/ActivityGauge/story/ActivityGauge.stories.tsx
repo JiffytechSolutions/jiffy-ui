@@ -29,7 +29,7 @@ export default {
       control: {
         type: "number",
       },
-      defaultValue: 2,
+      defaultValue: 1,
     },
     enableValue: {
       description:
@@ -50,23 +50,23 @@ export default {
 };
 
 const chartData: activityGaugeData[] = [
-  { value: 800, total: "900", label: "Series A", color: "#5834C3" },
-  { value: 680, total: "800", label: "Series B", color: "#269E6C" },
-  { value: 550, total: "700", label: "Series C", color: "#FEC84B" },
-  { value: 400, total: "600", label: "Series D", color: "#EC5B51" },
+  { value: 700, total: 900, label: "Series A", color: "#5834C3" },
+  { value: 600, total: 800, label: "Series B", color: "#269E6C" },
+  { value: 550, total: 700, label: "Series C", color: "#FEC84B" },
+  { value: 400, total: 600, label: "Series D", color: "#EC5B51" },
 ];
 
 const matchColor: activityGaugeData[] = [
-  { value: 600, total: "900", label: "Series A", color: "#7A5DCF" },
-  { value: 500, total: "800", label: "Series B", color: "#9984DB" },
-  { value: 500, total: "700", label: "Series C", color: "#BBADE7" },
-  { value: 300, total: "600", label: "Series D", color: "#D0C6EE" },
+  { value: 600, total: 900, label: "Series A", color: "#7A5DCF" },
+  { value: 500, total: 800, label: "Series B", color: "#9984DB" },
+  { value: 500, total: 700, label: "Series C", color: "#BBADE7" },
+  { value: 300, total: 600, label: "Series D", color: "#D0C6EE" },
 ];
 
 const Template = ({ ...rest }) => {
   return (
     <Card>
-      <FlexLayout halign="start">
+      <FlexLayout halign="start" spacing="extraLoose" direction="vertical">
         <ActivityGauge chartData={chartData} {...rest} />
       </FlexLayout>
     </Card>
@@ -101,13 +101,7 @@ export const ActivityGaugeAnimationDuration = ({ ...rest }) => {
       <Card title="Activity Gauge animation duration 1s">
         <FlexLayout halign="center" valign="center" spacing="loose">
           {size.map((size: any) => {
-            return (
-              <ActivityGauge
-                size={size}
-                chartData={matchColor}
-                animationDuration={1}
-              />
-            );
+            return <ActivityGauge size={size} chartData={matchColor} />;
           })}
         </FlexLayout>
       </Card>
@@ -115,7 +109,13 @@ export const ActivityGaugeAnimationDuration = ({ ...rest }) => {
       <Card title="Activity Gauge animation duration 2s">
         <FlexLayout halign="center" valign="center" spacing="loose">
           {size.map((size: any) => {
-            return <ActivityGauge size={size} chartData={chartData} />;
+            return (
+              <ActivityGauge
+                size={size}
+                chartData={chartData}
+                animationDuration={2}
+              />
+            );
           })}
         </FlexLayout>
       </Card>
@@ -124,7 +124,7 @@ export const ActivityGaugeAnimationDuration = ({ ...rest }) => {
 };
 
 // Activity Gauge enableValue
-export const ActivityGaugeEnableValue = ({ ...rest }) => {
+export const ActivityGaugePercentageAndValue = ({ ...rest }) => {
   return (
     <Card title="Activity Gauge enableVale">
       <Card title="Activity Gauge enableValue in number format">
