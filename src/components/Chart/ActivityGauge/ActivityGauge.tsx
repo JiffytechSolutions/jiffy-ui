@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import Text from "../../Text/Text";
 import getClassNames from "../../../utilities/getClassnames";
 import useDelayUnmount from "../../../utilities/useDelayTimeout";
 import "./ActivityGauge.css";

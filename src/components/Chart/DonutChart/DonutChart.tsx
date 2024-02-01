@@ -23,18 +23,16 @@ const DonutChart: React.FC<DonutChartI> = ({
   tooltipValue = "percentage",
 }) => {
   return (
-    <>
-      <PieAndDonutChart
-        chartData={chartData}
-        type="donutchart"
-        height={size}
-        width={size}
-        percentage={totalPercentage}
-        showTooltip={showTooltip}
-        tooltipValue={tooltipValue}
-        customClass={customClass}
-      />
-    </>
+    <PieAndDonutChart
+      chartData={chartData}
+      type="donutchart"
+      height={size}
+      width={size}
+      percentage={totalPercentage}
+      showTooltip={showTooltip}
+      tooltipValue={tooltipValue}
+      customClass={customClass}
+    />
   );
 };
 

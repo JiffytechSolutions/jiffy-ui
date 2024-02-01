@@ -6,7 +6,12 @@ import { FlexLayout } from "../../../FlexLayout";
 export default {
   title: "Components/Chart/PieChart",
   component: PieChart,
-
+  parameters: {
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=16582-60451&mode=design&t=vSRg5vCN35kbyqeL-0",
+    },
+  },
   argTypes: {
     chartData: {
       description: `<div><strong>chartData is an array of object:-</strong></div><i>Accepted key value pairs:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>value<span style="color:red">*</span></td><td>Number | String</td></tr><tr><td>label<span style="color:red">*</span></td><td>String</td></tr><tr><td>color<span style="color:red">*</span></td><td>String</td></tr></tbody></table>`,
@@ -55,6 +60,7 @@ export default {
     },
   },
 };
+
 const chartData: PieChartData[] = [
   { value: 25, label: "Series A", color: "#F0EDFA" },
   { value: 20, label: "Series B", color: "#C5B8EA" },

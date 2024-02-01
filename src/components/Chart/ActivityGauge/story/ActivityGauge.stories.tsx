@@ -3,14 +3,19 @@ import ActivityGauge, { activityGaugeData } from "../ActivityGauge";
 import { Card } from "../../../Card";
 import { FlexLayout } from "../../../FlexLayout";
 import Text from "../../../Text/Text";
-import Seprator from "../../../Seprator/Seprator";
 
 export default {
   title: "Components/Chart/ActivityGauge",
   component: ActivityGauge,
+  parameters: {
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=16653-5714&mode=design&t=vSRg5vCN35kbyqeL-0",
+    },
+  },
   argTypes: {
     chartData: {
-      description: `<div><strong>chartData is an array of object:-</strong></div><i>Accepted key value pairs:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>value<span style="color:red">*</span></td><td>Number | String</td></tr><tr><td>label<span style="color:red">*</span></td><td>String</td></tr><tr><td>color<span style="color:red">*</span></td><td>String</td></tr><tr><td>total<span style="color:red">*</span></td><td>Number | String;</td></tr></tbody></table>`,
+      description: `<div><strong>chartData is an array of object:-</strong></div><i>Accepted key value pairs:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>value<span style="color:red">*</span></td><td>Number</td></tr><tr><td>label<span style="color:red">*</span></td><td>String</td></tr><tr><td>color<span style="color:red">*</span></td><td>String</td></tr><tr><td>total<span style="color:red">*</span></td><td>Number</td></tr></tbody></table>`,
       control: {
         type: false,
       },
@@ -43,7 +48,7 @@ export default {
     customClass: {
       description: "Add custom class if need to change the design",
       control: {
-        type: false,
+        type: "text",
       },
     },
   },
