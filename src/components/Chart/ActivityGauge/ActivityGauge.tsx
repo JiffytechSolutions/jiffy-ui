@@ -26,12 +26,12 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
   enableValue = "number",
 }) => {
   const [showValue, setShowValue] = useState<{
-    label: number | string;
-    value: number | string;
+    label: string;
+    value: number;
     percentage: number;
   }>({
     label: "",
-    value: "",
+    value: 0,
     percentage: 0,
   });
   const [toggleAnimationClass, setToggleAnimationClass] = useState(false);
@@ -62,11 +62,13 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
       return 250;
     }
   };
-  const formatPercentage = (value: number) => {
+
+  const formatValue = (value: number) => {
     const formattedValue =
       value % 1 === 0 ? value.toFixed(0) : value.toFixed(2);
-    return value === 0 ? "" : `${formattedValue}%`;
+    return value === 0 ? "" : formattedValue;
   };
+
   return (
     <div
       className={getClassNames({
@@ -77,23 +79,26 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
         "inte-activityGauge__hoverAnimation": toggleAnimationClass,
         [customClass]: customClass,
       })}
-      style={{ height: sizeFun(), width: sizeFun() }}
+      // style={{ height: sizeFun(), width: sizeFun() }}
       onMouseEnter={() => setToggleAnimationClass(true)}
       onMouseLeave={() => setToggleAnimationClass(false)}
     >
       <svg
-        className="inte-activityGauge__svg"
+        viewBox={`0 0 ${sizeFun()} ${sizeFun()}`}
+        height={sizeFun()}
+        width={sizeFun()}
         xmlns="http://www.w3.org/2000/svg"
+        className="inte-activityGauge__svg"
       >
         {chartData.map((item: any, index: number) => {
           const circleRef = useRef<SVGCircleElement>(null);
           const percentage =
             typeof item.value === "string" && String(item.value).includes("%")
-              ? parseFloat(item.value) <= 100
-                ? parseFloat(item.value)
+              ? Math.abs(item.value) <= 100
+                ? Math.abs(item.value)
                 : 100
-              : parseInt(item.value) <= parseInt(item.total)
-              ? (parseFloat(item.value) / parseFloat(item.total)) * 100
+              : Math.abs(item.value) <= Math.abs(item.total)
+              ? (Math.abs(item.value) / Math.abs(item.total)) * 100
               : 100;
 
           // Animation
@@ -134,9 +139,9 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                 r={sizeFun() / 2 - calculateValue(index)}
                 strokeWidth={size == "small" ? 4 : size == "medium" ? 6 : 8}
                 opacity={
-                  showValue.value === ""
+                  showValue.value === 0
                     ? 1
-                    : showValue.value == item.value
+                    : showValue.value == Math.abs(item.value)
                     ? 1
                     : 0.4
                 }
@@ -160,9 +165,9 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                 strokeDashoffset="0"
                 strokeLinecap="round"
                 opacity={
-                  showValue.value === ""
+                  showValue.value === 0
                     ? 1
-                    : showValue.value == item.value
+                    : showValue.value == Math.abs(item.value)
                     ? 1
                     : 0.7
                 }
@@ -170,14 +175,14 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                   setShowValue({
                     label: item.label,
                     value:
-                      parseFloat(item.value) <= parseFloat(item.total)
-                        ? item.value
-                        : item.total,
+                      Math.abs(item.value) <= Math.abs(item.total)
+                        ? Math.abs(item.value)
+                        : Math.abs(item.total),
                     percentage: percentage <= 100 ? percentage : 100,
                   });
                 }}
                 onMouseOut={() =>
-                  setShowValue({ label: "", value: "", percentage: 0 })
+                  setShowValue({ label: "", value: 0, percentage: 0 })
                 }
                 className="inte-activityGauge__circle"
               />
@@ -193,12 +198,13 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
             "inte-activityGauge--out": showValue.label == "",
           })}
         >
-          <Text textcolor="secondary">{showValue.label} </Text>
-          <Text fontweight="bold" type="T-6">
+          <div className="inte-activityGauge__label">{showValue.label}</div>
+          <div className="inte-activityGauge__value">
             {enableValue === "percentage"
-              ? formatPercentage(showValue.percentage)
-              : showValue.value}
-          </Text>
+              ? formatValue(showValue.percentage) !== "" &&
+                formatValue(showValue.percentage) + "%"
+              : formatValue(showValue.value)}
+          </div>
         </div>
       )}
     </div>

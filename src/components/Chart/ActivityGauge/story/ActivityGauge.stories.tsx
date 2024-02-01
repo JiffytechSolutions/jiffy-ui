@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ActivityGauge, { activityGaugeData } from "../ActivityGauge";
 import { Card } from "../../../Card";
 import { FlexLayout } from "../../../FlexLayout";
@@ -66,7 +66,7 @@ const matchColor: activityGaugeData[] = [
 const Template = ({ ...rest }) => {
   return (
     <Card>
-      <FlexLayout halign="start" spacing="extraLoose" direction="vertical">
+      <FlexLayout>
         <ActivityGauge chartData={chartData} {...rest} />
       </FlexLayout>
     </Card>
@@ -158,23 +158,56 @@ export const ActivityGaugePercentageAndValue = ({ ...rest }) => {
   );
 };
 
-// Activity Gauge  All
-export const ActivityGaugeAll = ({ ...rest }) => {
-  return (
-    <Card title="Activity Gauge Size ">
-      <FlexLayout direction="vertical" spacing="loose">
-        <FlexLayout halign="center" valign="center" spacing="loose">
-          {size.map((size: any) => {
-            return <ActivityGauge size={size} chartData={matchColor} />;
-          })}
-        </FlexLayout>
-        <Seprator />
+// Activity Gauge Demo
+const getRandomNumber = () => {
+  return Math.abs(Math.random() * 1000);
+};
 
-        <FlexLayout halign="center" valign="center" spacing="loose">
-          {size.map((size: any) => {
-            return <ActivityGauge size={size} chartData={chartData} />;
-          })}
-        </FlexLayout>
+const getData = () => {
+  return [
+    {
+      value: getRandomNumber(),
+      total: 900,
+      label: "Series A",
+      color: "#5834C3",
+    },
+    {
+      value: getRandomNumber(),
+      total: 800,
+      label: "Series B",
+      color: "#269E6C",
+    },
+    {
+      value: getRandomNumber(),
+      total: 700,
+      label: "Series C",
+      color: "#FEC84B",
+    },
+    {
+      value: getRandomNumber(),
+      total: 600,
+      label: "Series D",
+      color: "#EC5B51",
+    },
+  ];
+};
+export const ActivityGaugeLiveDemo = ({ ...rest }) => {
+  const [data, setData] = useState(getData);
+  useEffect(() => {
+    const id = setInterval(() => {
+      setData(getData);
+    }, 2500);
+
+    return () => {
+      clearInterval(id);
+    };
+  });
+
+  return (
+    <Card title="Activity Gauge data live update then render after 2.5s ">
+      <FlexLayout halign="center" spacing="extraLoose">
+        <ActivityGauge size="large" chartData={data} />
+        <ActivityGauge size="large" chartData={data} enableValue="percentage" />
       </FlexLayout>
     </Card>
   );
