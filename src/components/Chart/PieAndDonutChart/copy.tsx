@@ -6,8 +6,8 @@ export interface PieChartI {
   chartData: PieChartData[];
   height?: number;
   width?: number;
-  tooltip?: tooltipI;
-  border?: showBorderI;
+  showTooltip?: boolean;
+  showBorder?: boolean;
   tooltipValue?: "percentage" | "value";
   type?: "piechart" | "donutchart";
   percentage?: boolean;
@@ -19,15 +19,6 @@ export interface PieChartData {
   label: string;
   color: string;
 }
-export interface tooltipI {
-  show?: boolean;
-  type?: "percentage" | "value";
-}
-export interface showBorderI {
-  show?: boolean;
-  width?: number;
-  color?: string;
-}
 
 const getTotalPercentage = (chartData: PieChartData[]) =>
   chartData.reduce((sum, item) => sum + Number(item.value), 0);
@@ -37,13 +28,11 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
   height = 250,
   width = 250,
   percentage = false,
-
-  tooltip = { show: false, type: "value" },
-  // showBorder,
+  showTooltip = false,
+  showBorder = false,
   customClass = "",
   tooltipValue = "percentage",
   type = "piechart",
-  border = { show: false, width: 1, color: "#fff" },
 }) => {
   const moveRef = useRef<any>(null);
   const toolTipRef = useRef<any>(null);
@@ -93,7 +82,7 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
       const toolTipWidth = toolTipRef.current.getBoundingClientRect();
       setTooltipWidth(toolTipWidth.width / 2);
     }
-  }, [tooltip.show, tooltipText.label, tooltipText.value, toolTipRef?.current]);
+  }, [showTooltip, tooltipText.label, tooltipText.value, toolTipRef?.current]);
 
   // Rotation animation effect
   useEffect(() => {
@@ -211,10 +200,7 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
                     rotateP.length > 0 ? rotateP[index] : 0
                   }deg)`,
                 }}
-                {...(border.show && {
-                  stroke: border.color,
-                  strokeWidth: `${border.width}`,
-                })}
+                {...(showBorder && { stroke: "#fff", strokeWidth: "1" })}
               />
             );
           })}
@@ -233,7 +219,7 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
             {formatPercentage(totalP)}
           </div>
         )}
-        {tooltipText.label && tooltipText.value && tooltip.show && (
+        {tooltipText.label && tooltipText.value && showTooltip && (
           <div
             className="inte-pieChart__tooltip"
             style={{

@@ -35,6 +35,7 @@ export default {
       },
       defaultValue: false,
     },
+
     tooltipValue: {
       description:
         "If you can showing tooltip value percentage or value then use tooltipValue prop and select inside options",
@@ -68,6 +69,14 @@ const chartData: donutChartData[] = [
   { value: 15, label: "Series E", color: "#B2DDFF" },
   { value: 10, label: "Series F", color: "#53B1FD" },
 ];
+const chartData1: donutChartData[] = [
+  { value: 700, label: "Series A", color: "#5834C3" },
+  { value: 600, label: "Series B", color: "#269E6C" },
+  { value: 550, label: "Series C", color: "#FEC84B" },
+  { value: 400, label: "Series D", color: "#EC5B51" },
+  { value: 350, label: "Series C", color: "#9984DB" },
+  { value: 300, label: "Series F", color: "#53B1FD" },
+];
 const Template = ({ ...rest }) => {
   return (
     <Card>
@@ -97,7 +106,6 @@ export const DonutChartTooltip = ({ ...rest }) => {
     <Card title="Donut Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="mediumLoose" wrap="wrap" halign="center">
         <DonutChart
-          showTooltip
           chartData={[
             { value: 250, label: "Series A", color: "#F0EDFA" },
             { value: 400, label: "Series B", color: "#C5B8EA" },
@@ -106,11 +114,11 @@ export const DonutChartTooltip = ({ ...rest }) => {
             { value: 100, label: "Series E", color: "#B2DDFF" },
           ]}
           size={250}
-          tooltipValue="percentage"
+          tooltip={{ show: true, type: "percentage" }}
         />
 
         <DonutChart
-          showTooltip
+          tooltip={{ show: true, type: "value" }}
           chartData={[
             { value: 250, label: "Series A", color: "#F0EDFA" },
             { value: 400, label: "Series B", color: "#C5B8EA" },
@@ -119,7 +127,6 @@ export const DonutChartTooltip = ({ ...rest }) => {
             { value: 100, label: "Series E", color: "#B2DDFF" },
           ]}
           size={250}
-          tooltipValue="value"
         />
       </FlexLayout>
     </Card>
@@ -132,13 +139,12 @@ export const DonutChartAll = ({ ...rest }) => {
     <Card title="Donut Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="loose" wrap="wrap">
         <DonutChart
-          showTooltip
           totalPercentage
           chartData={chartData}
           size={250}
+          tooltip={{ show: true, type: "value" }}
         />
         <DonutChart
-          showTooltip
           totalPercentage
           chartData={[
             { value: 25, label: "Series A", color: "#F0EDFA" },
@@ -148,9 +154,9 @@ export const DonutChartAll = ({ ...rest }) => {
             { value: 25, label: "Series E", color: "#B2DDFF" },
           ]}
           size={250}
+          tooltip={{ show: true, type: "value" }}
         />
         <DonutChart
-          showTooltip
           totalPercentage
           chartData={[
             { value: 25, label: "Series A", color: "#53B1FD" },
@@ -159,9 +165,9 @@ export const DonutChartAll = ({ ...rest }) => {
             { value: 25, label: "Series D", color: "#B2DDFF" },
           ]}
           size={250}
+          tooltip={{ show: true, type: "value" }}
         />
         <DonutChart
-          showTooltip
           totalPercentage
           chartData={[
             { value: 50, label: "Series A", color: "#53B1FD" },
@@ -169,21 +175,22 @@ export const DonutChartAll = ({ ...rest }) => {
             { value: 25, label: "Series C", color: "#9984DB" },
           ]}
           size={250}
+          tooltip={{ show: true, type: "value" }}
         />
         <DonutChart
-          showTooltip
           totalPercentage
           chartData={[
             { value: 50, label: "Series A", color: "#9984DB" },
             { value: 50, label: "Series B", color: "#D1E9FF" },
           ]}
           size={250}
+          tooltip={{ show: true, type: "value" }}
         />
         <DonutChart
-          showTooltip
           totalPercentage
           chartData={[{ value: 100, label: "Series A", color: "#9984DB" }]}
           size={250}
+          tooltip={{ show: true, type: "value" }}
         />
       </FlexLayout>
     </Card>
