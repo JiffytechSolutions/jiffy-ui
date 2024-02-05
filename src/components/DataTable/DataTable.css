@@ -10,7 +10,7 @@
 }
 
 .inte-dataTable--wrapper {
-  overflow:auto hidden;
+  overflow: auto hidden;
   box-sizing: border-box;
 }
 
@@ -82,7 +82,7 @@
 
 .shadowedRight::after {
   left: 0;
-  box-shadow: inset -10px 0 8px -8px  rgba(16, 24, 40, 0.10);
+  box-shadow: inset -10px 0 8px -8px rgba(16, 24, 40, 0.1);
 }
 
 .shadowedLeft::after {
@@ -141,20 +141,18 @@
 
 .inte-dataTable__pagination {
   padding: 1.6rem;
-  border-top:1px solid var(--inte-G40);
+  border-top: 1px solid var(--inte-G40);
 }
 
-.inte-dataTable__row--lastChild:not(.inte-dataTable__row--expandActive) .inte-dataTable__cell{
-  border-bottom: none ;
+.inte-dataTable__row--lastChild:not(.inte-dataTable__row--expandActive)
+  .inte-dataTable__cell {
+  border-bottom: none;
 }
 
 .inte-dataTable__row--Fixed {
   margin: 0 -0.1rem;
   padding: 1.6rem;
   background-color: var(--inte-P20);
-}
-.inte-dataTable__row--Fixed .inte-dataTable__container {
-  border: none;
 }
 
 .inte-DataTable__resizeHandler {
@@ -181,7 +179,7 @@
 
 .inte-dataTable__fixHeader--handler {
   position: sticky;
-  top:0;
+  top: 0;
   z-index: 9;
   overflow: hidden;
 }
@@ -243,7 +241,7 @@
 .inte-dataTable__stickyScrollBar--wrapper {
   overflow: auto;
   z-index: 1;
-  box-shadow: inset -10px 0 8px -8px rgba(16, 24, 40, 0.10);
+  box-shadow: inset -10px 0 8px -8px rgba(16, 24, 40, 0.1);
   position: fixed;
   bottom: 0;
   &::-webkit-scrollbar {
@@ -256,5 +254,5 @@
 }
 
 .inte-dataTable__cell--edited {
-  background-color: #F2F7FE;
+  background-color: #f2f7fe;
 }

@@ -1,3 +1,8 @@
+.inte-activityGauge__wrapper {
+  display: flex;
+  gap: 1.6rem;
+  flex-direction: column;
+}
 .inte-activityGauge {
   position: relative;
   line-height: 0;
@@ -66,4 +71,22 @@
 .inte-activityGauge--medium .inte-activityGauge__value,
 .inte-activityGauge--large .inte-activityGauge__value {
   color: var(--inte-G800);
+}
+/* legend  css*/
+.inte-chartLegend__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.inte-chartLegend,
+.inte-legend__name {
+  display: flex;
+  align-items: center;
+}
+.inte-chartLegend {
+  justify-content: space-between;
+}
+.inte-legend__name {
+  gap: 1rem;
 }
