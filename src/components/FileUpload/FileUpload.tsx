@@ -2,6 +2,8 @@ import React, { useId, useRef, useState } from "react";
 import FileDetails from "./component/FileDetails";
 import getClassNames from "../../utilities/getClassnames";
 import "./FileUpload.css";
+import TextLink from "../TextLink/TextLink";
+import Text from "../Text/Text";
 const FileUpload = ({
   id,
   innerLabel,
@@ -17,8 +19,10 @@ const FileUpload = ({
   helpIcon,
   maxSizeAllowed,
   customClass = "",
+  clearAll = false,
 }: UploadI) => {
   const [filesData, setFilesData] = useState<any | null>([]);
+  // const [filesData, setFilesData] = useState<any | null>([]);
   const [isDragOver, setIsDragOver] = useState(false);
   const inputUploadRef = useRef<HTMLInputElement>(null);
   const inputWrapperRef = useRef<HTMLLabelElement>(null);
@@ -88,10 +92,10 @@ const FileUpload = ({
     if (isMultiple) {
       if (maxCount && totalSelectedFiles.length > maxCount) {
         const truncatedFiles = totalSelectedFiles.slice(0, maxCount);
-        onChange(truncatedFiles);
+        onChange(truncatedFiles, files);
         setFilesData(truncatedFiles);
       } else {
-        onChange(totalSelectedFiles);
+        onChange(totalSelectedFiles, files);
         setFilesData(totalSelectedFiles);
       }
     } else {
@@ -263,12 +267,19 @@ const FileUpload = ({
                   </clipPath>
                 </defs>
               </svg>
-              <div className="inte-fileUpload__uploadText">
-                {innerLabel || (
-                  <>
-                    <span>Click to upload</span>
-                    <span> or drag and drop</span>
-                  </>
+              <div>
+                <div className="inte-fileUpload__uploadText">
+                  {innerLabel || (
+                    <>
+                      <span>Click to upload</span>
+                      <span> or drag and drop</span>
+                    </>
+                  )}
+                </div>
+                {accept && (
+                  <span className="inte-fileUpload__fileType">
+                    {accept?.join()}
+                  </span>
                 )}
               </div>
             </>
@@ -286,18 +297,30 @@ const FileUpload = ({
           <span>{helpText}</span>
         </span>
       )}
-      {filesData.length !== 0 &&
-        filesData.map((i: { id: React.Key | null | undefined }) => {
-          return (
-            <FileDetails
-              key={i.id}
-              removeImage={removeImage}
-              accept={accept}
-              item={i}
-              sizeAllowed={maxSizeAllowed}
-            />
-          );
-        })}
+      {filesData.length !== 0 && (
+        <>
+          {clearAll && (
+            <div className="inte-fileUpload__clearWrapper">
+              <Text fontweight="bold" type="T-7">
+                Uploaded File
+              </Text>
+              <TextLink label="Clear all" onClick={() => setFilesData([])} />
+            </div>
+          )}
+
+          {filesData.map((i: { id: React.Key | null | undefined }) => {
+            return (
+              <FileDetails
+                key={i.id}
+                removeImage={removeImage}
+                accept={accept}
+                item={i}
+                sizeAllowed={maxSizeAllowed}
+              />
+            );
+          })}
+        </>
+      )}
     </div>
   );
 };
@@ -309,11 +332,12 @@ export interface UploadI {
   isMultiple?: boolean;
   isDragable?: boolean;
   isDisabled?: boolean;
+  clearAll?: boolean;
   maxCount?: number;
   maxSizeAllowed?: number;
   helpText?: string;
   helpIcon?: React.ReactNode;
-  onChange?: (e: any) => void;
+  onChange?: (e: any, single?: any) => void;
   onRemove?: (e: any) => void;
   customClass?: string;
 }
