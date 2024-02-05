@@ -112,6 +112,13 @@ export default {
       },
       defaultValue: false,
     },
+    clearAll: {
+      description: "clear all",
+      control: {
+        type: "boolean",
+      },
+      defaultValue: true,
+    },
     customClass: {
       description: "Set custom class",
       control: {
@@ -130,6 +137,7 @@ const Template = ({ ...rest }) => {
           size: 20,
           color: "var(--inte-G300)",
         })}
+        onChange={(e) => {}}
       />
     </Card>
   );

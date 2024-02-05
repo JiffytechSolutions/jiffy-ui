@@ -1,5 +1,11 @@
+.inte-activityGauge__wrapper {
+  display: flex;
+  gap: 1.6rem;
+  flex-direction: column;
+}
 .inte-activityGauge {
   position: relative;
+  line-height: 0;
 }
 
 .inte-activityGauge__svg {
@@ -7,15 +13,14 @@
   width: 100%;
 }
 
-.inte-activityGauge__info {
-  position: absolute;
-}
-
 .inte-activityGauge__circle {
-  transform: rotate(271deg);
+  transform: rotate(-90deg);
   transform-origin: center;
 }
-
+.inte-activityGauge__hoverAnimation .inte-activityGauge__circle,
+.inte-activityGauge__hoverAnimation .inte-activityGauge__background {
+  transition: 300ms all linear !important;
+}
 .inte-activityGauge__info {
   position: absolute;
   top: 50%;
@@ -24,4 +29,64 @@
   transform: translate(-50%, -50%);
   flex-direction: column;
   align-items: center;
+}
+
+.inte-activityGauge--small .inte-activityGauge__label {
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+.inte-activityGauge--small .inte-activityGauge__value {
+  font-weight: 600;
+}
+
+.inte-activityGauge--medium .inte-activityGauge__label {
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+}
+
+.inte-activityGauge--small .inte-activityGauge__value,
+.inte-activityGauge--large .inte-activityGauge__label {
+  font-size: 1.8rem;
+  line-height: 2.4rem;
+}
+.inte-activityGauge--small .inte-activityGauge__label,
+.inte-activityGauge--medium .inte-activityGauge__label,
+.inte-activityGauge--large .inte-activityGauge__label {
+  font-weight: 400;
+}
+.inte-activityGauge--large .inte-activityGauge__value,
+.inte-activityGauge--medium .inte-activityGauge__value {
+  font-size: 2.4rem;
+  font-weight: 600;
+  line-height: 3.6rem;
+}
+
+.inte-activityGauge--small .inte-activityGauge__label,
+.inte-activityGauge--medium .inte-activityGauge__label,
+.inte-activityGauge--large .inte-activityGauge__label {
+  color: var(--inte-G450);
+}
+
+.inte-activityGauge--small .inte-activityGauge__value,
+.inte-activityGauge--medium .inte-activityGauge__value,
+.inte-activityGauge--large .inte-activityGauge__value {
+  color: var(--inte-G800);
+}
+/* legend  css*/
+.inte-chartLegend__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.inte-chartLegend,
+.inte-legend__name {
+  display: flex;
+  align-items: center;
+}
+.inte-chartLegend {
+  justify-content: space-between;
+}
+.inte-legend__name {
+  gap: 1rem;
 }

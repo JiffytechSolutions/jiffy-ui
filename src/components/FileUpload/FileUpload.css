@@ -100,6 +100,12 @@
   position: relative;
   border: 0.1rem solid var(--inte-G40);
 }
+.inte-fileUpload__clearWrapper {
+  display: flex;
+  margin-top: 1.2rem;
+  align-items: center;
+  justify-content: space-between;
+}
 .inte-fileUpload__item {
   position: relative;
   display: flex;

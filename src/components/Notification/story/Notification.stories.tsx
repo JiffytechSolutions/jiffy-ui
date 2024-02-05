@@ -44,9 +44,9 @@ export default {
     badge: {
       description: "Set the Badge ",
       control: {
-          disable: true
+        disable: true,
       },
-  },
+    },
     date: {
       description: "Set the Timeline",
       control: {
@@ -67,12 +67,13 @@ export default {
 const Template = ({ ...rest }: any) => {
   return (
     <Card title="Notification">
-      <Notification {...rest} 
-      badge={{
-        children: "New",
-        type: "success",
-        variant: 'accent'
-    }}
+      <Notification
+        {...rest}
+        badge={{
+          children: "New",
+          type: "success",
+          variant: "accent",
+        }}
       />
     </Card>
   );
