@@ -1,40 +1,41 @@
 import React from "react";
 import PieAndDonutChart from "../PieAndDonutChart/PieAndDonutChart";
 export interface DonutChartI {
-  chartData: DonutChartData[];
+  chartData: donutChartData[];
   size?: number;
-  showTooltip?: boolean;
-  tooltipValue?: "percentage" | "value";
+  tooltip?: tooltipI;
+
   totalPercentage?: boolean;
   customClass?: string;
 }
-export interface DonutChartData {
+export interface donutChartData {
   value: number;
   label: string;
   color: string;
+}
+
+export interface tooltipI {
+  show?: boolean;
+  type?: "percentage" | "value";
 }
 
 const DonutChart: React.FC<DonutChartI> = ({
   chartData,
   size = 250,
   totalPercentage = false,
-  showTooltip = false,
+  tooltip = { show: false, type: "value" },
   customClass = "",
-  tooltipValue = "percentage",
 }) => {
   return (
-    <>
-      <PieAndDonutChart
-        chartData={chartData}
-        type="donutchart"
-        height={size}
-        width={size}
-        percentage={totalPercentage}
-        showTooltip={showTooltip}
-        tooltipValue={tooltipValue}
-        customClass={customClass}
-      />
-    </>
+    <PieAndDonutChart
+      chartData={chartData}
+      type="donutchart"
+      height={size}
+      width={size}
+      percentage={totalPercentage}
+      tooltip={tooltip}
+      customClass={customClass}
+    />
   );
 };
 

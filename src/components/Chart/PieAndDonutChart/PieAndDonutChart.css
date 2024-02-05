@@ -1,6 +1,7 @@
 .inte-pieChart,
 .inte-donutChart {
   position: relative;
+  line-height: 0;
 }
 .inte-pieChart:hover,
 .inte-donutChart:hover {
