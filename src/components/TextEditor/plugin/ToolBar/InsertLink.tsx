@@ -6,6 +6,7 @@ import { TOGGLE_LINK_COMMAND,toggleLink} from "@lexical/link";
 import Modal from '../../../Modal/Modal';
 import { TextField } from '../../../Form';
 import { FlexLayout } from '../../../FlexLayout';
+import ToolTip from '../../../ToolTip/ToolTip';
 
 interface InsertLinkI {
   editor: LexicalEditor
@@ -52,10 +53,13 @@ const InsertLink = ({ editor, isLink, selectedText }: InsertLinkI) => {
 
   return (
     <>
-      <Button
-        onClick={isLink ? () => insertLink() : () => setOpen(prev => !prev)}
-        icon={<Link2 size="20" color='#1C2433' />}
-        type='textButton'
+      <ToolTip 
+        activator={<Button
+          onClick={isLink ? () => insertLink() : () => setOpen(prev => !prev)}
+          icon={<Link2 size="20" color='#1C2433' />}
+          type='textButton'
+        />}
+        helpText="Insert Link"
       />
 
       <Modal
