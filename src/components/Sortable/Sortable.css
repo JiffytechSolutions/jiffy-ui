@@ -1,5 +1,10 @@
+.inte-sortable:not(.inte-sortable--dummy) {
+  position: relative;
+}
+
 .inte-sortable__item {
   cursor: pointer;
+  /* transform-origin:left top ; */
 }
 
 .inte-sortable__item--dummy {
@@ -15,6 +20,7 @@
 
 .inte-sortable--dummy {
   opacity: 0;
+  /* margin-top: 20px; */
   position: fixed;
   z-index: -1;
   visibility: hidden;

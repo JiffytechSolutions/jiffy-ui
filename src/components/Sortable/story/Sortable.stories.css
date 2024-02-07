@@ -1,0 +1,34 @@
+.template {
+    display: grid;
+    grid-template-columns: repeat(4 , 1fr);
+    gap: 20px;
+}
+
+.template .inte-sortable__item:first-child {
+    grid-row: span 2;
+    grid-column: span 2;
+}
+
+
+.sortableVertical {
+    display: flex;
+    flex-direction: column;
+    gap:10px;
+    overflow-y: auto;
+    max-height: 600px;
+    margin: auto;
+}
+
+.sortableHorizontal {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+}
+
+.sortableGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap:15px;
+    overflow: auto;
+    max-height: 600px;
+}
