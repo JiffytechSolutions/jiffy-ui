@@ -191,6 +191,7 @@ const FontStyle = ({ editor }: FontStyleI) => {
         }]}
       />
 
+
     </div>
   )
 }

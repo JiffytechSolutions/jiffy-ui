@@ -28,6 +28,9 @@ export default {
       },
       defaultValue:"",
     },
+    onChange : {
+      description : "This function trigger when the order of the items changes <code>(newAlignedData: sortableArray) => void</code>"
+    }
   },
 };
 
@@ -139,7 +142,6 @@ const dragData = [
 const sortableArr: sortableArray = itemsData.map((item) => ({
   content: (
     <img
-      // style={{ aspectRatio: 1, borderRadius: "0%" , minHeight:"100%" , minWidth:"100%" }}
       src={item.imageUrl}
       alt="img"
       width={150}

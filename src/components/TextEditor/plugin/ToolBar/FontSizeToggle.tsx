@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react"
 import { Minus, Plus } from "../../../../icons"
 import Button from "../../../Button/Button"
-import { TextField } from "../../../Form"
+import { Select, TextField } from "../../../Form"
 import { $INTERNAL_isPointSelection, $getSelection, LexicalEditor } from "lexical"
-import {$patchStyleText} from '@lexical/selection';
+import { $patchStyleText } from '@lexical/selection';
 
 interface FontSizeToggleI {
   editor: LexicalEditor
   value: string
 }
 
-const FontSizeToggle = ({editor , value}:FontSizeToggleI) => {
+const fontSizeOptions = Array(43).fill(0).map((_, ind) => {
+  return {
+    label: `${ind + 8}`,
+    value: `${ind + 8}px`
+  }
+})
 
-  const [textFieldValue , setTextFieldValue] = useState(value.split('px')[0]) 
+const FontSizeToggle = ({ editor, value }: FontSizeToggleI) => {
 
-  const handleClick =  (newSize:string) => {
+  const handleFontSizeChange = (newSize: string) => {
     editor.update(() => {
       const selection = $getSelection();
       if ($INTERNAL_isPointSelection(selection)) {
@@ -24,38 +29,15 @@ const FontSizeToggle = ({editor , value}:FontSizeToggleI) => {
       }
     });
   }
-
-  const handelBlur = () => {
-    if(isNaN(Number(textFieldValue))) return
-    else if(Number(textFieldValue) < 1)  handleClick("1px");
-    else if(Number(textFieldValue) > 40) handleClick("40px");
-    else handleClick(textFieldValue + "px");
-  }
-
-  const handelChange = (newValue: string) => {
-    if(isNaN(Number(newValue))) return
-    setTextFieldValue(newValue)
-  }
-
-  useEffect(() => {
-    setTextFieldValue(value.split('px')[0])
-  },[value])
-
-  return <div className='inte-textEditor__fontSizeToggle'>
-    <Button
-      icon={<Minus size="24" color='#1C2433' />}
-      isDisabled={Number(textFieldValue) === 1}
-      type='textButton'
-      onClick={() => handleClick(Number(textFieldValue) - 1 + 'px')}
-    />
-    <TextField onBlur={handelBlur} value={textFieldValue} customClass='inte-customSmallInput' onChange={handelChange} />
-    <Button
-      icon={<Plus size="24" color='#1C2433' />}
-      type='textButton'
-      isDisabled={Number(textFieldValue) === 40}
-      onClick={() => handleClick(Number(textFieldValue) + 1 + 'px')}
-    />
-  </div>
+  return (
+    <div className="inte-textEditor__fontSizeChanger">
+      <Select
+        options={fontSizeOptions}
+        value={value}
+        onChange={handleFontSizeChange}
+      />
+    </div>
+  )
 }
 
 export default FontSizeToggle

@@ -39,8 +39,12 @@ export const INSERT_IMAGE_COMMAND: LexicalCommand<InsertImagePayload> = createCo
 
 export function InsertImageDialog({
   editor,
+  insidePopover,
+  close
 }: {
   editor: LexicalEditor;
+  insidePopover: boolean
+  close : () => void
 }): JSX.Element {
   const [src, setSrc] = useState('');
   const hasModifier = useRef(false);
@@ -61,13 +65,19 @@ export function InsertImageDialog({
   const onClick = (payload: InsertImagePayload) => {
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, payload);
     onClose();
+    close()
   };
 
   const activator = <Button
     icon={<Image size="20" color='#1C2433' />}
-    type='textButton'
     onClick={() => setOpen(prev => !prev)}
-  />
+    size={insidePopover ? "large" : "thin"}
+    type={"plainSecondary"}
+  >
+    {
+      insidePopover ? "Insert Image" : null
+    }
+  </Button>
 
   const loadImage = (files: FileList | null) => {
     const reader = new FileReader();
@@ -84,10 +94,12 @@ export function InsertImageDialog({
 
   return (
     <>
-      <ToolTip 
-        activator={activator}
-        helpText="Insert image"
-      />
+      {
+        insidePopover ? activator : <ToolTip
+          activator={activator}
+          helpText="Insert Image"
+        />
+      }
       <Modal
         isOpen={open}
         onClose={onClose}
@@ -111,7 +123,7 @@ export function InsertImageDialog({
           />
 
           <Seprator text='OR' />
-          <TextField label="Image URL" value={src} onChange={(newValue) => setSrc(newValue)}/>
+          <TextField label="Image URL" value={src} onChange={(newValue) => setSrc(newValue)} />
         </FlexLayout>
       </Modal>
     </>

@@ -49,8 +49,7 @@ export type CellEditorConfig = Readonly<{
   theme?: EditorThemeClasses;
 }>;
 
-export const INSERT_NEW_TABLE_COMMAND: LexicalCommand<InsertTableCommandPayload> =
-  createCommand('INSERT_NEW_TABLE_COMMAND');
+export const INSERT_NEW_TABLE_COMMAND: LexicalCommand<InsertTableCommandPayload> = createCommand('INSERT_NEW_TABLE_COMMAND');
 
 export const CellContext = createContext<CellContextShape>({
   cellEditorConfig: null,
@@ -85,7 +84,7 @@ export function TableContext({ children }: { children: JSX.Element }) {
   );
 }
 
-export const InsertTableModal = ({ editor }: { editor: LexicalEditor }) => {
+export const InsertTableModal = ({ editor , insidePopover , close }: { editor: LexicalEditor ,insidePopover: boolean , close : () => void }) => {
   const [open, setOpen] = useState(false)
   const [rows, setRows] = useState('5');
   const [columns, setColumns] = useState('5');
@@ -106,7 +105,7 @@ export const InsertTableModal = ({ editor }: { editor: LexicalEditor }) => {
       columns,
       rows,
     });
-
+    close()
     setOpen(false)
   };
 
@@ -114,15 +113,22 @@ export const InsertTableModal = ({ editor }: { editor: LexicalEditor }) => {
   const activator = <Button
     onClick={() => setOpen(prev => !prev)}
     icon={<GridSvg />}
-    type='textButton'
-  />
+    size={insidePopover ? "large" : "thin"}
+    type={"plainSecondary"}
+  >
+    {
+      insidePopover ? "Insert Table" : null
+    }
+  </Button>
 
   return (
     <>
-      <ToolTip
-        activator={activator}
-        helpText="Insert Table"
-      />
+     {
+        insidePopover ? activator : <ToolTip
+          activator={activator}
+          helpText="Insert Table"
+        />
+      }
       <Modal
         heading='Add Table'
         modalSize='small'
