@@ -10,6 +10,7 @@ import {
 import useMobileDevice from "../../utilities/useMobileDevice";
 import useBodyLock from "../../utilities/UseBodyLock";
 import "./Sortable.css";
+import getClassNames from "../../utilities/getClassnames";
 
 export type sortableArray = {
   content: React.ReactNode;
@@ -29,6 +30,7 @@ export interface SortableI {
   onChange: (newAlignedData: sortableArray) => void;
   animationDuration?: number;
   containerStyle?: React.CSSProperties;
+  customClass?: string;
 }
 
 const Sortable = ({
@@ -36,6 +38,7 @@ const Sortable = ({
   onChange,
   animationDuration = 300,
   containerStyle,
+  customClass = "",
 }: SortableI) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const dummyContainerRef = useRef<HTMLDivElement>(null);
@@ -201,23 +204,22 @@ const Sortable = ({
       element: fixedEle,
       index: index,
       thresholdCursor: thresholdCursor,
-      isMouseMove:false
+      isMouseMove: false,
     });
 
     setDummyData([...data]);
   };
 
   const handelMouseMove = (event: MouseEvent | TouchEvent | any) => {
-    if (!sortableData || !containerRef.current)
-      return;
+    if (!sortableData || !containerRef.current) return;
 
     const { clientX, clientY } = getClientXY(event);
 
-    if(fixedElementRef.current) {
+    if (fixedElementRef.current) {
       fixedElementRef.current.style.top =
-      clientY - sortableData.thresholdCursor.top + "px";
-    fixedElementRef.current.style.left =
-      clientX - sortableData.thresholdCursor.left + "px";
+        clientY - sortableData.thresholdCursor.top + "px";
+      fixedElementRef.current.style.left =
+        clientX - sortableData.thresholdCursor.left + "px";
     }
 
     const { top, left } = containerRef.current.getBoundingClientRect();
@@ -229,9 +231,9 @@ const Sortable = ({
       y: clientY + containerRef.current.scrollTop - top,
     });
 
-    if (latestIndex !== -1) { 
+    if (latestIndex !== -1) {
       setSortableData((prev) =>
-        prev ? { ...prev, dummyIndex: latestIndex, isMouseMove : true } : prev
+        prev ? { ...prev, dummyIndex: latestIndex, isMouseMove: true } : prev
       );
     }
   };
@@ -327,7 +329,14 @@ const Sortable = ({
 
   return (
     <>
-      <div ref={containerRef} className="inte-sortable" style={containerStyle}>
+      <div
+        ref={containerRef}
+        style={containerStyle}
+        className={getClassNames({
+          "inte-sortable": true,
+          [customClass]: customClass,
+        })}
+      >
         {data.map((ele, ind) => {
           const currentTransition = transitionArray[ind]
             ? `${transitionArray[ind].left ?? 0}px,${
@@ -375,7 +384,9 @@ const Sortable = ({
           })}
         </div>
       )}
-      <PortalComponent>{sortableData?.isMouseMove ? sortableData?.element : null}</PortalComponent>
+      <PortalComponent>
+        {sortableData?.isMouseMove ? sortableData?.element : null}
+      </PortalComponent>
     </>
   );
 };

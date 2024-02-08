@@ -168,7 +168,7 @@ const SimpleSelect = ({
         addOptions(opt);
       }
     }
-  }, [value,options]);
+  }, [value, options]);
   useEffect(() => {
     // Calling resize input function
     if (!isMobile) {

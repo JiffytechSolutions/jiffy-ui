@@ -27,6 +27,12 @@ export default {
       },
       defaultValue: 300,
     },
+    customClass: {
+      description: "Add desired custom class for adding your custom css",
+      control: {
+        type: "text",
+      },
+    },
   },
 };
 
@@ -154,6 +160,7 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <Sortable
+        {...rest}
         data={data}
         onChange={(newArr) => setData(newArr)}
         animationDuration={rest.animationDuration}

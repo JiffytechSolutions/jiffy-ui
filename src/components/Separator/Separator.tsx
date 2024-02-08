@@ -1,26 +1,27 @@
 import React, { FC } from "react";
 import getClassNames from "../../utilities/getClassnames";
-import "./Seprator.css";
+import "./Separator.css";
+
 export interface SeparatorI {
   type?: "solid" | "dotted" | "dashed";
   customClass?: string;
   text?: string;
 }
 
-const Seprator: FC<SeparatorI> = ({
+const Separator: FC<SeparatorI> = ({
   type = "solid",
   customClass = "",
   text,
 }: SeparatorI) => {
   const borderTypes = {
-    dashed: "inte-seprator--dashed",
-    dotted: "inte-seprator--dotted",
-    solid: "inte-seprator--solid",
+    dashed: "inte-separator--dashed",
+    dotted: "inte-separator--dotted",
+    solid: "inte-separator--solid",
   };
   const textDivider = {
-    dashed: "inte-seprator__text--dashed",
-    dotted: "inte-seprator__text--dotted",
-    solid: "inte-seprator__text--solid",
+    dashed: "inte-separator__text--dashed",
+    dotted: "inte-separator__text--dotted",
+    solid: "inte-separator__text--solid",
   };
   const typess = borderTypes[type];
   const textDividerSep = textDivider[type];
@@ -28,8 +29,8 @@ const Seprator: FC<SeparatorI> = ({
   return (
     <div
       className={getClassNames({
-        "inte-seprator": true,
-        "inte-seprator__textDivider": text,
+        "inte-separator": true,
+        "inte-separator__textDivider": text,
         [textDividerSep]: text,
         [typess]: !text,
         [customClass]: customClass,
@@ -40,4 +41,4 @@ const Seprator: FC<SeparatorI> = ({
   );
 };
 
-export default Seprator;
+export default Separator;

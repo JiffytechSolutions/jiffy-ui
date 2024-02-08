@@ -130,13 +130,13 @@ const TextField = React.forwardRef(
 
     // Manage padding space of Inner Prefix icon from left
     useLayoutEffect(() => {
-      prefix && SetInnericonWidth(innerPreref.current.offsetWidth);
+      prefix && SetInnericonWidth(innerPreref?.current?.offsetWidth);
     }, [innerPreref, prefix]);
     const innerPreIConWidth = prefix ? innerIconWidth + 26 : 12;
 
     // Manage padding  of Inner Prefix icon from right
     useLayoutEffect(() => {
-      suffix && SetInnericonWidthSuff(innerSufrefWidth.current?.offsetWidth);
+      suffix && SetInnericonWidthSuff(innerSufrefWidth?.current?.offsetWidth);
     }, [innerSufrefWidth, suffix]);
     const clearIconWidth = isClearable ? 28 : 0;
     const innerPreIConWidthSuf = suffix ? innerIconWidthSuf + 22 : 12;
