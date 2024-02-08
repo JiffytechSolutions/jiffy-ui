@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import Button from '../../../Button/Button'
 import { Link2 } from '../../../../icons'
 import { $getSelection, $isRangeSelection, LexicalEditor } from 'lexical'
-import { TOGGLE_LINK_COMMAND,toggleLink} from "@lexical/link";
+import { TOGGLE_LINK_COMMAND, toggleLink } from "@lexical/link";
 import Modal from '../../../Modal/Modal';
 import { TextField } from '../../../Form';
 import { FlexLayout } from '../../../FlexLayout';
@@ -12,9 +12,11 @@ interface InsertLinkI {
   editor: LexicalEditor
   isLink: boolean
   selectedText: string
+  insidePopover: boolean
+  close : () => void
 }
 
-const InsertLink = ({ editor, isLink, selectedText }: InsertLinkI) => {
+const InsertLink = ({ editor, isLink, selectedText, insidePopover , close }: InsertLinkI) => {
 
   const [open, setOpen] = useState(false)
   const [linkTextValue, setLinkTextValue] = useState(selectedText)
@@ -26,41 +28,48 @@ const InsertLink = ({ editor, isLink, selectedText }: InsertLinkI) => {
         const selection = $getSelection();
 
         if ($isRangeSelection(selection)) {
-            const { anchor, focus } = selection;
-            // inserting just the link text at the current selection
-            selection.insertText(linkTextValue);
+          const { anchor, focus } = selection;
+          // inserting just the link text at the current selection
+          selection.insertText(linkTextValue);
 
-            // selecting the inserted text
-            anchor.offset -= linkTextValue.length;
-            focus.offset = anchor.offset + linkTextValue.length;
-            
-            // transforming selection into a link
-            toggleLink(linkHref);
-          }
+          // selecting the inserted text
+          anchor.offset -= linkTextValue.length;
+          focus.offset = anchor.offset + linkTextValue.length;
+
+          // transforming selection into a link
+          toggleLink(linkHref);
+        }
       });
     } else {
-      console.log("remove Link")
       editor.dispatchCommand(TOGGLE_LINK_COMMAND, null);
     }
     setOpen(false)
-  }, [editor, isLink , linkHref , linkTextValue]);
+    close()
+  }, [editor, isLink, linkHref, linkTextValue]);
 
   useEffect(() => {
     setLinkTextValue(selectedText)
-  },[selectedText])
+  }, [selectedText])
 
-  // console.log(selectedText , "selectedText")
+  const activator = <Button
+    onClick={isLink ? () => insertLink() : () => setOpen(prev => !prev)}
+    icon={<Link2 size="20" color='#1C2433' />}
+    size={insidePopover ? "large" : "thin"}
+    type={"plainSecondary"}
+  >
+    {
+      insidePopover ? "Insert Link" : null
+    }
+  </Button>
 
   return (
     <>
-      <ToolTip 
-        activator={<Button
-          onClick={isLink ? () => insertLink() : () => setOpen(prev => !prev)}
-          icon={<Link2 size="20" color='#1C2433' />}
-          type='textButton'
-        />}
-        helpText="Insert Link"
-      />
+      {
+        insidePopover ? activator : <ToolTip
+          activator={activator}
+          helpText="Insert Link"
+        />
+      }
 
       <Modal
         modalSize='small'
@@ -76,7 +85,7 @@ const InsertLink = ({ editor, isLink, selectedText }: InsertLinkI) => {
         }}
         secondaryAction={{
           type: "secondary",
-          onClick:() => setOpen(false),
+          onClick: () => setOpen(false),
           content: "Cancel",
         }}
       >

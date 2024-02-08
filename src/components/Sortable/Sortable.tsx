@@ -6,6 +6,7 @@ import {
   pointInRangeArr,
   swapArray,
   getClientXY,
+  handelAutoScroll,
 } from "./SortableUtilityFun";
 import useMobileDevice from "../../utilities/useMobileDevice";
 import useBodyLock from "../../utilities/UseBodyLock";
@@ -25,20 +26,22 @@ type SortableDataI = {
   isMouseMove: boolean;
 };
 
+type transitionArr = { top: number, left: number, scaleX: number, scaleY: number }[]
+
 export interface SortableI {
   data: sortableArray;
   onChange: (newAlignedData: sortableArray) => void;
   animationDuration?: number;
-  containerStyle?: React.CSSProperties;
   customClass?: string;
 }
 
-const Sortable = ({
+
+
+const NewSortable = ({
   data,
   onChange,
   animationDuration = 300,
-  containerStyle,
-  customClass = "",
+  customClass,
 }: SortableI) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const dummyContainerRef = useRef<HTMLDivElement>(null);
@@ -47,128 +50,14 @@ const Sortable = ({
   const [dummyData, setDummyData] = useState<sortableArray>([]);
   const [sortableData, setSortableData] = useState<SortableDataI>();
 
-  const [originalRangeArray, setOriginalRangeArray] = useState<elementRect[]>(
-    []
-  );
-  const [dummyRangeArray, setDummyRangeArray] = useState<elementRect[]>([]);
-  const [transitionArray, setTransitionArray] = useState<
-    { top: number; left: number }[]
-  >([]);
+  const [originalRangeArray, setOriginalRangeArray] = useState<elementRect[]>([]);
+
+  const [transitionArray, setTransitionArray] = useState<string[]>([]);
 
   const isMobile = useMobileDevice();
   useBodyLock(isMobile && dummyData.length > 0);
 
   const timerRef = useRef<NodeJS.Timeout>();
-
-  const handelAutoScroll = (event: MouseEvent | TouchEvent) => {
-    const edgeSize = 50;
-    if (!containerRef.current) return;
-
-    const containerRect = containerRef.current.getBoundingClientRect();
-    const { clientX, clientY } = getClientXY(event);
-
-    const viewportX = clientX;
-    const viewportY = clientY;
-    const viewportWidth = containerRef.current.clientWidth;
-    const viewportHeight = containerRef.current.clientHeight;
-
-    const edgeTop = edgeSize + containerRect.top;
-    const edgeLeft = edgeSize + containerRect.left;
-    const edgeBottom = viewportHeight + containerRect.top - edgeSize;
-    const edgeRight = viewportWidth + containerRect.left - edgeSize;
-
-    const isInLeftEdge = viewportX < edgeLeft;
-    const isInRightEdge = viewportX > edgeRight;
-    const isInTopEdge = viewportY < edgeTop;
-    const isInBottomEdge = viewportY > edgeBottom;
-
-    if (!(isInLeftEdge || isInRightEdge || isInTopEdge || isInBottomEdge)) {
-      clearTimeout(timerRef.current);
-      return;
-    }
-
-    const containerWidth = Math.max(
-      containerRef.current.scrollWidth,
-      containerRef.current.offsetWidth,
-      containerRef.current.clientWidth
-    );
-
-    const containerHeight = Math.max(
-      containerRef.current.scrollHeight,
-      containerRef.current.offsetHeight,
-      containerRef.current.clientHeight
-    );
-
-    const maxScrollX = containerWidth - viewportWidth;
-    const maxScrollY = containerHeight - viewportHeight;
-
-    function adjustWindowScroll() {
-      if (!containerRef.current) return false;
-
-      const currentScrollX = containerRef.current.scrollLeft;
-      const currentScrollY = containerRef.current.scrollTop;
-
-      const canScrollUp = currentScrollY > 0;
-      const canScrollDown = currentScrollY < maxScrollY;
-      const canScrollLeft = currentScrollX > 0;
-      const canScrollRight = currentScrollX < maxScrollX;
-
-      // Since we can potentially scroll in two directions at the same time,
-      // let's keep track of the next scroll, starting with the current scroll.
-      // Each of these values can then be adjusted independently in the logic
-      // below.
-      let nextScrollX = currentScrollX;
-      let nextScrollY = currentScrollY;
-
-      // As we examine the mouse position within the edge, we want to make the
-      // incremental scroll changes more "intense" the closer that the user
-      // gets the viewport edge. As such, we'll calculate the percentage that
-      // the user has made it "through the edge" when calculating the delta.
-      // Then, that use that percentage to back-off from the "max" step value.
-      const maxStep = 50;
-
-      // Should we scroll left?
-      if (isInLeftEdge && canScrollLeft) {
-        const intensity = (edgeLeft - viewportX) / edgeSize;
-        nextScrollX = nextScrollX - maxStep * intensity;
-
-        // Should we scroll right?
-      } else if (isInRightEdge && canScrollRight) {
-        const intensity = (viewportX - edgeRight) / edgeSize;
-        nextScrollX = nextScrollX + maxStep * intensity;
-      }
-      // Should we scroll up?
-      if (isInTopEdge && canScrollUp) {
-        const intensity = (edgeTop - viewportY) / edgeSize;
-        nextScrollY = nextScrollY - maxStep * intensity;
-
-        // Should we scroll down?
-      } else if (isInBottomEdge && canScrollDown) {
-        const intensity = (viewportY - edgeBottom) / edgeSize;
-        nextScrollY = nextScrollY + maxStep * intensity;
-      }
-
-      // Sanitize invalid maximums. An invalid scroll offset won't break the
-      // subsequent .scrollTo() call; however, it will make it harder to
-      // determine if the .scrollTo() method should have been called in the
-      // first place.
-      nextScrollX = Math.max(0, Math.min(maxScrollX, nextScrollX));
-      nextScrollY = Math.max(0, Math.min(maxScrollY, nextScrollY));
-
-      if (nextScrollX !== currentScrollX || nextScrollY !== currentScrollY) {
-        containerRef.current.scrollTo(nextScrollX, nextScrollY);
-        return true;
-      } else return false;
-    }
-
-    (function checkForWindowScroll() {
-      clearTimeout(timerRef.current);
-
-      if (adjustWindowScroll()) {
-        timerRef.current = setTimeout(checkForWindowScroll, 30);
-      }
-    })();
-  };
 
   const handelMouseDown = (
     event: MouseEvent | TouchEvent | any,
@@ -193,6 +82,7 @@ const Sortable = ({
           top: eleRect.top,
           left: eleRect.left,
           width: eleRect.width,
+          height: eleRect.height
         }}
       >
         {data[index].content}
@@ -204,7 +94,7 @@ const Sortable = ({
       element: fixedEle,
       index: index,
       thresholdCursor: thresholdCursor,
-      isMouseMove: false,
+      isMouseMove: false
     });
 
     setDummyData([...data]);
@@ -215,26 +105,39 @@ const Sortable = ({
 
     const { clientX, clientY } = getClientXY(event);
 
-    if (fixedElementRef.current) {
-      fixedElementRef.current.style.top =
-        clientY - sortableData.thresholdCursor.top + "px";
-      fixedElementRef.current.style.left =
-        clientX - sortableData.thresholdCursor.left + "px";
-    }
-
     const { top, left } = containerRef.current.getBoundingClientRect();
 
-    handelAutoScroll(event);
+    handelAutoScroll(event, containerRef, timerRef);
 
     const latestIndex = pointInRangeArr(originalRangeArray, {
       x: clientX + containerRef.current.scrollLeft - left,
       y: clientY + containerRef.current.scrollTop - top,
     });
-
     if (latestIndex !== -1) {
+      let newThresholdCursor = sortableData.thresholdCursor
+      if (dummyContainerRef.current && fixedElementRef.current) {
+
+        const fixedElementRect = fixedElementRef.current.getBoundingClientRect();
+        const { width, height } = dummyContainerRef.current.children[latestIndex].getBoundingClientRect()
+
+        const widthIncreaseRatio = width / fixedElementRect.width
+        const heightIncreaseRatio = height / fixedElementRect.height
+
+
+        newThresholdCursor = {
+          top: sortableData.thresholdCursor.top * heightIncreaseRatio,
+          left: sortableData.thresholdCursor.left * widthIncreaseRatio
+        }
+
+        fixedElementRef.current.style.width = width + 'px'
+        fixedElementRef.current.style.height = height + 'px'
+        fixedElementRef.current.style.top = clientY - newThresholdCursor.top + "px";
+        fixedElementRef.current.style.left = clientX - newThresholdCursor.left + "px";
+      }
       setSortableData((prev) =>
-        prev ? { ...prev, dummyIndex: latestIndex, isMouseMove: true } : prev
+        prev ? { ...prev, dummyIndex: latestIndex, isMouseMove: true, thresholdCursor: newThresholdCursor } : prev
       );
+      setDummyData(swapArray(sortableData.index, latestIndex, data))
     }
   };
 
@@ -251,10 +154,6 @@ const Sortable = ({
     if (containerRef.current) {
       let rangeArr = makeRangeArray(containerRef.current);
       setOriginalRangeArray([...rangeArr]);
-    }
-    if (dummyContainerRef.current) {
-      let rangeArr = makeRangeArray(dummyContainerRef.current);
-      setDummyRangeArray([...rangeArr]);
     }
   };
 
@@ -275,36 +174,37 @@ const Sortable = ({
   }, [sortableData]);
 
   useEffect(() => {
-    if (
-      !originalRangeArray.length ||
-      !dummyRangeArray.length ||
-      !sortableData ||
-      !containerRef.current
-    )
-      return;
+    let res: transitionArr = []
+    if (!dummyContainerRef.current || !containerRef.current) return;
 
-    const dArr = Array(containerRef.current.children.length)
-      .fill(0)
-      .map((item, ind) => ind);
+    const t: string[] = data.map((item, index) => {
+      const prevPosition = dummyContainerRef.current?.children[index]
+      const currentPosition = dummyContainerRef.current?.querySelector(`#d-${item.id}`)
 
-    const originalIndexOfDummy = swapArray(
-      sortableData.dummyIndex,
-      sortableData.index,
-      dArr
-    );
+      if (prevPosition && currentPosition) {
+        const prevRect = prevPosition.getBoundingClientRect()
+        const currRect = currentPosition.getBoundingClientRect()
 
-    const res = originalRangeArray.map((item, i) => {
-      const currIndexInDummy = originalIndexOfDummy[i];
-      const currTransition = {
-        top: dummyRangeArray[currIndexInDummy].top - originalRangeArray[i].top,
-        left:
-          dummyRangeArray[currIndexInDummy].left - originalRangeArray[i].left,
-      };
-      return currTransition;
-    });
+        const widthIncrease = currRect.width / prevRect.width
+        const heightIncrease = currRect.height / prevRect.height
 
-    setTransitionArray([...res]);
-  }, [originalRangeArray, dummyRangeArray, sortableData]);
+        const xTranslate = currRect.x - prevRect.x
+        const yTranslate = currRect.y - prevRect.y
+
+        const newXtranslate = xTranslate / widthIncrease
+        const newYtranslate = yTranslate / heightIncrease
+
+        const newTransform = `scale(${widthIncrease} , ${heightIncrease}) translate(${newXtranslate}px , ${newYtranslate}px)`
+
+        return newTransform
+      }
+      return ""
+    })
+
+    setTransitionArray([...t])
+
+
+  }, [dummyData]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -323,26 +223,15 @@ const Sortable = ({
       clearTimeout(timerRef.current);
       return;
     }
-    let rangeArr = makeRangeArray(dummyContainerRef.current);
-    setDummyRangeArray([...rangeArr]);
   }, [sortableData]);
 
   return (
     <>
-      <div
-        ref={containerRef}
-        style={containerStyle}
-        className={getClassNames({
-          "inte-sortable": true,
-          [customClass]: customClass,
-        })}
-      >
+      <div ref={containerRef} className={getClassNames({
+        "inte-sortable": true,
+        [customClass as string]: customClass
+      })}>
         {data.map((ele, ind) => {
-          const currentTransition = transitionArray[ind]
-            ? `${transitionArray[ind].left ?? 0}px,${
-                transitionArray[ind].top ?? 0
-              }px,0`
-            : "(0 0  0)";
           return (
             <div
               key={ele.id}
@@ -354,11 +243,10 @@ const Sortable = ({
                 transition: sortableData
                   ? `transform ${animationDuration}ms `
                   : "",
-                transform: sortableData
-                  ? `translate3d(${currentTransition})`
-                  : "",
+                transform: sortableData ? transitionArray[ind] : '',
                 position: sortableData ? "relative" : undefined,
                 userSelect: sortableData ? "none" : undefined,
+                transformOrigin: sortableData ? 'top left' : ''
               }}
             >
               {ele.content}
@@ -369,15 +257,18 @@ const Sortable = ({
       {!!dummyData.length && (
         <div
           ref={dummyContainerRef}
-          className="inte-sortable inte-sortable--dummy"
+          className={getClassNames({
+            "inte-sortable inte-sortable--dummy": true,
+            "inte-sortable": true,
+            [customClass as string]: customClass
+          })}
           style={{
-            ...containerStyle,
             width: containerRef.current?.getBoundingClientRect().width + "px",
           }}
         >
           {dummyData.map((ele) => {
             return (
-              <div key={ele.id} className="inte-sortable__item">
+              <div key={ele.id} id={`d-${ele.id}`} className="inte-sortable__item">
                 {ele.content}
               </div>
             );
@@ -391,4 +282,4 @@ const Sortable = ({
   );
 };
 
-export default Sortable;
+export default NewSortable;

@@ -18,7 +18,7 @@ input:placeholder-shown {
   transition: 100ms box-shadow linear, 100ms border linear;
   -webkit-transition: 100ms box-shadow linear, 100ms border linear;
   -moz-transition: 100ms box-shadow linear, 100ms border linear;
-  user-select: none;
+  /* user-select: none; */
 }
 
 .inte-formElement__control:hover {

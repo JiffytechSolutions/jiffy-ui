@@ -34,14 +34,12 @@ export const pointInRangeArr = (
     // Calculate the horizontal distance from the point to the rectangle
     const colDistance = Math.abs(x - (currRect.left + currRect.width / 2));
 
-    // Update the nearest index if the current rectangle is closer in both row and column
-    if (
-      rowDistance < minDistance ||
-      (rowDistance === minDistance &&
-        colDistance <
-          Math.abs(x - (arr[nearestIndex].left + arr[nearestIndex].width / 2)))
-    ) {
-      minDistance = rowDistance;
+    // Calculate the Euclidean distance from the point to the rectangle
+    const distance = Math.sqrt(rowDistance * rowDistance + colDistance * colDistance);
+
+    // Update the nearest index if the current rectangle is closer
+    if (distance < minDistance) {
+      minDistance = distance;
       nearestIndex = i;
     }
   }
@@ -93,4 +91,115 @@ export const makeRangeArray = (container: HTMLElement) => {
     return currRange;
   });
   return res;
+};
+
+
+export const handelAutoScroll = (event: MouseEvent | TouchEvent , containerRef:React.RefObject<HTMLDivElement> , timerRef:React.MutableRefObject<NodeJS.Timeout | undefined>) => {
+  const edgeSize = 50;
+  if (!containerRef.current) return;
+
+  const containerRect = containerRef.current.getBoundingClientRect();
+  const { clientX, clientY } = getClientXY(event);
+
+  const viewportX = clientX;
+  const viewportY = clientY;
+  const viewportWidth = containerRef.current.clientWidth;
+  const viewportHeight = containerRef.current.clientHeight;
+
+  const edgeTop = edgeSize + containerRect.top;
+  const edgeLeft = edgeSize + containerRect.left;
+  const edgeBottom = viewportHeight + containerRect.top - edgeSize;
+  const edgeRight = viewportWidth + containerRect.left - edgeSize;
+
+  const isInLeftEdge = viewportX < edgeLeft;
+  const isInRightEdge = viewportX > edgeRight;
+  const isInTopEdge = viewportY < edgeTop;
+  const isInBottomEdge = viewportY > edgeBottom;
+
+  if (!(isInLeftEdge || isInRightEdge || isInTopEdge || isInBottomEdge)) {
+    clearTimeout(timerRef.current);
+    return;
+  }
+
+  const containerWidth = Math.max(
+    containerRef.current.scrollWidth,
+    containerRef.current.offsetWidth,
+    containerRef.current.clientWidth
+  );
+
+  const containerHeight = Math.max(
+    containerRef.current.scrollHeight,
+    containerRef.current.offsetHeight,
+    containerRef.current.clientHeight
+  );
+
+  const maxScrollX = containerWidth - viewportWidth;
+  const maxScrollY = containerHeight - viewportHeight;
+
+  function adjustWindowScroll() {
+    if (!containerRef.current) return false;
+
+    const currentScrollX = containerRef.current.scrollLeft;
+    const currentScrollY = containerRef.current.scrollTop;
+
+    const canScrollUp = currentScrollY > 0;
+    const canScrollDown = currentScrollY < maxScrollY;
+    const canScrollLeft = currentScrollX > 0;
+    const canScrollRight = currentScrollX < maxScrollX;
+
+    // Since we can potentially scroll in two directions at the same time,
+    // let's keep track of the next scroll, starting with the current scroll.
+    // Each of these values can then be adjusted independently in the logic
+    // below.
+    let nextScrollX = currentScrollX;
+    let nextScrollY = currentScrollY;
+
+    // As we examine the mouse position within the edge, we want to make the
+    // incremental scroll changes more "intense" the closer that the user
+    // gets the viewport edge. As such, we'll calculate the percentage that
+    // the user has made it "through the edge" when calculating the delta.
+    // Then, that use that percentage to back-off from the "max" step value.
+    const maxStep = 50;
+
+    // Should we scroll left?
+    if (isInLeftEdge && canScrollLeft) {
+      const intensity = (edgeLeft - viewportX) / edgeSize;
+      nextScrollX = nextScrollX - maxStep * intensity;
+
+      // Should we scroll right?
+    } else if (isInRightEdge && canScrollRight) {
+      const intensity = (viewportX - edgeRight) / edgeSize;
+      nextScrollX = nextScrollX + maxStep * intensity;
+    }
+    // Should we scroll up?
+    if (isInTopEdge && canScrollUp) {
+      const intensity = (edgeTop - viewportY) / edgeSize;
+      nextScrollY = nextScrollY - maxStep * intensity;
+
+      // Should we scroll down?
+    } else if (isInBottomEdge && canScrollDown) {
+      const intensity = (viewportY - edgeBottom) / edgeSize;
+      nextScrollY = nextScrollY + maxStep * intensity;
+    }
+
+    // Sanitize invalid maximums. An invalid scroll offset won't break the
+    // subsequent .scrollTo() call; however, it will make it harder to
+    // determine if the .scrollTo() method should have been called in the
+    // first place.
+    nextScrollX = Math.max(0, Math.min(maxScrollX, nextScrollX));
+    nextScrollY = Math.max(0, Math.min(maxScrollY, nextScrollY));
+
+    if (nextScrollX !== currentScrollX || nextScrollY !== currentScrollY) {
+      containerRef.current.scrollTo(nextScrollX, nextScrollY);
+      return true;
+    } else return false;
+  }
+
+  (function checkForWindowScroll() {
+    clearTimeout(timerRef.current);
+
+    if (adjustWindowScroll()) {
+      timerRef.current = setTimeout(checkForWindowScroll, 30);
+    }
+  })();
 };

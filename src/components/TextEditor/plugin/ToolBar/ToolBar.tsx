@@ -3,16 +3,12 @@ import './ToolBar.css'
 import { Code, RotateCcw, RotateCw } from '../../../../icons'
 import Button from '../../../Button/Button'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { $INTERNAL_isPointSelection, $getSelection, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
-import { $isAtNodeEnd, $setBlocksType, $getSelectionStyleValueForProperty } from "@lexical/selection"
+import { $getSelection, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
+import { $isAtNodeEnd, $getSelectionStyleValueForProperty } from "@lexical/selection"
 import { $isLinkNode } from "@lexical/link";
 import { mergeRegister, $getNearestNodeOfType, $findMatchingParent } from "@lexical/utils";
 import TextAlignBox from './TextAlignBox'
-import InsertLink from './InsertLink'
 import ListSelectBox from './ListBox'
-import { $createCodeNode } from "@lexical/code";
-import { InsertTableModal } from '../Table/TablePlugin'
-import { InsertImageDialog } from '../ImagesPulgin'
 import { $isHeadingNode } from '@lexical/rich-text';
 import {
   $isListNode,
@@ -23,6 +19,7 @@ import FontSizeToggle from './FontSizeToggle'
 import FontStyle from './FontColorPicker'
 import FontFamilyChanger from './FontFamilyChanger'
 import ToolTip from '../../../ToolTip/ToolTip'
+import SpecialNodes from './SpecialNodes'
 
 
 
@@ -52,7 +49,7 @@ function getSelectedNode(selection: RangeSelection) {
   }
 }
 
-const blockTypeToBlockName = {
+export const blockTypeToBlockName = {
   bullet: 'Bulleted List',
   check: 'Check List',
   code: 'Code Block',
@@ -170,30 +167,6 @@ const ToolBar = () => {
     editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, align);
   }
 
-  const formatCode = () => {
-    if (blockType !== 'code') {
-      editor.update(() => {
-        let selection = $getSelection();
-
-        if ($INTERNAL_isPointSelection(selection)) {
-          if (selection.isCollapsed()) {
-            $setBlocksType(selection, () => $createCodeNode());
-          } else {
-            const textContent = selection.getTextContent();
-            const codeNode = $createCodeNode();
-            selection.insertNodes([codeNode]);
-            selection = $getSelection();
-            console.log(textContent)
-            if ($isRangeSelection(selection))
-              selection.insertRawText(textContent);
-          }
-        }
-      });
-    }
-  };
-
-
-
   return (
     <div className='inte-TextEditor__toolBar'>
       <div className='inte-TextEditor__fontFormat'>
@@ -201,33 +174,24 @@ const ToolBar = () => {
         <FontFamilyChanger editor={editor} />
       </div>
       <FontStyle editor={editor} />
-      <Line />
       <FontSizeToggle editor={editor} value={fontSize} />
-      <Line />
       <div className='inte-textEditor__blockStyle'>
-        <ToolTip 
+        <ToolTip
           activator={<ListSelectBox editor={editor} currListType={isList} />}
           helpText={"Insert List"}
         />
-        <ToolTip 
+        <ToolTip
           activator={<TextAlignBox onClick={changeElementFormat} currAlign={currAlign} />}
           helpText={"Change Text Align"}
         />
       </div>
       <Line />
-      <div className='inte-textEditor__specialNodes'>
-        <InsertLink editor={editor} isLink={isLink} selectedText={selectedText} />
-        <InsertImageDialog editor={editor} />
-        <InsertTableModal editor={editor} />
-        <ToolTip 
-          activator={<Button
-            onClick={formatCode}
-            icon={<Code size="20" color='#1C2433' />}
-            type='textButton'
-          />}
-          helpText="Insert Code Block"
-        />
-      </div>
+      <SpecialNodes
+        blockType={blockType}
+        editor={editor}
+        isLink={isLink}
+        selectedText={selectedText}
+      />
       <Line />
       <div className="inte-textEditor__history">
         <ToolTip
