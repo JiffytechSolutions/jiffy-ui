@@ -326,7 +326,7 @@ function AutoComplete({
         helpText={helpText}
         label={name}
         prefix={<Search size={20} color={color} />}
-        placeholder={placeHolder}
+        placeHolder={placeHolder}
         isLoading={isLoading}
         autoFocus={autofocus}
         isClearable={isClearable}

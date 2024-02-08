@@ -111,7 +111,7 @@ const Template = ({ ...rest }: any) => {
   return (
     <>
       <TextField
-        placeholder={`Search by icon name`}
+        placeHolder={`Search by icon name`}
         customClass="inte-icon-search-bar"
         prefix={<Search size="20" color="rgb(195, 197, 201)" />}
         value={input}

@@ -82,7 +82,7 @@ const InputPhone = ({
       <TextField
         ref={myInputRef}
         type={type}
-        placeholder={placeholder}
+        placeHolder={placeholder}
         onChange={(e) => onChange(e)}
         value={value}
         label={label}
