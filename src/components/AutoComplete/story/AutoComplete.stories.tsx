@@ -553,7 +553,7 @@ autocomplete_with_popover_position.decorators = [
 
     return (
       <Card>
-        <FlexLayout desktopWidth="50" tabWidth="33" spacing="loose">
+        <FlexLayout wrap="wrap" desktopWidth="50" tabWidth="33" spacing="loose">
           {["left", "right", "top", "bottom"].map((item: any, index) => {
             return (
               <AutoComplete

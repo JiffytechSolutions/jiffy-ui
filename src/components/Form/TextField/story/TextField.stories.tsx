@@ -384,6 +384,7 @@ Types.decorators = [
           tabWidth="50"
           mobileWidth="100"
           spacing="extraLoose"
+          wrap="wrap"
         >
           {type.map((type: any, index: any) => {
             return (

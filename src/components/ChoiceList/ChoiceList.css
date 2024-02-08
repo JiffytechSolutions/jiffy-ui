@@ -59,3 +59,40 @@
   -webkit-appearance: none;
   appearance: none;
 }
+/* checkbox list  */
+
+.inte-checkboxGroup__listItem.inte-choiceList__item--hovered:hover
+  .inte-checkbox:not(.inte-checkbox--disabled)
+  > label
+  .inte-checkboxWrap
+  .inte__checkboxEle--fake {
+  border-color: var(--inte-P1000) !important;
+}
+
+.inte-checkboxGroup__listItem.inte-choiceList__item--hovered:hover
+  .inte-checkbox:not(.inte-checkbox--disabled)
+  label
+  .inte-checkbox--fake:checked
+  + .inte-checkboxWrap
+  > .inte__checkboxEle--fake,
+.inte-checkboxGroup__listItem.inte-choiceList__item--hovered:hover
+  .inte-checkbox:not(.inte-checkbox--disabled)
+  label
+  .inte-checkbox--fake:indeterminate
+  + .inte-checkboxWrap
+  > .inte__checkboxEle--fake {
+  background: var(--inte-P1000) !important;
+}
+
+/* radio list  */
+.inte-radioGroup__listItem.inte-choiceList__item--hovered:hover
+  .inte-radio:not(.inte-radio--disabled)
+  > label
+  .inte-radioWrap
+  .inte-radioEle--fake {
+  border-color: var(--inte-P1000);
+}
+
+.inte-popover.inte-choiceList {
+  z-index: var(--inte-Z-9);
+}

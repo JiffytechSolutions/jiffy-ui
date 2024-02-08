@@ -3,6 +3,7 @@ import AppWrapper from "../AppWrapper";
 import {
   AnnouncementBar,
   ButtonGroup,
+  ChoiceList,
   Image,
   Modal,
   PageHeader,
@@ -565,6 +566,8 @@ const Template = ({ ...rest }) => {
     },
   ]);
   const [showAllImg, setShowAllImg] = useState(false);
+  const [modalChoice, setModalChoice] = useState(false);
+  const [showChoiceList, setShowChoiceList] = useState(false);
 
   useEffect(() => {
     let hold: any = [];
@@ -603,8 +606,8 @@ const Template = ({ ...rest }) => {
           isOpen={showAllImg}
           src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg"
           multipleImage={storeData}
-          width={250}
-          height={250}
+          width={100}
+          height={100}
           onClose={() => setShowAllImg(false)}
           onClick={() => setShowAllImg(!showAllImg)}
           preview
@@ -612,6 +615,52 @@ const Template = ({ ...rest }) => {
           previewIcon={<Eye size={18} />}
           alt="Image not found or error 404"
         />
+        <Button
+          onClick={() => setModalChoice(!modalChoice)}
+          content="show modal"
+        />
+        <Modal
+          isOpen={modalChoice}
+          onClose={() => setModalChoice(false)}
+          heading="Modal Title"
+        >
+          <ChoiceList
+            isMulti
+            activator={
+              <Button
+                type="outlined"
+                disclosure
+                onClick={() => setShowChoiceList(!showChoiceList)}
+                content="Show list"
+              />
+            }
+            options={[
+              {
+                label: "label 1",
+                value: "value 1",
+              },
+              {
+                label: "label 2",
+                value: "value 2",
+              },
+              {
+                label: "label 3",
+                value: "value 3",
+              },
+              {
+                label: "label 4",
+                value: "value 4",
+              },
+              {
+                label: "label 5",
+                value: "value 5",
+              },
+            ]}
+            isOpen={showChoiceList}
+            onClose={() => setShowChoiceList(false)}
+            value={""}
+          />
+        </Modal>
         <Card>
           {features}
           {dataTable()}

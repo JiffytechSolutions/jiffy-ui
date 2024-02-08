@@ -1,13 +1,13 @@
 import React from "react";
 import { Card, FlexLayout } from "../../..";
-import Seprator from "../Seprator";
+import Separator from "../Separator";
 
 export default {
-  title: "Components/Entity/Seprator",
-  component: Seprator,
+  title: "Components/Entity/Separator",
+  component: Separator,
   argTypes: {
     type: {
-      description: "Set types of seprator",
+      description: "Set types of separator",
       control: {
         type: "radio",
         options: ["solid", "dotted", "dashed"],
@@ -15,7 +15,7 @@ export default {
       defaultValue: "solid",
     },
     customClass: {
-      description: "You can add extra class in seprator component",
+      description: "You can add extra class in separator component",
       control: {
         type: true,
       },
@@ -33,7 +33,7 @@ export default {
 const Template = ({ ...rest }) => {
   return (
     <Card>
-      <Seprator type={rest.type} text={rest.text} />
+      <Separator type={rest.type} text={rest.text} />
     </Card>
   );
 };
@@ -46,12 +46,12 @@ const types = ["solid", "dotted", "dashed"];
 export const Types: any = Template.bind({});
 Types.decorators = [
   () => (
-    <Card title={"Types of Seprator"}>
+    <Card title={"Types of Separator"}>
       <FlexLayout spacing="extraLoose" direction="vertical">
         {types.map((variant: any) => {
           return (
-            <Card cardType='borderLess' title={variant}>
-              <Seprator type={variant} />
+            <Card cardType="borderLess" title={variant}>
+              <Separator type={variant} />
             </Card>
           );
         })}
@@ -68,8 +68,8 @@ Seprator_with_text.decorators = [
       <FlexLayout spacing="extraLoose" direction="vertical">
         {types.map((variant: any) => {
           return (
-            <Card cardType='borderLess' title={variant}>
-              <Seprator type={variant} text="TEXT DIVIDER" />
+            <Card cardType="borderLess" title={variant}>
+              <Separator type={variant} text="TEXT DIVIDER" />
             </Card>
           );
         })}
