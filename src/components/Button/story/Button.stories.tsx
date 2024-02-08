@@ -67,8 +67,9 @@ export default {
           "secondary",
           "outlined",
           "dangerPlain",
+          "dangerPlainSecondary",
           "textButton",
-          "plainSecondary"
+          "plainSecondary",
         ],
       },
       defaultValue: "primary",
@@ -237,9 +238,7 @@ const Template = (rest: NewI) => {
       <Button
         {...rest}
         isHaptic={rest.isHaptic}
-        onClick={() => {
-         
-        }}
+        onClick={() => {}}
         icon={allIcons[rest.icon]({
           size: `${
             rest.size == "large"
@@ -259,7 +258,8 @@ const Template = (rest: NewI) => {
               ? "var(--inte-R200)"
               : rest.type == "dangerOutlined" && rest.isDisabled
               ? "var(--inte-R55)"
-              : (rest.type == "secondary" || rest.type === "plainSecondary") && !rest.isDisabled
+              : (rest.type == "secondary" || rest.type === "plainSecondary") &&
+                !rest.isDisabled
               ? "var(--inte-G800)"
               : rest.type == "secondary" && rest.isDisabled
               ? "var(--inte-G50)"
@@ -268,6 +268,8 @@ const Template = (rest: NewI) => {
               : rest.type == "outlined" && rest.isDisabled
               ? "var(--inte-G40)"
               : rest.type == "dangerPlain" && !rest.isDisabled
+              ? "var(--inte-R200)"
+              : rest.type == "dangerPlainSecondary" && !rest.isDisabled
               ? "var(--inte-R200)"
               : rest.type == "dangerPlain" && rest.isDisabled
               ? "var(--inte-R55)"
@@ -296,8 +298,9 @@ const types = [
   "secondary",
   "outlined",
   "dangerPlain",
+  "dangerPlainSecondary",
   "textButton",
-  "plainSecondary"
+  "plainSecondary",
 ];
 
 export const Types: any = Template.bind({});
@@ -378,6 +381,85 @@ size.decorators = [
           </FlexLayout>
         </Card>
       </FlexLayout>
+    </Card>
+  ),
+];
+
+// Button sizep lain secondary
+export const PlainTypeSize: any = Template.bind({});
+PlainTypeSize.decorators = [
+  () => (
+    <Card title={"Button size Options"}>
+      <Card title="Button type large">
+        <FlexLayout spacing="tight" valign="center" wrap="wrap">
+          <Button
+            type="dangerOutlined"
+            size="large"
+            content="Danger Outlined"
+          />
+          <Button
+            type="dangerPlainSecondary"
+            size="large"
+            content="Danger Outlined Secondary"
+          />
+          <Button type="dangerPlainSecondary" size="large" icon={<Icons.X />} />
+
+          <Button type="secondary" size="large" content="secondary" />
+          <Button
+            type="plainSecondary"
+            size="large"
+            content="Plain Secondary"
+          />
+          <Button type="plainSecondary" size="large" icon={<Icons.X />} />
+        </FlexLayout>
+      </Card>
+
+      <Card title="Button type thin">
+        <FlexLayout spacing="tight" valign="center" wrap="wrap">
+          <Button type="dangerOutlined" size="thin">
+            Danger Outlined thin
+          </Button>
+          <Button type="dangerPlainSecondary" size="thin">
+            Danger Outlined Secondary
+          </Button>
+
+          <Button type="dangerPlainSecondary" size="thin" icon={<Icons.X />} />
+
+          <Button type="secondary" size="thin">
+            secondary
+          </Button>
+
+          <Button type="plainSecondary" size="thin">
+            Plain Secondary
+          </Button>
+
+          <Button type="plainSecondary" size="thin" icon={<Icons.X />} />
+        </FlexLayout>
+      </Card>
+
+      <Card title="Button type extraThin">
+        <FlexLayout spacing="tight" valign="center" wrap="wrap">
+          <Button type="dangerOutlined" size="extraThin">
+            Danger Outlined
+          </Button>
+          <Button type="dangerPlainSecondary" size="extraThin">
+            Danger Outlined
+          </Button>
+
+          <Button
+            type="dangerPlainSecondary"
+            size="extraThin"
+            icon={<Icons.X />}
+          />
+
+          <Button type="secondary" size="extraThin">
+            secondary
+          </Button>
+          <Button type="plainSecondary" size="extraThin" content="secondary" />
+
+          <Button type="plainSecondary" size="extraThin" icon={<Icons.X />} />
+        </FlexLayout>
+      </Card>
     </Card>
   ),
 ];
@@ -489,9 +571,12 @@ Only_Icon.decorators = [
                       variant == "primary" || variant == "danger"
                         ? "#ffffff"
                         : variant == "dangerOutlined" ||
+                          variant == "dangerPlainSecondary" ||
                           variant == "dangerPlain"
                         ? "#DF5146"
-                        : variant == "secondary" || variant == "outlined" || variant == "plainSecondary"
+                        : variant == "secondary" ||
+                          variant == "outlined" ||
+                          variant == "plainSecondary"
                         ? "#1C2433"
                         : variant == "textButton"
                         ? "#70747e"
@@ -518,9 +603,12 @@ Only_Icon.decorators = [
                       variant == "primary" || variant == "danger"
                         ? "#ffffff"
                         : variant == "dangerOutlined" ||
+                          variant == "dangerPlainSecondary" ||
                           variant == "dangerPlain"
                         ? "#DF5146"
-                        : variant == "secondary" || variant == "outlined" || variant == "plainSecondary"
+                        : variant == "secondary" ||
+                          variant == "outlined" ||
+                          variant == "plainSecondary"
                         ? "#1C2433"
                         : variant == "textButton"
                         ? "#70747e"
@@ -547,11 +635,14 @@ Only_Icon.decorators = [
                       variant == "primary" || variant == "danger"
                         ? "#ffffff"
                         : variant == "dangerOutlined" ||
+                          variant == "dangerPlainSecondary" ||
                           variant == "dangerPlain"
                         ? "#DF5146"
-                        : variant == "secondary" || variant == "outlined" || variant == "plainSecondary"
+                        : variant == "secondary" ||
+                          variant == "outlined" ||
+                          variant == "plainSecondary"
                         ? "#1C2433"
-                        : variant == "textButton"
+                        : variant == "textButton" || variant == "plainSecondary"
                         ? "#70747e"
                         : "#dddddd"
                     }

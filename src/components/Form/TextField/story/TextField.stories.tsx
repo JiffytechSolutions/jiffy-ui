@@ -325,7 +325,7 @@ const Template = ({ ...rest }) => {
           }}
           type={rest.type}
           autocomplete={rest.autocomplete}
-          placeholder={rest.placeholder}
+          placeHolder={rest.placeHolder}
           isDisabled={rest.isDisabled}
           isLoading={rest.isLoading}
           max={rest.max}
@@ -397,7 +397,7 @@ Types.decorators = [
                 value={value[index]}
                 onChange={(e) => handleChange(e, index)}
                 autocomplete="on"
-                placeholder={`Enter ${type}`}
+                placeHolder={`Enter ${type}`}
               />
             );
           })}
@@ -464,7 +464,7 @@ placeholder.decorators = [
       <Card>
         <TextField
           type="text"
-          placeholder="Enter here"
+          placeHolder="Enter here"
           onChange={(e) => setValue(e)}
           value={value}
         />
@@ -482,7 +482,7 @@ helpText.decorators = [
         <TextField
           type="text"
           label="Label"
-          placeholder="Enter here"
+          placeHolder="Enter here"
           helpText="Show Help"
           onChange={(e) => setValue(e)}
           value={value}
@@ -501,7 +501,7 @@ helpTextIcon.decorators = [
         <TextField
           type="text"
           label="Label"
-          placeholder="Enter here"
+          placeHolder="Enter here"
           helpText="Show Help"
           onChange={(e) => setValue(e)}
           value={value}
@@ -522,7 +522,7 @@ Prefix.decorators = [
           <TextField
             type="text"
             label="Label"
-            placeholder="Prefix with Icon"
+            placeHolder="Prefix with Icon"
             onChange={(e) => setValue(e)}
             value={value}
             prefix={<Search size={20} />}
@@ -530,7 +530,7 @@ Prefix.decorators = [
           <TextField
             type="text"
             label="Label"
-            placeholder="Prefix with Text"
+            placeHolder="Prefix with Text"
             onChange={(e) => setValue(e)}
             value={value}
             prefix={"Weight"}
@@ -553,7 +553,7 @@ Suffix.decorators = [
           <TextField
             type="text"
             label="Label"
-            placeholder="Suffix With icon"
+            placeHolder="Suffix With icon"
             onChange={(e) => setValue(e)}
             value={value}
             suffix={<Search size={20} />}
@@ -561,7 +561,7 @@ Suffix.decorators = [
           <TextField
             type="text"
             label="Label"
-            placeholder="Suffix with Text"
+            placeHolder="Suffix with Text"
             onChange={(e) => setValue1(e)}
             value={value1}
             suffix={"Cm"}
@@ -606,7 +606,7 @@ ConnectedField.decorators = [
             min={1}
             type="number"
             label="Connect Left"
-            placeholder="Enter text"
+            placeHolder="Enter text"
             onChange={(e) => setValue(e)}
             value={value}
             helpText={"Helper text"}
@@ -615,7 +615,7 @@ ConnectedField.decorators = [
                 onChange={(e) => {
                   onSelectChange(e);
                 }}
-                placeholder="Kg"
+                placeHolder="Kg"
                 value={value1}
                 options={options}
               />
@@ -624,7 +624,7 @@ ConnectedField.decorators = [
           <TextField
             type="text"
             label="Connect Right"
-            placeholder="Enter text"
+            placeHolder="Enter text"
             onChange={(e) => setValue(e)}
             value={value}
             helpText={"Helper text"}
@@ -635,7 +635,7 @@ ConnectedField.decorators = [
           <TextField
             type="text"
             label="Connected Both"
-            placeholder="Enter text"
+            placeHolder="Enter text"
             onChange={(e) => setValue(e)}
             value={value}
             helpText={"Helper text"}
@@ -644,7 +644,7 @@ ConnectedField.decorators = [
                 onChange={(e) => {
                   onSelectChange2(e);
                 }}
-                placeholder="Kg"
+                placeHolder="Kg"
                 value={value2}
                 options={options}
               />
@@ -669,7 +669,7 @@ Loading_Textfield.decorators = [
         <TextField
           type="text"
           label="Label"
-          placeholder="Enter here"
+          placeHolder="Enter here"
           onChange={(e) => setValue(e)}
           value={value}
           isLoading={true}
@@ -689,7 +689,7 @@ ClearButton.decorators = [
         <TextField
           type="text"
           label="Label"
-          placeholder="Enter here"
+          placeHolder="Enter here"
           onChange={(e) => setValue(e)}
           value={value}
           isClearable={true}
@@ -715,7 +715,7 @@ Control_States.decorators = [
                 type="text"
                 label={data}
                 helpText="Help Text"
-                placeholder="Enter here"
+                placeHolder="Enter here"
                 onChange={(e) => setValue(e)}
                 value={value}
                 controlStates={data}
