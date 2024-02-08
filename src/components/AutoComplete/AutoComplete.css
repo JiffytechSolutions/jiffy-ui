@@ -12,7 +12,10 @@
   overflow: auto;
   padding: 1.2rem;
 }
-
+.inte-autoComplete--mobileDevice > .inte-autoComplete__list {
+  border: unset;
+  border-radius: unset;
+}
 .inte-formElement--focus .inte-formElement__textField {
   box-shadow: 0 0 0 3px var(--inte-P30);
   border-color: var(--inte-P900);
@@ -80,18 +83,20 @@
   border-top-left-radius: 2.4rem;
   border: 0.1rem solid var(--inte-G40);
   z-index: var(--inte-Z-8);
-
 }
 
-.inte-autoComplete--mobileDevice>.inte-autoComplete__list {
+.inte-autoComplete--mobileDevice > .inte-autoComplete__list {
   max-height: unset !important;
   min-height: calc(100vh - 15.3rem) !important;
 }
 
-.inte-autoComplete--mobileDevice .inte-autoComplete__list {
+.inte-autoComplete--mobileDevice
+  > .inte-autoComplete__list
+  .inte-autoComplete__list {
   border: unset !important;
+  padding: 1.2rem 0;
   border-radius: unset !important;
-  max-height: calc(100vh - 20.2rem);
+  max-height: calc(100vh - 22.5rem);
 }
 
 .inte-autoComplete--mobileDevice .inte-autoComplete__item:not(:last-child) {
@@ -128,9 +133,16 @@
   white-space: nowrap;
 }
 
-.inte-autoComplete--mobileDevice>.inte-autoComplete__list>.inte-autoComplete__list {
+.inte-autoComplete--mobileDevice
+  > .inte-autoComplete__list
+  > .inte-autoComplete__list {
   overflow: auto !important;
   position: relative;
+  top: 0;
+}
+.inte-hashHelpText.inte-autoComplete--mobileDevice
+  > .inte-autoComplete__list
+  > .inte-autoComplete__list {
   top: -27px;
 }
 

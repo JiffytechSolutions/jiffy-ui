@@ -130,13 +130,13 @@ const TextField = React.forwardRef(
 
     // Manage padding space of Inner Prefix icon from left
     useLayoutEffect(() => {
-      prefix && SetInnericonWidth(innerPreref.current.offsetWidth);
+      prefix && SetInnericonWidth(innerPreref?.current?.offsetWidth);
     }, [innerPreref, prefix]);
     const innerPreIConWidth = prefix ? innerIconWidth + 26 : 12;
 
     // Manage padding  of Inner Prefix icon from right
     useLayoutEffect(() => {
-      suffix && SetInnericonWidthSuff(innerSufrefWidth.current?.offsetWidth);
+      suffix && SetInnericonWidthSuff(innerSufrefWidth?.current?.offsetWidth);
     }, [innerSufrefWidth, suffix]);
     const clearIconWidth = isClearable ? 28 : 0;
     const innerPreIConWidthSuf = suffix ? innerIconWidthSuf + 22 : 12;
@@ -170,7 +170,7 @@ const TextField = React.forwardRef(
           min={props.min}
           max={props.max}
           step={step}
-          placeholder={props.placeholder}
+          placeholder={props.placeHolder}
           tabIndex={props.tabIndex}
           autoFocus={props.autoFocus}
           className="inte-formElement__control inte-formElement__textField"
@@ -433,7 +433,7 @@ export interface TextfieldI {
   value?: string | number;
   label?: string | React.ReactNode;
   type?: "text" | "number" | "password" | "tel" | "url" | "email";
-  placeholder?: string;
+  placeHolder?: string;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   connectLeft?: React.ReactNode;

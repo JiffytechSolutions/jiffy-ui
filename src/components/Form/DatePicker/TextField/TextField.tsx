@@ -86,13 +86,13 @@ const TextField = ({
     >
       <div
         className="inte-dateInput__container"
-        onClick={
-          !isDisabled
-            ? isOnlyIcon
-              ? onFocus
-              : handleStartInputClick
-            : undefined
-        }
+        onClick={() => {
+          if (!isDisabled) {
+            console.log("click");
+            onFocus(true);
+            handleStartInputClick();
+          }
+        }}
       >
         <Calender
           size="20"
@@ -132,13 +132,13 @@ const TextField = ({
           <div
             className="inte-dateInput__container"
             ref={textFieldRef}
-            onClick={
-              !isDisabled
-                ? isOnlyIcon
-                  ? onFocus
-                  : handleEndInputClick
-                : undefined
-            }
+            onClick={() => {
+              if (!isDisabled) {
+                console.log("click");
+                onFocus(true);
+                handleStartInputClick();
+              }
+            }}
           >
             <Calender
               size="20"

@@ -101,8 +101,7 @@ const NewSortable = ({
   };
 
   const handelMouseMove = (event: MouseEvent | TouchEvent | any) => {
-    if (!sortableData || !containerRef.current)
-      return;
+    if (!sortableData || !containerRef.current) return;
 
     const { clientX, clientY } = getClientXY(event);
 
@@ -276,7 +275,9 @@ const NewSortable = ({
           })}
         </div>
       )}
-      <PortalComponent>{sortableData?.isMouseMove ? sortableData?.element : null}</PortalComponent>
+      <PortalComponent>
+        {sortableData?.isMouseMove ? sortableData?.element : null}
+      </PortalComponent>
     </>
   );
 };

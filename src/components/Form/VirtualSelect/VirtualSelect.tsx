@@ -289,9 +289,10 @@ const VirtualSelect = ({
   }, [dropdownActive, selectedOptions, inputValue, optionsToShow]);
   // Calling search function
   useEffect(() => {
-    isSearchable ? searchHandler() : setOptionsToShow(memoizedConvertOptions(options))
-    
-  }, [inputValue, isSearchable,options]);
+    isSearchable
+      ? searchHandler()
+      : setOptionsToShow(memoizedConvertOptions(options));
+  }, [inputValue, isSearchable, options]);
   // on outside click
   const onClose = () => {
     setIsFocused(false);
@@ -460,7 +461,7 @@ const VirtualSelect = ({
         {isMobile && isSearchable && (
           <div className="inte-virtualSelect__dropdown-textField">
             <TextField
-              placeholder="Search"
+              placeHolder="Search"
               prefix={<Search size={20} />}
               onChange={(e) => {
                 setInputValue(e);

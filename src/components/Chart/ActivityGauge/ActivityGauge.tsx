@@ -250,7 +250,12 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                   <Text>{item.label}</Text>
                 </div>
                 <div className="inte-legend__value">
-                  <Text>{item.value}</Text>
+                  <Text>
+                    {enableValue === "percentage"
+                      ? formatValue(showValue.percentage) !== "" &&
+                        formatValue(showValue.percentage) + "%"
+                      : formatValue(showValue.value)}
+                  </Text>
                 </div>
               </div>
             );
