@@ -51,7 +51,6 @@ const NewSortable = ({
   const [sortableData, setSortableData] = useState<SortableDataI>();
 
   const [originalRangeArray, setOriginalRangeArray] = useState<elementRect[]>([]);
-  const [dummyRangeArray, setDummyRangeArray] = useState<elementRect[]>([]);
 
   const [transitionArray, setTransitionArray] = useState<string[]>([]);
 
@@ -157,10 +156,6 @@ const NewSortable = ({
       let rangeArr = makeRangeArray(containerRef.current);
       setOriginalRangeArray([...rangeArr]);
     }
-    if (dummyContainerRef.current) {
-      let rangeArr = makeRangeArray(dummyContainerRef.current);
-      setDummyRangeArray([...rangeArr]);
-    }
   };
 
   useEffect(() => {
@@ -229,8 +224,6 @@ const NewSortable = ({
       clearTimeout(timerRef.current);
       return;
     }
-    let rangeArr = makeRangeArray(dummyContainerRef.current);
-    setDummyRangeArray([...rangeArr]);
   }, [sortableData]);
 
   return (

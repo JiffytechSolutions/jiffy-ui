@@ -152,13 +152,11 @@ const sortableArr: sortableArray = itemsData.map((item) => ({
 
 const tempData = itemsData.map((item) => ({
   content: (
-    <img
-      style={{ aspectRatio: 1, borderRadius: "0%", minHeight: "100%", minWidth: "100%" }}
+    <Image
+      customClass="template-img"
       src={item.imageUrl}
       alt="img"
-      width={150}
-      height={150}
-
+      objectFit="fill"
     />
   ),
   id: item.id,

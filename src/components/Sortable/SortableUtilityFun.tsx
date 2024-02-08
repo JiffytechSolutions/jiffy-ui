@@ -34,14 +34,12 @@ export const pointInRangeArr = (
     // Calculate the horizontal distance from the point to the rectangle
     const colDistance = Math.abs(x - (currRect.left + currRect.width / 2));
 
-    // Update the nearest index if the current rectangle is closer in both row and column
-    if (
-      rowDistance < minDistance ||
-      (rowDistance === minDistance &&
-        colDistance <
-          Math.abs(x - (arr[nearestIndex].left + arr[nearestIndex].width / 2)))
-    ) {
-      minDistance = rowDistance;
+    // Calculate the Euclidean distance from the point to the rectangle
+    const distance = Math.sqrt(rowDistance * rowDistance + colDistance * colDistance);
+
+    // Update the nearest index if the current rectangle is closer
+    if (distance < minDistance) {
+      minDistance = distance;
       nearestIndex = i;
     }
   }

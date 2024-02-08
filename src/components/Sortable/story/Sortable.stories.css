@@ -1,10 +1,10 @@
 .template {
     display: grid;
-    grid-template-columns: repeat(4 , 1fr);
+    grid-template-columns: repeat(6 , 1fr);
     gap: 20px;
 }
 
-.template .inte-sortable__item:first-child {
+.template .inte-sortable__item:nth-child(1) {
     grid-row: span 2;
     grid-column: span 2;
 }

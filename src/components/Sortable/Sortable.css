@@ -15,7 +15,6 @@
 .inte-sortable__item--dummy > * {
   box-shadow: 0 15px 30px rgb(0 0 0 / 20%);
   border: 1px dashed var(--inte-P1000);
-  opacity: 0.8;
 }
 
 .inte-sortable--dummy {
