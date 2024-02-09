@@ -30,9 +30,10 @@ const Button = ({
     textButton: "inte-btn--textButton",
     danger: "inte-btn--danger",
     dangerOutlined: "inte-btn--dangerOutlined",
+    dangerPlainSecondary: "inte-btn--dangerSecondary",
     dangerPlain: "inte-btn--dangerPlain",
     secondary: "inte-btn--secondary",
-    plainSecondary: "inte-btn--plainSecondary"
+    plainSecondary: "inte-btn--plainSecondary",
   };
 
   const getSize: { [key: string]: string } = {
@@ -84,7 +85,7 @@ const Button = ({
       button.removeChild(ripple);
     }, 600);
   };
-  
+
   const renderButton = (
     <button
       id={id}
@@ -111,7 +112,7 @@ const Button = ({
       className={getClassNames({
         "inte-btn": true,
         "inte-btn--disable": isDisabled,
-        "inte-btn--hasDisclosure":disclosure ,
+        "inte-btn--hasDisclosure": disclosure,
         [bType]: bType,
         "inte-btn--hasIcon": true,
         [halignCss as string]: halignCss,
@@ -186,7 +187,8 @@ export interface ButtonI {
     | "outlined"
     | "dangerPlain"
     | "textButton"
-    | "plainSecondary";
+    | "plainSecondary"
+    | "dangerPlainSecondary";
   status?: "primary" | "secondary" | "success" | "error" | "warning";
   size?: "extraThin" | "thin" | "large";
   iconAlign?: "left" | "right";

@@ -16,7 +16,7 @@ const Template = ({...rest}) => {
             title="Text Editor Primary"
         >
             <TextEditor 
-                // placeholder='Start Typing Here...'
+                placeholder='Start Typing Here...'
             />
         </Card>
     )

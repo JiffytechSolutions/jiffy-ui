@@ -125,7 +125,7 @@ const Filter: React.FC<FilterI> = ({
             <Button
               size="thin"
               icon={<X size={24} color="var(--inte-G800)" />}
-              type="textButton"
+              type="plainSecondary"
               onClick={onClose}
             />
           </span>

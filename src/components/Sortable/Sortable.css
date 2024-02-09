@@ -1,5 +1,10 @@
+.inte-sortable:not(.inte-sortable--dummy) {
+  position: relative;
+}
+
 .inte-sortable__item {
   cursor: pointer;
+  /* transform-origin:left top ; */
 }
 
 .inte-sortable__item--dummy {
@@ -10,11 +15,11 @@
 .inte-sortable__item--dummy > * {
   box-shadow: 0 15px 30px rgb(0 0 0 / 20%);
   border: 1px dashed var(--inte-P1000);
-  opacity: 0.8;
 }
 
 .inte-sortable--dummy {
   opacity: 0;
+  /* margin-top: 20px; */
   position: fixed;
   z-index: -1;
   visibility: hidden;
