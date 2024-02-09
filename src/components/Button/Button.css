@@ -97,7 +97,7 @@
 .inte-btn--extraNarrow {
   padding: 0.2rem 1.2rem !important;
   height: 3.2rem;
-  gap:0.4rem;
+  gap: 0.4rem;
   border-radius: var(--radius-rounded-5);
 }
 
@@ -152,43 +152,64 @@
 }
 
 .inte-btn--danger:hover {
-  background-color: var(--inte-R350);
+  background-color: var(--inte-R400);
 }
 
 .inte-btn--danger:active {
-  background-color: var(--inte-R400);
+  background-color: var(--inte-R500);
 }
 
 /* Danger color Declarations End */
 
 /* Danger Outlined color Declarations */
-.inte-btn--dangerOutlined {
+.inte-btn--dangerOutlined,
+.inte-btn--dangerSecondary {
   background-color: var(--inte-G0);
   color: var(--inte-R200);
   border: 0.1rem solid var(--inte-R200);
 }
 
-.inte-btn--dangerOutlined:disabled {
+.inte-btn--dangerOutlined:disabled,
+.inte-btn--dangerSecondary:disabled {
   background-color: var(--inte-G0) !important;
   border: 0.1rem solid var(--inte-R55) !important;
   color: var(--inte-R55);
 }
+.inte-btn--dangerSecondary:disabled {
+  border: unset !important;
+}
 
-.inte-btn--dangerOutlined.inte-btn--loading {
+.inte-btn--dangerOutlined.inte-btn--loading,
+.inte-btn--dangerSecondary.inte-btn--loading {
   border-color: var(--inte-R55) !important;
   background-color: var(--inte-G0) !important;
 }
 
-.inte-btn--dangerOutlined:hover {
+.inte-btn--dangerOutlined:hover,
+.inte-btn--dangerSecondary:hover {
   background-color: var(--inte-R30);
 }
 
-.inte-btn--dangerOutlined:active {
+.inte-btn--dangerOutlined:active,
+.inte-btn--dangerSecondary:active {
   background-color: var(--inte-R40);
   border-color: var(--inte-R400);
 }
 
 /* Danger Outlined color Declarations End */
+
+/* Danger Outlined secondary color Declarations start */
+.inte-btn--dangerSecondary {
+  border: unset;
+}
+.inte-btn--dangerSecondary.inte-btn--narrow.inte-btn--onlyIcon {
+  height: 2.4rem !important;
+  padding: 0;
+}
+.inte-btn--dangerSecondary.inte-btn--hasIcon.inte-btn--large.inte-btn--onlyIcon {
+  padding: 0 !important;
+}
+/* Danger Outlined secondary color Declarations end */
 
 /* Danger plain color Declarations */
 .inte-btn--dangerPlain {
@@ -226,7 +247,8 @@
 /* Danger plain color Declarations End */
 
 /* Secondary Button color Declarations */
-.inte-btn--secondary {
+.inte-btn--secondary,
+.inte-btn--plainSecondary {
   background-color: var(--inte-G40);
   color: var(--inte-G800);
   border: 0.1rem solid var(--inte-transparet);
@@ -246,11 +268,34 @@
   background-color: var(--inte-G55);
 }
 
-.inte-btn--secondary:active {
+.inte-btn--secondary:active,
+.inte-btn--plainSecondary:active {
   background-color: var(--inte-G70);
 }
 
 /* Secondary Button color Declarations End*/
+
+/* plain secondary color Declarations start */
+.inte-btn--plainSecondary {
+  background-color: unset;
+}
+.inte-btn--plainSecondary:hover {
+  background-color: rgb(228 228 228);
+}
+.inte-btn--plainSecondary.inte-btn--hasIcon.inte-btn--narrow.inte-btn--onlyIcon {
+  padding: 0 !important;
+}
+.inte-btn--plainSecondary.inte-btn--hasIcon.inte-btn--large.inte-btn--onlyIcon {
+  padding: 0 !important;
+}
+.inte-btn--plainSecondary:disabled {
+  color: var(--inte-G50);
+}
+.inte-btn--plainSecondary:disabled,
+.inte-btn--plainSecondary.inte-btn--loading {
+  background-color: var(--inte-G0);
+}
+/* plain secondary color Declarations end */
 
 /* Outlined Button declarations */
 .inte-btn--outlined {
@@ -362,15 +407,13 @@
 /* Button With Only icon End */
 
 /* Button With Icon Decoration and Disclosure */
-
-
 .inte-btn--dangerPlain.inte-btn.inte-btn--hasIcon,
-.inte-btn--textButton.inte-btn.inte-btn--hasIcon {
+.inte-btn--dangerSecondary.inte-btn.inte-btn--hasIcon
+  .inte-btn--textButton.inte-btn.inte-btn--hasIcon {
   gap: 0.6rem;
 }
-.inte-btn--textButton.inte-btn.inte-btn--hasIcon.inte-btn--extraNarrow{
+.inte-btn--textButton.inte-btn.inte-btn--hasIcon.inte-btn--extraNarrow {
   gap: 0.4rem;
-
 }
 .inte-btn__icon {
   display: flex;
@@ -432,7 +475,8 @@
 .inte-btn--danger .ripple {
   background-color: rgb(255, 255, 255);
 }
-.inte-btn--dangerOutlined .ripple {
+.inte-btn--dangerOutlined .ripple,
+.inte-btn--dangerSecondary .ripple {
   background-color: #ff8277;
 }
 .inte-btn--dangerPlain .ripple,
@@ -446,7 +490,7 @@
   }
 }
 
-.inte-btn--plainSecondary {
+/* .inte-btn--plainSecondary {
   background-color: transparent;
   color: var(--inte-G800);
   &:hover {
@@ -459,4 +503,4 @@
     background-color: var(--inte-G0);
     color: var(--inte-G40);
   }
-}
+} */

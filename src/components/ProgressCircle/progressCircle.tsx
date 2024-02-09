@@ -12,11 +12,10 @@ function ProgressCircle({
     large: "inte-progressCircle--large",
     small: "inte-progressCircle--small",
   };
-  const sizeValue = size && checkSize[size]
-  const rId = useId()
+  const sizeValue = size && checkSize[size];
+  const rId = useId();
   return (
     <div className={`${customClass} ${sizeValue}`}>
-
       <svg
         className={`inte-circle-chart `}
         viewBox="0 0 33.83098862 33.83098862"
@@ -47,8 +46,8 @@ function ProgressCircle({
           <stop offset="100%" stopColor="#6E4FCB" />
         </linearGradient>
         <g className={"inte-circle-chart__info"}>
-          {
-            enablePercentage && <text
+          {enablePercentage && (
+            <text
               style={{ fontSize: fontsize }}
               className={"inte-progressCircle__text"}
               x="16.91549431"
@@ -59,7 +58,7 @@ function ProgressCircle({
             >
               {percentage > 100 ? 100 + "%" : percentage + "%"}
             </text>
-          }
+          )}
         </g>
       </svg>
     </div>
@@ -69,7 +68,7 @@ export interface ProgressCircleI {
   percentage?: number;
   size?: "large" | "small";
   fontsize?: number;
-  enablePercentage?: boolean
+  enablePercentage?: boolean;
   customClass?: string;
 }
 

@@ -25,26 +25,28 @@ export default {
     options: {
       description: `<div><strong>You can send array of objects for dropdown Items:-</strong></div><i>Accepted key value pairs:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>label<span style="color:red">*</span></td><td>label(String)</td></tr><tr><td>value<span style="color:red">*</span></td><td>value(String | Number)</td></tr><tr><td>id</td><td>id(String)</td></tr><tr><td>lname</td><td>lname(string)</td></tr><tr><td>popoverContent</td><td>popoverContent(ReactNode)</td></tr></tbody></table>`,
 
-      defaultValue: [{
-        label: "Cristin",
-        value: "Cristin",
-        id: "popover5",
-      },
-      {
-        label: "Auto Autox",
-        value: "Auto Autox",
-        id: "popover5",
-      },
-      {
-        label: "Auto pqr",
-        value: "Auto pqr",
-        id: "popover5",
-      },
-      {
-        label: "Jocelyne",
-        value: "Jocelyne",
-        id: "popover6",
-      },]
+      defaultValue: [
+        {
+          label: "Cristin",
+          value: "Cristin",
+          id: "popover5",
+        },
+        {
+          label: "Auto Autox",
+          value: "Auto Autox",
+          id: "popover5",
+        },
+        {
+          label: "Auto pqr",
+          value: "Auto pqr",
+          id: "popover5",
+        },
+        {
+          label: "Jocelyne",
+          value: "Jocelyne",
+          id: "popover6",
+        },
+      ],
     },
     value: {
       description: "It's your selected value",
@@ -481,10 +483,9 @@ const Template = ({ ...rest }) => {
     setValue(e);
   }
   function onEnter(e: string) {
-
     setValue(e);
   }
-  function onclicks(e: string) { }
+  function onclicks(e: string) {}
   return (
     <div>
       <Card title={"Autocomplete"}>
@@ -498,7 +499,7 @@ const Template = ({ ...rest }) => {
               value={value}
               onChange={onChangex}
               onEnter={onEnter}
-              onClick={()=>{}}
+              onClick={() => {}}
               setHiglighted={rest.setHiglighted}
               isLoading={rest.isLoading}
               isClearable={rest.isClearable}
@@ -523,7 +524,7 @@ autocomplete_without_Highlight.decorators = [
     function onChange(e: string) {
       setValue(e);
     }
-    function onclicks(e: string) { }
+    function onclicks(e: string) {}
     return (
       <Card>
         <AutoComplete
@@ -552,7 +553,7 @@ autocomplete_with_popover_position.decorators = [
 
     return (
       <Card>
-        <FlexLayout desktopWidth="50" tabWidth="33" spacing="loose">
+        <FlexLayout wrap="wrap" desktopWidth="50" tabWidth="33" spacing="loose">
           {["left", "right", "top", "bottom"].map((item: any, index) => {
             return (
               <AutoComplete
@@ -565,7 +566,9 @@ autocomplete_with_popover_position.decorators = [
                 onChange={(e: any) => Test(e, index)}
                 setHiglighted={true}
                 showPopover
-                popoverPosition={item} onClick={undefined} />
+                popoverPosition={item}
+                onClick={undefined}
+              />
             );
           })}
         </FlexLayout>

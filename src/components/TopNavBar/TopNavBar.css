@@ -1,7 +1,7 @@
 .inte-TopNav {
   padding: 0 3.2rem;
   overflow-x: auto;
-  border-bottom: 0.1rem solid silver;
+  border-bottom: 0.1rem solid var(--inte-G40);
   display: flex;
   align-items: center;
   background-color: var(--inte-G0);
@@ -25,13 +25,13 @@
 .inte-top__list {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 0.8rem;
   width: 100%;
   overflow: auto hidden;
 }
 /* parent li item  */
 .inte-top__listItem {
-  margin: 0.8rem 0;
+  margin: 0.5rem 0;
   border-radius: 0.6rem;
   position: relative;
 }
@@ -42,6 +42,9 @@
   cursor: pointer;
   gap: 1.2rem;
 }
+.inte-top__listItem--icon {
+  display: flex;
+}
 .inte-top__listItem--label {
   white-space: nowrap;
 }
@@ -50,7 +53,7 @@
 .inte-topNav--active,
 .inte-topNav--childActive,
 .inte-active {
-  background-color: var(--inte-P25);
+  background-color: var(--inte-P25) !important;
 }
 
 .inte-active,
@@ -63,7 +66,7 @@
 .inte-active::after {
   content: "";
   position: absolute;
-  bottom: -8px;
+  bottom: -0.5rem;
   left: 0;
   width: 100%;
   height: 0.2rem;
@@ -84,7 +87,7 @@
 
 /* common css  */
 .inte-top__listItem:not(.inte-topNav--active, .inte-active):hover,
-.inte-top__itemPopup:hover,
+.inte-top__itemPopup:not(.inte-topNav--childActive):hover,
 .inte-topNavBar--toggle {
   background-color: var(--inte-P20);
 }
@@ -93,10 +96,10 @@
 }
 .inte-top__listItem--label,
 .inte-top__itemPopup {
-  font-size: 16px;
+  font-size: 1.6rem;
   font-style: normal;
   font-weight: 600;
-  line-height: 22px;
+  line-height: 2.2rem;
 }
 /* arrow smoothly up down  */
 .inte-top__listItem
@@ -110,4 +113,26 @@
   .inte-topNav__listItemWrapper
   .inte-svgIcon:not(:first-child) {
   transform: rotate(90deg);
+}
+/* wrapping  */
+.inte-appWrapper .inte-announcementBar + .inte-TopNav__wrapper {
+  top: 4.8rem;
+}
+.inte-topNavBar--active .inte-appBar--container,
+.inte-topNavBar--active .inte-pageFooter {
+  margin-left: unset !important;
+  width: 100% !important;
+}
+
+.inte-topNavBar--active .inte-pageFooter,
+.inte-topNavBar--active .inte-main {
+  margin-left: unset !important;
+}
+
+.inte-topNavBar--active.inte-sideBar--active .inte-sideBar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  overflow: auto;
+  transform: translateX(-28rem);
 }

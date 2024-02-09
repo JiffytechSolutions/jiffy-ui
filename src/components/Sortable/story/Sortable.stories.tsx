@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card, Image, Text } from "../../..";
 import Sortable, { sortableArray } from "../Sortable";
+import './Sortable.stories.css'
 
 export default {
   title: "Components/Behaviour/Sortable",
@@ -13,13 +14,6 @@ export default {
         disable: true,
       },
     },
-    containerStyle: {
-      description:
-        "Make layout of the sortable container ( how elements were arranged in the container)",
-      control: {
-        disable: true,
-      },
-    },
     animationDuration: {
       description: "Duration of animation",
       control: {
@@ -27,6 +21,16 @@ export default {
       },
       defaultValue: 300,
     },
+    customClass: {
+      description: "set customClass ",
+      control: {
+        type: "text",
+      },
+      defaultValue:"",
+    },
+    onChange : {
+      description : "This function trigger when the order of the items changes <code>(newAlignedData: sortableArray) => void</code>"
+    }
   },
 };
 
@@ -138,30 +142,38 @@ const dragData = [
 const sortableArr: sortableArray = itemsData.map((item) => ({
   content: (
     <img
-      style={{ aspectRatio: 1, borderRadius: "50%" }}
       src={item.imageUrl}
       alt="img"
       width={150}
       height={150}
+
     />
   ),
   id: item.id,
 }));
 
+const tempData = itemsData.map((item) => ({
+  content: (
+    <Image
+      customClass="template-img"
+      src={item.imageUrl}
+      alt="img"
+      objectFit="fill"
+    />
+  ),
+  id: item.id,
+}))
+
 const Template = ({ ...rest }) => {
-  const [data, setData] = useState(sortableArr);
+  const [data, setData] = useState<sortableArray>(tempData);
 
   return (
     <Card>
       <Sortable
-        data={data}
+        data={data.slice(0, 9)}
         onChange={(newArr) => setData(newArr)}
         animationDuration={rest.animationDuration}
-        containerStyle={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "20px",
-        }}
+        customClass="template"
       />
     </Card>
   );
@@ -191,14 +203,7 @@ export const SortableVertical = ({ ...rest }) => {
       <Sortable
         data={data}
         onChange={(newArr) => setData(newArr)}
-        containerStyle={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "10px",
-          overflowY: "auto",
-          maxHeight: "600px",
-          margin: "auto",
-        }}
+        customClass="sortableVertical"
       />
     </Card>
   );
@@ -229,11 +234,7 @@ export const SortableHorizontal = ({ ...rest }) => {
       <Sortable
         data={data}
         onChange={(newArr) => setData(newArr)}
-        containerStyle={{
-          display: "flex",
-          gap: "20px",
-          overflowX: "auto",
-        }}
+        customClass="sortableHorizontal"
       />
     </Card>
   );
@@ -249,14 +250,7 @@ export const SortableVerticalWithImages = ({ ...rest }) => {
         data={data}
         onChange={(newArr) => setData(newArr)}
         animationDuration={rest.animationDuration}
-        containerStyle={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-          overflowY: "auto",
-          maxHeight: "600px",
-          margin: "auto",
-        }}
+        customClass="sortableVertical"
       />
     </Card>
   );
@@ -271,11 +265,7 @@ export const SortableHorizontalWithImages = ({ ...rest }) => {
         data={data}
         onChange={(newArr) => setData(newArr)}
         animationDuration={rest.animationDuration}
-        containerStyle={{
-          display: "flex",
-          gap: "20px",
-          overflowX: "auto",
-        }}
+        customClass="sortableHorizontal"
       />
     </Card>
   );
@@ -293,13 +283,7 @@ export const SortableGrid = () => {
       <Sortable
         data={data}
         onChange={(newArr) => setData(newArr)}
-        containerStyle={{
-          display: "flex",
-          flexWrap: "wrap",
-          gap: "15px",
-          overflow: "auto",
-          maxHeight: "600px",
-        }}
+        customClass="sortableGrid"
       />
     </Card>
   );

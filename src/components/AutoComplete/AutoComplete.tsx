@@ -44,11 +44,12 @@ function AutoComplete({
   const [color, setColor] = useState("var(--inte-G90)");
   const [opesheet, setOpensheet] = useState(false);
   const rId = useId();
-  const myRef: any = useRef(null);
-  const myReff: any = useRef(null);
+  const parentRef = useRef<any>(null);
+  const textFieldRef: any = useRef(null);
+  const popoverReff: any = useRef(null);
   const scrollRef = useRef<any>(null);
   const ListRef = useRef<any>({});
-  const popoverRef = useRef<HTMLDivElement>(null);
+  const hoveredCartPopoverRef = useRef<HTMLDivElement>(null);
   const showDiv = useDelayUnmount(opesheet, 300);
   const isMobile = useMobileDevice();
   //options Filtering
@@ -100,24 +101,24 @@ function AutoComplete({
     return label;
   }
   // Dynamic Position Calculation
-  useLayoutEffect(() => {
-    changePosition(myRef, myReff, { width: true })();
+  useEffect(() => {
+    changePosition(textFieldRef, popoverReff, { width: true })();
     window.addEventListener(
       "resize",
-      changePosition(myRef, myReff, { width: true })
+      changePosition(textFieldRef, popoverReff, { width: true })
     );
     window.addEventListener(
       "scroll",
-      changePosition(myRef, myReff, { width: true })
+      changePosition(textFieldRef, popoverReff, { width: true })
     );
     return () => {
       window.removeEventListener(
         "scroll",
-        changePosition(myRef, myReff, { width: true })
+        changePosition(textFieldRef, popoverReff, { width: true })
       );
       window.removeEventListener(
         "resize",
-        changePosition(myRef, myReff, { width: true })
+        changePosition(textFieldRef, popoverReff, { width: true })
       );
     };
   }, [value, filteredName]);
@@ -132,15 +133,15 @@ function AutoComplete({
 
     document.addEventListener(
       "mousedown",
-      handleClickOutside(myRef, myReff, onClose)
+      handleClickOutside(textFieldRef, popoverReff, onClose)
     );
     return () => {
       document.removeEventListener(
         "mousedown",
-        handleClickOutside(myRef, myReff, onClose)
+        handleClickOutside(textFieldRef, popoverReff, onClose)
       );
     };
-  }, [myReff.current]);
+  }, [popoverReff.current]);
 
   useEffect(() => {
     function handleResize() {
@@ -151,22 +152,31 @@ function AutoComplete({
 
   // on Hover Popover Portal Dimensions Code
   useLayoutEffect(() => {
-    const portalheight = popoverRef.current?.offsetHeight ?? 0;
-    const portalWidth = popoverRef.current?.offsetWidth ?? 0;
-    if (popoverRef.current !== null && ListRef.current?.[currentID] !== null) {
+    const portalheight = hoveredCartPopoverRef.current?.offsetHeight ?? 0;
+    const portalWidth = hoveredCartPopoverRef.current?.offsetWidth ?? 0;
+    if (
+      hoveredCartPopoverRef.current !== null &&
+      ListRef.current?.[currentID] !== null
+    ) {
       const position = ListRef?.current?.[currentID]?.getBoundingClientRect();
       if (popoverPosition == "top") {
-        popoverRef.current.style.left = `${position.left}px`;
-        popoverRef.current.style.top = `${position.top - portalheight}px`;
+        hoveredCartPopoverRef.current.style.left = `${position.left}px`;
+        hoveredCartPopoverRef.current.style.top = `${
+          position.top - portalheight
+        }px`;
       } else if (popoverPosition == "bottom") {
-        popoverRef.current.style.left = `${position.left}px`;
-        popoverRef.current.style.top = `${position.bottom}px`;
+        hoveredCartPopoverRef.current.style.left = `${position.left}px`;
+        hoveredCartPopoverRef.current.style.top = `${position.bottom}px`;
       } else if (popoverPosition == "left") {
-        popoverRef.current.style.left = `${position.left - portalWidth}px`;
-        popoverRef.current.style.top = `${position.top}px`;
+        hoveredCartPopoverRef.current.style.left = `${
+          position.left - portalWidth
+        }px`;
+        hoveredCartPopoverRef.current.style.top = `${position.top}px`;
       } else {
-        popoverRef.current.style.left = `${position.x + position.width}px`;
-        popoverRef.current.style.top = `${position.y}px`;
+        hoveredCartPopoverRef.current.style.left = `${
+          position.x + position.width
+        }px`;
+        hoveredCartPopoverRef.current.style.top = `${position.y}px`;
       }
     }
   }, [hoveredCart]);
@@ -176,7 +186,9 @@ function AutoComplete({
       event.preventDefault();
       if (showList1 && selectedIndex > 0) {
         setSelectedIndex(selectedIndex - 1);
-        myReff.current?.children[0].children[selectedIndex - 1].scrollIntoView({
+        popoverReff.current?.children[0].children[
+          selectedIndex - 1
+        ].scrollIntoView({
           block: "nearest",
         });
       }
@@ -185,7 +197,9 @@ function AutoComplete({
 
       if ((showList1 && selectedIndex) < filteredName.length - 1) {
         setSelectedIndex(selectedIndex + 1);
-        myReff.current?.children[0].children[selectedIndex + 1].scrollIntoView({
+        popoverReff.current?.children[0].children[
+          selectedIndex + 1
+        ].scrollIntoView({
           block: "nearest",
         });
       }
@@ -254,7 +268,7 @@ function AutoComplete({
                 showPopover && (
                   <PortalComponent>
                     <div
-                      ref={popoverRef}
+                      ref={hoveredCartPopoverRef}
                       id={values.id}
                       className={`inte-autoComplete__popover inte-autoComplete--position${popoverPosition}"
                   `.trim()}
@@ -320,13 +334,13 @@ function AutoComplete({
         }
         role="combobox"
         customClass={`inte-autoComplete `}
-        ref={myRef}
+        ref={textFieldRef}
         type="text"
         value={value}
         helpText={helpText}
         label={name}
         prefix={<Search size={20} color={color} />}
-        placeholder={placeHolder}
+        placeHolder={placeHolder}
         isLoading={isLoading}
         autoFocus={autofocus}
         isClearable={isClearable}
@@ -370,7 +384,7 @@ function AutoComplete({
         <PortalComponent>
           <div
             role="listbox"
-            ref={myReff}
+            ref={popoverReff}
             className={getClassNames({
               "inte-autoComplete__container": true,
               "inte-autoComplete--mobileDevice": isMobile,
@@ -385,7 +399,7 @@ function AutoComplete({
           {showList1 && value.length > 0 && value.trim() ? (
             <PortalComponent>
               <div
-                ref={myReff}
+                ref={popoverReff}
                 className={getClassNames({
                   "inte-autoComplete__container": true,
                   [customClass as string]: customClass,
@@ -405,11 +419,12 @@ function AutoComplete({
   }
 
   const { handleTouchStart, handleTouchMove, handleTouchEnd } = handleOnDrag(
-    myReff,
+    popoverReff,
     scrollRef,
     opesheet,
     onClos
   );
+
   return (
     <>
       <div
@@ -428,40 +443,39 @@ function AutoComplete({
       >
         {canFieldender()}
         {isMobile ? (
-          <>
+          <div ref={parentRef}>
             {showDiv && (
               <PortalComponent>
                 <div
                   role="listbox"
-                  onTouchStart={(e: any) => handleTouchStart(e)}
-                  onTouchMove={(e: any) => handleTouchMove(e)}
+                  onTouchStart={handleTouchStart}
+                  onTouchMove={handleTouchMove}
                   onTouchEnd={handleTouchEnd}
-                  ref={myReff}
+                  ref={popoverReff}
                   className={getClassNames({
                     "inte-autoComplete__container": true,
+                    "inte-hashHelpText": helpText,
                     "inte-autoComplete--mobileDevice": isMobile,
                     "inte-mobileDevice--in": isMobile && opesheet,
                     "inte-mobileDevice--out": isMobile && !opesheet,
                     [customClass as string]: customClass,
                   })}
                 >
-                  {isMobile && (
-                    <div className="inte-autoComplete__mobileHeader__wrapper">
-                      <div className="inte-autoComplete__slide"></div>
-                      <h3 className="inte-autoComplete__mobile--heading">
-                        {name}
-                      </h3>
-                      <Button
-                        icon={<X color="#1C2433" />}
-                        type="textButton"
-                        onClick={onClos}
-                      />
-                    </div>
-                  )}
+                  <div className="inte-autoComplete__mobileHeader__wrapper">
+                    <div className="inte-autoComplete__slide"></div>
+                    <h3 className="inte-autoComplete__mobile--heading">
+                      {name}
+                    </h3>
+                    <Button
+                      icon={<X color="#1C2433" />}
+                      type="textButton"
+                      onClick={onClos}
+                    />
+                  </div>
 
                   <ul
                     className={`inte-autoComplete__list`}
-                    ref={isMobile ? scrollRef : null}
+                    ref={scrollRef}
                     onTouchStart={(e) => handleTouchStart(e)}
                   >
                     {textField(true)}
@@ -481,7 +495,7 @@ function AutoComplete({
                 )}
               </PortalComponent>
             )}
-          </>
+          </div>
         ) : (
           renderData
         )}

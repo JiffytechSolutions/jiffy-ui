@@ -49,10 +49,10 @@ const Sheet: FC<SheetI> = ({
       if (event.key === "Escape") onClose();
     };
     if (closeOnEsc) window.addEventListener("keydown", keyEscHandler);
-    if(isOpen) document.body.classList.add("inte-bodyHasSheetBackdrop")
+    if (isOpen) document.body.classList.add("inte-bodyHasSheetBackdrop");
     return () => {
       window.removeEventListener("keydown", keyEscHandler);
-      document.body.classList.remove("inte-bodyHasSheetBackdrop")
+      document.body.classList.remove("inte-bodyHasSheetBackdrop");
     };
   }, [animateData]);
 
@@ -94,12 +94,14 @@ const Sheet: FC<SheetI> = ({
               onTouchEnd={handleTouchEnd}
             >
               <div className="inte-sheet__heading__wrapper">
-                <div className="inte-sheet__handleBar"></div>
+                {isMobileDevice && (
+                  <div className="inte-sheet__handleBar"></div>
+                )}
                 <h3 className="inte-sheet__heading">{heading}</h3>
                 <Button
                   accessibilityLabel="Close"
                   onClick={onClose}
-                  type="textButton"
+                  type="plainSecondary"
                   size="thin"
                   icon={<X size={24} color="var(--inte-G800)" />}
                 />

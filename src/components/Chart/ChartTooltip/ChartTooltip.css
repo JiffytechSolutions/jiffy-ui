@@ -1,0 +1,24 @@
+.inte-ChartTooltip {
+  position: absolute;
+  color: var(--inte-G0);
+  height: 4.4rem;
+  padding: 1.2rem;
+  text-align: center;
+  line-height: 2rem;
+  font-size: 1.6rem;
+  width: max-content;
+  font-weight: 600;
+  border-radius: 0.6rem;
+  z-index: var(--inte-Z-10);
+  background-color: var(--inte-G800);
+}
+.inte-ChartTooltip::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -0.5rem;
+  border-width: 0.5rem;
+  border-style: solid;
+  border-color: var(--inte-G800) transparent transparent transparent;
+}

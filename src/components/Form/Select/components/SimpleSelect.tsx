@@ -41,7 +41,7 @@ const SimpleSelect = ({
   isDisabled = false,
   isClearable = false,
   isCreatable = false,
-  placeholder,
+  placeHolder,
   customClass = "",
   onChange = () => null,
   onInputChange = () => null,
@@ -168,7 +168,7 @@ const SimpleSelect = ({
         addOptions(opt);
       }
     }
-  }, [value,options]);
+  }, [value, options]);
   useEffect(() => {
     // Calling resize input function
     if (!isMobile) {
@@ -669,7 +669,7 @@ const SimpleSelect = ({
         {isMobile && isSearchable && (
           <div className="inte-select__dropdown-textField">
             <TextField
-              placeholder="Search"
+              placeHolder="Search"
               prefix={<Search size={20} />}
               onChange={(e) => {
                 setInputValue(e);
@@ -701,7 +701,7 @@ const SimpleSelect = ({
             style: {
               maxHeight:
                 selectedValues.length === 0
-                  ? "calc(100vh - 19.2rem)"
+                  ? "calc(100vh - 20.2rem)"
                   : "calc(100vh - 23.4rem)",
             },
           })}
@@ -810,7 +810,7 @@ const SimpleSelect = ({
   const getPlaceholder = () => {
     return (
       <span className={`inte-formElement__placeholder`}>
-        {placeholder ?? "Select"}
+        {placeHolder ?? "Select"}
       </span>
     );
   };
