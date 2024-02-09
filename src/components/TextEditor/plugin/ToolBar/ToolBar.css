@@ -25,7 +25,7 @@
 }
 
 .inte-line {
-  width: 1px;
+  min-width: 1px;
   height: 26px;
   background: #e0e1e3;
 }
@@ -58,4 +58,30 @@
 
 .inte-textEditor__popover--specialNodes .inte-btn--large {
   padding: 1rem 1.2rem !important;
+}
+
+
+
+/* for mobile */
+
+.inte-TextEditor__toolBar--mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  & .inte-TextEditor__fontFormat {
+    display: flex;
+    & .inte-formElement  {
+      width: 100%;
+    }
+  }
+}
+
+.inte-textEditor__toolBar__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  justify-content: space-between;
+  & .inte-switcher__arrow  {
+    display: none;
+  }
 }

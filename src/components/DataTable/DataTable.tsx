@@ -24,9 +24,9 @@ export interface columnI {
     onSort?: (clickedColumn: columnI, order: 'asec' | 'desc') => void;
     comparator?: (a: any, b: any, order: any) => number;
   };
-  render?: (item: any , wholeObj : DataSourceI) => React.ReactNode;
+  render?: (item: any, wholeObj: DataSourceI) => React.ReactNode;
   onCell?: (rowNum: number) => any;
-  editor?:React.ReactNode
+  editor?: React.ReactNode
 }
 
 export interface DataSourceI {
@@ -48,9 +48,9 @@ export interface DataTableI {
   emptyTableUi?: React.ReactNode;
   customClass?: string;
   tableLayout?: "fixed" | "auto"
-  bulkEditTable?:boolean;
+  bulkEditTable?: boolean;
   stickyScrollBar?: boolean;
-  isCellEdited?:(columnKey : string | number , rowKey : string | number,cell : DataSourceI) => boolean;
+  isCellEdited?: (columnKey: string | number, rowKey: string | number, cell: DataSourceI) => boolean;
 }
 
 export interface expandableI {
@@ -138,7 +138,7 @@ const DataTable = ({
       "inte-dataTable__cell--Fixedleft-last"
     );
 
-    if(stickyScrollBar && stickyScrollBarRef.current) {
+    if (stickyScrollBar && stickyScrollBarRef.current) {
       stickyScrollBarRef.current.scrollLeft = GridWrapperRef.current.scrollLeft;
     }
 
@@ -523,23 +523,6 @@ const DataTable = ({
               </th>
             );
           })}
-          {/* {(scrollY ?? 0) > 0 &&
-            (GridWrapperRef.current?.scrollHeight ?? 0) >
-            (GridWrapperRef.current?.clientHeight ?? 0) && hasFixedHeader ? (
-            <th
-              className="inte-dataTable__spacedCellScrollBar"
-              ref={(cell) =>
-                makeCellRefsArray(
-                  0,
-                  columns.length +
-                  (expandable ? 1 : 0) +
-                  (rowSelection ? 1 : 0) +
-                  1,
-                  cell
-                )
-              }
-            ></th>
-          ) : null} */}
         </tr>
         {
           !!bulkEditTable && (
@@ -564,12 +547,6 @@ const DataTable = ({
                     "inte-dataTable__cell--Fixedleft": columns[0].fixed
                   })}
                 >
-                  {/* {rowSelection.multi !== false && (
-                    <Checkbox
-                      onChange={headerCheckboxChangeHandler}
-                      checked={giveHeaderCheckboxState(selectedCheckbox)}
-                    />
-                  )} */}
                 </th>
               )}
               {
@@ -582,7 +559,6 @@ const DataTable = ({
                       [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]: item.fixed,
 
                     })}
-                    // colSpan={item.colSpan ?? 1}
                   >
                     {
                       item.editor
@@ -590,14 +566,6 @@ const DataTable = ({
                   </th>
                 ))
               }
-              {/* {
-                Array(columns.length - bulkEditRow.length).fill(0).map(item =>
-                  <th
-                    colSpan={0}
-                    ref={(cell) => makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)}
-                  ></th>)
-              } */}
-
             </tr>
           )
         }
@@ -693,8 +661,8 @@ const DataTable = ({
             let span = i.onCell ? i.onCell(rowNum) : "";
             if (span === -1) return null;
             let ele = i.dataIndex ? item[i.dataIndex] : item;
-            ele = i.render ? i.render(ele , item) : ele;
-            const isEdited = isCellEdited ?  isCellEdited(dataSource[index]?.key , columns[ind]?.key , i) : false;
+            ele = i.render ? i.render(ele, item) : ele;
+            const isEdited = isCellEdited ? isCellEdited(dataSource[index]?.key, columns[ind]?.key, i) : false;
             return (
               <td
                 {...span}
@@ -707,7 +675,7 @@ const DataTable = ({
                 className={getClassNames({
                   'inte-dataTable__cell': true,
                   [`inte-dataTable__cell--Fixed` + i.fixed?.toLowerCase()]: i.fixed,
-                  'inte-dataTable__cell--edited' : isEdited
+                  'inte-dataTable__cell--edited': isEdited
                 })}
               >
                 {ele}
@@ -760,18 +728,18 @@ const DataTable = ({
         </tr>
       ));
 
-  const DataTableEmptyRow =  (
+  const DataTableEmptyRow = (
     <tr>
-        <td
-          colSpan={
-            columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
-          }
-        >
-          {emptyTableUi ? emptyTableUi : <NoProducts />}
-        </td>
-     </tr>
+      <td
+        colSpan={
+          columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
+        }
+      >
+        {emptyTableUi ? emptyTableUi : <NoProducts />}
+      </td>
+    </tr>
   )
-  
+
 
   const scrollGrid = () => {
     const scrollLeft = stickyScrollBarRef.current?.scrollLeft
@@ -787,21 +755,21 @@ const DataTable = ({
       (GridWrapperRef.current.clientWidth === GridWrapperRef.current?.scrollWidth) ||
       containerRect.top > currentScrollHeight
     ) {
-      stickyScrollBarRef.current.style.display = "none"
+      stickyScrollBarRef.current.style.visibility = "hidden"
     }
     else {
-      stickyScrollBarRef.current.style.display = "block";
+      stickyScrollBarRef.current.style.visibility = "visible";
     }
   }
 
   useEffect(() => {
-    if(!stickyScrollBar)  return
+    if (!stickyScrollBar) return
     handelStickyScroll()
     window.addEventListener('scroll', handelStickyScroll)
     return () => {
       window.removeEventListener('scroll', handelStickyScroll)
     }
-  }, [stickyScrollBarRef.current, GridWrapperRef.current, dataSource, window.innerWidth , stickyScrollBar])
+  }, [stickyScrollBarRef.current, GridWrapperRef.current, dataSource, window.innerWidth, stickyScrollBar])
 
   return (
     <div

@@ -30,7 +30,7 @@ const basicColors = [
   '#ffffff',
 ];
 
-const WIDTH = 214;
+const WIDTH = 214 ;
 const HEIGHT = 150;
 
 export default function ColorPicker({

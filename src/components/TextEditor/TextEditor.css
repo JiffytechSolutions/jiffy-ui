@@ -32,6 +32,9 @@
   caret-color: #444;
   border: 1px solid var(--inte-G40);
   border-radius: 5px;
+}
+
+.inte-TextEditor__body:not(.inte-TextEditor--mobile) {
   border-top: 0;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
