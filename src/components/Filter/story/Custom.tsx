@@ -175,7 +175,7 @@ export function TextFieldRender({ value, onChange }: TextFieldRenderI) {
   const [val, setVal] = useState(value);
   return (
     <TextField
-      placeHolder="Enter text"
+      placeholder="Enter text"
       value={value ?? val}
       onChange={(e) => {
         onChange && onChange(e);
@@ -189,7 +189,7 @@ export function SelectRender({ value, onChange }: TextFieldRenderI) {
   return (
     <Select
       value={selected}
-      placeHolder="Select Value"
+      placeholder="Select Value"
       onChange={(e) => {
         onChange && onChange(e);
         setSelected(e);

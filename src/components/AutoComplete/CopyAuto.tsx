@@ -27,7 +27,7 @@ function AutoComplete({
   name,
   helpText,
   setHiglighted = true,
-  placeHolder,
+  placeholder,
   isLoading = false,
   customClass,
   isClearable = true,
@@ -326,7 +326,7 @@ function AutoComplete({
         helpText={helpText}
         label={name}
         prefix={<Search size={20} color={color} />}
-        placeHolder={placeHolder}
+        placeholder={placeholder}
         isLoading={isLoading}
         autoFocus={autofocus}
         isClearable={isClearable}
@@ -496,7 +496,7 @@ export interface SearchI {
   id?: string;
   value?: string;
   name?: string;
-  placeHolder?: string;
+  placeholder?: string;
   helpText?: string;
   setHiglighted?: boolean;
   isLoading?: boolean;

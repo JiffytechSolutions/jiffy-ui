@@ -139,7 +139,7 @@ function BodyFun() {
         onChange={(e) => {
           setText(e);
         }}
-        placeHolder="Placeholder..."
+        placeholder="Placeholder..."
       />
     </React.Fragment>
   );
