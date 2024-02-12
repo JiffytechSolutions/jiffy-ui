@@ -205,10 +205,7 @@ const FontStyle = ({ editor }: FontStyleI) => {
               />}
               helpText={"Underline"}
             />
-            <ToolTip
-              activator={<FontColorPicker onChange={handelColorChange} color={fontColor} />}
-              helpText={"Change Text Color"}
-            />
+            <FontColorPicker onChange={handelColorChange} color={fontColor} />
           </>
         )
       }
@@ -234,14 +231,26 @@ interface FontColorPickerI {
 }
 
 export const FontColorPicker = ({ onChange, color }: FontColorPickerI) => {
+  const [currentColor, setCurrentColor] = useState(color)
   const [open, setOpen] = useState(false)
   const onClose = () => setOpen(false)
 
-  const activator = <Button
-    icon={<TextColorSvg />}
-    type='textButton'
-    onClick={() => setOpen(prev => !prev)}
+  const isMobile = useMobileDevice()
+
+  const activator = <ToolTip
+    activator={<Button
+      icon={<TextColorSvg />}
+      type='textButton'
+      onClick={() => setOpen(prev => !prev)}
+    />}
+    helpText={"Change Text Color"}
   />
+
+  useEffect(() => {
+    return () => {
+      setCurrentColor(color)
+    }
+  },[open])
 
   return (
     <Popover
@@ -251,7 +260,14 @@ export const FontColorPicker = ({ onChange, color }: FontColorPickerI) => {
       activator={activator}
       customClass='inte-textEditor--customHeight'
     >
-      <ColorPicker color={color} onChange={(value) => onChange(value)} />
+      <ColorPicker color={currentColor} onChange={(value) => setCurrentColor(value)} />
+      <div className='inte-colorPicker__footer'>
+        <Button isFullWidth={isMobile} halign='center' type='secondary' onClick={onClose}>Cancel</Button>
+        <Button isFullWidth={isMobile} halign='center' type='primary' onClick={() => {
+          onChange(currentColor);
+          onClose()
+        }}>Done</Button>
+      </div>
     </Popover>
   )
 }
