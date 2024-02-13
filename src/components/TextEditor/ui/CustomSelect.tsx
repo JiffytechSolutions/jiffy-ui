@@ -700,7 +700,7 @@ const CustomSelect = ({
         {isMobile && isSearchable && (
           <div className="inte-select__dropdown-textField">
             <TextField
-              placeHolder="Search"
+              placeholder="Search"
               prefix={<Search size={20} />}
               onChange={(e) => {
                 setInputValue(e);
