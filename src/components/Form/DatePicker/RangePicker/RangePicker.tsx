@@ -339,7 +339,7 @@ const RangePicker = ({
     <TextField
       onFocus={() => setIsOpen(true)}
       value={textFieldValue}
-      placeHolder={textFieldPlaceholder}
+      placeholder={textFieldPlaceholder}
       changeControl={(newControl: "start" | "end") =>
         setCurrControl(newControl)
       }

@@ -5,11 +5,12 @@ import {
   $createHeadingNode,
   HeadingTagType,
 } from '@lexical/rich-text';
-import {$setBlocksType} from '@lexical/selection';
+import { $setBlocksType } from '@lexical/selection';
+import CustomSelect from '../../ui/CustomSelect';
 
 interface InsertBlockI {
   editor: LexicalEditor,
-  blockType : keyof typeof blockTypeToBlockName
+  blockType: keyof typeof blockTypeToBlockName
 }
 
 const blockTypeToBlockName = {
@@ -28,7 +29,7 @@ const blockTypeToBlockName = {
 };
 
 
-const InsertBlock = ({ editor , blockType }: InsertBlockI) => {
+const InsertBlock = ({ editor, blockType }: InsertBlockI) => {
 
   const formatHeading = (headingSize: HeadingTagType) => {
     if (blockType !== headingSize) {
@@ -51,12 +52,13 @@ const InsertBlock = ({ editor , blockType }: InsertBlockI) => {
   };
 
   return (
-    <Select
+    <CustomSelect
+      heading='Choose Text Type'
       options={[
         { label: "Normal text", value: "paragraph" },
-        { label: 'Heading 1', value: "h1" },
-        { label: 'Heading 2', value: "h2" },
-        { label: 'Heading 3', value: "h3" },
+        { label: 'Heading 1', value: "h1", className: "inte-textType heading1" },
+        { label: 'Heading 2', value: "h2", className: "inte-textType heading2" },
+        { label: 'Heading 3', value: "h3", className: "inte-textType heading3" },
       ]}
       isMultiSelect={false}
       value={blockType}

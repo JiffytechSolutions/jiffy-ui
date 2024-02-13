@@ -153,9 +153,9 @@ import Modal from "../../Modal/Modal";
 
 //     const bulkEditRowDataSource = {
 //         key: 0,
-//         name: <TextField value="" placeHolder='Enter name for bulk update' />,
-//         // age : <TextField value="" placeHolder='Enter age for bulk upload' />,
-//         price: <TextField value="" placeHolder='Enter price for bulk update' />,
+//         name: <TextField value="" placeholder='Enter name for bulk update' />,
+//         // age : <TextField value="" placeholder='Enter age for bulk upload' />,
+//         price: <TextField value="" placeholder='Enter price for bulk update' />,
 //         category: <Select
 //             // label='Category'
 //             placeholder='Enter category for bulk update'
