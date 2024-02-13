@@ -9,7 +9,7 @@ interface TextFieldI {
   id?: string | number;
   value?: string[];
   onClick?: () => void;
-  placeHolder?: string[];
+  placeholder?: string[];
   changeControl?: (currControl: "start" | "end") => void;
   onChange?: (inputValues: string[]) => void;
   currControl?: "start" | "end";
@@ -27,7 +27,7 @@ const TextField = ({
   onFocus = () => {},
   currControl,
   value = ["", ""],
-  placeHolder = ["", ""],
+  placeholder = ["", ""],
   onClick = () => {},
   changeControl = () => {},
   onChange = () => {},
@@ -112,7 +112,7 @@ const TextField = ({
               autoComplete="off"
               value={value[0] ?? ""}
               onChange={handelFirstInputValueChange}
-              placeholder={placeHolder[0]}
+              placeholder={placeholder[0]}
             />
             <span
               className={getClassNames({
@@ -157,7 +157,7 @@ const TextField = ({
                   autoComplete="off"
                   value={value[1] ?? ""}
                   onChange={handelSecondInputValueChange}
-                  placeholder={placeHolder[1] ?? ""}
+                  placeholder={placeholder[1] ?? ""}
                 />
                 <div
                   className={getClassNames({

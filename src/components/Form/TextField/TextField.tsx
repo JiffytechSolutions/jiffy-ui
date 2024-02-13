@@ -170,7 +170,7 @@ const TextField = React.forwardRef(
           min={props.min}
           max={props.max}
           step={step}
-          placeholder={props.placeHolder}
+          placeholder={props.placeholder}
           tabIndex={props.tabIndex}
           autoFocus={props.autoFocus}
           className="inte-formElement__control inte-formElement__textField"
@@ -433,7 +433,7 @@ export interface TextfieldI {
   value?: string | number;
   label?: string | React.ReactNode;
   type?: "text" | "number" | "password" | "tel" | "url" | "email";
-  placeHolder?: string;
+  placeholder?: string;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   connectLeft?: React.ReactNode;

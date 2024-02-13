@@ -4,7 +4,7 @@ import "../Form.css";
 import "./TextArea.css";
 
 const TextArea = ({
-  placeHolder = "Type..",
+  placeholder = "Type..",
   value = "",
   resize = "both",
   required = false,
@@ -61,7 +61,7 @@ const TextArea = ({
         onChange={(e) => {
           onChange(e.target.value);
         }}
-        placeholder={placeHolder}
+        placeholder={placeholder}
         aria-describedby={`inte-textArea__description-${
           props.id ? props.id : rId
         }`}
@@ -87,7 +87,7 @@ export interface TextfieldI {
   value?: string | number;
   label?: string;
   resize?: "horizontal" | "vertical" | "both" | "none";
-  placeHolder?: string;
+  placeholder?: string;
   helpText?: string;
   onEnter?: (arr: any) => void;
   readOnly?: boolean;

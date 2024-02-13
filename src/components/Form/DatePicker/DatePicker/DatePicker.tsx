@@ -159,7 +159,7 @@ const DatePicker = ({
     <TextField
       onFocus={() => setIsOpen(true)}
       value={[textFieldValue]}
-      placeHolder={[textFieldPlaceholder]}
+      placeholder={[textFieldPlaceholder]}
       onChange={(inputValues) => onTextFieldChange(inputValues[0])}
       isFocused={isOpen}
       onClick={() => setIsOpen((prev) => !prev)}

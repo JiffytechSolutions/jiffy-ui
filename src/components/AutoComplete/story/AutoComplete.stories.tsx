@@ -61,7 +61,7 @@ export default {
       },
       defaultValue: "Kindly Search your required Item",
     },
-    placeHolder: {
+    placeholder: {
       description: "Show your Placeholder",
       control: {
         type: "text",
@@ -560,7 +560,7 @@ autocomplete_with_popover_position.decorators = [
                 options={names}
                 key={index}
                 name={item + " " + "Popover Position"}
-                placeHolder="Autocomplete without Heighlighted Text"
+                placeholder="Autocomplete without Heighlighted Text"
                 helpText="You can search Your Term"
                 value={value[index]}
                 onChange={(e: any) => Test(e, index)}

@@ -1,3 +1,13 @@
+.inte-colorPicker__footer {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: end;
+  padding: 1.2rem;
+  margin: 1.8rem -1.2rem 0 -1.2rem;
+  border-top: 0.1rem solid var(--inte-G40);
+  padding-bottom: 0;
+}
+
 .color-picker-wrapper > div:first-child {
     margin-bottom: 15px;
 }
@@ -78,4 +88,45 @@
   margin-top: 15px;
   width: 100%;
   height: 20px;
+}
+
+.color-picker__inputFields {
+  display: flex;
+  gap: 1.2rem;
+}
+
+.color-picker__inputFields > .inte-formElement {
+  min-width: 100px;
+}
+
+.color-picker__rgbField {
+  display: flex;
+}
+
+.color-picker__rgbField > div {
+  min-width: 60px;
+}
+
+.color-picker__rgbField .inte-formElement--spinner {
+  display: none;
+}
+
+.color-picker__rgbField .inte-formElement:nth-child(2) .inte-formElement__textField {
+  border-radius: 0;
+  border-left-color: transparent;
+  border-right-color: transparent;
+}
+
+.color-picker__rgbField .inte-formElement:nth-child(2) .inte-formElement__textField:focus {
+  border: 1px solid var(--inte-P900);
+}
+
+.color-picker__rgbField .inte-formElement:nth-child(1) .inte-formElement__textField {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.color-picker__rgbField .inte-formElement:nth-child(3) .inte-formElement__textField {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
 }

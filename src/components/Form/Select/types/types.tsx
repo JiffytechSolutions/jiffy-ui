@@ -6,7 +6,7 @@ export type SelectI = {
   onInputChange?: (e: any) => void;
   isRequired?: boolean;
   label?: string;
-  placeHolder?: string;
+  placeholder?: string;
   helpText?: string;
   helpIcon?: React.ReactNode;
   isDisabled?: boolean;
