@@ -59,7 +59,7 @@ const InputPhone = ({
   },
 }: InputPhoneI) => {
   const myInputRef = useRef<any>(null);
-
+  const [val, setValue] = useState();
   useEffect(() => {
     const textFieldElement = myInputRef?.current;
     if (textFieldElement && countryValue) {
@@ -70,7 +70,7 @@ const InputPhone = ({
         innerNode.focus();
       }
     }
-  }, [onCountryChange, countryValue]);
+  }, [val]);
 
   return (
     <div
@@ -82,7 +82,7 @@ const InputPhone = ({
       <TextField
         ref={myInputRef}
         type={type}
-        placeHolder={placeholder}
+        placeholder={placeholder}
         onChange={(e) => onChange(e)}
         value={value}
         label={label}
@@ -97,7 +97,10 @@ const InputPhone = ({
         onClear={onClear}
         connectLeft={
           <Select
-            onChange={(e) => onCountryChange(e)}
+            onChange={(e) => {
+              setValue(e);
+              onCountryChange(e);
+            }}
             value={countryValue ?? ""}
             options={countryOptions ?? []}
             isSearchable={isSearchable}

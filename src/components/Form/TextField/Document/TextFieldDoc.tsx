@@ -61,7 +61,7 @@ export const TextFieldDoc = () => {
                             autocomplete="new-password"
                             label="What is your email address?"
                             onChange={function noRefCheck() {}}
-                            placeHolder="ced@cedcoss.com"
+                            placeholder="ced@cedcoss.com"
                             type="email"
                           />
                         </FlexLayout>
@@ -95,7 +95,7 @@ export const TextFieldDoc = () => {
                             autocomplete="new-password"
                             label="Email"
                             onChange={function noRefCheck() {}}
-                            placeHolder="ced@cedcoss.com"
+                            placeholder="ced@cedcoss.com"
                             type="email"
                           />
                         </FlexLayout>
@@ -158,7 +158,7 @@ export const TextFieldDoc = () => {
                             autocomplete="new-password"
                             label="Email"
                             onChange={function noRefCheck() {}}
-                            placeHolder="ced@cedcoss.com"
+                            placeholder="ced@cedcoss.com"
                             type="email"
                           />
                         </FlexLayout>
@@ -194,7 +194,7 @@ export const TextFieldDoc = () => {
                             helpIcon={<HelpCircle size={20} />}
                             label="Error"
                             onChange={function noRefCheck() {}}
-                            placeHolder="Enter here"
+                            placeholder="Enter here"
                             type="text"
                             value=""
                           />
@@ -261,7 +261,7 @@ export const TextFieldDoc = () => {
                             helpText="For Example: ced@cedcoss.com"
                             label="Email"
                             onChange={function noRefCheck() {}}
-                            placeHolder="ced@cedcoss.com"
+                            placeholder="ced@cedcoss.com"
                             type="text"
                             value=""
                           />
@@ -295,7 +295,7 @@ export const TextFieldDoc = () => {
                           <TextField
                             label="Email"
                             onChange={function noRefCheck() {}}
-                            placeHolder="ced@cedcoss.com"
+                            placeholder="ced@cedcoss.com"
                             type="text"
                             value=""
                           />
@@ -360,7 +360,7 @@ export const TextFieldDoc = () => {
                           <TextField
                             label="Email"
                             onChange={function noRefCheck() {}}
-                            placeHolder="ENTER YOUR TEXT"
+                            placeholder="ENTER YOUR TEXT"
                             type="text"
                             value=""
                           />
@@ -394,7 +394,7 @@ export const TextFieldDoc = () => {
                           <TextField
                             label="Email"
                             onChange={function noRefCheck() {}}
-                            placeHolder="ced@cedcoss.com"
+                            placeholder="ced@cedcoss.com"
                             type="text"
                             value=""
                           />
@@ -479,7 +479,7 @@ export const TextFieldDoc = () => {
                                     { label: "Gram", value: "Gram" },
                                     { label: "Mg", value: "Mg" },
                                   ]}
-                                  placeHolder="Kg"
+                                  placeholder="Kg"
                                   value={"kg"}
                                 />
                               }
@@ -493,7 +493,7 @@ export const TextFieldDoc = () => {
                               helpText="Please enter an amount"
                               label="Enter an amount"
                               onChange={function noRefCheck() {}}
-                              placeHolder="Enter text"
+                              placeholder="Enter text"
                               type="text"
                               helpIcon={<HelpCircle size={20} />}
                               value="10"
@@ -535,7 +535,7 @@ export const TextFieldDoc = () => {
                                   { label: "Gram", value: "Gram" },
                                   { label: "Mg", value: "Mg" },
                                 ]}
-                                placeHolder="Kg"
+                                placeholder="Kg"
                                 value={"kg"}
                               />
                             }
@@ -549,7 +549,7 @@ export const TextFieldDoc = () => {
                             helpText="Please enter an amount"
                             label="Enter an amount"
                             onChange={function noRefCheck() {}}
-                            placeHolder="Enter text"
+                            placeholder="Enter text"
                             type="text"
                             helpIcon={<HelpCircle size={20} />}
                             value="10"
@@ -614,7 +614,7 @@ export const TextFieldDoc = () => {
                             autocomplete="new-password"
                             label="Email"
                             onChange={function noRefCheck() {}}
-                            placeHolder="ced@cedcoss.com"
+                            placeholder="ced@cedcoss.com"
                             type="number"
                           />
                         </FlexLayout>
@@ -653,13 +653,13 @@ export const TextFieldDoc = () => {
                                   { label: "Gram", value: "Gram" },
                                   { label: "Mg", value: "Mg" },
                                 ]}
-                                placeHolder="Kg"
+                                placeholder="Kg"
                                 value={"$"}
                               />
                             }
                             label="Enter an amount"
                             onChange={function noRefCheck() {}}
-                            placeHolder="Enter text"
+                            placeholder="Enter text"
                             type="number"
                             value="10"
                           />
@@ -731,13 +731,13 @@ export const TextFieldDoc = () => {
                                     { label: "Gram", value: "Gram" },
                                     { label: "Mg", value: "Mg" },
                                   ]}
-                                  placeHolder="test"
+                                  placeholder="test"
                                   value={"$"}
                                 />
                               }
                               label="Enter an amount"
                               onChange={function noRefCheck() {}}
-                              placeHolder="Enter text"
+                              placeholder="Enter text"
                               type="number"
                               value="126"
                             />
@@ -778,13 +778,13 @@ export const TextFieldDoc = () => {
                                   { label: "Gram", value: "Gram" },
                                   { label: "Mg", value: "Mg" },
                                 ]}
-                                placeHolder="test"
+                                placeholder="test"
                                 value={"$"}
                               />
                             }
                             label="Enter an amount"
                             onChange={function noRefCheck() {}}
-                            placeHolder="Enter text"
+                            placeholder="Enter text"
                             type="number"
                             value="126"
                           />
@@ -855,13 +855,13 @@ export const TextFieldDoc = () => {
                                   { label: "Gram", value: "Gram" },
                                   { label: "Mg", value: "Mg" },
                                 ]}
-                                placeHolder="RU"
+                                placeholder="RU"
                                 value={"RU"}
                               />
                             }
                             label="Enter phone number"
                             onChange={function noRefCheck() {}}
-                            placeHolder="3566768902"
+                            placeholder="3566768902"
                             type="text"
                             value="3566768902"
                           />
@@ -901,13 +901,13 @@ export const TextFieldDoc = () => {
                                   { label: "Gram", value: "Gram" },
                                   { label: "Mg", value: "Mg" },
                                 ]}
-                                placeHolder="+7"
+                                placeholder="+7"
                                 value={"+7"}
                               />
                             }
                             label="Enter phone number"
                             onChange={function noRefCheck() {}}
-                            placeHolder="3566768902"
+                            placeholder="3566768902"
                             type="text"
                             value="3566768902"
                           />

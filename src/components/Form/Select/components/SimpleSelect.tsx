@@ -41,7 +41,7 @@ const SimpleSelect = ({
   isDisabled = false,
   isClearable = false,
   isCreatable = false,
-  placeHolder,
+  placeholder,
   customClass = "",
   onChange = () => null,
   onInputChange = () => null,
@@ -669,7 +669,7 @@ const SimpleSelect = ({
         {isMobile && isSearchable && (
           <div className="inte-select__dropdown-textField">
             <TextField
-              placeHolder="Search"
+              placeholder="Search"
               prefix={<Search size={20} />}
               onChange={(e) => {
                 setInputValue(e);
@@ -810,7 +810,7 @@ const SimpleSelect = ({
   const getPlaceholder = () => {
     return (
       <span className={`inte-formElement__placeholder`}>
-        {placeHolder ?? "Select"}
+        {placeholder ?? "Select"}
       </span>
     );
   };

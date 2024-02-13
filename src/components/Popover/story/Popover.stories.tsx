@@ -197,63 +197,63 @@ const Template = ({ ...rest }) => {
             <TextField
               type="text"
               label="Name"
-              placeHolder={"Placeholder"}
+              placeholder={"Placeholder"}
               value={value}
               onChange={(data) => setvalue(data)}
             />
             <TextField
               type="text"
               label="Name"
-              placeHolder={"Placeholder"}
+              placeholder={"Placeholder"}
               value={value}
               onChange={(data) => setvalue(data)}
             />
             <TextField
               type="text"
               label="Name"
-              placeHolder={"Placeholder"}
+              placeholder={"Placeholder"}
               value={value}
               onChange={(data) => setvalue(data)}
             />{" "}
             <TextField
               type="text"
               label="Name"
-              placeHolder={"Placeholder"}
+              placeholder={"Placeholder"}
               value={value}
               onChange={(data) => setvalue(data)}
             />{" "}
             <TextField
               type="text"
               label="Name"
-              placeHolder={"Placeholder"}
+              placeholder={"Placeholder"}
               value={value}
               onChange={(data) => setvalue(data)}
             />{" "}
             <TextField
               type="text"
               label="Name"
-              placeHolder={"Placeholder"}
+              placeholder={"Placeholder"}
               value={value}
               onChange={(data) => setvalue(data)}
             />{" "}
             <TextField
               type="text"
               label="Name"
-              placeHolder={"Placeholder"}
+              placeholder={"Placeholder"}
               value={value}
               onChange={(data) => setvalue(data)}
             />{" "}
             <TextField
               type="text"
               label="Name"
-              placeHolder={"Placeholder"}
+              placeholder={"Placeholder"}
               value={value}
               onChange={(data) => setvalue(data)}
             />{" "}
             <TextField
               type="text"
               label="Name"
-              placeHolder={"Placeholder"}
+              placeholder={"Placeholder"}
               value={value}
               onChange={(data) => setvalue(data)}
             />

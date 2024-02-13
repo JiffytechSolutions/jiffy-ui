@@ -147,8 +147,8 @@ export default {
       },
       defaultValue: false,
     },
-    placeHolder: {
-      description: "Add any placeHolder as text",
+    placeholder: {
+      description: "Add any placeholder as text",
       control: {
         type: "text",
       },
@@ -311,7 +311,7 @@ const Template = ({ ...rest }) => {
         })}
         isVirtualSelect={rest.isVirtualSelect}
         isDisabled={rest.isDisabled}
-        placeHolder={rest.placeHolder}
+        placeholder={rest.placeholder}
         isLoading={rest.isLoading}
         onChange={onSelectChange}
         onInputChange={(e: any) => {}}
@@ -342,7 +342,7 @@ controlStates.decorators = [
               <Select
                 options={simpleOptions}
                 value={value1}
-                placeHolder={"Select"}
+                placeholder={"Select"}
                 controlStates={item}
                 onChange={(e) => {
                   onSelectChange(e);
@@ -369,7 +369,7 @@ SelectWithLoading.decorators = [
         <Select
           options={simpleOptions}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           isLoading
           onChange={(e) => {
             onSelectChange(e);
@@ -392,7 +392,7 @@ ClearableSelect.decorators = [
         <Select
           options={simpleOptions}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           isClearable
           isMultiSelect
           onChange={(e) => {
@@ -416,7 +416,7 @@ DisabledSelect.decorators = [
         <Select
           options={simpleOptions}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           isDisabled
           onChange={(e) => {
             onSelectChange(e);
@@ -438,7 +438,7 @@ SelectHavingError.decorators = [
       <Card title="Select having error">
         <Select
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           options={simpleOptions}
           controlStates="error"
           onChange={(e) => {
@@ -462,7 +462,7 @@ SingleSelect.decorators = [
         <Select
           options={simpleOptions}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -485,7 +485,7 @@ MultiSelect.decorators = [
           options={simpleOptions}
           value={value1}
           isMultiSelect
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -508,7 +508,7 @@ SearchableSelect.decorators = [
           options={simpleOptions}
           value={value1}
           isSearchable
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -534,7 +534,7 @@ CreatableSelect.decorators = [
           isSearchable
           isCreatable
           isMultiSelect
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -557,7 +557,7 @@ SelectWithLabel.decorators = [
           options={simpleOptions}
           value={value1}
           label="Label"
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -579,7 +579,7 @@ SelectWithHelpTextAndIcon.decorators = [
         <Select
           options={simpleOptions}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -603,7 +603,7 @@ SelectWithHelpTextAndWithoutIcon.decorators = [
         <Select
           options={simpleOptions}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -658,7 +658,7 @@ SelectWithDisabledOptionsInSimpleData.decorators = [
         <Select
           options={options}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -680,7 +680,7 @@ SelectWithGroupedData.decorators = [
         <Select
           options={groupOptions}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -745,7 +745,7 @@ SelectWithDisabledOptionsInGroupData.decorators = [
         <Select
           options={groupOptions}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -768,7 +768,7 @@ SelectWithDefaultSelectedOptionsInSingleselect.decorators = [
         <Select
           options={simpleOptions}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -792,7 +792,7 @@ SelectWithDefaultSelectedOptionsInMultiSelect.decorators = [
         <Select
           options={simpleOptions}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
@@ -840,7 +840,7 @@ SelectWithRealTimeFetch.decorators = [
           isLoading={option.length === 0}
           options={option}
           value={value1}
-          placeHolder={"Select"}
+          placeholder={"Select"}
           onChange={(e) => {
             onSelectChange(e);
           }}
