@@ -14,7 +14,7 @@ export default {
   },
   argTypes: {
     chartData: {
-      description: `<div><strong>chartData is an array of object:-</strong></div><i>Accepted key value pairs:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>value<span style="color:red">*</span></td><td>Number | String</td></tr><tr><td>label<span style="color:red">*</span></td><td>String</td></tr><tr><td>color<span style="color:red">*</span></td><td>String</td></tr></tbody></table>`,
+      description: `<div><strong>chartData is an array of object:-</strong></div><i>Accepted key value pairs:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>value<span style="color:red">*</span></td><td>Number</td></tr><tr><td>label<span style="color:red">*</span></td><td>String</td></tr><tr><td>color<span style="color:red">*</span></td><td>String</td></tr></tbody></table>`,
       control: {
         type: false,
       },
@@ -27,31 +27,21 @@ export default {
       },
       defaultValue: 250,
     },
-    showTooltip: {
+    tooltip: {
       description:
-        "If you can showing tooltip when mouse hover then use showTooltip prop and pass the value true",
+        "If you can showing tooltip then use tooltip prop  and tooltip is an object type",
       control: {
-        type: "boolean",
+        type: "object",
       },
-      defaultValue: false,
+      defaultValue: { show: false, type: "number" },
     },
-
-    tooltipValue: {
+    totalItems: {
       description:
-        "If you can showing tooltip value percentage or value then use tooltipValue prop and select inside options",
+        "If you can showing totalItems value then use totalItems prop  and totalItems is an object type",
       control: {
-        type: "radio",
-        options: ["percentage", "value"],
+        type: "object",
       },
-      defaultValue: "percentage",
-    },
-    totalPercentage: {
-      description:
-        "If you can showing total percentage value then use percentage prop and pass the value true",
-      control: {
-        type: "boolean",
-      },
-      defaultValue: false,
+      defaultValue: { show: false, type: "number" || "percentage" },
     },
     customClass: {
       description: "Add custom class if need to change the design",
@@ -81,7 +71,7 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <FlexLayout halign="center">
-        <DonutChart {...rest} chartData={chartData} size={rest.height} />
+        <DonutChart {...rest} chartData={chartData} />
       </FlexLayout>
     </Card>
   );
@@ -90,11 +80,20 @@ const Template = ({ ...rest }) => {
 export const Primary = Template.bind({});
 
 // Donut Chart Percentage
-export const DonutChartPercentage = ({ ...rest }) => {
+export const DonutChartTotalitems = ({ ...rest }) => {
   return (
     <Card title="Donut Chart with showing total percentage">
-      <FlexLayout halign="center">
-        <DonutChart totalPercentage chartData={chartData} size={250} />
+      <FlexLayout halign="center" spacing="mediumLoose">
+        <DonutChart
+          totalItems={{ show: true }}
+          chartData={chartData}
+          size={250}
+        />
+        <DonutChart
+          totalItems={{ show: true, type: "percentage" }}
+          chartData={chartData}
+          size={250}
+        />
       </FlexLayout>
     </Card>
   );
@@ -118,7 +117,7 @@ export const DonutChartTooltip = ({ ...rest }) => {
         />
 
         <DonutChart
-          tooltip={{ show: true, type: "value" }}
+          tooltip={{ show: true }}
           chartData={[
             { value: 250, label: "Series A", color: "#F0EDFA" },
             { value: 400, label: "Series B", color: "#C5B8EA" },
@@ -139,13 +138,13 @@ export const DonutChartAll = ({ ...rest }) => {
     <Card title="Donut Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="loose" wrap="wrap">
         <DonutChart
-          totalPercentage
+          totalItems={{ show: true, type: "number" }}
           chartData={chartData}
           size={250}
-          tooltip={{ show: true, type: "value" }}
+          tooltip={{ show: true }}
         />
         <DonutChart
-          totalPercentage
+          totalItems={{ show: true, type: "number" }}
           chartData={[
             { value: 25, label: "Series A", color: "#F0EDFA" },
             { value: 15, label: "Series B", color: "#C5B8EA" },
@@ -154,10 +153,10 @@ export const DonutChartAll = ({ ...rest }) => {
             { value: 25, label: "Series E", color: "#B2DDFF" },
           ]}
           size={250}
-          tooltip={{ show: true, type: "value" }}
+          tooltip={{ show: true }}
         />
         <DonutChart
-          totalPercentage
+          totalItems={{ show: true, type: "number" }}
           chartData={[
             { value: 25, label: "Series A", color: "#53B1FD" },
             { value: 25, label: "Series B", color: "#D1E9FF" },
@@ -165,32 +164,32 @@ export const DonutChartAll = ({ ...rest }) => {
             { value: 25, label: "Series D", color: "#B2DDFF" },
           ]}
           size={250}
-          tooltip={{ show: true, type: "value" }}
+          tooltip={{ show: true }}
         />
         <DonutChart
-          totalPercentage
+          totalItems={{ show: true, type: "number" }}
           chartData={[
             { value: 50, label: "Series A", color: "#53B1FD" },
             { value: 25, label: "Series B", color: "#D1E9FF" },
             { value: 25, label: "Series C", color: "#9984DB" },
           ]}
           size={250}
-          tooltip={{ show: true, type: "value" }}
+          tooltip={{ show: true }}
         />
         <DonutChart
-          totalPercentage
+          totalItems={{ show: true, type: "number" }}
           chartData={[
             { value: 50, label: "Series A", color: "#9984DB" },
             { value: 50, label: "Series B", color: "#D1E9FF" },
           ]}
           size={250}
-          tooltip={{ show: true, type: "value" }}
+          tooltip={{ show: true }}
         />
         <DonutChart
-          totalPercentage
+          totalItems={{ show: true, type: "number" }}
           chartData={[{ value: 100, label: "Series A", color: "#9984DB" }]}
           size={250}
-          tooltip={{ show: true, type: "value" }}
+          tooltip={{ show: true }}
         />
       </FlexLayout>
     </Card>

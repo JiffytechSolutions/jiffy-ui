@@ -1,10 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import getClassNames from "../../../utilities/getClassnames";
 import useDelayUnmount from "../../../utilities/useDelayTimeout";
-import "./ActivityGauge.css";
 import Badge from "../../Badge/Badge";
 import Text from "../../Text/Text";
 import useWindowResize from "../../../utilities/useWindowResize";
+import "./ActivityGauge.css";
+import "../Legend/Legend.css";
 export interface ActivityGaugeI {
   chartData: activityGaugeData[];
   size?: "small" | "medium" | "large";
@@ -39,6 +40,11 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
   });
   const [toggleAnimationClass, setToggleAnimationClass] = useState(false);
   const animateData = useDelayUnmount(toggleAnimationClass, 200);
+
+  const totalValue = chartData.reduce(
+    (sum, item) => sum + Number(item.value),
+    0
+  );
 
   const calculateValue: any = (index: number) => {
     if (size === "small") {
@@ -251,10 +257,19 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                 </div>
                 <div className="inte-legend__value">
                   <Text>
-                    {enableValue === "percentage"
-                      ? formatValue(showValue.percentage) !== "" &&
-                        formatValue(showValue.percentage) + "%"
-                      : formatValue(showValue.value)}
+                    {showValue.value !== 0 &&
+                      enableValue === "number" &&
+                      formatValue(item.value)}
+                    {showValue.percentage !== 0 &&
+                      enableValue === "percentage" &&
+                      formatValue(percentage) + "%"}
+
+                    {showValue.value === 0 &&
+                      enableValue === "number" &&
+                      formatValue(item.value)}
+                    {showValue.percentage === 0 &&
+                      enableValue === "percentage" &&
+                      formatValue(percentage) + "%"}
                   </Text>
                 </div>
               </div>

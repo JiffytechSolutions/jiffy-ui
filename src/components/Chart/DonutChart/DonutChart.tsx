@@ -4,8 +4,7 @@ export interface DonutChartI {
   chartData: donutChartData[];
   size?: number;
   tooltip?: tooltipI;
-
-  totalPercentage?: boolean;
+  totalItems?: tooltipI;
   customClass?: string;
 }
 export interface donutChartData {
@@ -15,15 +14,15 @@ export interface donutChartData {
 }
 
 export interface tooltipI {
-  show?: boolean;
-  type?: "percentage" | "value";
+  show: boolean;
+  type?: "number" | "percentage";
 }
 
 const DonutChart: React.FC<DonutChartI> = ({
   chartData,
   size = 250,
-  totalPercentage = false,
-  tooltip = { show: false, type: "value" },
+  totalItems = { show: false, type: "number" },
+  tooltip = { show: false, type: "number" },
   customClass = "",
 }) => {
   return (
@@ -32,7 +31,7 @@ const DonutChart: React.FC<DonutChartI> = ({
       type="donutchart"
       height={size}
       width={size}
-      percentage={totalPercentage}
+      totalItems={totalItems}
       tooltip={tooltip}
       customClass={customClass}
     />
