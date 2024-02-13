@@ -32,6 +32,7 @@ const FontSizeToggle = ({ editor, value }: FontSizeToggleI) => {
   return (
     <div className="inte-textEditor__fontSizeChanger">
       <Select
+        heading="Choose Font Size"
         options={fontSizeOptions}
         value={value}
         onChange={handleFontSizeChange}

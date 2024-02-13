@@ -3,8 +3,8 @@ import './ToolBar.css'
 import { Code, RotateCcw, RotateCw } from '../../../../icons'
 import Button from '../../../Button/Button'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
-import { $getSelection, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
-import { $isAtNodeEnd, $getSelectionStyleValueForProperty } from "@lexical/selection"
+import { $INTERNAL_isPointSelection, $getSelection, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
+import { $isAtNodeEnd, $getSelectionStyleValueForProperty,  $patchStyleText } from "@lexical/selection"
 import { $isLinkNode } from "@lexical/link";
 import { mergeRegister, $getNearestNodeOfType, $findMatchingParent } from "@lexical/utils";
 import TextAlignBox from './TextAlignBox'
@@ -16,10 +16,11 @@ import {
 } from '@lexical/list';
 import InsertBlock from './InsertBlock'
 import FontSizeToggle from './FontSizeToggle'
-import FontStyle from './FontColorPicker'
+import FontStyle, { FontColorPicker } from './FontColorPicker'
 import FontFamilyChanger from './FontFamilyChanger'
 import ToolTip from '../../../ToolTip/ToolTip'
 import SpecialNodes from './SpecialNodes'
+import useMobileDevice from '../../../../utilities/useMobileDevice'
 
 
 
@@ -72,8 +73,9 @@ const ToolBar = () => {
   const [blockType, setBlockType] = useState<keyof typeof blockTypeToBlockName>('paragraph');
   const [currAlign, setCurrAlign] = useState<ElementFormatType>('left')
   const [fontSize, setFontSize] = useState('14px')
-
+  const [fontColor, setFontColor] = useState('')
   const [selectedText, setSelectedText] = useState("");
+  const isMobileDevice = useMobileDevice()
 
   const updateToolBar = useCallback(() => {
     const selection = $getSelection();
@@ -142,6 +144,9 @@ const ToolBar = () => {
       setFontSize(
         $getSelectionStyleValueForProperty(selection, 'font-size', '14px'),
       );
+      setFontColor(
+        $getSelectionStyleValueForProperty(selection, 'color', '#000'),
+      );
     }
   }, [editor])
 
@@ -167,51 +172,105 @@ const ToolBar = () => {
     editor.dispatchCommand(FORMAT_ELEMENT_COMMAND, align);
   }
 
+  const handelColorChange = (newColor: string) => {
+    editor.update(
+      () => {
+        const selection = $getSelection();
+        if ($INTERNAL_isPointSelection(selection)) {
+          $patchStyleText(selection, { color: newColor });
+        }
+      }
+    );
+  }
+
   return (
-    <div className='inte-TextEditor__toolBar'>
-      <div className='inte-TextEditor__fontFormat'>
-        <InsertBlock editor={editor} blockType={blockType} />
-        <FontFamilyChanger editor={editor} />
-      </div>
-      <FontStyle editor={editor} />
-      <FontSizeToggle editor={editor} value={fontSize} />
-      <div className='inte-textEditor__blockStyle'>
-        <ToolTip
-          activator={<ListSelectBox editor={editor} currListType={isList} />}
-          helpText={"Insert List"}
-        />
-        <ToolTip
-          activator={<TextAlignBox onClick={changeElementFormat} currAlign={currAlign} />}
-          helpText={"Change Text Align"}
-        />
-      </div>
-      <Line />
-      <SpecialNodes
-        blockType={blockType}
-        editor={editor}
-        isLink={isLink}
-        selectedText={selectedText}
-      />
-      <Line />
-      <div className="inte-textEditor__history">
-        <ToolTip
-          activator={<Button
-            icon={<RotateCcw size="20" color='#1C2433' />}
-            type='textButton'
-            onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}
-          />}
-          helpText="Undo"
-        />
-        <ToolTip
-          activator={<Button
-            icon={<RotateCw size="20" color='#1C2433' />}
-            type='textButton'
-            onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}
-          />}
-          helpText="Redo"
-        />
-      </div>
-    </div>
+    <>
+      {
+        !isMobileDevice ? <div className='inte-TextEditor__toolBar'>
+          <div className='inte-TextEditor__fontFormat'>
+            <InsertBlock editor={editor} blockType={blockType} />
+            <FontFamilyChanger editor={editor} />
+          </div>
+          <FontStyle editor={editor} />
+          <FontSizeToggle editor={editor} value={fontSize} />
+          <div className='inte-textEditor__blockStyle'>
+            <ToolTip
+              activator={<ListSelectBox editor={editor} currListType={isList} />}
+              helpText={"Insert List"}
+            />
+            <ToolTip
+              activator={<TextAlignBox onClick={changeElementFormat} currAlign={currAlign} />}
+              helpText={"Change Text Align"}
+            />
+          </div>
+          <Line />
+          <SpecialNodes
+            blockType={blockType}
+            editor={editor}
+            isLink={isLink}
+            selectedText={selectedText}
+          />
+          <Line />
+          <div className="inte-textEditor__history">
+            <ToolTip
+              activator={<Button
+                icon={<RotateCcw size="20" color='#1C2433' />}
+                type='textButton'
+                onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}
+              />}
+              helpText="Undo"
+            />
+            <ToolTip
+              activator={<Button
+                icon={<RotateCw size="20" color='#1C2433' />}
+                type='textButton'
+                onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}
+              />}
+              helpText="Redo"
+            />
+          </div>
+        </div> : (
+          <div className='inte-TextEditor__toolBar--mobile'>
+            <div className='inte-TextEditor__fontFormat'>
+              <InsertBlock editor={editor} blockType={blockType} />
+              <FontFamilyChanger editor={editor} />
+              <FontSizeToggle editor={editor} value={fontSize} />
+            </div>
+            <div className="inte-textEditor__toolBar__actions">
+              <div className="inte-textEditor__history">
+                <ToolTip
+                  activator={<Button
+                    icon={<RotateCcw size="20" color='#1C2433' />}
+                    type='textButton'
+                    onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}
+                  />}
+                  helpText="Undo"
+                />
+                <ToolTip
+                  activator={<Button
+                    icon={<RotateCw size="20" color='#1C2433' />}
+                    type='textButton'
+                    onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}
+                  />}
+                  helpText="Redo"
+                />
+              </div>
+              <Line />
+              <FontStyle editor={editor} />
+              <FontColorPicker color={fontColor} onChange={handelColorChange} />
+              <ListSelectBox editor={editor} currListType={isList} />
+              <TextAlignBox onClick={changeElementFormat} currAlign={currAlign} />
+              <SpecialNodes
+                blockType={blockType}
+                editor={editor}
+                isLink={isLink}
+                selectedText={selectedText}
+              />
+            </div>
+          </div>
+        )
+      }
+    </>
   )
 }
 

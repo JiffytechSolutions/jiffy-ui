@@ -27,6 +27,8 @@ import CodeHighlightPlugin from './plugin/CodeHighlightPlugin';
 import FloatingLinkEditorPlugin from './plugin/FloatingLinkEditorPlugin';
 import DragDropPaste from './plugin/DragDropPastePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
+import useMobileDevice from '../../utilities/useMobileDevice';
+import getClassNames from '../../utilities/getClassnames';
 
 
 const editorConfig : InitialConfigType = {
@@ -60,6 +62,8 @@ const TextEditor = ({ placeholder }: TextEditorI) => {
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 
+  const isMobileDevice = useMobileDevice()
+
   const onChange = (e: EditorState) => {
     e.read(() => {
       console.log(e)
@@ -82,7 +86,10 @@ const TextEditor = ({ placeholder }: TextEditorI) => {
             <DragDropPaste />
             <div className='inte-TextEditor__body--wrapper'>
               <RichTextPlugin
-                contentEditable={<div ref={onRef}><ContentEditable spellCheck={false} className="inte-TextEditor__body" /></div>}
+                contentEditable={<div ref={onRef}><ContentEditable spellCheck={false} className={getClassNames({
+                  "inte-TextEditor__body" : true,
+                  'inte-TextEditor--mobile' : isMobileDevice
+                })} /></div>}
                 placeholder={<div className="inte-TextEditor__placeholder">{placeholder}</div>}
                 ErrorBoundary={LexicalErrorBoundary}
               />

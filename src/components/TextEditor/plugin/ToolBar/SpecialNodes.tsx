@@ -59,7 +59,7 @@ const SpecialNodes = ({ editor, isLink, selectedText, blockType }: SpecialNodesI
     }
   </Button>
 
-  const activator = <Button type='textButton' icon={<Plus size="20" color="#1c2433" />} onClick={() => setOpen(prev => !prev)} />
+  const activator = <Button type={`${open ? "secondary" : "plainSecondary"}`} icon={<Plus size="20" color="#1c2433" />} onClick={() => setOpen(prev => !prev)} />
 
   const body = (
     <>
@@ -77,6 +77,7 @@ const SpecialNodes = ({ editor, isLink, selectedText, blockType }: SpecialNodesI
       {
         insidePopover ? (
           <Popover
+            heading='More Options'
             isOpen={open}
             activator={activator}
             onClose={onClose}

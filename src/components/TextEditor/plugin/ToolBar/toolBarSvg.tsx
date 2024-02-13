@@ -42,3 +42,35 @@ export const NumberedListSvg = () => {
     </svg>
   )
 }
+
+export const Strikethrough = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <path
+        d="M4.16992 10.0002H15.8371M13.337 5.41666C13.148 5.04995 12.715 4.72634 12.109 4.49912C11.5031 4.2719 10.7605 4.15463 10.0035 4.16661H9.17016C8.39657 4.16661 7.65467 4.47391 7.10766 5.02092C6.56066 5.56792 6.25335 6.30982 6.25335 7.08341C6.25335 7.85699 6.56066 8.59889 7.10766 9.1459C7.65467 9.69291 8.39657 10.0002 9.17016 10.0002H10.8369C11.6105 10.0002 12.3524 10.3075 12.8994 10.8545C13.4464 11.4015 13.7537 12.1434 13.7537 12.917C13.7537 13.6906 13.4464 14.4325 12.8994 14.9795C12.3524 15.5265 11.6105 15.8338 10.8369 15.8338H9.58684C8.82983 15.8458 8.08724 15.7285 7.48133 15.5013C6.87542 15.2741 6.44232 14.9505 6.25335 14.5838"
+        stroke="#1C2433"
+        strokeWidth="1.67"
+        strokeLinecap="round"
+        stroke-Linejoin="round" />
+    </svg>
+  )
+}
+
+export const TextStylesIcon = () => {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+      <g clip-path="url(#clip0_18017_11784)">
+        <path d="M1.66602 17.5006L3.72494 12.5003M3.72494 12.5003L4.58282 10.4169L7.49962 3.33325L10.4164 10.4169L11.2743 12.5003M3.72494 12.5003H11.2743M13.3332 17.5006L11.2743 12.5003" stroke="#1C2433" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M11.667 4.16675H18.334" stroke="black" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M13.333 8.33374H18.333" stroke="black" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M15 12.5005H18.3333" stroke="black" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round" />
+        <path d="M16.667 16.6675H18.3337" stroke="black" strokeWidth="1.67" strokeLinecap="round" strokeLinejoin="round" />
+      </g>
+      <defs>
+        <clipPath id="clip0_18017_11784">
+          <rect width="20.0009" height="20.0009" fill="white" transform="translate(-0.000976562)" />
+        </clipPath>
+      </defs>
+    </svg>
+  )
+} 

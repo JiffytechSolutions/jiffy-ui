@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { Select } from '../../../Form'
 import { $getSelectionStyleValueForProperty, $patchStyleText } from '@lexical/selection';
 import { mergeRegister } from "@lexical/utils";
+import CustomSelect from '../../ui/CustomSelect';
 
 interface FontFamilyChangerI {
   editor: LexicalEditor,
@@ -66,7 +67,10 @@ const FontFamilyChanger = ({ editor }: FontFamilyChangerI) => {
   const options = useMemo(() => {
     return availableFonts.map(font => ({
       label: font,
-      value: font
+      value: font,
+      style : {
+        fontFamily : font
+      }
     }))
   }, [availableFonts])
 
@@ -82,7 +86,8 @@ const FontFamilyChanger = ({ editor }: FontFamilyChangerI) => {
   }
 
   return (
-    <Select
+    <CustomSelect
+      heading='Choose Font Family'
       options={options}
       value={fontFamily}
       onChange={handelFontChange}

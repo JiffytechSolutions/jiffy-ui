@@ -1,6 +1,6 @@
 import './ColorPicker.css';
 
-import {useEffect, useMemo, useRef, useState} from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as React from 'react';
 
 import { TextField } from '../../../Form';
@@ -30,7 +30,7 @@ const basicColors = [
   '#ffffff',
 ];
 
-const WIDTH = 214;
+// const WIDTH = 214 ;
 const HEIGHT = 150;
 
 export default function ColorPicker({
@@ -39,7 +39,10 @@ export default function ColorPicker({
 }: Readonly<ColorPickerProps>): JSX.Element {
   const [selfColor, setSelfColor] = useState(transformColor('hex', color));
   const [inputColor, setInputColor] = useState(color);
-  const innerDivRef = useRef(null);
+  const innerDivRef = useRef<HTMLDivElement>(null);
+  const [rgb, setRgb] = useState<any>(transformColor('hex', color).rgb)
+
+  const [WIDTH, setWidth] = useState(214)
 
   const saturationPosition = useMemo(
     () => ({
@@ -64,7 +67,7 @@ export default function ColorPicker({
     }
   };
 
-  const onMoveSaturation = ({x, y}: Position) => {
+  const onMoveSaturation = ({ x, y }: Position) => {
     const newHsv = {
       ...selfColor.hsv,
       s: (x / WIDTH) * 100,
@@ -75,51 +78,54 @@ export default function ColorPicker({
     setInputColor(newColor.hex);
   };
 
-  const onMoveHue = ({x}: Position) => {
-    const newHsv = {...selfColor.hsv, h: (x / WIDTH) * 360};
+  const onMoveHue = ({ x }: Position) => {
+    const newHsv = { ...selfColor.hsv, h: (x / WIDTH) * 360 };
     const newColor = transformColor('hsv', newHsv);
 
     setSelfColor(newColor);
     setInputColor(newColor.hex);
   };
 
+  const handelRgbChange = (newValue:string , type : 'r'|'g'| 'b') => {
+    const newRgb = {...rgb , [type] : newValue}
+
+    if(newRgb.r !== "" && newRgb.g !== "" && newRgb.b !== ""){
+      setSelfColor(transformColor("rgb",{r : Number(newRgb.r), g : Number(newRgb.g) , b : Number(newRgb.b)}))
+    }
+
+    setRgb(newRgb)
+
+  }
+
   useEffect(() => {
     // Check if the dropdown is actually active
     if (innerDivRef.current !== null && onChange) {
       onChange(selfColor.hex, skipAddingToHistoryStack);
       setInputColor(selfColor.hex);
+      setRgb(selfColor.rgb)
     }
   }, [selfColor, onChange]);
 
   useEffect(() => {
-    if (color === undefined) return;
-    const newColor = transformColor('hex', color);
-    setSelfColor(newColor);
-    setInputColor(newColor.hex);
-  }, [color]);
+    if (innerDivRef.current)
+      setWidth(innerDivRef.current.clientWidth)
+  }, [])
 
   return (
     <div
       className="color-picker-wrapper"
-      style={{width: WIDTH}}
       ref={innerDivRef}>
-      <TextField label="Hex" onChange={onSetHex} value={inputColor} />
-      <div className="color-picker-basic-color">
-        {basicColors.map((basicColor) => (
-          <button
-            className={basicColor === selfColor.hex ? ' active' : ''}
-            key={basicColor}
-            style={{backgroundColor: basicColor}}
-            onClick={() => {
-              setInputColor(basicColor);
-              setSelfColor(transformColor('hex', basicColor));
-            }}
-          />
-        ))}
+      <div className='color-picker__inputFields'>
+        <TextField label="Hex" onChange={onSetHex} value={inputColor} />
+        <div className='color-picker__rgbField'>
+            <TextField label="R" max={255} min={0} type='number' value={rgb.r} onChange={(newValue:string) => handelRgbChange(newValue , 'r')} />
+            <TextField label="G" max={255} min={0} type='number' value={rgb.g} onChange={(newValue:string) => handelRgbChange(newValue , 'g')}/>
+            <TextField label="B" max={255} min={0} type='number' value={rgb.b} onChange={(newValue:string) => handelRgbChange(newValue , 'b')}/>
+        </div>
       </div>
       <MoveWrapper
         className="color-picker-saturation"
-        style={{backgroundColor: `hsl(${selfColor.hsv.h}, 100%, 50%)`}}
+        style={{ backgroundColor: `hsl(${selfColor.hsv.h}, 100%, 50%)` }}
         onChange={onMoveSaturation}>
         <div
           className="color-picker-saturation_cursor"
@@ -141,7 +147,7 @@ export default function ColorPicker({
       </MoveWrapper>
       <div
         className="color-picker-color"
-        style={{backgroundColor: selfColor.hex}}
+        style={{ backgroundColor: selfColor.hex }}
       />
     </div>
   );
@@ -159,31 +165,30 @@ interface MoveWrapperProps {
   children: JSX.Element;
 }
 
-function MoveWrapper({className, style, onChange, children}: MoveWrapperProps) {
+function MoveWrapper({ className, style, onChange, children }: MoveWrapperProps) {
   const divRef = useRef<HTMLDivElement>(null);
   const draggedRef = useRef(false);
 
-  const move = (e: React.MouseEvent | MouseEvent): void => {
+  const move = (clientX: number, clientY: number): void => {
     if (divRef.current) {
-      const {current: div} = divRef;
-      const {width, height, left, top} = div.getBoundingClientRect();
+      const { current: div } = divRef;
+      const { width, height, left, top } = div.getBoundingClientRect();
 
-      const x = clamp(e.clientX - left, width, 0);
-      const y = clamp(e.clientY - top, height, 0);
+      const x = clamp(clientX - left, width, 0);
+      const y = clamp(clientY - top, height, 0);
 
-      onChange({x, y});
+      onChange({ x, y });
     }
   };
 
   const onMouseDown = (e: React.MouseEvent): void => {
     if (e.button !== 0) return;
-
-    move(e);
+    move(e.clientX, e.clientY);
 
     const onMouseMove = (_e: MouseEvent): void => {
       draggedRef.current = true;
       skipAddingToHistoryStack = true;
-      move(_e);
+      move(_e.clientX, _e.clientY);
     };
 
     const onMouseUp = (_e: MouseEvent): void => {
@@ -194,7 +199,7 @@ function MoveWrapper({className, style, onChange, children}: MoveWrapperProps) {
       document.removeEventListener('mousemove', onMouseMove, false);
       document.removeEventListener('mouseup', onMouseUp, false);
 
-      move(_e);
+      move(_e.clientX, _e.clientY);
       draggedRef.current = false;
     };
 
@@ -202,12 +207,40 @@ function MoveWrapper({className, style, onChange, children}: MoveWrapperProps) {
     document.addEventListener('mouseup', onMouseUp, false);
   };
 
+  const onTouchMove = (e: React.TouchEvent<HTMLDivElement>): void => {
+    e.stopPropagation()
+    draggedRef.current = true;
+    skipAddingToHistoryStack = true;
+    const [clientX, clientY] = [e.touches[0].clientX, e.touches[0].clientY]
+    move(clientX, clientY);
+  }
+
+  const onTouchEnd = (e: React.TouchEvent<HTMLDivElement>): void => {
+    if (draggedRef.current) {
+      skipAddingToHistoryStack = false;
+    }
+    const [clientX, clientY] = [e.touches[0].clientX, e.touches[0].clientY]
+    move(clientX, clientY);
+    draggedRef.current = false;
+  }
+
+  const onTouchStart = (e: React.TouchEvent<HTMLDivElement>): void => {
+    draggedRef.current = true;
+    skipAddingToHistoryStack = true;
+    const [clientX, clientY] = [e.touches[0].clientX, e.touches[0].clientY]
+    move(clientX, clientY);
+  }
+
   return (
     <div
       ref={divRef}
       className={className}
       style={style}
-      onMouseDown={onMouseDown}>
+      onMouseDown={onMouseDown}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       {children}
     </div>
   );
@@ -276,7 +309,7 @@ function hex2rgb(hex: string): RGB {
   };
 }
 
-function rgb2hsv({r, g, b}: RGB): HSV {
+function rgb2hsv({ r, g, b }: RGB): HSV {
   r /= 255;
   g /= 255;
   b /= 255;
@@ -286,18 +319,18 @@ function rgb2hsv({r, g, b}: RGB): HSV {
 
   const h = d
     ? (max === r
-        ? (g - b) / d + (g < b ? 6 : 0)
-        : max === g
+      ? (g - b) / d + (g < b ? 6 : 0)
+      : max === g
         ? 2 + (b - r) / d
         : 4 + (r - g) / d) * 60
     : 0;
   const s = max ? (d / max) * 100 : 0;
   const v = max * 100;
 
-  return {h, s, v};
+  return { h, s, v };
 }
 
-function hsv2rgb({h, s, v}: HSV): RGB {
+function hsv2rgb({ h, s, v }: HSV): RGB {
   s /= 100;
   v /= 100;
 
@@ -312,10 +345,10 @@ function hsv2rgb({h, s, v}: HSV): RGB {
   const g = Math.round([t, v, v, q, p, p][index] * 255);
   const b = Math.round([p, p, t, v, v, q][index] * 255);
 
-  return {b, g, r};
+  return { b, g, r };
 }
 
-function rgb2hex({b, g, r}: RGB): string {
+function rgb2hex({ b, g, r }: RGB): string {
   return '#' + [r, g, b].map((x) => x.toString(16).padStart(2, '0')).join('');
 }
 
@@ -347,5 +380,5 @@ function transformColor<M extends keyof Color, C extends Color[M]>(
     hex = rgb2hex(rgb);
   }
 
-  return {hex, hsv, rgb};
+  return { hex, hsv, rgb };
 }
