@@ -99,7 +99,7 @@ export default {
     },
     maxSizeAllowed: {
       description:
-        "Limit the file size to be upload (In Bytes) ,<br/> Ex. 1KB = 1024 Bytes",
+        "Limit the file size to be uploaded (in bytes). For example, 1KB equals 1024 bytes. It will check <b>every file</b> to ensure its size is less than the provided limit.",
       control: {
         type: "number",
       },
