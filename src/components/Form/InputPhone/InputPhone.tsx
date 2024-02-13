@@ -60,17 +60,50 @@ const InputPhone = ({
 }: InputPhoneI) => {
   const myInputRef = useRef<any>(null);
   const [val, setValue] = useState();
+
   useEffect(() => {
     const textFieldElement = myInputRef?.current;
+    const node = document.querySelector(".inte-formElement--select-focused");
     if (textFieldElement && countryValue) {
       const innerNode = textFieldElement.querySelector(
         ".inte-formElement__textField"
       );
       if (innerNode) {
         innerNode.focus();
+        node?.classList.remove("inte-formElement--select-focused");
       }
     }
+    const handleKey = (e: any) => {
+      if (e.key === "Tab") {
+        if (textFieldElement && countryValue) {
+          if (node) {
+            node?.classList.remove("inte-formElement--select-focused");
+          }
+        }
+      }
+    };
+    const handleKeydown = (e: any) => {
+      if (["e", "+", "-", "E"].includes(e.key)) {
+        e.preventDefault();
+      }
+    };
+
+    window.addEventListener("keydown", handleKey);
+    textFieldElement.addEventListener("keydown", handleKeydown);
+    return () => {
+      window.removeEventListener("keydown", handleKey)
+      textFieldElement.removeEventListener("keydown", handleKeydown)
+    }
   }, [val]);
+
+  
+  const handleChange = (event: any) => {
+    const value = event;
+    const regex = /^[0-9\b]+$/;
+    if (value === "" || regex.test(value)) {
+      onChange(value);
+    }
+  };
 
   return (
     <div
@@ -83,7 +116,7 @@ const InputPhone = ({
         ref={myInputRef}
         type={type}
         placeholder={placeholder}
-        onChange={(e) => onChange(e)}
+        onChange={(e) => handleChange(e)}
         value={value}
         label={label}
         helpText={helpText}
