@@ -154,7 +154,7 @@ export const AutoCompleteDoc = () => {
                                                                     value: 'Pepillo'
                                                                 }
                                                             ]}
-                                                            placeHolder="Search by Name, Price, Order ID, Avail..."
+                                                            placeholder="Search by Name, Price, Order ID, Avail..."
                                                             popoverPosition="left"
                                                             setHiglighted
                                                             showPopover value={""} onClick={undefined} />
@@ -257,7 +257,7 @@ export const AutoCompleteDoc = () => {
                                                                 value: 'Pepillo'
                                                             }
                                                         ]}
-                                                        placeHolder="Search by Name, Price, Order ID or Availability"
+                                                        placeholder="Search by Name, Price, Order ID or Availability"
                                                         popoverPosition="left"
                                                         setHiglighted
                                                         showPopover value={""} onClick={undefined} />

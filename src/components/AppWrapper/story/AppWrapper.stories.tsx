@@ -120,7 +120,7 @@ const features = (
   <div className="inte-feature">
     <AutoComplete
       options={[]}
-      placeHolder="Search for Fruits, Vegetables or eating items"
+      placeholder="Search for Fruits, Vegetables or eating items"
       value={""}
       onChange={undefined}
       onClick={undefined}

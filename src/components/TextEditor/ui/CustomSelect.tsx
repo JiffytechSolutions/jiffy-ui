@@ -1,32 +1,65 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useId, useRef, useState } from "react";
-import {
-  Check,
-  ChevronDown,
-  Search,
-  X,
-} from "../../../../storybook/Foundation/Icons/Icons";
-import Badge from "../../../Badge/Badge";
-import Skeleton from "../../../Skeleton/Skeleton";
-import Spinner from "../../../Spinner/Spinner";
-import { ClearIcon } from "../../../../assets/icon/ActionIcons";
-import PortalComponent from "../../../../utilities/PoratalComponent";
-import handleClickOutside from "../../../../utilities/handelClickOutside";
-import changePosition from "../../../../utilities/changePosition";
-import Tag from "../../../Tag/Tag";
-import getClassNames from "../../../../utilities/getClassnames";
-import handleOnDrag from "../../../../utilities/handelOnDrag/useHandleOnDrag";
-import useMobileDevice from "../../../../utilities/useMobileDevice";
-import Button from "../../../Button/Button";
-import { GroupedObjI, SelectI, SimpleObjI } from "../types/types";
-import useDelayUnmount from "../../../../utilities/useDelayTimeout";
-import TextField from "../../TextField/TextField";
-import useBodyLock from "../../../../utilities/UseBodyLock";
-import "./Select.css";
-import "../../Form.css";
+import "../../Form/Select/components/Select.css";
+import "../../Form/Form.css";
+import useDelayUnmount from "../../../utilities/useDelayTimeout";
+import useBodyLock from "../../../utilities/UseBodyLock";
+import handleClickOutside from "../../../utilities/handelClickOutside";
+import changePosition from "../../../utilities/changePosition";
+import getClassNames from "../../../utilities/getClassnames";
+import { Check, ChevronDown, Search, X } from "../../../icons";
+import Tag from "../../Tag/Tag";
+import useMobileDevice from "../../../utilities/useMobileDevice";
+import Badge from "../../Badge/Badge";
+import useHandleOnDrag from "../../../utilities/handelOnDrag/useHandleOnDrag";
+import Button from "../../Button/Button";
+import { TextField } from "../../Form";
+import Skeleton from "../../Skeleton/Skeleton";
+import Spinner from "../../Spinner/Spinner";
+import { ClearIcon } from "../../../assets/icon/ActionIcons";
+import PortalComponent from "../../../utilities/PoratalComponent";
 
-const SimpleSelect = ({
+export type SelectI = {
+    id?: string;
+    options: SimpleObjI[] | GroupedObjI[];
+    value: string | string[] | number | number[];
+    onChange?: (e: any) => void;
+    onInputChange?: (e: any) => void;
+    isRequired?: boolean;
+    label?: string;
+    placeHolder?: string;
+    helpText?: string;
+    helpIcon?: React.ReactNode;
+    isDisabled?: boolean;
+    isLoading?: boolean;
+    isMultiSelect?: boolean;
+    isSearchable?: boolean;
+    isClearable?: boolean;
+    isCreatable?: boolean;
+    isVirtualSelect?: boolean;
+    accessibilityLabel?: string;
+    controlStates?: "success" | "warning" | "error" | "default";
+    heading?: string;
+    customClass?: string;
+    width?: number;
+  };
+  export interface SimpleObjI {
+    label: string;
+    value: string | number;
+    description?: string;
+    isDisabled?: boolean;
+    style?:React.CSSProperties
+    className?: string;
+  }
+  export interface GroupedObjI {
+    label: string;
+  
+    group: SimpleObjI[];
+  }
+  
+
+const CustomSelect = ({
   id,
   helpText,
   label,
@@ -41,7 +74,7 @@ const SimpleSelect = ({
   isDisabled = false,
   isClearable = false,
   isCreatable = false,
-  placeholder,
+  placeHolder,
   customClass = "",
   onChange = () => null,
   onInputChange = () => null,
@@ -78,9 +111,7 @@ const SimpleSelect = ({
         setIsFocused(false);
       }
     );
-    const changePos = changePosition(selectBoxRef, dropdownListRef, {
-      width: true,
-    });
+    const changePos = changePosition(selectBoxRef, dropdownListRef);
     window.addEventListener("click", handleClick, true);
     window.addEventListener("click", clickingInsideSelectBox, true);
     window.addEventListener("scroll", changePos, true);
@@ -99,12 +130,12 @@ const SimpleSelect = ({
       window.removeEventListener("click", clickingInsideSelectBox, true);
       window.removeEventListener(
         "scroll",
-        changePosition(selectBoxRef, dropdownListRef, { width: true }),
+        changePosition(selectBoxRef, dropdownListRef),
         true
       );
       window.removeEventListener(
         "resize",
-        changePosition(selectBoxRef, dropdownListRef, { width: true }),
+        changePosition(selectBoxRef, dropdownListRef),
         true
       );
     };
@@ -219,7 +250,7 @@ const SimpleSelect = ({
   }, [dropdownActive]);
   // setting position
   useEffect(() => {
-    changePosition(selectBoxRef, dropdownListRef, { width: true })();
+    changePosition(selectBoxRef, dropdownListRef)();
   }, [dropdownActive, inputValue, selectedValues, optionsToShow]);
   // Clicking on dropdown list items
   const dropdownItemClickHandler = (item: any) => {
@@ -274,7 +305,7 @@ const SimpleSelect = ({
   // Selected items in form of tags in case of multiSelect
   const selectedItemsInMultiSelect = () => {
     return selectedValues.map((item: any, index: number) => (
-      <Tag
+      <Tag  
         key={index}
         onDestroy={() => {
           if (!isDisabled) {
@@ -620,7 +651,7 @@ const SimpleSelect = ({
           {item._isNew_ ? (
             <span>Create "{item.label}"</span>
           ) : (
-            <span className="demo">{item.label}</span>
+            <span style={item.style} className={getClassNames({[item.className] : item.className})}>{item.label}</span>
           )}
           {item.description && <span>{item.description}</span>}
         </div>
@@ -631,7 +662,7 @@ const SimpleSelect = ({
     setIsFocused(false);
     setDropdownActive(false);
   };
-  const { handleTouchStart, handleTouchMove, handleTouchEnd } = handleOnDrag(
+  const { handleTouchStart, handleTouchMove, handleTouchEnd } = useHandleOnDrag(
     dropdownListRef,
     scrollRef,
     showDiv,
@@ -810,7 +841,7 @@ const SimpleSelect = ({
   const getPlaceholder = () => {
     return (
       <span className={`inte-formElement__placeholder`}>
-        {placeholder ?? "Select"}
+        {placeHolder ?? "Select"}
       </span>
     );
   };
@@ -961,4 +992,4 @@ const SimpleSelect = ({
   );
 };
 
-export default SimpleSelect;
+export default CustomSelect;

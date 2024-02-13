@@ -1,18 +1,17 @@
 import { $INTERNAL_isPointSelection, $createParagraphNode, $getSelection, $isRangeSelection, $isTextNode, FORMAT_TEXT_COMMAND, LexicalEditor, SELECTION_CHANGE_COMMAND } from 'lexical'
 import React, { useCallback, useEffect, useState } from 'react'
 import Button from '../../../Button/Button'
-import { Bold, Italic, MoreVertical, Underline } from '../../../../icons'
-import { TextColorSvg } from './toolBarSvg'
+import { Bold, Code, Italic, MoreVertical, Underline } from '../../../../icons'
+import { Strikethrough, TextColorSvg, TextStylesIcon } from './toolBarSvg'
 import { mergeRegister, $getNearestBlockElementAncestorOrThrow } from "@lexical/utils";
 import ActionList from '../../../ActionList/ActionList'
 import { $isHeadingNode, $isQuoteNode } from '@lexical/rich-text';
 import { $isDecoratorBlockNode } from '@lexical/react/LexicalDecoratorBlockNode';
 import Popover from '../../../Popover/Popover'
-import { FlexLayout } from '../../../FlexLayout'
-import { $patchStyleText , $getSelectionStyleValueForProperty} from '@lexical/selection';
+import { $patchStyleText, $getSelectionStyleValueForProperty } from '@lexical/selection';
 import ColorPicker from '../../ui/color-picker/ColorPicker'
 import ToolTip from '../../../ToolTip/ToolTip'
-
+import useMobileDevice from '../../../../utilities/useMobileDevice'
 interface FontStyleI {
   editor: LexicalEditor
 }
@@ -27,7 +26,10 @@ const FontStyle = ({ editor }: FontStyleI) => {
   const [isStrikeThrough, setIsStrikeThrough] = useState(false)
   const [isSubscript, setIsSubscript] = useState(false)
   const [isSuperscript, setIsSuperscript] = useState(false)
-  const [fontColor , setFontColor] = useState('')
+  const [isCode, setIsCode] = useState(false)
+  const [fontColor, setFontColor] = useState('')
+
+  const isMobile = useMobileDevice()
 
   const updateToolBar = () => {
     const selection = $getSelection();
@@ -38,6 +40,7 @@ const FontStyle = ({ editor }: FontStyleI) => {
       setIsStrikeThrough(selection.hasFormat('strikethrough'))
       setIsSubscript(selection.hasFormat('subscript'))
       setIsSuperscript(selection.hasFormat('superscript'))
+      setIsCode(selection.hasFormat('code'))
       setFontColor(
         $getSelectionStyleValueForProperty(selection, 'color', '#000'),
       );
@@ -63,8 +66,8 @@ const FontStyle = ({ editor }: FontStyleI) => {
   })
 
   const activator = <Button
-    icon={<MoreVertical size="20" color='#1C2433' />}
-    type='textButton'
+    type={(open || (isStrikeThrough || isSubscript || isSuperscript || isCode) || (isMobile ? (isBold || isItalic || isUnderline) : false)) ? "secondary" : "plainSecondary"}
+    icon={isMobile ? <TextStylesIcon /> : <MoreVertical size="20" color='#1C2433' />}
     onClick={() => setOpen(prev => !prev)}
   />
 
@@ -113,81 +116,107 @@ const FontStyle = ({ editor }: FontStyleI) => {
     });
   }, [editor]);
 
-  const handelColorChange = (newColor:string) => {
+  const handelColorChange = (newColor: string) => {
     editor.update(
       () => {
         const selection = $getSelection();
         if ($INTERNAL_isPointSelection(selection)) {
-          $patchStyleText(selection, {color : newColor});
+          $patchStyleText(selection, { color: newColor });
         }
       }
     );
   }
 
+  const actionListItems = [
+    {
+      prefixIcon: <Strikethrough />,
+      content: "Strikethrough",
+      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough")
+    },
+    {
+      content: "Subscript",
+      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript")
+    },
+    {
+      content: "Superscript",
+      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript")
+    },
+    {
+      prefixIcon: <Code />,
+      content: 'Code',
+      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code")
+    },
+    {
+      content: "Clear Formatting",
+      onClick: clearFormatting
+    },
+  ]
+
+  const actionListMobileItems = [
+    {
+      prefixIcon: <Bold size="20" color='#1C2433' />,
+      content: "Bold",
+      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold")
+    },
+    {
+      prefixIcon: <Italic size="20" color='#1C2433' />,
+      content: "Italic",
+      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic")
+    },
+    {
+      prefixIcon: <Underline size="20" color='#1C2433' />,
+      content: "Underline",
+      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline")
+    }
+  ]
+
   return (
     <div className='inte-textEditor__fontStyle'>
-      <ToolTip 
-        activator={<Button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-          }}
-          icon={<Bold size="20" color='#1C2433' />}
-          type={isBold ? "secondary" : 'textButton'}
-        />}
-        helpText="Bold"
-      />
-      <ToolTip 
-        activator={<Button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-          }}
-          icon={<Italic size="20" color='#1C2433' />}
-          type={isItalic ? "secondary" : 'textButton'}
-        />}
-        helpText={"Italic"}
-      />
-      <ToolTip 
-        activator={<Button
-          onClick={() => {
-            editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-          }}
-          icon={<Underline size="20" color='#1C2433' />}
-          type={isUnderline ? "secondary" : 'textButton'}
-        />}
-        helpText={"Underline"}
-      />
-      <ToolTip 
-        activator={<FontColorPicker onChange={handelColorChange} color={fontColor} />}
-        helpText={"Change Text Color"}
-      />
+      {
+        !isMobile && (
+          <>
+            <ToolTip
+              activator={<Button
+                onClick={() => {
+                  editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+                }}
+                icon={<Bold size="20" color='#1C2433' />}
+                type={isBold ? "secondary" : 'textButton'}
+              />}
+              helpText="Bold"
+            />
+            <ToolTip
+              activator={<Button
+                onClick={() => {
+                  editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
+                }}
+                icon={<Italic size="20" color='#1C2433' />}
+                type={isItalic ? "secondary" : 'textButton'}
+              />}
+              helpText={"Italic"}
+            />
+            <ToolTip
+              activator={<Button
+                onClick={() => {
+                  editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
+                }}
+                icon={<Underline size="20" color='#1C2433' />}
+                type={isUnderline ? "secondary" : 'textButton'}
+              />}
+              helpText={"Underline"}
+            />
+            <FontColorPicker onChange={handelColorChange} color={fontColor} />
+          </>
+        )
+      }
 
       <ActionList
+        heading='Styling'
         isOpen={open}
         onClose={onClose}
         activator={activator}
         options={[{
-          items: [
-            {
-              content: "Strikethrough",
-              onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough")
-            },
-            {
-              content: "Subscript",
-              onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript")
-            },
-            {
-              content: "Superscript",
-              onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript")
-            },
-            {
-              content: 'Code',
-              onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code")
-            },
-            {
-              content: "Clear Formatting",
-              onClick: clearFormatting
-            }
-          ]
+          items: isMobile ? [...actionListMobileItems, ...actionListItems] : [...actionListItems]
         }]}
       />
 
@@ -197,28 +226,48 @@ const FontStyle = ({ editor }: FontStyleI) => {
 }
 
 interface FontColorPickerI {
-  onChange : (colorValue:string) => void
-  color : string
+  onChange: (colorValue: string) => void
+  color: string
 }
 
-const FontColorPicker = ({onChange , color}:FontColorPickerI) => {
+export const FontColorPicker = ({ onChange, color }: FontColorPickerI) => {
+  const [currentColor, setCurrentColor] = useState(color)
   const [open, setOpen] = useState(false)
   const onClose = () => setOpen(false)
 
-  const activator = <Button
-    icon={<TextColorSvg />}
-    type='textButton'
-    onClick={() => setOpen(prev => !prev)}
+  const isMobile = useMobileDevice()
+
+  const activator = <ToolTip
+    activator={<Button
+      icon={<TextColorSvg />}
+      type='textButton'
+      onClick={() => setOpen(prev => !prev)}
+    />}
+    helpText={"Change Text Color"}
   />
+
+  useEffect(() => {
+    return () => {
+      setCurrentColor(color)
+    }
+  },[open])
 
   return (
     <Popover
+      heading='Choose Font Color'
       isOpen={open}
       onClose={onClose}
       activator={activator}
       customClass='inte-textEditor--customHeight'
     >
-     <ColorPicker color={color} onChange={(value) => onChange(value)}/>
+      <ColorPicker color={currentColor} onChange={(value) => setCurrentColor(value)} />
+      <div className='inte-colorPicker__footer'>
+        <Button isFullWidth={isMobile} halign='center' type='secondary' onClick={onClose}>Cancel</Button>
+        <Button isFullWidth={isMobile} halign='center' type='primary' onClick={() => {
+          onChange(currentColor);
+          onClose()
+        }}>Done</Button>
+      </div>
     </Popover>
   )
 }

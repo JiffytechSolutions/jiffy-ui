@@ -12,7 +12,7 @@ export default {
         disable: true,
       },
     },
-    placeHolder: {
+    placeholder: {
       description: "Set placeholder for textarea",
       control: {
         type: "text",
@@ -108,7 +108,7 @@ const Template = ({ ...rest }) => {
         id={rest.id}
         value={val}
         error={rest.error}
-        placeHolder={rest.placeHolder}
+        placeholder={rest.placeholder}
         label={rest.label}
         helpText={rest.helpText}
         onChange={(e) => setval(e)}
@@ -131,7 +131,7 @@ WithLabel.decorators = [
         <TextArea
           value={val}
           label="Name"
-          placeHolder="Type....."
+          placeholder="Type....."
           onChange={(e) => setval(e)}
           onEnter={() => {
             setval("");
@@ -142,15 +142,15 @@ WithLabel.decorators = [
   },
 ];
 
-export const placeHolder: any = Template.bind({});
-placeHolder.decorators = [
+export const placeholder: any = Template.bind({});
+placeholder.decorators = [
   () => {
     const [val, setval] = useState("");
     return (
       <Card>
         <TextArea
           value={val}
-          placeHolder="Type....."
+          placeholder="Type....."
           onChange={(e) => setval(e)}
           onEnter={() => {
             setval("");
@@ -170,7 +170,7 @@ Readonly.decorators = [
         <TextArea
           readOnly
           value={val}
-          placeHolder="Type....."
+          placeholder="Type....."
           onChange={(e) => setval(e)}
           onEnter={() => {
             setval("");
@@ -191,7 +191,7 @@ Rows.decorators = [
           rows={8}
           readOnly
           value={val}
-          placeHolder="Type....."
+          placeholder="Type....."
           onChange={(e) => setval(e)}
           onEnter={() => {
             setval("");

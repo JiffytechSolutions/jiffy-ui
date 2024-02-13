@@ -275,8 +275,8 @@ Input_Phone_Number_controlStates.decorators = [
 ];
 
 // Input Phone Number with placeholder
-export const Input_Phone_Number_Placeholder: any = Template.bind({});
-Input_Phone_Number_Placeholder.decorators = [
+export const Input_Phone_Number_placeHolder: any = Template.bind({});
+Input_Phone_Number_placeHolder.decorators = [
   () => {
     const holdData: any = [
       {

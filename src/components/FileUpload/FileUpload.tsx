@@ -114,8 +114,8 @@ const FileUpload = ({
         const truncatedFiles = maxCount
           ? filteredFiles.slice(0, maxCount)
           : totalSelectedFiles;
-        onChange(truncatedFiles, [singleFiltered[0]]);
-        setFilesData(truncatedFiles);
+        onChange(truncatedFiles, singleFiltered.slice(0,maxCount - filesData.length));
+        setFilesData(totalSelectedFiles.slice(0,maxCount));
       } else {
         const truncatedFiles = maxCount
           ? filteredFiles.slice(0, maxCount)
