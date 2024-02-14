@@ -45,19 +45,19 @@ const Template = ({ ...rest }) => {
     <Card title="Default Vertical Form">
       <FormElement {...rest}>
         <TextField
-          placeHolder="Enter Fname"
+          placeholder="Enter Fname"
           label="Fname"
           onChange={(e) => setValue1(e)}
           value={value1}
         ></TextField>
         <TextField
-          placeHolder="Enter Fname"
+          placeholder="Enter Fname"
           label="Lname"
           onChange={(e) => setValue2(e)}
           value={value2}
         ></TextField>
         <TextField
-          placeHolder="Enter Fname"
+          placeholder="Enter Fname"
           label="Lname"
           onChange={(e) => setValue2(e)}
           value={value2}
@@ -79,19 +79,19 @@ horizontal_Form.decorators = [
       <Card title={"Horizontal Forms"}>
         <FormElement horizontal>
           <TextField
-            placeHolder="Enter Fname"
+            placeholder="Enter Fname"
             label="Fname"
             onChange={(e) => setValue1(e)}
             value={value1}
           ></TextField>
           <TextField
-            placeHolder="Enter Fname"
+            placeholder="Enter Fname"
             label="Lname"
             onChange={(e) => setValue2(e)}
             value={value2}
           ></TextField>
           <TextField
-            placeHolder="Enter Fname"
+            placeholder="Enter Fname"
             label="Lname"
             onChange={(e) => setValue2(e)}
             value={value2}
@@ -112,19 +112,19 @@ condensed_Form.decorators = [
       <Card title={"Condensed Forms"}>
         <FormElement horizontal condensed>
           <TextField
-            placeHolder="Enter Fname"
+            placeholder="Enter Fname"
             label="Fname"
             onChange={(e) => setValue1(e)}
             value={value1}
           ></TextField>
           <TextField
-            placeHolder="Enter Fname"
+            placeholder="Enter Fname"
             label="Lname"
             onChange={(e) => setValue2(e)}
             value={value2}
           ></TextField>
           <TextField
-            placeHolder="Enter Fname"
+            placeholder="Enter Fname"
             label="Lname"
             onChange={(e) => setValue2(e)}
             value={value2}

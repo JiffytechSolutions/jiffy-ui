@@ -46,7 +46,7 @@ const Template = ({ ...rest }) => {
 
 export const Primary = Template.bind({});
 
-// Types of Seprator
+// Types of Separator
 const types = ["solid", "dotted", "dashed"];
 
 export const Types: any = Template.bind({});
@@ -66,11 +66,11 @@ Types.decorators = [
   ),
 ];
 
-// Seprator with text
-export const Seprator_with_text: any = Template.bind({});
-Seprator_with_text.decorators = [
+// Separator with text
+export const Separator_with_text: any = Template.bind({});
+Separator_with_text.decorators = [
   () => (
-    <Card title="Seprator with text" cardType="bordered">
+    <Card title="Separator with text" cardType="bordered">
       <FlexLayout spacing="extraLoose" direction="vertical">
         {types.map((variant: any) => {
           return (
