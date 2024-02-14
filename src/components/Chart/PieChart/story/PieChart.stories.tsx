@@ -79,7 +79,7 @@ const chartData1: PieChartData[] = [
 const Template = ({ ...rest }) => {
   return (
     <Card>
-      <FlexLayout halign="center">
+      <FlexLayout halign="end">
         <PieChart {...rest} chartData={chartData} />
       </FlexLayout>
     </Card>
