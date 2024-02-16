@@ -86,7 +86,7 @@ const FileUpload = ({
     } else if (!accept && maxSizeAllowed) {
       return isFileSizeValid(item);
     }
-    return item
+    return item;
   };
   const handleFiles = (e: any[] | FileList) => {
     function appendUniqueId(e: any) {
@@ -108,14 +108,17 @@ const FileUpload = ({
     const files = appendUniqueId(e);
     const totalSelectedFiles = filesData.concat(files);
     const filteredFiles = totalSelectedFiles.filter(isFileValid);
-    const singleFiltered=files.filter(isFileValid)
+    const singleFiltered = files.filter(isFileValid);
     if (isMultiple) {
       if (maxCount && totalSelectedFiles.length > maxCount) {
         const truncatedFiles = maxCount
           ? filteredFiles.slice(0, maxCount)
           : totalSelectedFiles;
-        onChange(truncatedFiles, singleFiltered.slice(0,maxCount - filesData.length));
-        setFilesData(totalSelectedFiles.slice(0,maxCount));
+        onChange(
+          truncatedFiles,
+          singleFiltered.slice(0, maxCount - filesData.length)
+        );
+        setFilesData(totalSelectedFiles.slice(0, maxCount));
       } else {
         const truncatedFiles = maxCount
           ? filteredFiles.slice(0, maxCount)
@@ -125,7 +128,7 @@ const FileUpload = ({
       }
     } else {
       setFilesData(files);
-      singleFiltered.length > 0 && onChange(singleFiltered,singleFiltered);
+      singleFiltered.length > 0 && onChange(singleFiltered, singleFiltered);
     }
     if (inputUploadRef.current) {
       inputUploadRef.current.value = "";
@@ -133,14 +136,14 @@ const FileUpload = ({
   };
   const removeImage = (id: any) => {
     const files = filesData.filter((item: { id: any }) => item.id !== id);
-    const removedFile=filesData.filter((item: { id: any }) => item.id === id);
+    const removedFile = filesData.filter((item: { id: any }) => item.id === id);
     const filteredFiles = filesData.filter(isFileValid);
-    const isFound=filteredFiles.some((ele:any,ind:any)=>{
-      if(ele.id === id){
-        return true
+    const isFound = filteredFiles.some((ele: any, ind: any) => {
+      if (ele.id === id) {
+        return true;
       }
-      return false
-    })
+      return false;
+    });
     isFound && onRemove(removedFile);
     setFilesData([...files]);
   };

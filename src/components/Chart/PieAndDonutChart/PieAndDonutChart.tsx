@@ -3,6 +3,7 @@ import getClassNames from "../../../utilities/getClassnames";
 import Legend from "../Legend/Legend";
 import useWindowResize from "../../../utilities/useWindowResize";
 import "./PieAndDonutChart.css";
+import ChartTooltip from "../ChartTooltip/ChartTooltip";
 export interface PieChartI {
   chartData: PieChartData[];
   height?: number;
@@ -242,6 +243,12 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
               : formatPercentage(totalValue1)}
           </div>
         )}
+        {/* <ChartTooltip
+          activator={<button>btn</button>}
+          helpText={
+            "Testing sfsfsdfs dsdfs dgs dgsf gsdf gsdfg sg sdfg sfdg sdfg sdfg sdfg sdf gsdfg s"
+          }
+        /> */}
         {tooltipText.label &&
           tooltipText.value &&
           tooltip.show &&

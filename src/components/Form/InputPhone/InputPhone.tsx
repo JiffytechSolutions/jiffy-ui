@@ -59,12 +59,12 @@ const InputPhone = ({
   },
 }: InputPhoneI) => {
   const myInputRef = useRef<any>(null);
-  const [val, setValue] = useState();
+  const [changeValue, setChangeValue] = useState();
 
   useEffect(() => {
     const textFieldElement = myInputRef?.current;
     const node = document.querySelector(".inte-formElement--select-focused");
-    if (textFieldElement && countryValue) {
+    if (textFieldElement && changeValue) {
       const innerNode = textFieldElement.querySelector(
         ".inte-formElement__textField"
       );
@@ -91,12 +91,11 @@ const InputPhone = ({
     window.addEventListener("keydown", handleKey);
     textFieldElement.addEventListener("keydown", handleKeydown);
     return () => {
-      window.removeEventListener("keydown", handleKey)
-      textFieldElement.removeEventListener("keydown", handleKeydown)
-    }
-  }, [val]);
+      window.removeEventListener("keydown", handleKey);
+      textFieldElement.removeEventListener("keydown", handleKeydown);
+    };
+  }, [changeValue]);
 
-  
   const handleChange = (event: any) => {
     const value = event;
     const regex = /^[0-9\b]+$/;
@@ -131,7 +130,7 @@ const InputPhone = ({
         connectLeft={
           <Select
             onChange={(e) => {
-              setValue(e);
+              setChangeValue(e);
               onCountryChange(e);
             }}
             value={countryValue ?? ""}
