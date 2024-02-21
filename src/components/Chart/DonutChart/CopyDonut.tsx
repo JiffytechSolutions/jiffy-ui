@@ -1,17 +1,63 @@
-import React from "react";
-import "./NewDonutChart.css";
+import React, { useEffect } from "react";
+import "./DonutChart.css";
 
-export interface DonutChartProps {
-  chartData: { value: number; color: string; label: string }[];
+export interface DonutChartI {
+  chartData: donutChartData[];
   size?: number;
-  border?: boolean;
+  tooltip?: tooltipI;
+  border?: showBorderI;
+  type?: "piechart" | "donutchart";
+  totalItems?: tooltipI;
+  customClass?: string;
 }
 
-export const NewDonutChart: React.FC<DonutChartProps> = ({
+export interface donutChartData {
+  value: number;
+  label: string;
+  color: string;
+}
+export interface tooltipI {
+  show: boolean;
+  type?: "number" | "percentage";
+}
+export interface showBorderI {
+  show?: boolean;
+  width?: number;
+  color?: string;
+}
+
+export const DonutChart: React.FC<DonutChartI> = ({
   chartData,
+  border = { show: false, width: 1, color: "#fff" },
   size = 250,
-  border = false,
 }) => {
+  const animatePath = (
+    path: any,
+    startAngle: any,
+    endAngle: any,
+    duration: any
+  ) => {
+    const startTime = performance.now();
+
+    const animateFrame = (currentTime: any) => {
+      const elapsedTime = currentTime - startTime;
+      const animationProgress = Math.min(elapsedTime / duration, 1);
+      const currentAngle =
+        startAngle + (endAngle - startAngle) * animationProgress;
+
+      path.setAttribute(
+        "d",
+        getDonutSegmentPath(startAngle, currentAngle, radius / 2, radius)
+      );
+
+      if (animationProgress < 1) {
+        requestAnimationFrame(animateFrame);
+      }
+    };
+
+    requestAnimationFrame(animateFrame);
+  };
+
   // Convert negative values to positive
   const normalizedChartData = chartData.map((data) => ({
     ...data,
@@ -24,10 +70,6 @@ export const NewDonutChart: React.FC<DonutChartProps> = ({
   );
   const radius = Math.min(size, size) / 2; // min(width, height)
 
-  const percentages = normalizedChartData.map(
-    (chartData) => (chartData.value / total) * 100
-  );
-
   const newArr = normalizedChartData.map((item) => {
     return {
       percentage: Number(((item.value / total) * 100).toFixed(2)), // this is return point after 2 digits
@@ -37,7 +79,6 @@ export const NewDonutChart: React.FC<DonutChartProps> = ({
     };
   });
 
-  console.log(newArr);
   const getDonutSegmentPath = (
     startAngle: number,
     endAngle: number,
@@ -63,10 +104,23 @@ export const NewDonutChart: React.FC<DonutChartProps> = ({
             L ${x2Inner} ${y2Inner} 
             A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 0 ${x1Inner} ${y1Inner} Z`;
   };
-
   let startAngle = -90; // Start angle at the top
+  // getting path value
+  let intervals: any = [];
+  for (let i = 0; i < newArr.length; i++) {
+    const endAngle = startAngle + (newArr[i].percentage * 360) / 100;
+    let currentTime = startAngle;
+    while (currentTime < endAngle) {
+      intervals.push({ value: currentTime, index: i });
+      currentTime += 2;
+    }
+    startAngle = endAngle; // Update start for the next interval
+  }
+
+  // creating path
   const paths = newArr.map((item, index) => {
     const endAngle = startAngle + (item.percentage * 360) / 100;
+
     const innerRadius = radius / 2;
     const pathData = getDonutSegmentPath(
       startAngle,
@@ -74,6 +128,7 @@ export const NewDonutChart: React.FC<DonutChartProps> = ({
       innerRadius,
       radius
     );
+
     startAngle = endAngle;
 
     return (
@@ -81,12 +136,27 @@ export const NewDonutChart: React.FC<DonutChartProps> = ({
         key={index}
         d={pathData}
         fill={chartData[index].color}
-        stroke={`${border ? "#000" : "#fff"}`}
-        strokeWidth="1"
+        // stroke={`${border ? "#000" : "#fff"}`}
+        // strokeWidth="1"
         className="inte-newdonutChart__path"
+        {...(border.show && {
+          stroke: border.color,
+          strokeWidth: `${border.width}`,
+        })}
       />
     );
   });
+  useEffect(() => {
+    const paths = document.querySelectorAll(".inte-newdonutChart__path");
+
+    paths.forEach((path, index) => {
+      const startPercentage = newArr[index]?.percentage;
+      const endAngle = startAngle + (startPercentage * 360) / 100;
+
+      animatePath(path, startAngle, endAngle, 200); // Animation duration 2000ms (2 seconds)
+      startAngle = endAngle;
+    });
+  }, []);
 
   return (
     <div className="inte-newdonutChart">

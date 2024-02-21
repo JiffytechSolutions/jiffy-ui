@@ -36,14 +36,25 @@ export default {
       },
       defaultValue: 1,
     },
-    enableValue: {
+    valueType: {
       description:
-        "If you are showing value format percentage or number then use enableValue prop",
+        "If you are showing value format percentage or number then use valueType prop",
       control: {
         type: "radio",
         options: ["number", "percentage"],
       },
       defaultValue: "number",
+    },
+    legend: {
+      description: "Show legend",
+      control: {
+        type: "object",
+      },
+      defaultValue: {
+        desktop: false,
+        tab: false,
+        mobile: true,
+      },
     },
     customClass: {
       description: "Add custom class if need to change the design",
@@ -71,7 +82,7 @@ const matchColor: activityGaugeData[] = [
 const Template = ({ ...rest }) => {
   return (
     <Card>
-      <FlexLayout>
+      <FlexLayout spacing="extraLoose">
         <ActivityGauge chartData={chartData} {...rest} />
       </FlexLayout>
     </Card>
@@ -128,11 +139,11 @@ export const ActivityGaugeAnimationDuration = ({ ...rest }) => {
   );
 };
 
-// Activity Gauge enableValue
+// Activity Gauge valueType
 export const ActivityGaugePercentageAndValue = ({ ...rest }) => {
   return (
     <Card title="Activity Gauge enableVale">
-      <Card title="Activity Gauge enableValue in number format">
+      <Card title="Activity Gauge valueType in number format">
         <FlexLayout halign="center" valign="center" spacing="loose">
           {size.map((size: any) => {
             return (
@@ -146,14 +157,14 @@ export const ActivityGaugePercentageAndValue = ({ ...rest }) => {
         </FlexLayout>
       </Card>
 
-      <Card title="Activity Gauge enableValue in percentage format">
+      <Card title="Activity Gauge valueType in percentage format">
         <FlexLayout halign="center" valign="center" spacing="loose">
           {size.map((size: any) => {
             return (
               <ActivityGauge
                 size={size}
                 chartData={chartData}
-                enableValue="percentage"
+                valueType="percentage"
               />
             );
           })}
@@ -212,7 +223,7 @@ export const ActivityGaugeLiveDemo = ({ ...rest }) => {
     <Card title="Activity Gauge data live update then render after 2.5s ">
       <FlexLayout halign="center" spacing="extraLoose">
         <ActivityGauge size="large" chartData={data} />
-        <ActivityGauge size="large" chartData={data} enableValue="percentage" />
+        <ActivityGauge size="large" chartData={data} valueType="percentage" />
       </FlexLayout>
     </Card>
   );
