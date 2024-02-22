@@ -4,10 +4,10 @@ import FileUpload from "../FileUpload";
 import * as Icon from "../../../storybook/Foundation/Icons/Icons";
 import { FlexLayout } from "../../FlexLayout";
 import FileUploadDoc from "../Document/FileUploadDoc";
-import "./FileUploadCustomNotification.css";
 import { X } from "../../../storybook/Foundation/Icons/Icons";
 import Text from "../../Text/Text";
 import TextLink from "../../TextLink/TextLink";
+import "./FileUploadCustomNotification.css";
 
 const allIcons: any = { ...Icon };
 export default {
@@ -95,13 +95,7 @@ export default {
         disable: true,
       },
     },
-    maxCount: {
-      description: "Limit the number of files to be uploaded",
-      control: {
-        type: "number",
-      },
-      defaultValue: 5,
-    },
+
     maxSizeAllowed: {
       description:
         "Limit the file size to be uploaded (in bytes). For example, 1KB equals 1024 bytes. It will check <b>every file</b> to ensure its size is less than the provided limit.",
@@ -124,6 +118,12 @@ export default {
       },
       defaultValue: true,
     },
+    customNotification: {
+      description: "customNotification prop is a react node type",
+      control: {
+        type: false,
+      },
+    },
     customClass: {
       description: "Set custom class",
       control: {
@@ -142,7 +142,7 @@ const Template = ({ ...rest }) => {
           size: 20,
           color: "var(--inte-G300)",
         })}
-        onChange={(e) => {}}
+        onChange={(e, single) => {}}
       />
     </Card>
   );
@@ -165,7 +165,7 @@ export const customNotification = ({ ...rest }) => {
         <FlexLayout spacing="loose" wrap="wrap">
           {data?.map((item: any, index: number) => {
             return (
-              <span className="inte-fileUpload__customImage">
+              <span key={index} className="inte-fileUpload__customImage">
                 <div>{item.data.name}</div>
                 <button
                   className="inte-fileUpload__customFileClear"
@@ -180,8 +180,8 @@ export const customNotification = ({ ...rest }) => {
         </FlexLayout>
 
         <FileUpload
-          // isDisabled={data?.length >= 3}
-
+          accept={["png"]}
+          //isDisabled={data?.length >= 3} // set the max limit
           onChange={(e, single) => {
             setData([...data, ...single]); // Update data state correctly
           }}
@@ -279,15 +279,6 @@ FileUploadWithCustomLabel.decorators = [
   () => (
     <Card>
       <FileUpload innerLabel="File upload with custom label" />
-    </Card>
-  ),
-];
-
-export const FileUploadWithMaxCount: any = Template.bind({});
-FileUploadWithMaxCount.decorators = [
-  () => (
-    <Card>
-      <FileUpload isDragable maxCount={5} />
     </Card>
   ),
 ];

@@ -148,6 +148,10 @@ const FileUpload = ({
     isFound && onRemove(removedFile);
     setFilesData([...files]);
   };
+
+  const dottedArray = accept?.map((item) => "." + item);
+  const acceptValue = dottedArray?.join(", ");
+
   return (
     <div
       className={getClassNames({
@@ -180,6 +184,7 @@ const FileUpload = ({
           onChange={(e) => handleInputChange(e)}
           multiple={isMultiple}
           disabled={isDisabled || filesData.length === maxCount}
+          accept={`${acceptValue}`}
         />
         <div className="inte-fileUpload__dropZoneText">
           {type === "primary" && (
