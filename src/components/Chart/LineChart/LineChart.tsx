@@ -17,11 +17,24 @@ export interface LineChartI {
   dataSet: {
     name: string
     color: string,
-    points: number[],
+    points: number[]
+    animationDuration?: number
+    beginAtOrigin?: boolean
   }[],
-  xPadding?: number,
-  yPadding?: number,
-  showBackgroundGrid?: boolean
+  paddingLeft?: number,
+  paddingBottom?: number,
+  backgroundGrid?: {
+    xLines?: {
+      color?: string,
+      type?: "dashed" | "solid",
+      show?: boolean
+    },
+    yLines?: {
+      color?: string,
+      type?: "dashed" | "solid",
+      show?: boolean
+    },
+  }
   legend?: { show?: boolean, position?: "top" | "bottom" },
   customClass?: string
 }
@@ -49,9 +62,9 @@ const LineChart = ({
   labels,
   dataSet,
   lineType = "curved",
-  showBackgroundGrid = true,
-  xPadding = 60,
-  yPadding = 50,
+  backgroundGrid,
+  paddingLeft = 60,
+  paddingBottom = 50,
   customClass,
   legend = { show: true, position: "bottom" }
 }: LineChartI) => {
@@ -64,6 +77,7 @@ const LineChart = ({
   const [disableCurves, setDisableCurves] = useState<number[]>([])
   const chartRef = useRef<SVGSVGElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
+  const labelListRef = useRef<HTMLUListElement>(null)
   const [svgSize, setSvgSize] = useState<{ width: number, height: number }>({
     width: 300,
     height: height
@@ -71,21 +85,21 @@ const LineChart = ({
 
   const origin = useMemo(() => {
     return {
-      x: xPadding,
-      y: svgSize.height - yPadding,
+      x: paddingLeft,
+      y: svgSize.height - paddingBottom,
     }
-  }, [xPadding, svgSize, yPadding])
+  }, [paddingLeft, svgSize, paddingBottom])
 
   const xBlockCount = useMemo(() => typeof labels.x === "number" ? labels.x : labels.x.length, [labels])
   const yBlockCount = useMemo(() => typeof labels.y === "number" ? labels.y : labels.y.length, [labels]);
 
   const xBlockWidth = useMemo(() => {
-    return (svgSize.width - xPadding) / xBlockCount
-  }, [svgSize, xPadding, xBlockCount]);
+    return (svgSize.width - paddingLeft) / xBlockCount
+  }, [svgSize, paddingLeft, xBlockCount]);
 
   const yBlockWidth = useMemo(() => {
-    return (svgSize.height - (yPadding + (yPadding / 2))) / yBlockCount
-  }, [svgSize, yPadding, yBlockCount]);
+    return (svgSize.height - (paddingBottom + (paddingBottom / 2))) / yBlockCount
+  }, [svgSize, paddingBottom, yBlockCount]);
 
   const maxY = useMemo<number>(() => {
     let maxY = 0;
@@ -97,8 +111,8 @@ const LineChart = ({
   }, [dataSet])
 
   const maxX = useMemo(() => {
-    return svgSize.width - xPadding
-  }, [svgSize, xPadding])
+    return svgSize.width - paddingLeft
+  }, [svgSize, paddingLeft])
 
   const getYPixels = (y: number) => {
     const takesBlock = y / (maxY / yBlockCount)
@@ -149,8 +163,8 @@ const LineChart = ({
     }).join(" ")
 
     const cutsInYAxis = Array(yBlockCount).fill(0).map((item, index) => {
-      const x1 = xPadding;
-      const x2 = xPadding - (graphScale?.cutSize ?? 0);
+      const x1 = paddingLeft;
+      const x2 = paddingLeft - (graphScale?.cutSize ?? 0);
       const y1 = getPointsFromIndex(index, "vertical")
       const y2 = y1;
       yLabelPoints.push({
@@ -164,7 +178,7 @@ const LineChart = ({
       const currValue = blockWidth * (index + 1)
       return currValue
     }
-    const xLabels = xLabelPoints.map((item, index) => makeScaleLabel(item, typeof labels.x === "number" ? `${xPadding + item.x}` : labels.x[index], "horizontal"))
+    const xLabels = xLabelPoints.map((item, index) => makeScaleLabel(item, typeof labels.x === "number" ? `${paddingLeft + item.x}` : labels.x[index], "horizontal"))
 
     const yLabels = yLabelPoints.map((item, index) => makeScaleLabel(item, typeof labels.y === "number" ? `${getYLabel(index, labels.y)}` : labels.y[index], "vertical"))
 
@@ -173,7 +187,7 @@ const LineChart = ({
     return (
       <>
         <path
-          d={`M ${xPadding},0 ${origin.x},${origin.y} ${svgSize.width},${svgSize.height - yPadding}`}
+          d={`M ${paddingLeft},0 ${origin.x},${origin.y} ${svgSize.width},${svgSize.height - paddingBottom}`}
           strokeWidth={graphScale.lineWidth}
           stroke={graphScale.color}
           fill='none'
@@ -183,26 +197,29 @@ const LineChart = ({
   }
 
   const drawCurve = () => {
-    const xPoints = Array(xBlockCount).fill(0).map((item, index) => getPointsFromIndex(index, "horizontal"))
-    const curvesEquations = dataSet.map((item, index) => {
-      const currPoints = xPoints.map((x, index) => {
+    const xPoints = Array(xBlockCount).fill(0).map((_, index) => getPointsFromIndex(index, "horizontal"))
+    const curvesEquations = dataSet.map((item, _) => {
+      let currPoints = xPoints.map((x, index) => {
         return ({
           x: x,
           y: getYPixels(item.points[index])
         })
       })
+      if (item.beginAtOrigin) {
+        currPoints = [{ x: paddingLeft, y: svgSize.height - paddingBottom }, ...currPoints]
+      }
       return cubicSplineInterpolation(
         currPoints,
-        xPadding,
+        paddingLeft,
         0,
         svgSize.width,
-        svgSize.height - yPadding
+        svgSize.height - paddingBottom
       )
     })
 
     const curvesPoint = lineType === "curved" ? curvesEquations.map((equation, index) => {
       const points: Point[] = []
-      for (let i = xPadding + 1; i < svgSize.width; i++) {
+      for (let i = paddingLeft + 1; i < svgSize.width; i++) {
         points.push({
           x: i,
           y: equation(i)
@@ -210,12 +227,15 @@ const LineChart = ({
       }
       return points
     }) : dataSet.map((item, index) => {
-      const points: Point[] = [];
+      let points: Point[] = [];
       for (let i = 0; i < xPoints.length; i++) {
         points.push({
           x: xPoints[i],
           y: getYPixels(item.points[i])
         })
+      }
+      if (item.beginAtOrigin) {
+        points = [{ x: paddingLeft, y: svgSize.height - paddingBottom }, ...points]
       }
       return points
     })
@@ -226,6 +246,9 @@ const LineChart = ({
       return (
         <path
           className='inte-LineChart__dataLine'
+          style={{
+            animationDuration: `${dataSet[index].animationDuration ?? 300}ms`
+          }}
           d={`M ${path}`}
           strokeWidth={graphScale.lineWidth * 3}
           stroke={dataSet[index].color}
@@ -243,7 +266,7 @@ const LineChart = ({
       x: e.clientX - (chartRef.current?.getBoundingClientRect().left ?? 0),
       y: e.clientY - (chartRef.current?.getBoundingClientRect().top ?? 0)
     }
-    if (currPoint.x < xPadding || currPoint.y < 0 || currPoint.x > svgSize.width || currPoint.y > svgSize.height - yPadding) {
+    if (currPoint.x < paddingLeft || currPoint.y < 0 || currPoint.x > svgSize.width || currPoint.y > svgSize.height - paddingBottom) {
       setCurrentHoveredBlock(undefined)
     }
     else {
@@ -265,6 +288,7 @@ const LineChart = ({
       height: containerRef.current.clientHeight,
       width: containerRef.current.clientWidth,
     })
+    handelGraphLabelSize()
   }
 
   const handelCurvePointHover = (datasetIndex: number) => {
@@ -325,7 +349,7 @@ const LineChart = ({
   }
 
   const chartLegend = useMemo(() => (
-    <ul style={{ marginLeft: `${xPadding}px` }} className={`inte-Legend__list inte-Legend--lineChart inte-Legend__list--${legend.position}`}>
+    <ul style={{ marginLeft: `${paddingLeft}px` }} className={`inte-Legend__list inte-Legend--lineChart inte-Legend__list--${legend.position}`}>
       {
         dataSet.map((item, index) => {
           const color = item.color
@@ -345,23 +369,36 @@ const LineChart = ({
         })
       }
     </ul>
-  ), [legend])
+  ), [legend, disableCurves])
+
+  const handelGraphLabelSize = () => {
+    if (!labelListRef.current || !containerRef.current) return
+    const totalWidth = containerRef.current.clientWidth - paddingLeft
+    const widthTaken = Array.from(labelListRef.current.getElementsByClassName("inte-scaleLabel--horizontal")).map(ele => ele.clientWidth).reduce((accumulator, currentValue) => accumulator + currentValue + 24, 0);
+    if (totalWidth <= widthTaken) labelListRef.current.classList.add("inte-scaleLabel--small")
+    else labelListRef.current.classList.remove("inte-scaleLabel--small")
+  }
 
   useEffect(() => {
     if (!chartRef) return
     drawGraph()
+
     window?.addEventListener('resize', setSvgGraphSize)
-    chartRef.current?.addEventListener('mousemove', handelMouseOver)
+    window?.addEventListener('mousemove', handelMouseOver)
     return () => {
-      chartRef.current?.removeEventListener('mousemove', handelMouseOver)
+      window?.removeEventListener('mousemove', handelMouseOver)
       window?.removeEventListener('resize', setSvgGraphSize)
     }
-  }, [dataSet, lineType, svgSize, xPadding, yPadding])
+  }, [dataSet, lineType, svgSize, paddingLeft, paddingBottom])
 
   useEffect(() => {
     if (!containerRef.current) return
     setSvgGraphSize()
   }, [width, height])
+
+  useEffect(() => {
+    handelGraphLabelSize()
+  }, [scaleLabel])
 
   return (
     <div className={getClassNames({
@@ -392,23 +429,31 @@ const LineChart = ({
             graphScaleLine
           }
           {
-            !!showBackgroundGrid && (
-              <path
-                d={`${Array(xBlockCount).fill(0).map((_, ind) => {
-                  const x = getPointsFromIndex(ind, "horizontal") - (graphScale.lineWidth / 2);
-                  const y1 = origin.y;
-                  const y2 = 0
-                  return `M ${x},${y1} ${x},${y2}`
-                }).join(' ')} ${Array(yBlockCount).fill(0).map((_, ind) => {
-                  const y = getPointsFromIndex(ind, "vertical") - (graphScale.lineWidth / 2);
-                  const x1 = origin.x;
-                  const x2 = svgSize.width
-                  return `M ${x1},${y} ${x2},${y}`
-                }).join(' ')}`}
-                stroke='#E7E1F6'
-                strokeDasharray={"5 4"}
-                strokeWidth={graphScale.lineWidth}
-              />
+            !!backgroundGrid && (
+              <>
+                <path
+                  d={`${backgroundGrid.yLines?.show === false ? "" : Array(xBlockCount).fill(0).map((_, ind) => {
+                    const x = getPointsFromIndex(ind, "horizontal") - (graphScale.lineWidth / 2);
+                    const y1 = origin.y;
+                    const y2 = 0
+                    return `M ${x},${y1} ${x},${y2}`
+                  }).join(' ')}`}
+                  stroke={backgroundGrid.yLines?.color ?? "#E7E1F6"}
+                  strokeDasharray={backgroundGrid.yLines?.type === "dashed" ? "5" : "0"}
+                  strokeWidth={graphScale.lineWidth}
+                />
+                <path
+                  d={`${backgroundGrid.xLines?.show === false ? "" : Array(yBlockCount).fill(0).map((_, ind) => {
+                    const y = getPointsFromIndex(ind, "vertical") - (graphScale.lineWidth / 2);
+                    const x1 = origin.x;
+                    const x2 = svgSize.width
+                    return `M ${x1},${y} ${x2},${y}`
+                  }).join(' ')}`}
+                  stroke={backgroundGrid.xLines?.color ?? "#E7E1F6"}
+                  strokeDasharray={backgroundGrid.xLines?.type === "dashed" ? "5" : "0"}
+                  strokeWidth={graphScale.lineWidth}
+                />
+              </>
             )
           }
           {
@@ -435,7 +480,7 @@ const LineChart = ({
             )
           }
         </svg>
-        <ul className='inte-LineChart__labelsList'>
+        <ul ref={labelListRef} className='inte-LineChart__labelsList'>
           {
             scaleLabel.map((label, index) => <React.Fragment key={index}>{label}</React.Fragment>)
           }
