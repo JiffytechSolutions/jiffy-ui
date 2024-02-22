@@ -1,0 +1,17 @@
+.inte-newdonutChart {
+  position: relative;
+  line-height: 0;
+}
+.inte-newdonutChart__svg {
+  height: 100%;
+  width: 100%;
+  overflow: visible;
+}
+
+.inte-newdonutChart__path {
+  transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+.inte-newdonutChart__path:hover {
+  transform: scale(1.04);
+}

@@ -6,6 +6,8 @@ import * as Icon from "../../../../storybook/Foundation/Icons/Icons";
 import { GroupedObjI, SimpleObjI } from "../types/types";
 import Select from "../Select";
 import { FlexLayout } from "../../../FlexLayout";
+import Button from "../../../Button/Button";
+
 const allIcons: any = { ...Icon };
 export default {
   title: "Components/Form/Select",
@@ -198,6 +200,13 @@ export default {
         type: "number",
       },
     },
+    footer: {
+      description:
+        "You Can add footer in  select , footer prop accept here react node",
+      control: {
+        disable: true,
+      },
+    },
     customClass: {
       description: "Add any desired custom class on dropdown",
       control: {
@@ -325,6 +334,47 @@ const Template = ({ ...rest }) => {
   );
 };
 export const Primary = Template.bind({});
+
+//DropDownWithFooter
+export const SelectWithFooterAction = ({ ...rest }) => {
+  const [value1, setValue1] = useState([]);
+  const onSelectChange = (val: React.SetStateAction<never[]>) => {
+    setValue1(val);
+  };
+  return (
+    <Card>
+      <Select
+        {...rest}
+        value={value1}
+        options={simpleOptions}
+        helpIcon={allIcons[rest.helpIcon]({
+          size: 20,
+          color: `${
+            rest.controlStates == "error"
+              ? "#C4281C"
+              : rest.controlStates === "success"
+              ? "var(--inte-GR300)"
+              : rest.controlStates === "warning"
+              ? "var(--inte-Y300)"
+              : "#616771"
+          }`,
+        })}
+        onChange={onSelectChange}
+        onInputChange={(e: any) => {}}
+        footer={
+          <Button
+            type="outlined"
+            content="Add Another Account"
+            halign="center"
+            size="thin"
+            isFullWidth
+            onClick={() => alert("Add Another Account")}
+          />
+        }
+      />
+    </Card>
+  );
+};
 
 // Select controlStates
 export const controlStates: any = Template.bind({});

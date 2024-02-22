@@ -9,7 +9,7 @@ export default {
   parameters: {
     design: {
       type: "figma",
-      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-3.0-(Production)?node-id=1581-108328&t=tb1dL4Z7hEk2Cb1x-0",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=1581-108327&mode=design&t=fJIBZJVp9olvgZpq-0",
     },
   },
   argTypes: {

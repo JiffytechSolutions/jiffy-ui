@@ -1,24 +1,236 @@
-.inte-ChartTooltip {
-  position: absolute;
-  color: var(--inte-G0);
-  height: 4.4rem;
-  padding: 1.2rem;
-  text-align: center;
-  line-height: 2rem;
-  font-size: 1.6rem;
-  width: max-content;
-  font-weight: 600;
-  border-radius: 0.6rem;
-  z-index: var(--inte-Z-10);
-  background-color: var(--inte-G800);
+.inte-chart__toolTip {
+  display: inline-flex;
 }
-.inte-ChartTooltip::after {
-  content: " ";
+.inte-chartToolTip__wrapper {
+  z-index: var(--inte-Z-9);
+}
+.inte-toolTip__pointer {
   position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -0.5rem;
-  border-width: 0.5rem;
-  border-style: solid;
-  border-color: var(--inte-G800) transparent transparent transparent;
+  display: inline-flex;
+}
+
+/* direction space  */
+.inte-toolTip--top {
+  padding-bottom: 0.7rem;
+}
+.inte-toolTip--right {
+  padding-left: 0.7rem;
+}
+.inte-toolTip--bottom {
+  padding-top: 0.7rem;
+}
+.inte-toolTip--bottom .inte-toolTip__pointer {
+  top: 1px;
+  transform: rotate(90deg) translateX(-50%);
+}
+.inte-toolTip--left {
+  padding-right: 0.7rem;
+}
+.inte-toolTip--left .inte-toolTip__pointer {
+  right: 0.1rem;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+/* ToolTip-pointer  css*/
+/* .inte-toolTip--rightCenter { */
+/* left: 0.1rem;
+  top: 50%; */
+/* transform: translateY(-50%);
+} */
+/* .inte-toolTip--center {
+  top: 0.1rem;
+  left: 49%;
+  transform: rotate(90deg) translateX(-50%);
+} */
+/* .inte-toolTip--bottomRight {
+  top: 0.1rem;
+  transform: rotate(90deg) translateX(-50%);
+} */
+/* .inte-toolTip--bottomLeft {
+  top: 0.1rem;
+  transform: rotate(90deg) translateX(-50%);
+} */
+.inte-toolTip--topLeft {
+  bottom: 0.1rem;
+  right: 8px;
+  transform: rotate(270deg) translateX(-50%);
+}
+.inte-chartToolTip--topCenter {
+  bottom: 0.1rem;
+  left: 49%;
+  transform: rotate(270deg) translateX(-50%);
+}
+.inte-chartToolTip--topRight {
+  bottom: 0.1rem;
+  left: 10px;
+  transform: rotate(270deg) translateX(-50%);
+}
+.inte-toolTip--leftCenter {
+  top: 50%;
+  right: 0.1rem;
+  transform: translateY(-50%) rotate(180deg);
+}
+.inte-toolTip--leftTop {
+  right: 0.4rem;
+  transform: rotate(180deg) translateX(-50%);
+}
+
+.inte-toolTip--leftBottom {
+  right: 0.4rem;
+  transform: rotate(180deg) translateX(-50%);
+}
+
+/* Tooltip Message */
+.inte-toolTip__message {
+  background: var(--inte-G800);
+  max-width: 30rem;
+  font-size: 1.6rem;
+  border-radius: var(--radius-rounded-6);
+  color: var(--inte-G10);
+  line-height: 2.2rem;
+  padding: 1.2rem;
+  text-align: left;
+  word-break: break-word;
+}
+
+/* Animation */
+/* Animation Right */
+.inte-toolTip--right.inte-toolTip--in {
+  animation: tooltipInRight 0.1s linear forwards;
+  transform-origin: left center;
+}
+.inte-toolTip--right.inte-toolTip--out {
+  animation: tooltipOutRight 0.1s linear forwards;
+  transform-origin: left center;
+}
+/* Animation Left */
+.inte-toolTip--left.inte-toolTip--in {
+  animation: tooltipInLeft 0.1s linear forwards;
+  transform-origin: right center;
+}
+.inte-toolTip--left.inte-toolTip--out {
+  animation: tooltipOutLeft 0.1s linear forwards;
+  transform-origin: right center;
+}
+/* Animation Top */
+.inte-toolTip--top.inte-toolTip--in {
+  animation: tooltipInTop 0.1s linear forwards;
+  transform-origin: bottom center;
+}
+.inte-toolTip--top.inte-toolTip--out {
+  animation: tooltipOutTop 0.1s linear forwards;
+  transform-origin: bottom center;
+}
+/* Animation Bottom */
+.inte-toolTip--bottom.inte-toolTip--in {
+  animation: tooltipInBottom 0.1s linear forwards;
+  transform-origin: bottom center;
+}
+.inte-toolTip--bottom.inte-toolTip--out {
+  animation: tooltipOutBottom 0.1s linear forwards;
+  transform-origin: bottom center;
+}
+/* Amimation Frames */
+@keyframes tooltipInRight {
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  0% {
+    -webkit-transform: translate3d(5px, 0, 0) scale(0.98);
+    transform: translate3d(5px, 0, 0) scale(0.98);
+    opacity: 0.8;
+  }
+}
+
+@keyframes tooltipOutRight {
+  100% {
+    -webkit-transform: translate3d(5px, 0, 0) scale(0.98);
+    transform: translate3d(5px, 0, 0) scale(0.98);
+    opacity: 0;
+  }
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+/* Frames Left */
+@keyframes tooltipInLeft {
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  0% {
+    -webkit-transform: translate3d(-5px, 0, 0) scale(0.95);
+    transform: translate3d(-5px, 0, 0) scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+@keyframes tooltipOutLeft {
+  100% {
+    -webkit-transform: translate3d(-5px, 0, 0) scale(0.95);
+    transform: translate3d(-5px, 0, 0) scale(0.95);
+    opacity: 0;
+  }
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+/* Frames Top */
+@keyframes tooltipInTop {
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  0% {
+    -webkit-transform: translate3d(0, -5px, 0) scale(0.95);
+    transform: translate3d(0, -5px 0) scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+@keyframes tooltipOutTop {
+  100% {
+    -webkit-transform: translate3d(0, -5px, 0) scale(0.95);
+    transform: translate3d(0, -5px, 0) scale(0.95);
+    opacity: 0;
+  }
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+/* Frames Bottom */
+@keyframes tooltipInBottom {
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+  0% {
+    -webkit-transform: translate3d(0, -5px, 0) scale(0.95);
+    transform: translate3d(0, -5px 0) scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+@keyframes tooltipOutBottom {
+  100% {
+    -webkit-transform: translate3d(0, -5px, 0) scale(0.95);
+    transform: translate3d(0, -5px, 0) scale(0.95);
+    opacity: 0;
+  }
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
 }

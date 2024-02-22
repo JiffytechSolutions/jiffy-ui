@@ -18,6 +18,7 @@
 .inte-pieChart__path,
 .inte-donutChart__path {
   transition: transform 0.3s ease, fill 0.3s ease;
+  /* transition: transform 20s ease, fill 20s ease; */
   transform-origin: center;
   transform: scale(1);
 }

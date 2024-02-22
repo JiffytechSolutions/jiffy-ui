@@ -1,27 +1,28 @@
 import React, { useEffect, useRef, useState } from "react";
 import getClassNames from "../../../utilities/getClassnames";
+import Legend from "../Legend/Legend";
+import useWindowResize from "../../../utilities/useWindowResize";
 import "./PieAndDonutChart.css";
-
+import ChartTooltip from "../ChartTooltip/ChartTooltip";
 export interface PieChartI {
   chartData: PieChartData[];
   height?: number;
   width?: number;
   tooltip?: tooltipI;
   border?: showBorderI;
-  tooltipValue?: "percentage" | "value";
   type?: "piechart" | "donutchart";
-  percentage?: boolean;
+  totalItems?: tooltipI;
   customClass?: string;
 }
 
 export interface PieChartData {
-  value: number | number;
+  value: number;
   label: string;
   color: string;
 }
 export interface tooltipI {
-  show?: boolean;
-  type?: "percentage" | "value";
+  show: boolean;
+  type?: "number" | "percentage";
 }
 export interface showBorderI {
   show?: boolean;
@@ -36,15 +37,13 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
   chartData,
   height = 250,
   width = 250,
-  percentage = false,
-
-  tooltip = { show: false, type: "value" },
-  // showBorder,
+  totalItems = { show: false, type: "number" },
+  tooltip = { show: false, type: "number" },
   customClass = "",
-  tooltipValue = "percentage",
   type = "piechart",
   border = { show: false, width: 1, color: "#fff" },
 }) => {
+  const windowWidth = useWindowResize().width;
   const moveRef = useRef<any>(null);
   const toolTipRef = useRef<any>(null);
   const totalPercentage = getTotalPercentage(chartData);
@@ -57,6 +56,10 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
 
   const totalValue = chartData.reduce(
     (sum, item) => sum + Number(item.value) / 100,
+    0
+  );
+  const totalValue1 = chartData.reduce(
+    (sum, item) => sum + Number(item.value),
     0
   );
 
@@ -126,16 +129,21 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
   const formatPercentage = (value: number) => {
     const formattedValue =
       value % 1 === 0 ? value.toFixed(0) : value.toFixed(2);
-    return `${formattedValue}%`;
+    return formattedValue;
   };
 
   return (
-    <>
+    <div
+      className={getClassNames({
+        "inte-pieChart__wrapper": type === "piechart",
+        "inte-donutChart__wrapper": type === "donutchart",
+        [customClass]: customClass,
+      })}
+    >
       <div
         className={getClassNames({
           "inte-pieChart": type === "piechart",
           "inte-donutChart": type === "donutchart",
-          [customClass]: customClass,
         })}
         onMouseMove={handleMouseMove}
         ref={moveRef}
@@ -166,7 +174,7 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
             cumulativePercentage += Number(item.value);
 
             const isHovered = index === hoveredSlice;
-            const scaleFactor = isHovered ? 1.03 : 1; // Increase size when hovered
+            const scaleFactor = windowWidth > 768 ? (isHovered ? 1.04 : 1) : 1;
 
             const pathData = `
             M ${width / 2} ${height / 2}
@@ -228,29 +236,43 @@ const PieAndDonutChart: React.FC<PieChartI> = ({
             />
           )}
         </svg>
-        {percentage && (
+        {totalItems.show && (
           <div className="inte-pieChart__percentage">
-            {formatPercentage(totalP)}
+            {totalItems.type === "percentage"
+              ? `${formatPercentage(totalP)}%`
+              : formatPercentage(totalValue1)}
           </div>
         )}
-        {tooltipText.label && tooltipText.value && tooltip.show && (
-          <div
-            className="inte-pieChart__tooltip"
-            style={{
-              left: `${tooltipPosition.x}px`,
-              top: `${tooltipPosition.y}px`,
-            }}
-            ref={toolTipRef}
-          >
-            {`${tooltipText.label}:  ${
-              tooltipValue === "percentage"
-                ? formatPercentage(tooltipText.value / totalValue)
-                : tooltipText.value
-            }`}
-          </div>
-        )}
+        {/* <ChartTooltip
+          activator={<button>btn</button>}
+          helpText={
+            "Testing sfsfsdfs dsdfs dgs dgsf gsdf gsdfg sg sdfg sfdg sdfg sdfg sdfg sdf gsdfg s"
+          }
+        /> */}
+        {tooltipText.label &&
+          tooltipText.value &&
+          tooltip.show &&
+          windowWidth > 768 && (
+            <div
+              className="inte-pieChart__tooltip"
+              style={{
+                left: `${tooltipPosition.x}px`,
+                top: `${tooltipPosition.y}px`,
+              }}
+              ref={toolTipRef}
+            >
+              {`${tooltipText.label}:  ${
+                tooltip.type === "percentage"
+                  ? `${formatPercentage(tooltipText.value / totalValue)}%`
+                  : tooltipText.value
+              }`}
+            </div>
+          )}
       </div>
-    </>
+      {windowWidth <= 768 && tooltip.show && (
+        <Legend chartData={chartData} width={width} enableValue={tooltip} />
+      )}
+    </div>
   );
 };
 

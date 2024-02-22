@@ -6,6 +6,12 @@ import { TimeI } from "../TimePicker/TimePicker";
 export default {
   title: "Components/Form/DatePicker/RangePicker",
   component: RangePicker,
+  parameters: {
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=1822-167476&mode=design&t=fJIBZJVp9olvgZpq-0",
+    },
+  },
   argTypes: {
     selectedDates: {
       description:

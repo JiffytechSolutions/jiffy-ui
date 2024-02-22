@@ -5,18 +5,18 @@ export interface PieChartI {
   size?: number;
   tooltip?: tooltipI;
   border?: showBorderI;
-  totalPercentage?: boolean;
+  totalItems?: tooltipI;
   customClass?: string;
 }
 export interface PieChartData {
-  value: number | number;
+  value: number;
   label: string;
   color: string;
 }
 
 export interface tooltipI {
-  show?: boolean;
-  type?: "percentage" | "value";
+  show: boolean;
+  type?: "number" | "percentage";
 }
 export interface showBorderI {
   show?: boolean;
@@ -27,8 +27,8 @@ export interface showBorderI {
 const PieChart: React.FC<PieChartI> = ({
   chartData,
   size = 250,
-  totalPercentage = false,
-  tooltip = { show: false, type: "value" },
+  totalItems = { show: false, type: "number" },
+  tooltip = { show: false, type: "number" },
   border = { show: false, width: 1, color: "#fff" },
   customClass = "",
 }) => {
@@ -37,7 +37,7 @@ const PieChart: React.FC<PieChartI> = ({
       chartData={chartData}
       height={size}
       width={size}
-      percentage={totalPercentage}
+      totalItems={totalItems}
       tooltip={tooltip}
       customClass={customClass}
       border={border}

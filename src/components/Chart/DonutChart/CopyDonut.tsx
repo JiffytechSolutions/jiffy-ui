@@ -146,34 +146,17 @@ export const DonutChart: React.FC<DonutChartI> = ({
       />
     );
   });
-
   useEffect(() => {
     const paths = document.querySelectorAll(".inte-newdonutChart__path");
-    const endAngles: any = []; // Array to store end angles of each path
 
     paths.forEach((path, index) => {
       const startPercentage = newArr[index]?.percentage;
       const endAngle = startAngle + (startPercentage * 360) / 100;
 
-      // const startAngle = -90; // Starting angle for all paths
-      // const endAngle = startAngle + (newArr[index].percentage * 360) / 100;
-      endAngles.push(endAngle); // Store the end angle for the current path
-
-      animatePath(path, startAngle, endAngle, 2000); // Animation duration 2000ms (2 seconds)
-      // startAngle = endAngle;
+      animatePath(path, startAngle, endAngle, 200); // Animation duration 2000ms (2 seconds)
+      startAngle = endAngle;
     });
   }, []);
-  // useEffect(() => {
-  //   const paths = document.querySelectorAll(".inte-newdonutChart__path");
-
-  //   paths.forEach((path, index) => {
-  //     const startPercentage = newArr[index]?.percentage;
-  //     const endAngle = startAngle + (startPercentage * 360) / 100;
-
-  //     animatePath(path, startAngle, endAngle, 200); // Animation duration 2000ms (2 seconds)
-  //     startAngle = endAngle;
-  //   });
-  // }, []);
 
   return (
     <div className="inte-newdonutChart">
