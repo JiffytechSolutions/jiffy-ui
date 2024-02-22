@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card } from "../../Card";
 import FileUpload from "../FileUpload";
 import * as Icon from "../../../storybook/Foundation/Icons/Icons";
 import { FlexLayout } from "../../FlexLayout";
 import FileUploadDoc from "../Document/FileUploadDoc";
+import { X } from "../../../storybook/Foundation/Icons/Icons";
+import Text from "../../Text/Text";
+import TextLink from "../../TextLink/TextLink";
+import "./FileUploadCustomNotification.css";
+
 const allIcons: any = { ...Icon };
 export default {
   title: "Components/Form/FileUpload",
@@ -90,13 +95,7 @@ export default {
         disable: true,
       },
     },
-    maxCount: {
-      description: "Limit the number of files to be uploaded",
-      control: {
-        type: "number",
-      },
-      defaultValue: 5,
-    },
+
     maxSizeAllowed: {
       description:
         "Limit the file size to be uploaded (in bytes). For example, 1KB equals 1024 bytes. It will check <b>every file</b> to ensure its size is less than the provided limit.",
@@ -119,6 +118,12 @@ export default {
       },
       defaultValue: true,
     },
+    customNotification: {
+      description: "customNotification prop is a react node type",
+      control: {
+        type: false,
+      },
+    },
     customClass: {
       description: "Set custom class",
       control: {
@@ -137,12 +142,89 @@ const Template = ({ ...rest }) => {
           size: 20,
           color: "var(--inte-G300)",
         })}
-        onChange={(e) => {}}
+        onChange={(e, single) => {}}
       />
     </Card>
   );
 };
 export const Primary: any = Template.bind({});
+
+//  here custom showing list or or notifications
+export const customNotification = ({ ...rest }) => {
+  const [data, setData] = useState<any>([]);
+
+  const handleRemoveItem = (index: number) => {
+    const newData = [...data];
+    newData.splice(index, 1);
+    setData(newData);
+  };
+
+  return (
+    <Card>
+      <FlexLayout direction="vertical" spacing="loose">
+        <FlexLayout spacing="loose" wrap="wrap">
+          {data?.map((item: any, index: number) => {
+            return (
+              <span key={index} className="inte-fileUpload__customImage">
+                <div>{item.data.name}</div>
+                <button
+                  className="inte-fileUpload__customFileClear"
+                  onClick={() => handleRemoveItem(index)}
+                  aria-label="clear"
+                >
+                  <X size={20} color="var(--inte-G800)" />
+                </button>
+              </span>
+            );
+          })}
+        </FlexLayout>
+
+        <FileUpload
+          accept={["png"]}
+          //isDisabled={data?.length >= 3} // set the max limit
+          onChange={(e, single) => {
+            setData([...data, ...single]); // Update data state correctly
+          }}
+          helpIcon={allIcons[rest.helpIcon]({
+            size: 20,
+            color: "var(--inte-G300)",
+          })}
+          helpText="Help Text"
+          customNotification={
+            <div className="inte-fileUpload__customItemWrapper">
+              {data.length > 0 && (
+                <div className="inte-fileUpload__customClearWrapper">
+                  <Text fontweight="bold" type="T-7">
+                    Uploaded File
+                  </Text>
+                  <TextLink label="Clear all" onClick={() => setData([])} />
+                </div>
+              )}
+              {data?.map((item: any, index: number) => {
+                return (
+                  <div
+                    key={index}
+                    className="inte-fileUpload__custimItemWrapper"
+                  >
+                    <div>{item.data.name}</div>
+                    <button
+                      className="inte-fileUpload__customFileClear"
+                      onClick={() => handleRemoveItem(index)}
+                      aria-label="clear"
+                    >
+                      <X size={20} color="var(--inte-G800)" />
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          }
+        />
+      </FlexLayout>
+    </Card>
+  );
+};
+
 const UploadTypes = ["primary", "secondary"];
 export const types: any = Template.bind({});
 types.decorators = [
@@ -197,15 +279,6 @@ FileUploadWithCustomLabel.decorators = [
   () => (
     <Card>
       <FileUpload innerLabel="File upload with custom label" />
-    </Card>
-  ),
-];
-
-export const FileUploadWithMaxCount: any = Template.bind({});
-FileUploadWithMaxCount.decorators = [
-  () => (
-    <Card>
-      <FileUpload isDragable maxCount={5} />
     </Card>
   ),
 ];
