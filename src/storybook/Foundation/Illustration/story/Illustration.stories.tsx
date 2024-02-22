@@ -23,6 +23,13 @@ import { Card, CopyClipboard, FlexLayout } from "../../../../components";
 
 export default {
   title: "Foundation/Illustration",
+  parameters: {
+    docs: {},
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=16734-19158&mode=design&t=fJIBZJVp9olvgZpq-0",
+    },
+  },
   argTypes: {
     size: {
       description: "Set size of illustration",

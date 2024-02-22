@@ -15,7 +15,7 @@ export default {
     docs: {},
     design: {
       type: "figma",
-      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-3.0-(Production)?node-id=576-33848&t=I5X8uq0HTkwaulx9-0",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=923-57246&mode=design&t=fJIBZJVp9olvgZpq-0",
     },
   },
   argTypes: {
