@@ -1,0 +1,40 @@
+.inte-fileUpload__customItemWrapper {
+  margin-top: 1.2rem;
+  background-color: var(--inte-G0);
+}
+.inte-fileUpload__custimItemWrapper,
+.inte-fileUpload__customImage {
+  margin-top: 1.2rem;
+  padding: 1.6rem;
+  border-radius: var(--radius-rounded-6);
+  position: relative;
+  border: 0.1rem solid var(--inte-G40);
+  background-color: var(--inte-G0);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: nowrap;
+  gap: 0.8rem;
+}
+
+.inte-fileUpload__customFileClear {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  padding: 0.6rem;
+  cursor: pointer;
+}
+.inte-fileUpload__customClearWrapper {
+  display: flex;
+  margin-top: 1.2rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.inte-fileUpload__customFileClear:hover {
+  border-radius: var(--radius-rounded-6);
+  background-color: var(--inte-G30);
+}
+.inte-fileUpload__customImage {
+  height: 100px;
+}
