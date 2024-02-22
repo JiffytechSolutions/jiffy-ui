@@ -64,7 +64,8 @@
 }
 
 .inte-LineChart__dataLine {
-  animation: lineAnimation 300ms linear;
+  animation-name: lineAnimation;
+  animation-timing-function: linear;
   transform-origin: center calc(100% - 50px);
 }
 
@@ -138,4 +139,9 @@
   height: 2px;
   background-color: grey;
   top:calc(50% - 1px)
+}
+
+.inte-scaleLabel--small .inte-scaleLabel--horizontal div{
+  position: relative;
+  transform: translateX(-50%) rotate(-45deg);
 }
