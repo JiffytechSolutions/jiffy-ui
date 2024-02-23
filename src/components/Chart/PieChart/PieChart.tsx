@@ -24,7 +24,7 @@ export interface showBorderI {
   color?: string;
 }
 
-const PieChart: React.FC<PieChartI> = ({
+const NewPieChart: React.FC<PieChartI> = ({
   chartData,
   size = 250,
   totalItems = { show: false, type: "number" },
@@ -45,4 +45,4 @@ const PieChart: React.FC<PieChartI> = ({
   );
 };
 
-export default PieChart;
+export default NewPieChart;

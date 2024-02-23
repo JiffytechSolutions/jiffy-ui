@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "../../../Card";
 import PieChart, { PieChartData } from "../PieChart";
 import { FlexLayout } from "../../../FlexLayout";
+import NewwPieChart from "../NewChart";
 
 export default {
   title: "Components/Chart/PieChart",
@@ -80,7 +81,8 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <FlexLayout halign="center">
-        <PieChart {...rest} chartData={chartData} />
+        {/* <PieChart {...rest} chartData={chartData} /> */}
+        <NewwPieChart chartData={chartData} />
       </FlexLayout>
     </Card>
   );
