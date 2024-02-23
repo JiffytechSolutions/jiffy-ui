@@ -1,11 +1,11 @@
 import React from "react";
 import { Card } from "../../../Card";
-import PieChart, { PieChartData } from "../PieChart";
 import { FlexLayout } from "../../../FlexLayout";
+import PieChart, { PieChartData } from "../PieChart";
 
 export default {
   title: "Components/Chart/PieChart",
-  component: PieChart,
+  component:PieChart ,
   parameters: {
     design: {
       type: "figma",
@@ -70,9 +70,9 @@ export default {
 };
 
 const chartData: PieChartData[] = [
-  { value: 25, label: "Series A", color: "#F0EDFA" },
+  { value: 55, label: "Series A", color: "#F0EDFA" },
   { value: 20, label: "Series B", color: "#C5B8EA" },
-  { value: 15, label: "Series C", color: "#9984DB" },
+  { value: 30, label: "Series C", color: "#9984DB" },
   { value: 15, label: "Series D", color: "#D1E9FF" },
   { value: 15, label: "Series E", color: "#B2DDFF" },
   { value: 10, label: "Series F", color: "#53B1FD" },
@@ -89,7 +89,7 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <FlexLayout halign="center">
-        <PieChart {...rest} chartData={chartData} size={rest.height} />
+        <PieChart {...rest} chartData={chartData} size={rest.height} animationDuration={500}/>
       </FlexLayout>
     </Card>
   );
@@ -102,7 +102,7 @@ export const PieChartPercentage = ({ ...rest }) => {
   return (
     <Card title="Pie Chart with showing total percentage">
       <FlexLayout halign="center">
-        <PieChart totalPercentage chartData={chartData} size={250} />
+        <PieChart percentage chartData={chartData} size={250} />
       </FlexLayout>
     </Card>
   );
@@ -147,14 +147,14 @@ export const PieChartWithBorder = ({ ...rest }) => {
     <Card title="Pie Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="loose" wrap="wrap">
         <PieChart
-          totalPercentage
+          percentage
           chartData={chartData}
           size={250}
           border={{ show: true, width: 1, color: "red" }}
           tooltip={{ show: true, type: "value" }}
         />
         <PieChart
-          totalPercentage
+          percentage
           chartData={chartData1}
           size={250}
           border={{ show: true, width: 1, color: "#fff" }}
@@ -184,13 +184,13 @@ export const PieChartAll = ({ ...rest }) => {
       <FlexLayout spacing="loose" wrap="wrap">
         <PieChart
           tooltip={{ show: true, type: "value" }}
-          totalPercentage
+          percentage
           chartData={chartData}
           size={250}
         />
         <PieChart
           tooltip={{ show: true, type: "value" }}
-          totalPercentage
+          percentage
           chartData={[
             { value: 25, label: "Series A", color: "#F0EDFA" },
             { value: 15, label: "Series B", color: "#C5B8EA" },
@@ -202,7 +202,7 @@ export const PieChartAll = ({ ...rest }) => {
         />
         <PieChart
           tooltip={{ show: true, type: "value" }}
-          totalPercentage
+          percentage
           chartData={[
             { value: 25, label: "Series A", color: "#53B1FD" },
             { value: 25, label: "Series B", color: "#D1E9FF" },
@@ -213,7 +213,7 @@ export const PieChartAll = ({ ...rest }) => {
         />
         <PieChart
           tooltip={{ show: true, type: "value" }}
-          totalPercentage
+          percentage
           chartData={[
             { value: 50, label: "Series A", color: "#53B1FD" },
             { value: 25, label: "Series B", color: "#D1E9FF" },
@@ -223,7 +223,7 @@ export const PieChartAll = ({ ...rest }) => {
         />
         <PieChart
           tooltip={{ show: true, type: "value" }}
-          totalPercentage
+          percentage
           chartData={[
             { value: 50, label: "Series A", color: "#9984DB" },
             { value: 50, label: "Series B", color: "#D1E9FF" },
@@ -232,7 +232,7 @@ export const PieChartAll = ({ ...rest }) => {
         />
         <PieChart
           tooltip={{ show: true, type: "value" }}
-          totalPercentage
+          percentage
           chartData={[{ value: 100, label: "Series A", color: "#9984DB" }]}
           size={200}
         />
