@@ -29,11 +29,11 @@ export default {
     },
     tooltip: {
       description:
-        "If you can showing tooltip then use tooltip prop  and tooltip is an object type",
+        "show or hide the tooltip",
       control: {
-        type: "object",
+        type: "boolean",
       },
-      defaultValue: { show: false, type: "number" },
+      defaultValue: true,
     },
     totalItems: {
       description:
@@ -73,7 +73,11 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <FlexLayout halign="center">
-        <DonutChart {...rest} chartData={chartData} />
+        <DonutChart 
+          {...rest} 
+          chartData={chartData} 
+          legend={{ desktop:true , mobile : true , tab : false}} 
+        />
       </FlexLayout>
     </Card>
   );
@@ -81,119 +85,3 @@ const Template = ({ ...rest }) => {
 
 export const Primary = Template.bind({});
 
-// Donut Chart Percentage
-// export const DonutChartTotalitems = ({ ...rest }) => {
-//   return (
-//     <Card title="Donut Chart with showing total percentage">
-//       <FlexLayout halign="center" spacing="mediumLoose">
-//         <DonutChart
-//           // totalItems={{ show: true }}
-//           chartData={chartData}
-//           size={250}
-//         />
-//         <DonutChart
-//           totalItems={{ show: true, type: "percentage" }}
-//           chartData={chartData}
-//           size={250}
-//         />
-//       </FlexLayout>
-//     </Card>
-//   );
-// };
-
-// Donut Chart with tooltip
-// export const DonutChartTooltip = ({ ...rest }) => {
-//   return (
-//     <Card title="Donut Chart with tooltip (Mouse hover any particular area then showing tooltip)">
-//       <FlexLayout spacing="mediumLoose" wrap="wrap" halign="center">
-//         <DonutChart
-//           chartData={[
-//             { value: 250, label: "Series A", color: "#F0EDFA" },
-//             { value: 400, label: "Series B", color: "#C5B8EA" },
-//             { value: 550, label: "Series C", color: "#9984DB" },
-//             { value: 310, label: "Series D", color: "#D1E9FF" },
-//             { value: 100, label: "Series E", color: "#B2DDFF" },
-//           ]}
-//           size={250}
-//           tooltip={{ show: true, type: "percentage" }}
-//         />
-
-//         <DonutChart
-//           tooltip={{ show: true }}
-//           chartData={[
-//             { value: 250, label: "Series A", color: "#F0EDFA" },
-//             { value: 400, label: "Series B", color: "#C5B8EA" },
-//             { value: 550, label: "Series C", color: "#9984DB" },
-//             { value: 310, label: "Series D", color: "#D1E9FF" },
-//             { value: 100, label: "Series E", color: "#B2DDFF" },
-//           ]}
-//           size={250}
-//         />
-//       </FlexLayout>
-//     </Card>
-//   );
-// };
-
-// Donut Chart with All
-// export const DonutChartAll = ({ ...rest }) => {
-//   return (
-//     <Card title="Donut Chart with tooltip (Mouse hover any particular area then showing tooltip)">
-//       <FlexLayout spacing="loose" wrap="wrap">
-//         <DonutChart
-//           totalItems={{ show: true, type: "number" }}
-//           chartData={chartData}
-//           size={250}
-//           tooltip={{ show: true }}
-//         />
-//         <DonutChart
-//           totalItems={{ show: true, type: "number" }}
-//           chartData={[
-//             { value: 25, label: "Series A", color: "#F0EDFA" },
-//             { value: 15, label: "Series B", color: "#C5B8EA" },
-//             { value: 20, label: "Series C", color: "#9984DB" },
-//             { value: 15, label: "Series D", color: "#D1E9FF" },
-//             { value: 25, label: "Series E", color: "#B2DDFF" },
-//           ]}
-//           size={250}
-//           tooltip={{ show: true }}
-//         />
-//         <DonutChart
-//           totalItems={{ show: true, type: "number" }}
-//           chartData={[
-//             { value: 25, label: "Series A", color: "#53B1FD" },
-//             { value: 25, label: "Series B", color: "#D1E9FF" },
-//             { value: 25, label: "Series C", color: "#9984DB" },
-//             { value: 25, label: "Series D", color: "#B2DDFF" },
-//           ]}
-//           size={250}
-//           tooltip={{ show: true }}
-//         />
-//         <DonutChart
-//           totalItems={{ show: true, type: "number" }}
-//           chartData={[
-//             { value: 50, label: "Series A", color: "#53B1FD" },
-//             { value: 25, label: "Series B", color: "#D1E9FF" },
-//             { value: 25, label: "Series C", color: "#9984DB" },
-//           ]}
-//           size={250}
-//           tooltip={{ show: true }}
-//         />
-//         <DonutChart
-//           totalItems={{ show: true, type: "number" }}
-//           chartData={[
-//             { value: 50, label: "Series A", color: "#9984DB" },
-//             { value: 50, label: "Series B", color: "#D1E9FF" },
-//           ]}
-//           size={250}
-//           tooltip={{ show: true }}
-//         />
-//         <DonutChart
-//           totalItems={{ show: true, type: "number" }}
-//           chartData={[{ value: 100, label: "Series A", color: "#9984DB" }]}
-//           size={250}
-//           tooltip={{ show: true }}
-//         />
-//       </FlexLayout>
-//     </Card>
-//   );
-// };

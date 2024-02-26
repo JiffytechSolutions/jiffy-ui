@@ -1,15 +1,24 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./DonutChart.css";
+import Badge from "../../Badge/Badge";
+import Text from "../../Text/Text";
+import Legend from "../Legend/Legend";
 
 export interface DonutChartI {
   chartData: donutChartData[];
   size?: number;
-  tooltip?: tooltipI;
+  tooltip?: boolean;
   border?: showBorderI;
   type?: "piechart" | "donutchart";
   totalItems?: tooltipI;
   customClass?: string;
   animationDuration?: number
+  valueType?: "number" | "percentage"
+  legend?: {
+    tab?: boolean
+    mobile?: boolean
+    desktop?: boolean
+  }
 }
 
 export interface donutChartData {
@@ -31,10 +40,43 @@ export const DonutChart: React.FC<DonutChartI> = ({
   chartData,
   border = { show: false, width: 1, color: "#fff" },
   size = 250,
-  animationDuration = 2000
+  animationDuration = 2000,
+  valueType,
+  tooltip,
+  legend
 }) => {
-
+  const [deviceType, setDeviceType] = useState<"desktop" | "tab" | "mobile">("desktop")
+  const [handleIndex, setHandleIndex] = useState(-1);
   const chartRef = useRef<SVGSVGElement>(null)
+  const [showValue, setShowValue] = useState<{
+    label: string;
+    value: number;
+    percentage: number;
+    color: string
+  }>({
+    label: "",
+    value: 0,
+    percentage: 0,
+    color: ""
+  });
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseOver = (
+    item: donutChartData,
+    event: React.MouseEvent<SVGPathElement>
+  ) => {
+    setShowValue({ label: item.label, value: item.value, percentage: 0, color: item.color, });
+    const pathRect = (event.target as HTMLElement).getBoundingClientRect()
+    if (!pathRect) return
+    const left = pathRect.left + (pathRect.width / 2)
+    const top = pathRect.top + (pathRect.height / 2)
+    setTooltipPosition({ x: left, y: top });
+
+  };
+
+  const handleMouseLeave = () => {
+    setShowValue({ label: "", value: 0, percentage: 0, color: "" });
+  };
 
   // Convert negative values to positive
   const normalizedChartData = chartData.map((data) => ({
@@ -104,7 +146,12 @@ export const DonutChart: React.FC<DonutChartI> = ({
         key={index}
         d={pathData}
         fill={chartData[index].color}
-        className="inte-newdonutChart__path"
+        className="inte-donutChart__path"
+        onMouseOver={(e) => { handleMouseOver(item, e); setHandleIndex(index) }}
+        onMouseLeave={() => { handleMouseLeave(); setHandleIndex(-1) }}
+        style={{
+          transform: `scale(${handleIndex === index ? 1.04 : 1})`,
+        }}
         {...(border.show && {
           stroke: border.color,
           strokeWidth: `${border.width}`,
@@ -113,57 +160,97 @@ export const DonutChart: React.FC<DonutChartI> = ({
     );
   });
 
-  let start:number, previousTimeStamp:number;
+  let start: number, previousTimeStamp: number;
   let done = false;
 
-  const animatePath = (timeStamp:number) => {
+  useEffect(() => {
+
+  }, [tooltip])
+
+  const animatePath = (timeStamp: number) => {
     if (start === undefined) {
       start = timeStamp;
     }
     const elapsed = timeStamp - start;
 
-    if(previousTimeStamp !== timeStamp){
+    if (previousTimeStamp !== timeStamp) {
 
-      const paths = Array.from(chartRef.current?.querySelectorAll(".inte-newdonutChart__path") ?? [])
+      const paths = Array.from(chartRef.current?.querySelectorAll(".inte-donutChart__path") ?? [])
 
-      if(paths && paths.length && newArr){
-        const animationCompletePercentage = Math.min(Math.ceil((elapsed / animationDuration) * 100) , 100)
+      if (paths && paths.length && newArr) {
+        const animationCompletePercentage = Math.min(Math.ceil((elapsed / animationDuration) * 100), 100)
         let startAngel = -90
         const innerRadius = radius / 2;
-        paths.map((path , index) => {
-          const currPathPer = (newArr[index].percentage * animationCompletePercentage)/100;
+        paths.map((path, index) => {
+          const currPathPer = (newArr[index].percentage * animationCompletePercentage) / 100;
           const endAngle = startAngel + (currPathPer * 360) / 100;
-          const currPathD = getDonutSegmentPath(startAngel , endAngle , innerRadius , radius)
+          const currPathD = getDonutSegmentPath(startAngel, endAngle, innerRadius, radius)
           path.setAttribute("d", currPathD)
           startAngel = endAngle
         })
 
       }
-      const count = Math.min(elapsed , animationDuration)
-      if(count === animationDuration) done = true
+      const count = Math.min(elapsed, animationDuration)
+      if (count === animationDuration) done = true
     }
 
-    if(elapsed < animationDuration){
+    if (elapsed < animationDuration) {
       previousTimeStamp = timeStamp
-      if(!done) window.requestAnimationFrame(animatePath)
+      if (!done) window.requestAnimationFrame(animatePath)
     }
   }
 
+  const checkDeviceType = () => {
+    const width = window.innerWidth
+    if (width < 480) setDeviceType("mobile")
+    else if (width < 768) setDeviceType("tab")
+    else setDeviceType("desktop")
+  }
+
   useEffect(() => {
-     window.requestAnimationFrame(animatePath)
+    window.requestAnimationFrame(animatePath)
   }, []);
 
+  useEffect(() => {
+    checkDeviceType()
+    window.addEventListener('resize', checkDeviceType)
+    return () => {
+      window.removeEventListener('resize', checkDeviceType)
+    }
+  }, [legend])
+
+
   return (
-    <div className="inte-newdonutChart">
-      <svg
-        ref={chartRef}
-        width={size}
-        height={size}
-        viewBox={`0 0 ${size} ${size}`}
-        className="inte-newdonutChart__svg"
-      >
-        <g transform={`translate(${size / 2}, ${size / 2})`}>{paths}</g>
-      </svg>
+    <div className="inte-donutChart__wrapper">
+      <div className="inte-donutChart">
+        <svg
+          ref={chartRef}
+          width={size}
+          height={size}
+          viewBox={`0 0 ${size} ${size}`}
+          className="inte-donutChart__svg"
+        >
+          <g transform={`translate(${size / 2}, ${size / 2})`}>{paths}</g>
+        </svg>
+      </div>
+      {
+        legend && (legend[deviceType] !== false) ? <Legend chartData={chartData} renderIndex={(index) => setHandleIndex(index)} valueType={valueType ?? "number"} /> : null
+      }
+      {showValue.label && showValue.value && tooltip && (
+        <div
+          className="inte-chart__tooltip"
+          style={{
+            left: `${tooltipPosition.x}px`,
+            top: `${tooltipPosition.y}px`,
+          }}
+        >
+          <Badge size="large" dot customBgColor={showValue.color} />
+          {`${showValue.label}:  ${valueType === "percentage"
+            ? ((showValue.value / total) * 100).toFixed(2) + "%"
+            : showValue.value
+            }`}
+        </div>
+      )}
     </div>
   );
 };

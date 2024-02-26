@@ -18,7 +18,8 @@
 .inte-pieChart__path,
 .inte-donutChart__path {
   transition: transform 0.3s ease, fill 0.3s ease;
-  transform-origin: center;
+  /* transition: transform 20s ease, fill 20s ease; */
+  /* transform-origin: center; */
   transform: scale(1);
 }
 
@@ -44,8 +45,8 @@
   background-color: var(--inte-P20);
 }
 /* tooltip  css*/
-.inte-pieChart__tooltip {
-  position: absolute;
+.inte-chart__tooltip {
+  position: fixed;
   color: var(--inte-G0);
   height: 4.4rem;
   padding: 1.2rem;
@@ -57,8 +58,14 @@
   border-radius: 0.6rem;
   z-index: var(--inte-Z-10);
   background-color: var(--inte-G800);
+  transform: translate(-50% , -50%);
+  pointer-events: none;
+  transition: all 0.5s ease-in;
+  display: flex;
+  gap: 12px;
+  align-items: center;
 }
-.inte-pieChart__tooltip::after {
+/* .inte-pieChart__tooltip::after {
   content: " ";
   position: absolute;
   top: 100%;
@@ -67,4 +74,4 @@
   border-width: 0.5rem;
   border-style: solid;
   border-color: var(--inte-G800) transparent transparent transparent;
-}
+} */

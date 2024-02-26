@@ -1,27 +1,33 @@
 import React, { useEffect, useRef, useState } from "react";
 import getClassNames from "../../../utilities/getClassnames";
 import "./PieChart.css";
+import Badge from "../../Badge/Badge";
+import Text from "../../Text/Text";
+import Legend from "../Legend/Legend";
 
 export interface PieChartI {
   chartData: PieChartData[];
   size?: number;
   animationDuration?: number;
-  tooltip?: tooltipI;
+  tooltip?: boolean;
   border?: showBorderI;
-  tooltipValue?: "percentage" | "value";
-  type?: "piechart" | "donutchart";
-  percentage?: boolean;
+  valueType?: "percentage" | "number";
   customClass?: string;
+  legend?: {
+    tab?: boolean
+    mobile?: boolean
+    desktop?: boolean
+  }
 }
 
 export interface PieChartData {
-  value: number | number;
+  value: number;
   label: string;
   color: string;
 }
 export interface tooltipI {
-  show?: boolean;
-  type?: "percentage" | "value";
+  show: boolean;
+  type?: "number" | "percentage";
 }
 export interface showBorderI {
   show?: boolean;
@@ -36,88 +42,52 @@ const PieChart: React.FC<PieChartI> = ({
   chartData,
   size = 250,
   animationDuration = 1000,
-  percentage = false,
-
-  tooltip = { show: false, type: "value" },
+  legend,
+  tooltip,
   // showBorder,
   customClass = "",
-  tooltipValue = "percentage",
-  type = "piechart",
+  valueType="number",
   border = { show: false, width: 1, color: "#fff" },
 }) => {
+  const [deviceType, setDeviceType] = useState<"desktop" | "tab" | "mobile">("desktop")
+  const [handleIndex, setHandleIndex] = useState(-1);
   const moveRef = useRef<HTMLDivElement>(null);
-  const toolTipRef = useRef<any>(null);
   const totalPercentage = getTotalPercentage(chartData);
   let cumulativePercentage = 0;
-  const [tooltipText, setTooltipText] = useState({ label: "", value: 0 });
+  const [showValue, setShowValue] = useState<{
+    label: string;
+    value: number;
+    percentage: number;
+    color:string
+  }>({
+    label: "",
+    value: 0,
+    percentage: 0,
+    color:""
+  });
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
-  const [hoveredSlice, setHoveredSlice] = useState<number | null>(null);
-  const [tooltipWidth, setTooltipWidth] = useState<number>(130);
-
 
   const totalValue = chartData.reduce(
     (sum, item) => sum + Number(item.value) / 100,
     0
   );
 
-  const result = chartData.map((value: any) => value.value / totalValue); // Divide each element of b by a
-  const totalP = result.reduce((sum, value) => sum + value, 0); // Get the sum of the results
-
   const handleMouseOver = (
-    label: any,
-    value: any,
-    index: number,
-    event: any
+    item:PieChartData ,
+    event: React.MouseEvent<SVGPathElement>
   ) => {
-    setTooltipText({ label: label, value: value });
-    const left = event.clientX - (moveRef?.current?.getBoundingClientRect().left ?? 0);
-    const top = event.clientY - (moveRef?.current?.getBoundingClientRect().top ?? 0);
-    setTooltipPosition({ x: left - tooltipWidth, y: top - 65 });
-    setHoveredSlice(index);
+    setShowValue({ label: item.label, value: item.value , percentage:0 , color:item.color, });
+    const pathRect = (event.target as HTMLElement).getBoundingClientRect()
+    if(!pathRect) return
+    const left = pathRect.left + (pathRect.width / 2)
+    const top = pathRect.top + (pathRect.height / 2)
+    setTooltipPosition({ x: left, y: top});
+
   };
 
   const handleMouseLeave = () => {
-    setTooltipText({ label: "", value: 0 });
-    setHoveredSlice(null);
+    setShowValue({ label: "", value: 0, percentage:0 , color : "" });
   };
-
-  const handleMouseMove = (event: any) => {
-    const left = event.clientX - (moveRef?.current?.getBoundingClientRect().left ?? 0);
-    const top = event.clientY - (moveRef?.current?.getBoundingClientRect().top ?? 0);
-    setTooltipPosition({ x: left - tooltipWidth, y: top - 65 });
-  };
-
-  // getting tool tip pisition width
-  useEffect(() => {
-    if (toolTipRef?.current) {
-      const toolTipWidth = toolTipRef.current.getBoundingClientRect();
-      setTooltipWidth(toolTipWidth.width / 2);
-    }
-  }, [tooltip.show, tooltipText.label, tooltipText.value, toolTipRef?.current]);
-
-  // Rotation animation effect
-  useEffect(() => {
-    const paths =
-      type === "piechart"
-        ? document.querySelectorAll(".inte-pieChart__path")
-        : document.querySelectorAll(".inte-donutChart__path");
-    const totalPercentage = getTotalPercentage(chartData);
-    let currTot = 0;
-    const pointArr = Array.from(paths).map((path, index) => {
-      const currentSlicePercentage =
-        (Number(chartData[index]?.value) / totalPercentage) * 100;
-
-      const degreeOfRotation = (currentSlicePercentage / 100) * 360;
-      currTot = currTot + degreeOfRotation;
-
-      return -currTot;
-    });
-
-
-
-  }, [chartData]);
-
-
 
   // percentage format
   const formatPercentage = (value: number) => {
@@ -171,8 +141,6 @@ const PieChart: React.FC<PieChartI> = ({
           startAngel = endAngel
         })
       }
-
-      
       const count = Math.min(elapsed , animationDuration)
       if(count === animationDuration) done = true
     }
@@ -187,19 +155,34 @@ const PieChart: React.FC<PieChartI> = ({
     window.requestAnimationFrame(animatePath)
  }, []);
 
+ const checkDeviceType = () => {
+  const width = window.innerWidth
+  if (width < 480) setDeviceType("mobile")
+  else if (width < 768) setDeviceType("tab")
+  else setDeviceType("desktop")
+}
+
+ useEffect(() => {
+  checkDeviceType()
+  window.addEventListener('resize', checkDeviceType)
+  return () => {
+    window.removeEventListener('resize', checkDeviceType)
+  }
+}, [legend])
+
+
   return (
-    <>
+    <div className="inte-pieChart__wrapper">
       <div
         className={getClassNames({
-          "inte-pieChart": type === "piechart",
-          "inte-donutChart": type === "donutchart",
+          "inte-pieChart": true,
+     
           [customClass]: customClass,
         })}
-        onMouseMove={handleMouseMove}
         ref={moveRef}
       >
         <svg
-          className={`inte-${type === "piechart" ? "pieChart" : "donutChart"
+          className={`inte-pieChart""
             }__svg`}
           viewBox={`0 0 ${size} ${size}`}
           width={size}
@@ -209,7 +192,6 @@ const PieChart: React.FC<PieChartI> = ({
         >
           {chartData.map((item, index: number) => {
             let startAngle = 0;
-            // const startAngle = (cumulativePercentage / totalPercentage) * 360;
             const endAngle =
               ((cumulativePercentage + Number(item.value)) / totalPercentage) *
               360;
@@ -222,25 +204,27 @@ const PieChart: React.FC<PieChartI> = ({
 
             cumulativePercentage += Number(item.value);
 
-            const isHovered = index === hoveredSlice;
-            const scaleFactor = isHovered ? 1.03 : 1; // Increase size when hovered
-
           const pathData = getPathData(startAngle, endAngle , item.value)
             return (
               <path
                 key={index}
                 className={getClassNames({
-                  "inte-pieChart__path": type === "piechart",
-                  "inte-donutChart__path": type === "donutchart",
+                  "inte-pieChart__path": true,
+          
                 })}
                 d={pathData}
                 fill={item.color || ""}
-                onMouseOver={(e) =>
-                  handleMouseOver(item.label, item.value, index, e)
-                }
-                onMouseLeave={handleMouseLeave}
+                onMouseOver={(e) => {
+                  setHandleIndex(index);
+                  handleMouseOver(item, e);
+                }}
+                onMouseLeave={() => {
+                  setHandleIndex(-1);
+                  handleMouseLeave();
+                }}
                 style={{
                   transformOrigin: "center",
+                  transform: `scale(${handleIndex === index ? 1.04 : 1})`,
                 }}
                 {...(border.show && {
                   stroke: border.color,
@@ -250,37 +234,29 @@ const PieChart: React.FC<PieChartI> = ({
             );
           })}
 
-          {type === "donutchart" && (
-            <circle
-              cx={size / 2}
-              cy={size / 2}
-              r={Math.min(size, size) * 0.5 - 50} // Adjust the radius to control the size of the hole
-              fill="#fff" // Set the color of the hole
-            />
-          )}
+        
         </svg>
-        {percentage && (
-          <div className="inte-pieChart__percentage">
-            {formatPercentage(totalP)}
-          </div>
-        )}
-        {tooltipText.label && tooltipText.value && tooltip.show && (
+        {showValue.label && showValue.value && tooltip && (
           <div
-            className="inte-pieChart__tooltip"
+            className="inte-chart__tooltip"
             style={{
               left: `${tooltipPosition.x}px`,
               top: `${tooltipPosition.y}px`,
             }}
-            ref={toolTipRef}
           >
-            {`${tooltipText.label}:  ${tooltipValue === "percentage"
-                ? formatPercentage(tooltipText.value / totalValue)
-                : tooltipText.value
+            <Badge size="large" dot customBgColor={showValue.color} />
+            {`${showValue.label}:  ${valueType === "percentage"
+                ? formatPercentage(showValue.value / totalValue)
+                : showValue.value
               }`}
           </div>
         )}
+       
       </div>
-    </>
+      {
+        legend && (legend[deviceType] !== false) ? <Legend chartData={chartData} renderIndex={(index) => setHandleIndex(index)} valueType={valueType ?? "number"} /> : null
+      }
+    </div>
   );
 };
 

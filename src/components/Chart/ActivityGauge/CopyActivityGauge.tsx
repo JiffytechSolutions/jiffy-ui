@@ -1,13 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
-import Text from "../../Text/Text";
 import getClassNames from "../../../utilities/getClassnames";
 import useDelayUnmount from "../../../utilities/useDelayTimeout";
+import Badge from "../../Badge/Badge";
+import Text from "../../Text/Text";
+import useWindowResize from "../../../utilities/useWindowResize";
 import "./ActivityGauge.css";
+import "../Legend/Legend.css";
 export interface ActivityGaugeI {
   chartData: activityGaugeData[];
   size?: "small" | "medium" | "large";
-  enableValue?: "number" | "percentage";
+  valueType?: "number" | "percentage";
   animationDuration?: number;
+  legend?: legendI;
   customClass?: string;
 }
 
@@ -17,12 +21,10 @@ export interface activityGaugeData {
   label: string;
   color: string;
 }
-
-export interface activityGaugeData {
-  value: number;
-  total: number;
-  label: string;
-  color: string;
+export interface legendI {
+  desktop?: boolean;
+  tab?: boolean;
+  mobile?: boolean;
 }
 
 const AnimatedCircle: React.FC<{
@@ -36,8 +38,8 @@ const AnimatedCircle: React.FC<{
   };
   setShowValue: React.Dispatch<
     React.SetStateAction<{
-      label: number | string;
-      value: number | string;
+      label: string;
+      value: number;
       percentage: number;
     }>
   >;
@@ -46,7 +48,6 @@ const AnimatedCircle: React.FC<{
   size: string;
   calculateValue: (index: number) => number;
   sizeFun: () => number;
-
   calculateStrokeDashOffset: (r: number, percentage: number) => number;
 }> = ({
   percentage,
@@ -135,39 +136,47 @@ const AnimatedCircle: React.FC<{
             percentage: percentage <= 100 ? percentage : 100,
           });
         }}
-        onMouseOut={() => setShowValue({ label: "", value: "", percentage: 0 })}
+        onMouseOut={() => setShowValue({ label: "", value: 0, percentage: 0 })}
         className="inte-activityGauge__circle"
       />
     </g>
   );
 };
 
-const CActivityGauge: React.FC<ActivityGaugeI> = ({
+const ActivityGauge: React.FC<ActivityGaugeI> = ({
   size = "large",
   chartData,
   customClass = "",
   animationDuration = 1,
-  enableValue = "number",
+  valueType = "number",
+  legend = { desktop: false, tab: false, mobile: true },
 }) => {
+  const { width } = useWindowResize();
+
   const [showValue, setShowValue] = useState<{
-    label: number | string;
-    value: number | string;
+    label: string;
+    value: number;
     percentage: number;
   }>({
     label: "",
-    value: "",
+    value: 0,
     percentage: 0,
   });
   const [toggleAnimationClass, setToggleAnimationClass] = useState(false);
   const animateData = useDelayUnmount(toggleAnimationClass, 200);
 
+  const totalValue = chartData.reduce(
+    (sum, item) => sum + Number(item.value),
+    0
+  );
+
   const calculateValue: any = (index: number) => {
     if (size === "small") {
       return index === 0 ? 4 : calculateValue(index - 1) + 10; // Small space 2px
     } else if (size === "medium") {
-      return index === 0 ? 5 : calculateValue(index - 1) + 15; // Medium space 5px
+      return index === 0 ? 5 : calculateValue(index - 1) + 14; // Medium space 4px
     } else {
-      return index === 0 ? 6 : calculateValue(index - 1) + 15; // Large space 3px
+      return index === 0 ? 6 : calculateValue(index - 1) + 18; // Large space 6px
     }
   };
 
@@ -186,11 +195,13 @@ const CActivityGauge: React.FC<ActivityGaugeI> = ({
       return 250;
     }
   };
-  const formatPercentage = (value: number) => {
+
+  const formatValue = (value: number) => {
     const formattedValue =
       value % 1 === 0 ? value.toFixed(0) : value.toFixed(2);
-    return value === 0 ? "" : `${formattedValue}%`;
+    return value === 0 ? "" : formattedValue;
   };
+
   const calculatePercentage = (item: any) => {
     return typeof item.value === "string" && String(item.value).includes("%")
       ? parseFloat(item.value) <= 100
@@ -201,62 +212,172 @@ const CActivityGauge: React.FC<ActivityGaugeI> = ({
       : 100;
   };
 
-  return (
-    <div
-      className={getClassNames({
-        "inte-activityGauge": true,
-        "inte-activityGauge--small": size === "small",
-        "inte-activityGauge--medium": size === "medium",
-        "inte-activityGauge--large": size === "large",
-        "inte-activityGauge__hoverAnimation": toggleAnimationClass,
-        [customClass]: customClass,
-      })}
-      style={{ height: sizeFun(), width: sizeFun() }}
-      onMouseEnter={() => setToggleAnimationClass(true)}
-      onMouseLeave={() => setToggleAnimationClass(false)}
-    >
-      <svg
-        className="inte-activityGauge__svg"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        {chartData.map((item: any, index: number) => {
-          const circleRef = useRef<SVGCircleElement>(null);
+  const legendValue = ({ chartData }: ActivityGaugeI) => {
+    return (
+      <div className="inte-chartLegend__wrapper">
+        {chartData.map((item, index) => {
+          const percentage =
+            typeof item.value === "string" && String(item.value).includes("%")
+              ? Math.abs(item.value) <= 100
+                ? Math.abs(item.value)
+                : 100
+              : Math.abs(item.value) <= Math.abs(item.total)
+              ? (Math.abs(item.value) / Math.abs(item.total)) * 100
+              : 100;
           return (
-            <AnimatedCircle
+            <div
               key={index}
-              percentage={calculatePercentage(item)}
-              totalLength={circleRef.current?.getTotalLength() || 0}
-              showValue={showValue}
-              setShowValue={setShowValue}
-              item={item}
-              index={index}
-              size={size}
-              calculateValue={calculateValue}
-              sizeFun={sizeFun}
-              calculateStrokeDashOffset={calculateStrokeDashOffset}
-              animationDuration={animationDuration}
-            />
+              className="inte-chartLegend"
+              onMouseOver={() => {
+                setShowValue({
+                  label: item.label,
+                  value:
+                    Math.abs(item.value) <= Math.abs(item.total)
+                      ? Math.abs(item.value)
+                      : Math.abs(item.total),
+                  percentage: percentage <= 100 ? percentage : 100,
+                });
+              }}
+              onMouseOut={() =>
+                setShowValue({ label: "", value: 0, percentage: 0 })
+              }
+            >
+              <div className="inte-legend__name">
+                <Badge
+                  dot
+                  size="large"
+                  type="primary"
+                  customBgColor={item.color}
+                />
+                <Text>{item.label}</Text>
+              </div>
+              <div className="inte-legend__value">
+                <Text>
+                  {showValue.value !== 0 &&
+                    valueType === "number" &&
+                    formatValue(item.value)}
+                  {showValue.percentage !== 0 &&
+                    valueType === "percentage" &&
+                    formatValue(percentage) + "%"}
+
+                  {showValue.value === 0 &&
+                    valueType === "number" &&
+                    formatValue(item.value)}
+                  {showValue.percentage === 0 &&
+                    valueType === "percentage" &&
+                    formatValue(percentage) + "%"}
+                </Text>
+              </div>
+            </div>
           );
         })}
-      </svg>
-      {animateData && (
-        <div
-          className={getClassNames({
-            "inte-activityGauge__info": true,
-            "inte-activityGauge--in": showValue.label !== "",
-            "inte-activityGauge--out": showValue.label == "",
-          })}
+      </div>
+    );
+  };
+
+  return (
+    <div className="inte-activityGauge__wrapper">
+      <div
+        className={getClassNames({
+          "inte-activityGauge": true,
+          "inte-activityGauge--small": size === "small",
+          "inte-activityGauge--medium": size === "medium",
+          "inte-activityGauge--large": size === "large",
+          "inte-activityGauge__hoverAnimation": toggleAnimationClass,
+          [customClass]: customClass,
+        })}
+        onMouseEnter={() => setToggleAnimationClass(true)}
+        onMouseLeave={() => setToggleAnimationClass(false)}
+      >
+        <svg
+          viewBox={`0 0 ${sizeFun()} ${sizeFun()}`}
+          height={sizeFun()}
+          width={sizeFun()}
+          xmlns="http://www.w3.org/2000/svg"
+          className="inte-activityGauge__svg"
         >
-          <Text textcolor="secondary">{showValue.label} </Text>
-          <Text fontweight="bold" type="T-6">
-            {enableValue === "percentage"
-              ? formatPercentage(showValue.percentage)
-              : showValue.value}
-          </Text>
-        </div>
-      )}
+          {chartData.map((item: any, index: number) => {
+            const circleRef = useRef<SVGCircleElement>(null);
+            return (
+              <AnimatedCircle
+                key={index}
+                percentage={calculatePercentage(item)}
+                totalLength={circleRef.current?.getTotalLength() || 0}
+                showValue={showValue}
+                setShowValue={setShowValue}
+                item={item}
+                index={index}
+                size={size}
+                calculateValue={calculateValue}
+                sizeFun={sizeFun}
+                calculateStrokeDashOffset={calculateStrokeDashOffset}
+                animationDuration={animationDuration}
+              />
+            );
+          })}
+        </svg>
+        {animateData && width >= 768 && (
+          <div
+            className={getClassNames({
+              "inte-activityGauge__info": true,
+              "inte-activityGauge--in": showValue.label !== "",
+              "inte-activityGauge--out": showValue.label == "",
+            })}
+          >
+            <div className="inte-activityGauge__label">{showValue.label}</div>
+            <div className="inte-activityGauge__value">
+              {valueType === "percentage"
+                ? formatValue(showValue.percentage) !== "" &&
+                  formatValue(showValue.percentage) + "%"
+                : formatValue(showValue.value)}
+            </div>
+          </div>
+        )}
+      </div>
+      {/*show in desktop */}
+      {width > 991 &&
+        legend.desktop &&
+        !legend.mobile &&
+        !legend.tab &&
+        legendValue({ chartData })}
+      {/*show in  tab  */}
+      {width < 991 &&
+        width > 768 &&
+        legend.tab &&
+        !legend.desktop &&
+        !legend.mobile &&
+        legendValue({ chartData })}
+      {/*show in  mobile   */}
+      {width < 768 &&
+        legend.mobile &&
+        !legend.desktop &&
+        !legend.tab &&
+        legendValue({ chartData })}
+      {/*show in desktop , tab  */}
+      {width > 768 &&
+        legend.desktop &&
+        legend.tab &&
+        !legend.mobile &&
+        legendValue({ chartData })}
+      {/*show in tab, mobile   */}
+      {width < 991 &&
+        legend.tab &&
+        legend.mobile &&
+        !legend.desktop &&
+        legendValue({ chartData })}
+      {/* show in desktop , mobile  */}
+      {legend.desktop &&
+        !legend.tab &&
+        (width > 991 || width < 768) &&
+        legend.mobile &&
+        legendValue({ chartData })}
+      {/*show in desktop , tab, mobile   */}
+      {legend.desktop &&
+        legend.tab &&
+        legend.mobile &&
+        legendValue({ chartData })}
     </div>
   );
 };
 
-export default CActivityGauge;
+export default ActivityGauge;

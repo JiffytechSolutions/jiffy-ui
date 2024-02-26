@@ -9,6 +9,12 @@ import "./story.css";
 export default {
   title: "Components/Feedback/AnnouncementBar",
   component: AnnouncementBar,
+  parameters: {
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=5743-246102&mode=design&t=fJIBZJVp9olvgZpq-0",
+    },
+  },
   argTypes: {
     children: {
       description: "This is announcement bar children",

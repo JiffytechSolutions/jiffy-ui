@@ -5,6 +5,12 @@ import Separator from "../Separator";
 export default {
   title: "Components/Entity/Separator",
   component: Separator,
+  parameters: {
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=15599-6954&mode=design&t=fJIBZJVp9olvgZpq-0",
+    },
+  },
   argTypes: {
     type: {
       description: "Set types of separator",
