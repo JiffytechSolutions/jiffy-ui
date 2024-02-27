@@ -15,7 +15,8 @@ export interface barChartI {
   };
   dataSet: {
     name: string;
-    color: string;
+    color: string[];
+    // color: string;
     points: number[];
     animationDuration?: number;
     beginAtOrigin?: boolean;
@@ -344,7 +345,7 @@ const BarChart = ({
         className={`inte-Legend__list inte-Legend--lineChart inte-Legend__list--${legend.position}`}
       >
         {dataSet.map((item, index) => {
-          const color = item.color;
+          const color = item.color[index];
           return (
             <li
               key={index}
@@ -407,6 +408,122 @@ const BarChart = ({
     handelGraphLabelSize();
   }, [scaleLabel]);
 
+  const oneLineBarChart = () => {
+    return dataSet.map((item, index) => {
+      const x =
+        getPointsFromIndex(index, "horizontal") - graphScale.lineWidth / 2;
+      const y1 = origin.y;
+      const y2 = getYPixels(item.points[0]);
+      const pathD = `M ${x},${y1} ${x},${y2}`;
+
+      return (
+        <>
+          <path
+            key={index}
+            d={pathD}
+            stroke={item.color[0]}
+            strokeWidth={31}
+            className="inte-barChart__fillPath"
+            onMouseOver={() => setShowPoint(index)}
+            onMouseOut={() => setShowPoint(-1)}
+          />
+
+          {showPoint === index && (
+            <>
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="30%" stop-color="white" />
+                  <stop offset="100%" stop-color={item.color} />
+                </linearGradient>
+              </defs>
+              <circle
+                cx={x}
+                cy={y2}
+                r="6.667"
+                stroke="#fff"
+                strokeWidth="2"
+                fill="url(#gradient)"
+                onMouseOver={() =>
+                  handelCurvePointHover(
+                    x,
+                    y2,
+                    item.name,
+                    item.color[0],
+                    item.points[0],
+                    index
+                  )
+                }
+              />
+            </>
+          )}
+        </>
+      );
+    });
+  };
+
+  const twoLineBarChart = () => {
+    return dataSet.map((item, index) => {
+      const x =
+        getPointsFromIndex(index, "horizontal") - graphScale.lineWidth / 2;
+      const y1 = origin.y;
+      const y21 = getYPixels(item.points[0]);
+      const y22 = getYPixels(item.points[1]);
+      const path1 = `M ${x - 15.5},${y1} ${x - 15.5},${y21}`; // first
+      const path2 = `M ${x + 15.5},${y1} ${x + 15.5},${y22}`; // second
+
+      return (
+        <>
+          <path
+            key={index}
+            d={path1}
+            stroke={item.color[0]}
+            strokeWidth={31}
+            className="inte-barChart__fillPath"
+            onMouseOver={() => setShowPoint(index)}
+            onMouseOut={() => setShowPoint(-1)}
+          />
+          <path
+            key={index}
+            d={path2}
+            stroke={item.color[1]}
+            strokeWidth={31}
+            className="inte-barChart__fillPath"
+            onMouseOver={() => setShowPoint(index)}
+            onMouseOut={() => setShowPoint(-1)}
+          />
+
+          {showPoint === index && (
+            <>
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="30%" stop-color="white" />
+                  <stop offset="100%" stop-color={item.color} />
+                </linearGradient>
+              </defs>
+              <circle
+                cx={x}
+                cy={y22}
+                r="6.667"
+                stroke="#fff"
+                strokeWidth="2"
+                fill="url(#gradient)"
+                onMouseOver={() =>
+                  handelCurvePointHover(
+                    x,
+                    y22,
+                    item.name,
+                    item.color[0],
+                    item.points[1],
+                    index
+                  )
+                }
+              />
+            </>
+          )}
+        </>
+      );
+    });
+  };
   return (
     <div
       className={getClassNames({
@@ -474,63 +591,8 @@ const BarChart = ({
                 }
                 strokeWidth={graphScale.lineWidth}
               />
-              {dataSet.map((item, index) => {
-                const x =
-                  getPointsFromIndex(index, "horizontal") -
-                  graphScale.lineWidth / 2;
-                const y1 = origin.y;
-                const y2 = getYPixels(item.points[0]);
-                const pathD = `M ${x},${y1} ${x},${y2}`;
-
-                return (
-                  <>
-                    <path
-                      key={index}
-                      d={pathD}
-                      stroke={item.color}
-                      strokeWidth={31}
-                      className="inte-barChart__fillPath"
-                      onMouseOver={() => setShowPoint(index)}
-                      onMouseOut={() => setShowPoint(-1)}
-                    />
-
-                    {showPoint === index && (
-                      <>
-                        <defs>
-                          <linearGradient
-                            id="gradient"
-                            x1="0%"
-                            y1="0%"
-                            x2="0%"
-                            y2="100%"
-                          >
-                            <stop offset="30%" stop-color="white" />
-                            <stop offset="100%" stop-color={item.color} />
-                          </linearGradient>
-                        </defs>
-                        <circle
-                          cx={x}
-                          cy={y2}
-                          r="6.667"
-                          stroke="#fff"
-                          strokeWidth="2"
-                          fill="url(#gradient)"
-                          onMouseOver={() =>
-                            handelCurvePointHover(
-                              x,
-                              y2,
-                              item.name,
-                              item.color,
-                              item.points[0],
-                              index
-                            )
-                          }
-                        />
-                      </>
-                    )}
-                  </>
-                );
-              })}
+              {barChartType === "oneLine" && oneLineBarChart()}
+              {barChartType === "twoLine" && twoLineBarChart()}
             </>
           )}
         </svg>

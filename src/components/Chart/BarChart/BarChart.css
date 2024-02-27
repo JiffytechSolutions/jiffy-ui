@@ -145,3 +145,9 @@
   position: relative;
   transform: translateX(-50%) rotate(-45deg);
 }
+
+.inte-barChart__tooltipActivator {
+  height: 1.4rem;
+  width: 1.4rem;
+  border: 0.2rem solid #fff;
+}
