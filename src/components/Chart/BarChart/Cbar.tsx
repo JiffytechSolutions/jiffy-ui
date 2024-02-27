@@ -609,3 +609,80 @@ const BarChart = ({
 };
 
 export default BarChart;
+
+// {dataSet.map((item, index) => {
+//   return item.points.map((_, ind) => {
+//     let pathD;
+//     let y2: any;
+//     const x =
+//       getPointsFromIndex(index, "horizontal") -
+//       graphScale.lineWidth / 2;
+//     const y1 = origin.y;
+
+//     // ---------------------------------
+// const y20 = ind == 0 && getYPixels(item.points[ind]);
+// const y21 = ind == 1 && getYPixels(item.points[ind]);
+// const y22 = ind == 2 && getYPixels(item.points[ind]);
+// const path1 = `M ${x - 15.5},${y1} ${x - 15.5},${y21}`; // first
+// const path2 = `M ${x + 15.5},${y1} ${x + 15.5},${y22}`; // second
+
+// console.log(ind);
+// y2 = getYPixels(item.points[ind]);
+// if (ind == 0 && item.points.length > 0) {
+//   pathD = `M ${x - 16},${y1} ${x - 16},${y20}`;
+// } else if (ind == 1 && item.points.length > 0) {
+//   pathD = `M ${x + 16},${y1} ${x + 16},${y21}`;
+// } else {
+//   pathD = `M ${x},${y1} ${x},${y20}`;
+// }
+
+//     return (
+//       <>
+//         <path
+//           key={index}
+//           d={pathD}
+//           stroke={item.color}
+//           strokeWidth={31}
+//           className="inte-barChart__fillPath"
+//           onMouseOver={() => setShowPoint(index)}
+//           onMouseOut={() => setShowPoint(-1)}
+//         />
+
+//         {showPoint === index && (
+//           <>
+//             <defs>
+//               <linearGradient
+//                 id="gradient"
+//                 x1="0%"
+//                 y1="0%"
+//                 x2="0%"
+//                 y2="100%"
+//               >
+//                 <stop offset="30%" stop-color="white" />
+//                 <stop offset="100%" stop-color={item.color} />
+//               </linearGradient>
+//             </defs>
+//             <circle
+//               cx={x}
+//               cy={y2}
+//               r="6.667"
+//               stroke="#fff"
+//               strokeWidth="2"
+//               fill="url(#gradient)"
+//               onMouseOver={() =>
+//                 handelCurvePointHover(
+//                   x,
+//                   y2,
+//                   item.name,
+//                   item.color,
+//                   item.points[0],
+//                   index
+//                 )
+//               }
+//             />
+//           </>
+//         )}
+//       </>
+//     );
+//   });
+// })}

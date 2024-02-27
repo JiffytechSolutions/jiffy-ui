@@ -30,35 +30,24 @@ export default {
 
 const demoDataSetLineChart = {
   labels: {
-    x: ["Jan", "Feb", "Mar", "Apr", "May"],
-    // x: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"],
+    x: ["Jan", "Feb", "Mar"],
     y: 10,
   },
   dataSet: [
     {
-      name: "Orders",
+      name: "Products",
       color: "red",
-      points: [60, 80],
+      points: [65, 80, 90],
     },
     {
+      name: "Orders",
       color: "blue",
-      points: [80, 90],
-      name: "Sales",
+      points: [45, 50, 70],
     },
     {
-      name: "Purchase",
+      name: "Variants",
       color: "green",
-      points: [40, 76],
-    },
-    {
-      name: "Four",
-      color: "green",
-      points: [55, 90],
-    },
-    {
-      name: "Five",
-      color: "black",
-      points: [44, 56],
+      points: [30, 40, 50],
     },
   ],
 };
@@ -84,7 +73,6 @@ const Template = ({ ...rest }) => {
         legend={{ show: true, position: rest.legend }}
         dataSet={demoDataSetLineChart.dataSet}
         labels={demoDataSetLineChart.labels}
-        barChartType="twoLine"
       />
     </Card>
   );
