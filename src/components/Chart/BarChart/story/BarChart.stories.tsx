@@ -49,6 +49,21 @@ const demoDataSetLineChart = {
       color: "green",
       points: [30, 40, 50],
     },
+    // {
+    //   name: "Variants",
+    //   color: "yellow",
+    //   points: [26, 30, 45],
+    // },
+    // {
+    //   name: "Orders",
+    //   color: "blue",
+    //   points: [45, 50, 70],
+    // },
+    // {
+    //   name: "Variants",
+    //   color: "green",
+    //   points: [30, 40, 50],
+    // },
   ],
 };
 const Template = ({ ...rest }) => {

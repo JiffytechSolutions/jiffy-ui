@@ -686,3 +686,244 @@ export default BarChart;
 //     );
 //   });
 // })}
+
+// today new
+
+// const renderPaths = () => {
+//   const paths: any = [];
+//   for (
+//     let i = 0;
+//     i < (typeof labels.x === "number" ? labels.x : labels.x.length);
+//     i++
+//   ) {
+//     const labelName = typeof labels.x === "number" ? i : labels.x[i];
+
+//     dataSet.map((item, index) => {
+//       const color = item.color;
+//       const currValue = item.points[i];
+//       const x =
+//         getPointsFromIndex(i, "horizontal") - graphScale.lineWidth / 2;
+//       const y1 = origin.y;
+//       const y2 = getYPixels(currValue);
+//       const pathD = `M ${x},${y1} ${x},${y2}`;
+
+//       let total = dataSet.length;
+//       // if (index === 1 && dataSet.length > 0) {
+//       let even = 15;
+//       let odd = 15;
+//       let groupPath;
+//       console.clear();
+//       for (let j = 1; j <= total; j++) {
+//         // even
+//         if (dataSet.length % 2 == 0) {
+//           if (total / 2 >= j) {
+//             console.log("if");
+//             groupPath = `M ${x - even},${y1} ${x - even},${y2}`;
+//             even = even + 31;
+//           } else {
+//             console.log("if else");
+//             groupPath = `M ${x + odd},${y1} ${x + odd},${y2}`;
+//             odd = odd + 31;
+//           }
+//         } else {
+//           // odd
+//           console.log("else");
+//         }
+//       }
+
+//       type === "group"
+//         ? paths.push(
+//             <>
+//               <path
+//                 key={index}
+//                 d={groupPath}
+//                 stroke={color}
+//                 strokeWidth={31}
+//                 className="inte-barChart__fillPath"
+//                 onMouseOver={() => setShowPoint(index)}
+//                 onMouseOut={() => setShowPoint(-1)}
+//               />
+//               {showPoint === index && (
+//                 <>
+//                   <defs>
+//                     <linearGradient
+//                       id="gradient"
+//                       x1="0%"
+//                       y1="0%"
+//                       x2="0%"
+//                       y2="100%"
+//                     >
+//                       <stop offset="30%" stop-color="white" />
+//                       <stop offset="100%" stop-color={item.color} />
+//                     </linearGradient>
+//                   </defs>
+//                   <circle
+//                     cx={x}
+//                     cy={y2}
+//                     r="6.667"
+//                     stroke="#fff"
+//                     strokeWidth="2"
+//                     fill="url(#gradient)"
+//                     onMouseOver={() =>
+//                       handelCurvePointHover(
+//                         x,
+//                         y2,
+//                         item.name,
+//                         item.color,
+//                         item.points[0],
+//                         index
+//                       )
+//                     }
+//                   />
+//                 </>
+//               )}
+//             </>
+//           )
+//         : paths.push(
+//             <>
+//               <path
+//                 key={index}
+//                 d={pathD}
+//                 stroke={color}
+//                 strokeWidth={31}
+//                 className="inte-barChart__fillPath"
+//                 onMouseOver={() => setShowPoint(index)}
+//                 onMouseOut={() => setShowPoint(-1)}
+//               />
+//               {showPoint === index && (
+//                 <>
+//                   <defs>
+//                     <linearGradient
+//                       id="gradient"
+//                       x1="0%"
+//                       y1="0%"
+//                       x2="0%"
+//                       y2="100%"
+//                     >
+//                       <stop offset="30%" stop-color="white" />
+//                       <stop offset="100%" stop-color={item.color} />
+//                     </linearGradient>
+//                   </defs>
+//                   <circle
+//                     cx={x}
+//                     cy={y2}
+//                     r="6.667"
+//                     stroke="#fff"
+//                     strokeWidth="2"
+//                     fill="url(#gradient)"
+//                     onMouseOver={() =>
+//                       handelCurvePointHover(
+//                         x,
+//                         y2,
+//                         item.name,
+//                         item.color,
+//                         item.points[0],
+//                         index
+//                       )
+//                     }
+//                   />
+//                 </>
+//               )}
+//             </>
+//           );
+//     });
+//   }
+//   return paths;
+// };
+
+// chat code
+
+// const renderPaths = () => {
+//   const paths: any = [];
+//   const dataSetLength = dataSet.length;
+
+//   for (
+//     let i = 0;
+//     i < (typeof labels.x === "number" ? labels.x : labels.x.length);
+//     i++
+//   ) {
+//     dataSet.map((item, index) => {
+//       const color = item.color;
+//       const currValue = item.points[i];
+//       const x =
+//         getPointsFromIndex(i, "horizontal") - graphScale.lineWidth / 2;
+//       const y1 = origin.y;
+//       const y2 = getYPixels(currValue);
+//       const pathD = `M ${x},${y1} ${x},${y2}`;
+
+//       let groupPath = ""; // Initialize groupPath
+
+//       if (dataSetLength === 1) {
+//         // Center for odd data length
+//         groupPath = `M ${x},${y1} ${x},${y2}`;
+//       } else if (dataSetLength % 2 === 0) {
+//         // Left side for even data length
+//         if (index < dataSetLength / 2) {
+//           groupPath = `M ${x - 15},${y1} ${x - 15},${y2}`;
+//         } else {
+//           // Right side for even data length
+//           groupPath = `M ${x + 15},${y1} ${x + 15},${y2}`;
+//         }
+//       } else {
+//         // Left side for odd data length
+//         if (index < Math.floor(dataSetLength / 2)) {
+//           groupPath = `M ${x - 31},${y1} ${x - 31},${y2}`;
+//         } else if (index === Math.floor(dataSetLength / 2)) {
+//           // Center for odd data length
+//           groupPath = `M ${x},${y1} ${x},${y2}`;
+//         } else {
+//           // Right side for odd data length
+//           groupPath = `M ${x + 31},${y1} ${x + 31},${y2}`;
+//         }
+//       }
+
+//       paths.push(
+//         <React.Fragment key={`path-${index}`}>
+//           <path
+//             d={groupPath}
+//             stroke={color}
+//             strokeWidth={31}
+//             className="inte-barChart__fillPath"
+//             onMouseOver={() => setShowPoint(index)}
+//             onMouseOut={() => setShowPoint(-1)}
+//           />
+//           {showPoint === index && (
+//             <React.Fragment>
+//               <defs>
+//                 <linearGradient
+//                   id={`gradient-${index}`}
+//                   x1="0%"
+//                   y1="0%"
+//                   x2="0%"
+//                   y2="100%"
+//                 >
+//                   <stop offset="30%" stop-color="white" />
+//                   <stop offset="100%" stop-color={item.color} />
+//                 </linearGradient>
+//               </defs>
+//               <circle
+//                 cx={x}
+//                 cy={y2}
+//                 r="6.667"
+//                 stroke="#fff"
+//                 strokeWidth="2"
+//                 fill={`url(#gradient-${index})`}
+//                 onMouseOver={() =>
+//                   handelCurvePointHover(
+//                     x,
+//                     y2,
+//                     item.name,
+//                     item.color,
+//                     item.points[0],
+//                     index
+//                   )
+//                 }
+//               />
+//             </React.Fragment>
+//           )}
+//         </React.Fragment>
+//       );
+//     });
+//   }
+//   return paths;
+// };

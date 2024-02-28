@@ -426,43 +426,50 @@ const BarChart = ({
         const y2 = getYPixels(currValue);
         const pathD = `M ${x},${y1} ${x},${y2}`;
 
+        let total = dataSet.length;
+        // if (index === 1 && dataSet.length > 0) {
+        let even = 15;
+        let odd = 15;
         let groupPath;
-
-        if (index === 1) {
-          console.log(i, index);
-          groupPath = `M ${x + 15},${y1} ${x + 15},${y2}`;
-          // let a = 15;
-          // for (let j = i; j <= index; j++) {
-          //   if (j % 2 == 0) {
-          //     console.log(a, "even");
-          //     groupPath = `M ${x - a},${y1} ${x - a},${y2}`;
-          //     a = a * 2;
-          //   } else {
-          //     console.log(a, "odd");
-          //     groupPath = `M ${x + a},${y1} ${x + a},${y2}`;
-          //     a = a * 2;
-          //   }
-          // }
-        } else if (index === 0) {
-          groupPath = `M ${x - 15},${y1} ${x - 15},${y2}`;
-        } else if (index === 2) {
-          groupPath = `M ${x - 15},${y1} ${x - 15},${y2}`;
-        } else if (dataSet.length === 0) {
-          groupPath = pathD;
-        }
+        console.clear();
+        const empty = useMemo(() => {
+          const emp: any = [];
+          for (let j = 0; j < total; j++) {
+            if (total > 0) {
+              groupPath = `M ${x + 31},${y1} ${x + 31},${y2}`;
+              // emp.push(`M ${x + 31},${y1} ${x + 31},${y2}`);
+              if (j == 0) {
+                groupPath = `M ${x},${y1} ${x},${y2}`;
+                emp.push(`M ${x + 31},${y1} ${x + 31},${y2}`);
+              } else {
+                groupPath = `M ${x + even},${y1} ${x + even},${y2}`;
+                emp.push(`M ${x + even},${y1} ${x + even},${y2}`);
+                even = even + 15;
+              }
+            } else if (total === 0) {
+              groupPath = pathD;
+            }
+          }
+          return emp;
+        }, [index, i, dataSet]);
+        console.log(empty);
 
         type === "group"
           ? paths.push(
               <>
-                <path
-                  key={index}
-                  d={groupPath}
-                  stroke={color}
-                  strokeWidth={31}
-                  className="inte-barChart__fillPath"
-                  onMouseOver={() => setShowPoint(index)}
-                  onMouseOut={() => setShowPoint(-1)}
-                />
+                {empty.map((item: any) => {
+                  return (
+                    <path
+                      key={index}
+                      d={item}
+                      stroke={color}
+                      strokeWidth={31}
+                      className="inte-barChart__fillPath"
+                      onMouseOver={() => setShowPoint(index)}
+                      onMouseOut={() => setShowPoint(-1)}
+                    />
+                  );
+                })}
                 {showPoint === index && (
                   <>
                     <defs>
