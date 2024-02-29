@@ -182,7 +182,7 @@ export const DonutChart: React.FC<DonutChartI> = ({
         let startAngel = -90
         const innerRadius = radius / 2;
         paths.map((path, index) => {
-          const currPathPer = (newArr[index].percentage * animationCompletePercentage) / 100;
+          const currPathPer = (newArr[index]?.percentage * animationCompletePercentage) / 100;
           const endAngle = startAngel + (currPathPer * 360) / 100;
           const currPathD = getDonutSegmentPath(startAngel, endAngle, innerRadius, radius)
           path.setAttribute("d", currPathD)
@@ -209,7 +209,7 @@ export const DonutChart: React.FC<DonutChartI> = ({
 
   useEffect(() => {
     window.requestAnimationFrame(animatePath)
-  }, []);
+  }, [chartData]);
 
   useEffect(() => {
     checkDeviceType()
@@ -222,7 +222,7 @@ export const DonutChart: React.FC<DonutChartI> = ({
 
   return (
     <div className="inte-donutChart__wrapper">
-      <div className="inte-donutChart">
+      <div className="inte-donutChart" style={{height:`${size}px`, width : `${size}px`}}>
         <svg
           ref={chartRef}
           width={size}

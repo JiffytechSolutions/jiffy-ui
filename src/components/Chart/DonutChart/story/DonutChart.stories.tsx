@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "../../../Card";
 import { DonutChart, donutChartData } from "../DonutChart";
 import { FlexLayout } from "../../../FlexLayout";
+import DonutChartTemplate from "./DonutChartTemplate";
 
 export default {
   title: "Components/Chart/DonutChart",
@@ -43,6 +44,31 @@ export default {
       },
       defaultValue: { show: false, type: "number" || "percentage" },
     },
+    legend: {
+      description:
+        `Show the legend
+          <table>
+            <tbody>
+              <tr>
+                <td>desktop</td>
+                <td>Show legend in desktop device or not <code>boolean</code></td>
+              </tr>
+              <tr>
+                <td>tab</td>
+                <td>Show legend in tab device or not <code>boolean</code></td>
+              </tr>
+              <tr>
+                <td>mobile</td>
+                <td>Show legend in mobile device or not <code>boolean</code></td>
+              </tr>
+            </tbody>
+          </table>
+        `,
+      control: {
+        type: "object",
+      },
+      defaultValue: { mobile: true, tab: true , desktop: true },
+    },
     animationDuration: {
       description:
         "Set the duration of animation in <code> millisecond </code>",
@@ -76,7 +102,6 @@ const Template = ({ ...rest }) => {
         <DonutChart 
           {...rest} 
           chartData={chartData} 
-          legend={{ desktop:true , mobile : true , tab : false}} 
         />
       </FlexLayout>
     </Card>
@@ -84,4 +109,6 @@ const Template = ({ ...rest }) => {
 };
 
 export const Primary = Template.bind({});
+
+export const DonutChartTemplateWithDemoData = () => <DonutChartTemplate />
 

@@ -153,7 +153,7 @@ const PieChart: React.FC<PieChartI> = ({
 
   useEffect(() => {
     window.requestAnimationFrame(animatePath)
- }, []);
+ }, [chartData]);
 
  const checkDeviceType = () => {
   const width = window.innerWidth

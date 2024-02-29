@@ -51,6 +51,31 @@ export default {
       },
       defaultValue: { show: true, type: "number" },
     },
+    legend: {
+      description:
+        `Show the legend
+          <table>
+            <tbody>
+              <tr>
+                <td>desktop</td>
+                <td>Show legend in desktop device or not <code>boolean</code></td>
+              </tr>
+              <tr>
+                <td>tab</td>
+                <td>Show legend in tab device or not <code>boolean</code></td>
+              </tr>
+              <tr>
+                <td>mobile</td>
+                <td>Show legend in mobile device or not <code>boolean</code></td>
+              </tr>
+            </tbody>
+          </table>
+        `,
+      control: {
+        type: "object",
+      },
+      defaultValue: { mobile: true, tab: true , desktop: true },
+    },
     customClass: {
       description: "Add custom class if need to change the design",
       control: {
@@ -80,7 +105,12 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <FlexLayout halign="center">
-        <PieChart {...rest} chartData={chartData} size={rest.height} animationDuration={500} legend={{tab:false}} />
+        <PieChart 
+          {...rest} 
+          chartData={chartData} 
+          size={rest.height} 
+          animationDuration={500}  
+        />
       </FlexLayout>
     </Card>
   );
