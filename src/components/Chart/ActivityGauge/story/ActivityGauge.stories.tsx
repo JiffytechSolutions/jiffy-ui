@@ -83,7 +83,7 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <FlexLayout spacing="extraLoose">
-        <ActivityGauge chartData={chartData} {...rest} />
+        <ActivityGauge chartData={chartData} {...rest} legend={{desktop : true , mobile : true , tab : true}}/>
       </FlexLayout>
     </Card>
   );

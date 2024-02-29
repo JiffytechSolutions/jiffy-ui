@@ -2,6 +2,7 @@ import React from "react";
 import { Card } from "../../../Card";
 import LineChart, { LineChartI } from "../LineChart";
 import { FlexLayout } from "../../../FlexLayout";
+import LineChartTemplate from "./LineChartTemplate";
 
 export default {
   title: "Components/Chart/LineChart",
@@ -84,20 +85,6 @@ export default {
       control: {
         disable: true
       },
-    },
-    paddingLeft: {
-      description: "Spacing from the left of the chart",
-      control: {
-        type: 'number',
-      },
-      defaultValue: 60
-    },
-    paddingBottom: {
-      description: "Spacing from the bottom of the chart",
-      control: {
-        type: 'number',
-      },
-      defaultValue: 50
     },
     backgroundGrid: {
       description: `Customize the background grid
@@ -421,4 +408,8 @@ export const LineChartWithSmallLabels = ({ ...rest }) => {
       </FlexLayout>
     </Card>
   )
+}
+
+export const LineChartTemplateWithDemoData = () => {
+  return  <LineChartTemplate />
 }

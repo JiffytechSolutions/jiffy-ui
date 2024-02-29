@@ -1,14 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./DonutChart.css";
+import Badge from "../../Badge/Badge";
+import Text from "../../Text/Text";
+import Legend from "../Legend/Legend";
 
 export interface DonutChartI {
   chartData: donutChartData[];
   size?: number;
-  tooltip?: tooltipI;
+  tooltip?: boolean;
   border?: showBorderI;
   type?: "piechart" | "donutchart";
   totalItems?: tooltipI;
   customClass?: string;
+  animationDuration?: number
+  valueType?: "number" | "percentage"
+  legend?: {
+    tab?: boolean
+    mobile?: boolean
+    desktop?: boolean
+  }
 }
 
 export interface donutChartData {
@@ -30,32 +40,42 @@ export const DonutChart: React.FC<DonutChartI> = ({
   chartData,
   border = { show: false, width: 1, color: "#fff" },
   size = 250,
+  animationDuration = 2000,
+  valueType,
+  tooltip,
+  legend
 }) => {
-  const animatePath = (
-    path: any,
-    startAngle: any,
-    endAngle: any,
-    duration: any
+  const [deviceType, setDeviceType] = useState<"desktop" | "tab" | "mobile">("desktop")
+  const [handleIndex, setHandleIndex] = useState(-1);
+  const chartRef = useRef<SVGSVGElement>(null)
+  const [showValue, setShowValue] = useState<{
+    label: string;
+    value: number;
+    percentage: number;
+    color: string
+  }>({
+    label: "",
+    value: 0,
+    percentage: 0,
+    color: ""
+  });
+  const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
+
+  const handleMouseOver = (
+    item: donutChartData,
+    event: React.MouseEvent<SVGPathElement>
   ) => {
-    const startTime = performance.now();
+    setShowValue({ label: item.label, value: item.value, percentage: 0, color: item.color, });
+    const pathRect = (event.target as HTMLElement).getBoundingClientRect()
+    if (!pathRect) return
+    const left = pathRect.left + (pathRect.width / 2)
+    const top = pathRect.top + (pathRect.height / 2)
+    setTooltipPosition({ x: left, y: top });
 
-    const animateFrame = (currentTime: any) => {
-      const elapsedTime = currentTime - startTime;
-      const animationProgress = Math.min(elapsedTime / duration, 1);
-      const currentAngle =
-        startAngle + (endAngle - startAngle) * animationProgress;
+  };
 
-      path.setAttribute(
-        "d",
-        getDonutSegmentPath(startAngle, currentAngle, radius / 2, radius)
-      );
-
-      if (animationProgress < 1) {
-        requestAnimationFrame(animateFrame);
-      }
-    };
-
-    requestAnimationFrame(animateFrame);
+  const handleMouseLeave = () => {
+    setShowValue({ label: "", value: 0, percentage: 0, color: "" });
   };
 
   // Convert negative values to positive
@@ -104,18 +124,9 @@ export const DonutChart: React.FC<DonutChartI> = ({
             L ${x2Inner} ${y2Inner} 
             A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 0 ${x1Inner} ${y1Inner} Z`;
   };
+
+
   let startAngle = -90; // Start angle at the top
-  // getting path value
-  let intervals: any = [];
-  for (let i = 0; i < newArr.length; i++) {
-    const endAngle = startAngle + (newArr[i].percentage * 360) / 100;
-    let currentTime = startAngle;
-    while (currentTime < endAngle) {
-      intervals.push({ value: currentTime, index: i });
-      currentTime += 2;
-    }
-    startAngle = endAngle; // Update start for the next interval
-  }
 
   // creating path
   const paths = newArr.map((item, index) => {
@@ -128,7 +139,6 @@ export const DonutChart: React.FC<DonutChartI> = ({
       innerRadius,
       radius
     );
-
     startAngle = endAngle;
 
     return (
@@ -136,9 +146,12 @@ export const DonutChart: React.FC<DonutChartI> = ({
         key={index}
         d={pathData}
         fill={chartData[index].color}
-        // stroke={`${border ? "#000" : "#fff"}`}
-        // strokeWidth="1"
-        className="inte-newdonutChart__path"
+        className="inte-donutChart__path"
+        onMouseOver={(e) => { handleMouseOver(item, e); setHandleIndex(index) }}
+        onMouseLeave={() => { handleMouseLeave(); setHandleIndex(-1) }}
+        style={{
+          transform: `scale(${handleIndex === index ? 1.04 : 1})`,
+        }}
         {...(border.show && {
           stroke: border.color,
           strokeWidth: `${border.width}`,
@@ -147,44 +160,97 @@ export const DonutChart: React.FC<DonutChartI> = ({
     );
   });
 
+  let start: number, previousTimeStamp: number;
+  let done = false;
+
   useEffect(() => {
-    const paths = document.querySelectorAll(".inte-newdonutChart__path");
-    const endAngles: any = []; // Array to store end angles of each path
 
-    paths.forEach((path, index) => {
-      const startPercentage = newArr[index]?.percentage;
-      const endAngle = startAngle + (startPercentage * 360) / 100;
+  }, [tooltip])
 
-      // const startAngle = -90; // Starting angle for all paths
-      // const endAngle = startAngle + (newArr[index].percentage * 360) / 100;
-      endAngles.push(endAngle); // Store the end angle for the current path
+  const animatePath = (timeStamp: number) => {
+    if (start === undefined) {
+      start = timeStamp;
+    }
+    const elapsed = timeStamp - start;
 
-      animatePath(path, startAngle, endAngle, 2000); // Animation duration 2000ms (2 seconds)
-      // startAngle = endAngle;
-    });
-  }, []);
-  // useEffect(() => {
-  //   const paths = document.querySelectorAll(".inte-newdonutChart__path");
+    if (previousTimeStamp !== timeStamp) {
 
-  //   paths.forEach((path, index) => {
-  //     const startPercentage = newArr[index]?.percentage;
-  //     const endAngle = startAngle + (startPercentage * 360) / 100;
+      const paths = Array.from(chartRef.current?.querySelectorAll(".inte-donutChart__path") ?? [])
 
-  //     animatePath(path, startAngle, endAngle, 200); // Animation duration 2000ms (2 seconds)
-  //     startAngle = endAngle;
-  //   });
-  // }, []);
+      if (paths && paths.length && newArr) {
+        const animationCompletePercentage = Math.min(Math.ceil((elapsed / animationDuration) * 100), 100)
+        let startAngel = -90
+        const innerRadius = radius / 2;
+        paths.map((path, index) => {
+          const currPathPer = (newArr[index]?.percentage * animationCompletePercentage) / 100;
+          const endAngle = startAngel + (currPathPer * 360) / 100;
+          const currPathD = getDonutSegmentPath(startAngel, endAngle, innerRadius, radius)
+          path.setAttribute("d", currPathD)
+          startAngel = endAngle
+        })
+
+      }
+      const count = Math.min(elapsed, animationDuration)
+      if (count === animationDuration) done = true
+    }
+
+    if (elapsed < animationDuration) {
+      previousTimeStamp = timeStamp
+      if (!done) window.requestAnimationFrame(animatePath)
+    }
+  }
+
+  const checkDeviceType = () => {
+    const width = window.innerWidth
+    if (width < 480) setDeviceType("mobile")
+    else if (width < 768) setDeviceType("tab")
+    else setDeviceType("desktop")
+  }
+
+  useEffect(() => {
+    window.requestAnimationFrame(animatePath)
+  }, [chartData]);
+
+  useEffect(() => {
+    checkDeviceType()
+    window.addEventListener('resize', checkDeviceType)
+    return () => {
+      window.removeEventListener('resize', checkDeviceType)
+    }
+  }, [legend])
+
 
   return (
-    <div className="inte-newdonutChart">
-      <svg
-        width={size}
-        height={size}
-        viewBox={`0 0 ${size} ${size}`}
-        className="inte-newdonutChart__svg"
-      >
-        <g transform={`translate(${size / 2}, ${size / 2})`}>{paths}</g>
-      </svg>
+    <div className="inte-donutChart__wrapper">
+      <div className="inte-donutChart" style={{height:`${size}px`, width : `${size}px`}}>
+        <svg
+          ref={chartRef}
+          width={size}
+          height={size}
+          viewBox={`0 0 ${size} ${size}`}
+          className="inte-donutChart__svg"
+        >
+          <g transform={`translate(${size / 2}, ${size / 2})`}>{paths}</g>
+        </svg>
+      </div>
+      {
+        legend && (legend[deviceType] !== false) ? <Legend chartData={chartData} renderIndex={(index) => setHandleIndex(index)} valueType={valueType ?? "number"} /> : null
+      }
+      {showValue.label && showValue.value && tooltip && (
+        <div
+          className="inte-chart__tooltip"
+          style={{
+            left: `${tooltipPosition.x}px`,
+            top: `${tooltipPosition.y}px`,
+          }}
+        >
+          <Badge size="large" dot customBgColor={showValue.color} />
+          {`${showValue.label}:  ${valueType === "percentage"
+            ? ((showValue.value / total) * 100).toFixed(2) + "%"
+            : showValue.value
+            }`}
+        </div>
+      )}
     </div>
   );
 };

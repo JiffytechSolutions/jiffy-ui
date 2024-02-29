@@ -21,8 +21,6 @@ export interface LineChartI {
     animationDuration?: number
     beginAtOrigin?: boolean
   }[],
-  paddingLeft?: number,
-  paddingBottom?: number,
   backgroundGrid?: {
     xLines?: {
       color?: string,
@@ -56,6 +54,14 @@ const graphScale = {
   textColor: "#1C2433"
 }
 
+const getHeightChange = (width:number , height:number , angle:number) => {
+  const rad = angle * Math.PI / 180,
+    sin = Math.sin(rad),
+    cos = Math.cos(rad);
+  const newHeight = Math.abs(width * sin) + Math.abs(height * cos);
+  return newHeight
+}
+
 const LineChart = ({
   width = "100%",
   height = 350,
@@ -63,8 +69,6 @@ const LineChart = ({
   dataSet,
   lineType = "curved",
   backgroundGrid,
-  paddingLeft = 60,
-  paddingBottom = 50,
   customClass,
   legend = { show: true, position: "bottom" }
 }: LineChartI) => {
@@ -82,6 +86,10 @@ const LineChart = ({
     width: 300,
     height: height
   })
+  const [{paddingLeft , paddingBottom} , setPadding] = useState({
+    paddingLeft : 60,
+    paddingBottom : 50
+  })
 
   const origin = useMemo(() => {
     return {
@@ -98,7 +106,7 @@ const LineChart = ({
   }, [svgSize, paddingLeft, xBlockCount]);
 
   const yBlockWidth = useMemo(() => {
-    return (svgSize.height - (paddingBottom + (paddingBottom / 2))) / yBlockCount
+    return (svgSize.height - (paddingBottom + (20))) / yBlockCount
   }, [svgSize, paddingBottom, yBlockCount]);
 
   const maxY = useMemo<number>(() => {
@@ -176,7 +184,7 @@ const LineChart = ({
     const getYLabel = (index: number, tot: number) => {
       const blockWidth = maxY / tot
       const currValue = blockWidth * (index + 1)
-      return currValue
+      return currValue.toFixed(2)
     }
     const xLabels = xLabelPoints.map((item, index) => makeScaleLabel(item, typeof labels.x === "number" ? `${paddingLeft + item.x}` : labels.x[index], "horizontal"))
 
@@ -375,8 +383,31 @@ const LineChart = ({
     if (!labelListRef.current || !containerRef.current) return
     const totalWidth = containerRef.current.clientWidth - paddingLeft
     const widthTaken = Array.from(labelListRef.current.getElementsByClassName("inte-scaleLabel--horizontal")).map(ele => ele.clientWidth).reduce((accumulator, currentValue) => accumulator + currentValue + 24, 0);
-    if (totalWidth <= widthTaken) labelListRef.current.classList.add("inte-scaleLabel--small")
-    else labelListRef.current.classList.remove("inte-scaleLabel--small")
+    let pb = paddingBottom
+    if (totalWidth <= widthTaken) {
+      labelListRef.current.classList.add("inte-scaleLabel--small")
+      const maxHeightChange = Array.from(labelListRef.current.getElementsByClassName("inte-scaleLabel--horizontal"))
+      .map(ele => {
+        const currRect = ele.getBoundingClientRect()
+        return getHeightChange(currRect.width , currRect.height , 45)
+      }).reduce((accumulator, item) => Math.max(accumulator , item),0)
+
+      pb = maxHeightChange
+    }
+    else {
+      labelListRef.current.classList.remove("inte-scaleLabel--small")
+      const maxHeightChange = Array.from(labelListRef.current.getElementsByClassName("inte-scaleLabel--horizontal"))
+      .map(ele => {
+        const currRect = ele.getBoundingClientRect()
+        return getHeightChange(currRect.width , currRect.height , 0)
+      }).reduce((accumulator, item) => Math.max(accumulator , item),0)
+
+      pb = maxHeightChange
+    }
+
+    const maxWidth = Array.from(labelListRef.current.getElementsByClassName("inte-scaleLabel--vertical")).map(ele => ele.getBoundingClientRect().width).reduce((accumulator, currentValue) => Math.max(accumulator , currentValue),0)+ graphScale.cutGap + graphScale.cutSize
+
+    setPadding({paddingLeft : maxWidth , paddingBottom : Math.ceil(pb + graphScale.cutGap + graphScale.cutSize)})
   }
 
   useEffect(() => {
@@ -416,6 +447,7 @@ const LineChart = ({
         style={{
           ["--lineColor" as any]: graphScale.color,
           ['--lineWidth' as any]: graphScale.lineWidth + 'px',
+          ["--animateBottom" as any] : paddingBottom + 'px',
           width: width,
           height: height
         }}

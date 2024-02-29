@@ -1,17 +1,25 @@
-.inte-newdonutChart {
-  position: relative;
-  line-height: 0;
-}
-.inte-newdonutChart__svg {
-  height: 100%;
-  width: 100%;
-  overflow: visible;
-}
-
-.inte-newdonutChart__path {
-  transition: transform 0.3s ease, fill 0.3s ease;
-}
-
-.inte-newdonutChart__path:hover {
-  transform: scale(1.04);
-}
+.inte-donutChart {
+    position: relative;
+    line-height: 0;
+  }
+  .inte-donutChart__svg {
+    height: 100%;
+    width: 100%;
+    overflow: visible;
+  }
+  
+  .inte-donutChart__path {
+    transition: transform 0.3s ease, fill 0.3s ease;
+  }
+  
+  .inte-donutChart__path:hover {
+    transform: scale(1.03);
+  transition: "transform 0.5s ease, fill 0.5s ease";
+  }
+  
+  .inte-chartLegend__list {
+    display: flex;
+    margin-top: 1.6rem;
+    gap: 1.2rem;
+    flex-direction: column;
+  }
