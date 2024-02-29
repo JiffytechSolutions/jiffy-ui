@@ -1,15 +1,15 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { cubicSplineInterpolation } from "./Curve";
-import "./LineChart.css";
 import ToolTip from "../../ToolTip/ToolTip";
 import Badge from "../../Badge/Badge";
 import Text from "../../Text/Text";
 import getClassNames from "../../../utilities/getClassnames";
+import "./BarChart.css";
 
-export interface LineChartI {
+export interface barChartI {
   width?: string;
   height?: number;
-  lineType?: "straight" | "curved";
+  type?: "group" | "stack";
+  direction?: "vertical" | "horizontal";
   labels: {
     x: string[] | number;
     y: string[] | number;
@@ -21,6 +21,8 @@ export interface LineChartI {
     animationDuration?: number;
     beginAtOrigin?: boolean;
   }[];
+  paddingLeft?: number;
+  paddingBottom?: number;
   backgroundGrid?: {
     xLines?: {
       color?: string;
@@ -37,12 +39,6 @@ export interface LineChartI {
   customClass?: string;
 }
 
-export type DataSetLineChart = {
-  color: string;
-  points: number[];
-  name: string;
-}[];
-
 type Point = { x: number; y: number };
 
 const graphScale = {
@@ -54,25 +50,20 @@ const graphScale = {
   textColor: "#1C2433",
 };
 
-const getHeightChange = (width: number, height: number, angle: number) => {
-  const rad = (angle * Math.PI) / 180,
-    sin = Math.sin(rad),
-    cos = Math.cos(rad);
-  const newHeight = Math.abs(width * sin) + Math.abs(height * cos);
-  return newHeight;
-};
-
-const LineChart = ({
+const BarChart = ({
   width = "100%",
   height = 350,
   labels,
   dataSet,
-  lineType = "curved",
+  type = "group",
   backgroundGrid,
+  paddingLeft = 60,
+  paddingBottom = 50,
   customClass,
   legend = { show: true, position: "bottom" },
-}: LineChartI) => {
-  const [curveLines, setCurveLines] = useState<React.JSX.Element[]>([]);
+}: barChartI) => {
+  const [showPoint, setShowPoint] = useState(-1);
+  const [currentColor, setCurrentColor] = useState("");
   const [graphScaleLine, setGraphScaleLine] = useState<React.JSX.Element>();
   const [currentHoveredBlock, setCurrentHoveredBlock] =
     useState<Point | undefined>();
@@ -85,10 +76,6 @@ const LineChart = ({
   const [svgSize, setSvgSize] = useState<{ width: number; height: number }>({
     width: 300,
     height: height,
-  });
-  const [{ paddingLeft, paddingBottom }, setPadding] = useState({
-    paddingLeft: 60,
-    paddingBottom: 50,
   });
 
   const origin = useMemo(() => {
@@ -112,7 +99,7 @@ const LineChart = ({
   }, [svgSize, paddingLeft, xBlockCount]);
 
   const yBlockWidth = useMemo(() => {
-    return (svgSize.height - (paddingBottom + 20)) / yBlockCount;
+    return (svgSize.height - (paddingBottom + paddingBottom / 2)) / yBlockCount;
   }, [svgSize, paddingBottom, yBlockCount]);
 
   const maxY = useMemo<number>(() => {
@@ -123,7 +110,6 @@ const LineChart = ({
     });
     return maxY - (maxY % 10) + 10;
   }, [dataSet]);
-
   const maxX = useMemo(() => {
     return svgSize.width - paddingLeft;
   }, [svgSize, paddingLeft]);
@@ -131,11 +117,6 @@ const LineChart = ({
   const getYPixels = (y: number) => {
     const takesBlock = y / (maxY / yBlockCount);
     return origin.y - takesBlock * yBlockWidth;
-  };
-
-  const getXPixels = (x: number) => {
-    const takesBlock = x / (maxX / xBlockCount);
-    return origin.x + takesBlock * xBlockWidth;
   };
 
   const getPointsFromIndex = (
@@ -191,7 +172,7 @@ const LineChart = ({
   const drawScale = () => {
     let xLabelPoints: Point[] = [];
     let yLabelPoints: Point[] = [];
-
+    // show this bottom label
     const cutsInXAxis = Array(xBlockCount)
       .fill(0)
       .map((item, index) => {
@@ -225,7 +206,7 @@ const LineChart = ({
     const getYLabel = (index: number, tot: number) => {
       const blockWidth = maxY / tot;
       const currValue = blockWidth * (index + 1);
-      return currValue.toFixed(2);
+      return currValue;
     };
     const xLabels = xLabelPoints.map((item, index) =>
       makeScaleLabel(
@@ -250,93 +231,15 @@ const LineChart = ({
     setScaleLabel([...xLabels, ...yLabels]);
 
     return (
-      <>
-        <path
-          d={`M ${paddingLeft},0 ${origin.x},${origin.y} ${svgSize.width},${
-            svgSize.height - paddingBottom
-          }`}
-          strokeWidth={graphScale.lineWidth}
-          stroke={graphScale.color}
-          fill="none"
-        />
-      </>
+      <path
+        d={`M ${paddingLeft},0 ${origin.x},${origin.y} ${svgSize.width},${
+          svgSize.height - paddingBottom
+        }`}
+        strokeWidth={graphScale.lineWidth}
+        stroke={graphScale.color}
+        fill="none"
+      />
     );
-  };
-
-  const drawCurve = () => {
-    const xPoints = Array(xBlockCount)
-      .fill(0)
-      .map((_, index) => getPointsFromIndex(index, "horizontal"));
-    const curvesEquations = dataSet.map((item, _) => {
-      let currPoints = xPoints.map((x, index) => {
-        return {
-          x: x,
-          y: getYPixels(item.points[index]),
-        };
-      });
-      if (item.beginAtOrigin) {
-        currPoints = [
-          { x: paddingLeft, y: svgSize.height - paddingBottom },
-          ...currPoints,
-        ];
-      }
-      return cubicSplineInterpolation(
-        currPoints,
-        paddingLeft,
-        0,
-        svgSize.width,
-        svgSize.height - paddingBottom
-      );
-    });
-
-    const curvesPoint =
-      lineType === "curved"
-        ? curvesEquations.map((equation, index) => {
-            const points: Point[] = [];
-            for (let i = paddingLeft + 1; i < svgSize.width; i++) {
-              points.push({
-                x: i,
-                y: equation(i),
-              });
-            }
-            return points;
-          })
-        : dataSet.map((item, index) => {
-            let points: Point[] = [];
-            for (let i = 0; i < xPoints.length; i++) {
-              points.push({
-                x: xPoints[i],
-                y: getYPixels(item.points[i]),
-              });
-            }
-            if (item.beginAtOrigin) {
-              points = [
-                { x: paddingLeft, y: svgSize.height - paddingBottom },
-                ...points,
-              ];
-            }
-            return points;
-          });
-
-    const curveLines = curvesPoint.map((item, index) => {
-      let path = "";
-      item.forEach((p) => (path += `${p.x},${p.y} `));
-      return (
-        <path
-          className="inte-LineChart__dataLine"
-          style={{
-            animationDuration: `${dataSet[index].animationDuration ?? 300}ms`,
-          }}
-          d={`M ${path}`}
-          strokeWidth={graphScale.lineWidth * 3}
-          stroke={dataSet[index].color}
-          fill="none"
-          strokeLinecap="round"
-        />
-      );
-    });
-
-    return curveLines;
   };
 
   const handelMouseOver = (e: MouseEvent) => {
@@ -360,7 +263,6 @@ const LineChart = ({
   };
 
   const drawGraph = () => {
-    setCurveLines(drawCurve());
     setGraphScaleLine(drawScale());
   };
 
@@ -373,15 +275,17 @@ const LineChart = ({
     handelGraphLabelSize();
   };
 
-  const handelCurvePointHover = (datasetIndex: number) => {
+  const handelCurvePointHover = (
+    x: number,
+    y: number,
+    name: string,
+    color: string,
+    points: number,
+    datasetIndex: number
+  ) => {
     if (!currentHoveredBlock) return;
-    const hoveredDataSet = dataSet[datasetIndex];
+    const hoveredDataSet: any = dataSet[datasetIndex];
     const currentYvalue = hoveredDataSet.points[currentHoveredBlock.x];
-    const currentHoveredPoints = dataSet.filter(
-      (item, ind) =>
-        !disableCurves.includes(ind) &&
-        currentYvalue === item.points[currentHoveredBlock.x]
-    );
 
     const style: React.CSSProperties = {
       ["--color" as any]: graphScale.color,
@@ -389,15 +293,8 @@ const LineChart = ({
         origin.y - getYPixels(currentYvalue) - graphScale.lineWidth * 6
       }px`,
       ["--lineWidth" as any]: graphScale.lineWidth + "px",
-      top: getYPixels(currentYvalue) + "px",
-      left:
-        getXPixels(currentHoveredBlock.x * xBlockWidth) +
-        (graphScale.cutPosition === "center"
-          ? xBlockWidth / 2
-          : graphScale.cutPosition === "right"
-          ? xBlockWidth
-          : 0) +
-        "px",
+      top: y,
+      left: x,
     };
 
     const label =
@@ -407,42 +304,32 @@ const LineChart = ({
 
     const div = (
       <div
-        className="inte-LineChart__toolTipBox"
+        className="inte-barChart__toolTipBox"
         style={style}
         onMouseLeave={() => setToolTipDiv(undefined)}
       >
         <ToolTip
+          isOpen={true}
           activator={
             <div
-              className="inte-LineChart__tooltip-circle"
+              className="inte-barChart__tooltip-circle"
               style={{
                 width: graphScale.lineWidth * 15 + "px",
                 height: graphScale.lineWidth * 15 + "px",
                 borderRadius: "50%",
-                border: "3px solid #ffffff",
-                backgroundColor: currentHoveredPoints[0].color,
+                border: "2px solid #fff",
+                backgroundImage: `linear-gradient(white, ${color})`,
               }}
             />
           }
           helpText={
-            <div className="inte-LineChart__toolTipBody">
-              <div className="toolTip__title">{label}</div>
-              {currentHoveredPoints.map((item, index) => {
-                return (
-                  <div
-                    key={index}
-                    className="inte-LineChart__tooltip__dataItem"
-                  >
-                    <Badge dot customBgColor={item.color} />
-                    <span>{item.name}</span>
-                    <span>
-                      {typeof labels.y !== "number"
-                        ? labels.y[currentHoveredBlock.y]
-                        : currentYvalue}
-                    </span>
-                  </div>
-                );
-              })}
+            <div className="inte-barChart__toolTipBody">
+              <div className="inte-barChart__toolTipTitle">{label}</div>
+              <div className="inte-barChart__tooltip__dataItem">
+                <Badge dot customBgColor={color} />
+                <span>{name}</span>
+                <span>{points}</span>
+              </div>
             </div>
           }
         />
@@ -456,7 +343,7 @@ const LineChart = ({
     () => (
       <ul
         style={{ marginLeft: `${paddingLeft}px` }}
-        className={`inte-Legend__list inte-Legend--lineChart inte-Legend__list--${legend.position}`}
+        className={`inte-Legend__list inte-Legend--barChart inte-Legend__list--${legend.position}`}
       >
         {dataSet.map((item, index) => {
           const color = item.color;
@@ -496,53 +383,9 @@ const LineChart = ({
         (accumulator, currentValue) => accumulator + currentValue + 24,
         0
       );
-    let pb = paddingBottom;
-    if (totalWidth <= widthTaken) {
+    if (totalWidth <= widthTaken)
       labelListRef.current.classList.add("inte-scaleLabel--small");
-      const maxHeightChange = Array.from(
-        labelListRef.current.getElementsByClassName(
-          "inte-scaleLabel--horizontal"
-        )
-      )
-        .map((ele) => {
-          const currRect = ele.getBoundingClientRect();
-          return getHeightChange(currRect.width, currRect.height, 45);
-        })
-        .reduce((accumulator, item) => Math.max(accumulator, item), 0);
-
-      pb = maxHeightChange;
-    } else {
-      labelListRef.current.classList.remove("inte-scaleLabel--small");
-      const maxHeightChange = Array.from(
-        labelListRef.current.getElementsByClassName(
-          "inte-scaleLabel--horizontal"
-        )
-      )
-        .map((ele) => {
-          const currRect = ele.getBoundingClientRect();
-          return getHeightChange(currRect.width, currRect.height, 0);
-        })
-        .reduce((accumulator, item) => Math.max(accumulator, item), 0);
-
-      pb = maxHeightChange;
-    }
-
-    const maxWidth =
-      Array.from(
-        labelListRef.current.getElementsByClassName("inte-scaleLabel--vertical")
-      )
-        .map((ele) => ele.getBoundingClientRect().width)
-        .reduce(
-          (accumulator, currentValue) => Math.max(accumulator, currentValue),
-          0
-        ) +
-      graphScale.cutGap +
-      graphScale.cutSize;
-
-    setPadding({
-      paddingLeft: maxWidth,
-      paddingBottom: Math.ceil(pb + graphScale.cutGap + graphScale.cutSize),
-    });
+    else labelListRef.current.classList.remove("inte-scaleLabel--small");
   };
 
   useEffect(() => {
@@ -555,7 +398,7 @@ const LineChart = ({
       window?.removeEventListener("mousemove", handelMouseOver);
       window?.removeEventListener("resize", setSvgGraphSize);
     };
-  }, [dataSet, lineType, svgSize, paddingLeft, paddingBottom]);
+  }, [dataSet, svgSize, paddingLeft, paddingBottom]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -566,29 +409,210 @@ const LineChart = ({
     handelGraphLabelSize();
   }, [scaleLabel]);
 
+  // render all dynamic paths
+  const renderPaths = () => {
+    const paths: any = [];
+    for (
+      let i = 0;
+      i < (typeof labels.x === "number" ? labels.x : labels.x.length);
+      i++
+    ) {
+      const labelName = typeof labels.x === "number" ? i : labels.x[i];
+
+      dataSet.map((item, index) => {
+        const color = item.color;
+        const currValue = item.points[i];
+        const x =
+          getPointsFromIndex(i, "horizontal") - graphScale.lineWidth / 2;
+        const y1 = origin.y;
+        const y2 = getYPixels(currValue);
+        const pathD = `M ${x},${y1} ${x},${y2}`;
+        const width = 30;
+        let total = dataSet.length;
+
+        let evenPlus = width / 2; // 15
+        let evenMinus = width / 2; // 15
+        // odd
+        let oddPlus = width; //30
+        let oddnMinus = width; // 30
+        const empty: any = [];
+        const newX: any = [];
+
+        if (total > 0) {
+          for (let j = 1; j <= total; j++) {
+            // even
+            if (total % 2 == 0) {
+              if (total / 2 >= j) {
+                // console.log("if");
+                empty.push(`M ${x - evenMinus},${y1} ${x - evenMinus},${y2}`);
+                newX.push(x - evenMinus);
+                evenMinus = evenMinus + width;
+              } else {
+                // console.log("if else");
+                empty.push(`M ${x + evenPlus},${y1} ${x + evenPlus},${y2}`);
+                newX.push(x + evenPlus);
+                evenPlus = evenPlus + width;
+              }
+            } else {
+              // odd
+              // console.log("else");
+              if (Math.ceil(total / 2) > j) {
+                empty.push(`M ${x - oddnMinus},${y1} ${x - oddnMinus},${y2}`);
+                newX.push(x - oddnMinus);
+                oddnMinus = oddnMinus + width;
+              } else if (Math.ceil(total / 2) === j) {
+                empty.push(`M ${x},${y1} ${x},${y2}`);
+                newX.push(x);
+              } else {
+                empty.push(`M ${x + oddPlus},${y1} ${x + oddPlus},${y2}`);
+                newX.push(x + oddPlus);
+                oddPlus = oddPlus + width;
+              }
+            }
+          }
+        } else {
+          empty.push(`M ${x},${y1} ${x},${y2}`);
+        }
+
+        type === "group"
+          ? paths.push(
+              <>
+                <path
+                  key={index}
+                  id={`inte-barChart__dataLine${i}${index}`}
+                  d={empty[index]}
+                  stroke={color}
+                  strokeWidth={width}
+                  className="inte-barChart__dataLine"
+                  onMouseOver={() => {
+                    // setShowPoint(`${i}${index}`);
+                    setShowPoint(Number(`${i}${index}`));
+                    setCurrentColor(item.color);
+                    // hoverDot(item, newX, y2, i, index);
+                  }}
+                  // onMouseOut={() => setShowPoint(-1)}
+                  style={{
+                    animationDuration: `${
+                      dataSet[index].animationDuration ?? 300
+                    }ms`,
+                  }}
+                />
+
+                <>
+                  <defs>
+                    <linearGradient
+                      id="gradient"
+                      x1="0%"
+                      y1="0%"
+                      x2="0%"
+                      y2="100%"
+                    >
+                      <stop offset="30%" stop-color="white" />
+                      <stop offset="100%" stop-color={currentColor} />
+                    </linearGradient>
+                  </defs>
+                  <circle
+                    cx={newX[index]}
+                    cy={y2}
+                    r="6.667"
+                    stroke="#fff"
+                    className="Circle"
+                    strokeWidth="2"
+                    fill="url(#gradient)"
+                    onMouseOver={() => {
+                      handelCurvePointHover(
+                        newX[index],
+                        y2,
+                        item.name,
+                        item.color,
+                        dataSet[index].points[i],
+                        index
+                      );
+                    }}
+                  />
+                </>
+              </>
+            )
+          : paths.push(
+              <>
+                <path
+                  key={index}
+                  d={pathD}
+                  stroke={color}
+                  strokeWidth={31}
+                  className="inte-barChart__dataLine"
+                  onMouseOver={() => setShowPoint(index)}
+                  onMouseOut={() => setShowPoint(-1)}
+                  style={{
+                    animationDuration: `${
+                      dataSet[index].animationDuration ?? 300
+                    }ms`,
+                  }}
+                />
+                {showPoint === index && (
+                  <>
+                    <defs>
+                      <linearGradient
+                        id="gradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                      >
+                        <stop offset="30%" stop-color="white" />
+                        <stop offset="100%" stop-color={item.color} />
+                      </linearGradient>
+                    </defs>
+                    <circle
+                      cx={x}
+                      cy={y2}
+                      r="6.667"
+                      stroke="#fff"
+                      strokeWidth="2"
+                      fill="url(#gradient)"
+                      onMouseOver={() =>
+                        handelCurvePointHover(
+                          x,
+                          y2,
+                          item.name,
+                          item.color,
+                          item.points[0],
+                          index
+                        )
+                      }
+                    />
+                  </>
+                )}
+              </>
+            );
+      });
+    }
+    return paths;
+  };
+
   return (
     <div
       className={getClassNames({
-        "inte-LineChart__container": true,
+        "inte-barChart__wrapper": true,
         [customClass as string]: customClass,
       })}
     >
       {legend.position === "top" ? chartLegend : null}
       <div
-        className="inte-LineChart"
+        className="inte-barChart"
         ref={containerRef}
         style={{
           ["--lineColor" as any]: graphScale.color,
           ["--lineWidth" as any]: graphScale.lineWidth + "px",
-          ["--animateBottom" as any]: paddingBottom + "px",
           width: width,
           height: height,
         }}
       >
         <svg ref={chartRef} width={svgSize.width} height={svgSize.height}>
           {graphScaleLine}
-          {!!backgroundGrid && (
-            <>
+
+          <>
+            {!!backgroundGrid && (
               <path
                 d={`${
                   backgroundGrid.yLines?.show === false
@@ -611,6 +635,9 @@ const LineChart = ({
                 }
                 strokeWidth={graphScale.lineWidth}
               />
+            )}
+
+            {!!backgroundGrid && (
               <path
                 d={`${
                   backgroundGrid.xLines?.show === false
@@ -633,42 +660,11 @@ const LineChart = ({
                 }
                 strokeWidth={graphScale.lineWidth}
               />
-            </>
-          )}
-          {curveLines.map((line, ind) =>
-            !disableCurves.includes(ind) ? (
-              <React.Fragment key={ind}>{line}</React.Fragment>
-            ) : null
-          )}
-          {!!currentHoveredBlock &&
-            !toolTipDiv &&
-            dataSet.map((item, ind) =>
-              !disableCurves.includes(ind) ? (
-                <circle
-                  className="inte-lineChart__circle"
-                  key={ind}
-                  cx={
-                    getXPixels(currentHoveredBlock.x * xBlockWidth) +
-                    (graphScale.cutPosition === "center"
-                      ? xBlockWidth / 2
-                      : graphScale.cutPosition === "right"
-                      ? xBlockWidth
-                      : 0)
-                  }
-                  cy={getYPixels(item.points[currentHoveredBlock.x])}
-                  fill={item.color}
-                  strokeWidth={graphScale.lineWidth * 3}
-                  stroke="#ffffff"
-                  r={graphScale.lineWidth * 6}
-                  style={{
-                    cursor: "pointer",
-                  }}
-                  onMouseOver={() => handelCurvePointHover(ind)}
-                />
-              ) : null
             )}
+            {renderPaths()}
+          </>
         </svg>
-        <ul ref={labelListRef} className="inte-LineChart__labelsList">
+        <ul ref={labelListRef} className="inte-barChart__labelsList">
           {scaleLabel.map((label, index) => (
             <React.Fragment key={index}>{label}</React.Fragment>
           ))}
@@ -680,4 +676,4 @@ const LineChart = ({
   );
 };
 
-export default LineChart;
+export default BarChart;

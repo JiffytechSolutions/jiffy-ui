@@ -42,6 +42,7 @@ export const menu = [
     id: "order",
     label: "Order",
     path: "/order",
+    isDisabled: true,
     icon: <Settings size="20" />,
     children: [
       {
@@ -60,6 +61,7 @@ export const menu = [
     id: "help",
     label: "Help",
     path: "/help",
+    isDisabled: true,
     icon: <HelpCircle size="20" />,
   },
   {
@@ -246,9 +248,9 @@ export const sideBarLogo = (
         y2="18.9601"
         gradientUnits="userSpaceOnUse"
       >
-        <stop stop-color="#413BBC" />
-        <stop offset="0.47" stop-color="#383365" />
-        <stop offset="1" stop-color="#0A0A0A" />
+        <stop stopColor="#413BBC" />
+        <stop offset="0.47" stopColor="#383365" />
+        <stop offset="1" stopColor="#0A0A0A" />
       </linearGradient>
     </defs>
   </svg>

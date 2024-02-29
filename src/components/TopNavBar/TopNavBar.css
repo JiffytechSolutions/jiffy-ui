@@ -1,33 +1,12 @@
 .inte-TopNav {
   padding: 0 3.2rem;
-  overflow-x: auto;
   border-bottom: 0.1rem solid var(--inte-G40);
-  display: flex;
-  align-items: center;
   background-color: var(--inte-G0);
 }
 .inte-TopNav--stickyTop {
   position: sticky;
   top: 0;
   z-index: var(--inte-Z-6);
-}
-/* Hide scrollbar for Chrome, Safari and Opera */
-.inte-TopNav ::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-.inte-TopNav {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-/* parent ul list  */
-.inte-top__list {
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  width: 100%;
-  overflow: auto hidden;
 }
 /* parent li item  */
 .inte-top__listItem {
@@ -78,11 +57,6 @@
   padding: 1rem 1.2rem;
   border-radius: 0.6rem;
   cursor: pointer;
-}
-/* left and reight button  */
-.inte-arrowLeft__scroll,
-.inte-arrowRight__scroll {
-  border-radius: 50%;
 }
 
 /* common css  */
@@ -135,4 +109,46 @@
   bottom: 0;
   overflow: auto;
   transform: translateX(-28rem);
+}
+.inte-topNavBar--active .inte-announcementBar + .inte-TopNav__wrapper {
+  margin-top: 4.8rem;
+}
+.inte-topNavBar--active
+  .inte-announcementBar
+  + .inte-TopNav__wrapper
+  + .inte-main {
+  margin-top: 0 !important;
+}
+/* new  css*/
+.inte-topNavBar--active:not(.inte-topNav__sticky) .inte-announcementBar {
+  position: absolute !important;
+}
+
+.inte-TopNav .inte-carousel__itemsWrapper {
+  width: calc(100% - 103px);
+  margin: auto;
+}
+
+.inte-TopNav .inte-carousel__prev,
+.inte-TopNav .inte-carousel__next {
+  border-radius: 50%;
+  padding: 1.2rem;
+}
+.inte-TopNav .inte-popover--wrapper {
+  width: 100%;
+}
+
+.inte-topNav__listItemWrapper {
+  justify-content: center;
+}
+.inte-top__listItem.inte-topNavBar--disable {
+  cursor: not-allowed !important;
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}
+@media screen and (min-width: 991px) {
+  .inte-topNavBar--active .inte-appWrapper.inte-sideBar--active .inte-sideBar {
+    left: -280px !important;
+  }
 }
