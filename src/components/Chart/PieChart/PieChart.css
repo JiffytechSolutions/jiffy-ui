@@ -1,0 +1,77 @@
+.inte-pieChart,
+.inte-donutChart {
+  position: relative;
+  line-height: 0;
+}
+.inte-pieChart:hover,
+.inte-donutChart:hover {
+  overflow: visible;
+}
+/* sgv css  */
+.inte-pieChart__svg,
+.inte-donutChart__svg {
+  height: 100%;
+  width: 100%;
+}
+
+/* path css   */
+.inte-pieChart__path,
+.inte-donutChart__path {
+  transition: transform 0.3s ease, fill 0.3s ease;
+  /* transition: transform 20s ease, fill 20s ease; */
+  /* transform-origin: center; */
+  transform: scale(1);
+}
+
+.inte-pieChart__path:hover,
+.inte-donutChart__path:hover {
+  transform: scale(1.03);
+  transition: "transform 0.5s ease, fill 0.5s ease";
+}
+
+/* percentage  css */
+.inte-pieChart__percentage {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 1rem;
+  font-size: 1.6rem;
+  line-height: 2.2rem;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 3rem;
+  color: var(--inte-P900);
+  transform: translate(-50%, -50%);
+  background-color: var(--inte-P20);
+}
+/* tooltip  css*/
+.inte-chart__tooltip {
+  position: fixed;
+  color: var(--inte-G0);
+  height: 4.4rem;
+  padding: 1.2rem;
+  text-align: center;
+  line-height: 2rem;
+  font-size: 1.6rem;
+  width: max-content;
+  font-weight: 600;
+  border-radius: 0.6rem;
+  z-index: var(--inte-Z-10);
+  background-color: var(--inte-G800);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: all 0.5s ease-in;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+/* .inte-pieChart__tooltip::after {
+  content: " ";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -0.5rem;
+  border-width: 0.5rem;
+  border-style: solid;
+  border-color: var(--inte-G800) transparent transparent transparent;
+} */

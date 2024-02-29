@@ -142,3 +142,9 @@
     opacity: 1;
   }
 }
+.inte-barChart__dataLine ~ .Circle {
+  display: none;
+}
+.inte-barChart__dataLine:hover ~ .Circle {
+  display: block;
+}

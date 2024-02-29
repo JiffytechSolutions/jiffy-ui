@@ -88,7 +88,6 @@ const TextField = ({
         className="inte-dateInput__container"
         onClick={() => {
           if (!isDisabled) {
-            console.log("click");
             onFocus(true);
             handleStartInputClick();
           }
@@ -134,7 +133,6 @@ const TextField = ({
             ref={textFieldRef}
             onClick={() => {
               if (!isDisabled) {
-                console.log("click");
                 onFocus(true);
                 handleStartInputClick();
               }

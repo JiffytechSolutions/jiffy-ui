@@ -120,6 +120,85 @@ const oneData = {
     },
   ],
 };
+const data = {
+  labels: {
+    x: ["Jan", "Feb", "Mar"],
+    y: 10,
+  },
+  dataSet: [
+    {
+      name: "Orders",
+      color: "blue",
+      points: [90, 100, 85],
+    },
+
+    {
+      name: "Variants",
+      color: "green",
+      points: [70, 80, 75],
+    },
+
+    {
+      name: "Orders",
+      color: "magenta",
+      points: [50, 60, 55],
+    },
+    {
+      name: "Variants",
+      color: "purple",
+      points: [30, 40, 25],
+    },
+  ],
+};
+
+export const BarChartTypes = ({ ...rest }) => {
+  return (
+    <Card>
+      <Card title="Bar Chart ">
+        <BarChart
+          height={500}
+          backgroundGrid={{
+            xLines: {
+              color: "steelblue",
+              type: "dashed",
+              show: true,
+            },
+            yLines: {
+              color: "silver",
+              type: "dashed",
+              show: true,
+            },
+          }}
+          legend={{ show: true, position: rest.legend }}
+          dataSet={data.dataSet}
+          labels={data.labels}
+        />
+      </Card>
+      <Card title="Bar Chart stack">
+        <BarChart
+          type="stack"
+          height={500}
+          backgroundGrid={{
+            xLines: {
+              color: "steelblue",
+              type: "dashed",
+              show: true,
+            },
+            yLines: {
+              color: "silver",
+              type: "dashed",
+              show: true,
+            },
+          }}
+          legend={{ show: true, position: rest.legend }}
+          dataSet={data.dataSet}
+          labels={data.labels}
+        />
+      </Card>
+    </Card>
+  );
+};
+
 export const OneChart = ({ ...rest }) => {
   return (
     <Card>
@@ -249,30 +328,62 @@ const aniBarData = {
   dataSet: [
     {
       name: "Orders",
-      color: "magenta",
-      points: [55, 75, 90],
-      animationDuration: 2000,
+      color: "blue",
+      points: [90, 100, 85],
+      animationDuration: 800,
     },
 
     {
       name: "Variants",
-      color: "steelblue",
-      points: [80, 55, 70],
-      animationDuration: 1500,
+      color: "green",
+      points: [70, 80, 75],
+      animationDuration: 800,
+    },
+
+    {
+      name: "Orders",
+      color: "magenta",
+      points: [50, 60, 55],
+      animationDuration: 800,
     },
     {
       name: "Variants",
       color: "purple",
-      points: [45, 40, 65],
-      animationDuration: 1000,
+      points: [30, 40, 25],
+      animationDuration: 800,
     },
   ],
 };
-export const BarChartAnimationDuration = ({ ...rest }) => {
+export const BarChartAnimation = ({ ...rest }) => {
   return (
-    <Card>
+    <Card title="Bar chart animation in stack 800ms">
       <BarChart
-        width={"100%"}
+        height={400}
+        backgroundGrid={{
+          xLines: {
+            color: "steelblue",
+            type: "dashed",
+            show: true,
+          },
+          yLines: {
+            color: "silver",
+            type: "dashed",
+            show: true,
+          },
+        }}
+        legend={{ show: true, position: rest.legend }}
+        dataSet={aniBarData.dataSet}
+        labels={aniBarData.labels}
+      />
+    </Card>
+  );
+};
+
+export const BarChartAnimationStack = ({ ...rest }) => {
+  return (
+    <Card title="Bar chart animation in stack 800ms">
+      <BarChart
+        type="stack"
         height={500}
         backgroundGrid={{
           xLines: {
@@ -286,6 +397,21 @@ export const BarChartAnimationDuration = ({ ...rest }) => {
             show: true,
           },
         }}
+        legend={{ show: true, position: rest.legend }}
+        dataSet={aniBarData.dataSet}
+        labels={aniBarData.labels}
+      />
+    </Card>
+  );
+};
+
+// Bar chart stack with out background border
+export const StackWithOutBGLine = ({ ...rest }) => {
+  return (
+    <Card title="Bar chart stack with out background border">
+      <BarChart
+        type="stack"
+        height={500}
         legend={{ show: true, position: rest.legend }}
         dataSet={aniBarData.dataSet}
         labels={aniBarData.labels}

@@ -62,10 +62,8 @@ const BarChart = ({
   customClass,
   legend = { show: true, position: "bottom" },
 }: barChartI) => {
-  const drowLineRef = useRef(null); // Array of refs
-  // const drowLineRef = useRef<Array<SVGPathElement | null>>([]);
-
   const [showPoint, setShowPoint] = useState(-1);
+  const [currentColor, setCurrentColor] = useState("");
   const [graphScaleLine, setGraphScaleLine] = useState<React.JSX.Element>();
   const [currentHoveredBlock, setCurrentHoveredBlock] =
     useState<Point | undefined>();
@@ -411,31 +409,6 @@ const BarChart = ({
     handelGraphLabelSize();
   }, [scaleLabel]);
 
-  // getting (Tooltip) all dynamic path distance fron x axis , and y axis
-
-  useEffect(() => {
-    const tooltip = chartRef?.current;
-
-    const getPathPositionIn = () => {
-      const getValue: any = tooltip?.getElementsByClassName(
-        "inte-barChart__dataLine"
-      );
-      console.log(getValue, "mouse in");
-    };
-
-    const getPathPositionOut = () => {
-      console.log("mouseout");
-    };
-
-    // tooltip?.addEventListener("mouseover", getPathPositionIn);
-    // tooltip?.addEventListener("mouseout", getPathPositionOut);
-
-    // return () => {
-    //   tooltip?.addEventListener("mouseover", getPathPositionIn);
-    //   tooltip?.addEventListener("mouseout", getPathPositionOut);
-    // };
-  }, []);
-
   // render all dynamic paths
   const renderPaths = () => {
     const paths: any = [];
@@ -463,6 +436,7 @@ const BarChart = ({
         let oddPlus = width; //30
         let oddnMinus = width; // 30
         const empty: any = [];
+        const newX: any = [];
 
         if (total > 0) {
           for (let j = 1; j <= total; j++) {
@@ -471,10 +445,12 @@ const BarChart = ({
               if (total / 2 >= j) {
                 // console.log("if");
                 empty.push(`M ${x - evenMinus},${y1} ${x - evenMinus},${y2}`);
+                newX.push(x - evenMinus);
                 evenMinus = evenMinus + width;
               } else {
                 // console.log("if else");
                 empty.push(`M ${x + evenPlus},${y1} ${x + evenPlus},${y2}`);
+                newX.push(x + evenPlus);
                 evenPlus = evenPlus + width;
               }
             } else {
@@ -482,11 +458,14 @@ const BarChart = ({
               // console.log("else");
               if (Math.ceil(total / 2) > j) {
                 empty.push(`M ${x - oddnMinus},${y1} ${x - oddnMinus},${y2}`);
+                newX.push(x - oddnMinus);
                 oddnMinus = oddnMinus + width;
               } else if (Math.ceil(total / 2) === j) {
                 empty.push(`M ${x},${y1} ${x},${y2}`);
+                newX.push(x);
               } else {
                 empty.push(`M ${x + oddPlus},${y1} ${x + oddPlus},${y2}`);
+                newX.push(x + oddPlus);
                 oddPlus = oddPlus + width;
               }
             }
@@ -500,14 +479,18 @@ const BarChart = ({
               <>
                 <path
                   key={index}
+                  id={`inte-barChart__dataLine${i}${index}`}
                   d={empty[index]}
                   stroke={color}
                   strokeWidth={width}
-                  ref={drowLineRef}
-                  // ref={(el) => (drowLineRef.current[index] = el)} // Assign ref dynamically
                   className="inte-barChart__dataLine"
-                  onMouseOver={() => setShowPoint(index)}
-                  onMouseOut={() => setShowPoint(-1)}
+                  onMouseOver={() => {
+                    // setShowPoint(`${i}${index}`);
+                    setShowPoint(Number(`${i}${index}`));
+                    setCurrentColor(item.color);
+                    // hoverDot(item, newX, y2, i, index);
+                  }}
+                  // onMouseOut={() => setShowPoint(-1)}
                   style={{
                     animationDuration: `${
                       dataSet[index].animationDuration ?? 300
@@ -525,26 +508,27 @@ const BarChart = ({
                       y2="100%"
                     >
                       <stop offset="30%" stop-color="white" />
-                      <stop offset="100%" stop-color={item.color} />
+                      <stop offset="100%" stop-color={currentColor} />
                     </linearGradient>
                   </defs>
                   <circle
-                    cx={x}
+                    cx={newX[index]}
                     cy={y2}
                     r="6.667"
                     stroke="#fff"
+                    className="Circle"
                     strokeWidth="2"
                     fill="url(#gradient)"
-                    onMouseOver={() =>
+                    onMouseOver={() => {
                       handelCurvePointHover(
-                        x,
+                        newX[index],
                         y2,
                         item.name,
                         item.color,
-                        item.points[0],
+                        dataSet[index].points[i],
                         index
-                      )
-                    }
+                      );
+                    }}
                   />
                 </>
               </>
@@ -559,6 +543,11 @@ const BarChart = ({
                   className="inte-barChart__dataLine"
                   onMouseOver={() => setShowPoint(index)}
                   onMouseOut={() => setShowPoint(-1)}
+                  style={{
+                    animationDuration: `${
+                      dataSet[index].animationDuration ?? 300
+                    }ms`,
+                  }}
                 />
                 {showPoint === index && (
                   <>
@@ -621,8 +610,9 @@ const BarChart = ({
       >
         <svg ref={chartRef} width={svgSize.width} height={svgSize.height}>
           {graphScaleLine}
-          {!!backgroundGrid && (
-            <>
+
+          <>
+            {!!backgroundGrid && (
               <path
                 d={`${
                   backgroundGrid.yLines?.show === false
@@ -645,7 +635,9 @@ const BarChart = ({
                 }
                 strokeWidth={graphScale.lineWidth}
               />
+            )}
 
+            {!!backgroundGrid && (
               <path
                 d={`${
                   backgroundGrid.xLines?.show === false
@@ -668,9 +660,9 @@ const BarChart = ({
                 }
                 strokeWidth={graphScale.lineWidth}
               />
-              {renderPaths()}
-            </>
-          )}
+            )}
+            {renderPaths()}
+          </>
         </svg>
         <ul ref={labelListRef} className="inte-barChart__labelsList">
           {scaleLabel.map((label, index) => (
