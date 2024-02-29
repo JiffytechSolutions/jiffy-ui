@@ -1,51 +1,51 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { cubicSplineInterpolation } from './Curve'
-import './LineChart.css'
-import ToolTip from '../../ToolTip/ToolTip'
-import Badge from '../../Badge/Badge'
-import Text from '../../Text/Text'
-import getClassNames from '../../../utilities/getClassnames'
+import React, { useEffect, useMemo, useRef, useState } from "react";
+import { cubicSplineInterpolation } from "./Curve";
+import "./LineChart.css";
+import ToolTip from "../../ToolTip/ToolTip";
+import Badge from "../../Badge/Badge";
+import Text from "../../Text/Text";
+import getClassNames from "../../../utilities/getClassnames";
 
 export interface LineChartI {
-  width?: string,
-  height?: number,
-  lineType?: 'straight' | 'curved'
+  width?: string;
+  height?: number;
+  lineType?: "straight" | "curved";
   labels: {
-    x: string[] | number,
-    y: string[] | number
-  },
+    x: string[] | number;
+    y: string[] | number;
+  };
   dataSet: {
-    name: string
-    color: string,
-    points: number[]
-    animationDuration?: number
-    beginAtOrigin?: boolean
-  }[],
-  paddingLeft?: number,
-  paddingBottom?: number,
+    name: string;
+    color: string;
+    points: number[];
+    animationDuration?: number;
+    beginAtOrigin?: boolean;
+  }[];
+  paddingLeft?: number;
+  paddingBottom?: number;
   backgroundGrid?: {
     xLines?: {
-      color?: string,
-      type?: "dashed" | "solid",
-      show?: boolean
-    },
+      color?: string;
+      type?: "dashed" | "solid";
+      show?: boolean;
+    };
     yLines?: {
-      color?: string,
-      type?: "dashed" | "solid",
-      show?: boolean
-    },
-  }
-  legend?: { show?: boolean, position?: "top" | "bottom" },
-  customClass?: string
+      color?: string;
+      type?: "dashed" | "solid";
+      show?: boolean;
+    };
+  };
+  legend?: { show?: boolean; position?: "top" | "bottom" };
+  customClass?: string;
 }
 
 export type DataSetLineChart = {
-  color: string,
-  points: number[],
-  name: string
-}[]
+  color: string;
+  points: number[];
+  name: string;
+}[];
 
-type Point = { x: number, y: number }
+type Point = { x: number; y: number };
 
 const graphScale = {
   color: "#9B9EA5",
@@ -53,8 +53,8 @@ const graphScale = {
   cutGap: 12,
   cutSize: 9,
   cutPosition: "center",
-  textColor: "#1C2433"
-}
+  textColor: "#1C2433",
+};
 
 const LineChart = ({
   width = "100%",
@@ -66,147 +66,211 @@ const LineChart = ({
   paddingLeft = 60,
   paddingBottom = 50,
   customClass,
-  legend = { show: true, position: "bottom" }
+  legend = { show: true, position: "bottom" },
 }: LineChartI) => {
-
-  const [curveLines, setCurveLines] = useState<React.JSX.Element[]>([])
-  const [graphScaleLine, setGraphScaleLine] = useState<React.JSX.Element>()
-  const [currentHoveredBlock, setCurrentHoveredBlock] = useState<Point | undefined>()
-  const [toolTipDiv, setToolTipDiv] = useState<React.JSX.Element>()
-  const [scaleLabel, setScaleLabel] = useState<React.JSX.Element[]>([])
-  const [disableCurves, setDisableCurves] = useState<number[]>([])
-  const chartRef = useRef<SVGSVGElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const labelListRef = useRef<HTMLUListElement>(null)
-  const [svgSize, setSvgSize] = useState<{ width: number, height: number }>({
+  const [curveLines, setCurveLines] = useState<React.JSX.Element[]>([]);
+  const [graphScaleLine, setGraphScaleLine] = useState<React.JSX.Element>();
+  const [currentHoveredBlock, setCurrentHoveredBlock] =
+    useState<Point | undefined>();
+  const [toolTipDiv, setToolTipDiv] = useState<React.JSX.Element>();
+  const [scaleLabel, setScaleLabel] = useState<React.JSX.Element[]>([]);
+  const [disableCurves, setDisableCurves] = useState<number[]>([]);
+  const chartRef = useRef<SVGSVGElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const labelListRef = useRef<HTMLUListElement>(null);
+  const [svgSize, setSvgSize] = useState<{ width: number; height: number }>({
     width: 300,
-    height: height
-  })
+    height: height,
+  });
 
   const origin = useMemo(() => {
     return {
       x: paddingLeft,
       y: svgSize.height - paddingBottom,
-    }
-  }, [paddingLeft, svgSize, paddingBottom])
+    };
+  }, [paddingLeft, svgSize, paddingBottom]);
 
-  const xBlockCount = useMemo(() => typeof labels.x === "number" ? labels.x : labels.x.length, [labels])
-  const yBlockCount = useMemo(() => typeof labels.y === "number" ? labels.y : labels.y.length, [labels]);
+  const xBlockCount = useMemo(
+    () => (typeof labels.x === "number" ? labels.x : labels.x.length),
+    [labels]
+  );
+  const yBlockCount = useMemo(
+    () => (typeof labels.y === "number" ? labels.y : labels.y.length),
+    [labels]
+  );
 
   const xBlockWidth = useMemo(() => {
-    return (svgSize.width - paddingLeft) / xBlockCount
+    return (svgSize.width - paddingLeft) / xBlockCount;
   }, [svgSize, paddingLeft, xBlockCount]);
 
   const yBlockWidth = useMemo(() => {
-    return (svgSize.height - (paddingBottom + (paddingBottom / 2))) / yBlockCount
+    return (svgSize.height - (paddingBottom + paddingBottom / 2)) / yBlockCount;
   }, [svgSize, paddingBottom, yBlockCount]);
 
   const maxY = useMemo<number>(() => {
     let maxY = 0;
-    dataSet.forEach(i => {
-      let currMax = Math.max(...i.points)
-      if (currMax > maxY) maxY = currMax
-    })
-    return (maxY - (maxY % 10)) + 10;
-  }, [dataSet])
+    dataSet.forEach((i) => {
+      let currMax = Math.max(...i.points);
+      if (currMax > maxY) maxY = currMax;
+    });
+    return maxY - (maxY % 10) + 10;
+  }, [dataSet]);
 
   const maxX = useMemo(() => {
-    return svgSize.width - paddingLeft
-  }, [svgSize, paddingLeft])
+    return svgSize.width - paddingLeft;
+  }, [svgSize, paddingLeft]);
 
   const getYPixels = (y: number) => {
-    const takesBlock = y / (maxY / yBlockCount)
-    return origin.y - (takesBlock * yBlockWidth)
-  }
+    const takesBlock = y / (maxY / yBlockCount);
+    return origin.y - takesBlock * yBlockWidth;
+  };
 
   const getXPixels = (x: number) => {
-    const takesBlock = x / (maxX / xBlockCount)
-    return origin.x + (takesBlock * xBlockWidth)
-  }
+    const takesBlock = x / (maxX / xBlockCount);
+    return origin.x + takesBlock * xBlockWidth;
+  };
 
-  const getPointsFromIndex = (index: number, line: "horizontal" | "vertical") => {
+  const getPointsFromIndex = (
+    index: number,
+    line: "horizontal" | "vertical"
+  ) => {
     const blockWidth = line === "vertical" ? yBlockWidth : xBlockWidth;
-    const currSize = (blockWidth * (index + 1)) - (line === "vertical" ? 0 : (graphScale.cutPosition === "center" ? blockWidth / 2 : graphScale.cutPosition === "left" ? blockWidth : 0));
-    return line === "vertical" ? origin.y - currSize : origin.x + currSize
-  }
+    const currSize =
+      blockWidth * (index + 1) -
+      (line === "vertical"
+        ? 0
+        : graphScale.cutPosition === "center"
+        ? blockWidth / 2
+        : graphScale.cutPosition === "left"
+        ? blockWidth
+        : 0);
+    return line === "vertical" ? origin.y - currSize : origin.x + currSize;
+  };
 
-  const makeScaleLabel = (point: Point, label: string, line: "horizontal" | "vertical") => {
+  const makeScaleLabel = (
+    point: Point,
+    label: string,
+    line: "horizontal" | "vertical"
+  ) => {
     return (
       <li
         className={`inte-scaleLabel inte-scaleLabel--${line}`}
         style={{
-          ["--top" as any]: `${line === "horizontal" ? -(graphScale.cutSize + graphScale.cutGap) : point.y}px`,
-          ['--left' as any]: `${line === "vertical" ? graphScale.cutGap : point.x}px`,
-          top: (line === 'horizontal' ? point.y + (graphScale.cutGap ?? 0) : point.y) + 'px',
-          left: (line === 'vertical' ? point.x - (graphScale.cutGap ?? 0) : point.x) + 'px',
-          position: "absolute"
+          ["--top" as any]: `${
+            line === "horizontal"
+              ? -(graphScale.cutSize + graphScale.cutGap)
+              : point.y
+          }px`,
+          ["--left" as any]: `${
+            line === "vertical" ? graphScale.cutGap : point.x
+          }px`,
+          top:
+            (line === "horizontal"
+              ? point.y + (graphScale.cutGap ?? 0)
+              : point.y) + "px",
+          left:
+            (line === "vertical"
+              ? point.x - (graphScale.cutGap ?? 0)
+              : point.x) + "px",
+          position: "absolute",
         }}
       >
         <div>{label}</div>
       </li>
-    )
-  }
+    );
+  };
 
   const drawScale = () => {
-    let xLabelPoints: Point[] = []
-    let yLabelPoints: Point[] = []
+    let xLabelPoints: Point[] = [];
+    let yLabelPoints: Point[] = [];
 
-    const cutsInXAxis = Array(xBlockCount).fill(0).map((item, index) => {
-      const x1 = getPointsFromIndex(index, "horizontal")
-      const x2 = x1;
-      const y1 = origin.y
-      const y2 = origin.y + (graphScale?.cutSize ?? 0);
-      xLabelPoints.push({
-        x: x2, y: y2
+    const cutsInXAxis = Array(xBlockCount)
+      .fill(0)
+      .map((item, index) => {
+        const x1 = getPointsFromIndex(index, "horizontal");
+        const x2 = x1;
+        const y1 = origin.y;
+        const y2 = origin.y + (graphScale?.cutSize ?? 0);
+        xLabelPoints.push({
+          x: x2,
+          y: y2,
+        });
+        return `M ${x1},${y1} ${x2},${y2}`;
       })
-      return `M ${x1},${y1} ${x2},${y2}`
-    }).join(" ")
+      .join(" ");
 
-    const cutsInYAxis = Array(yBlockCount).fill(0).map((item, index) => {
-      const x1 = paddingLeft;
-      const x2 = paddingLeft - (graphScale?.cutSize ?? 0);
-      const y1 = getPointsFromIndex(index, "vertical")
-      const y2 = y1;
-      yLabelPoints.push({
-        x: x2, y: y2
+    const cutsInYAxis = Array(yBlockCount)
+      .fill(0)
+      .map((item, index) => {
+        const x1 = paddingLeft;
+        const x2 = paddingLeft - (graphScale?.cutSize ?? 0);
+        const y1 = getPointsFromIndex(index, "vertical");
+        const y2 = y1;
+        yLabelPoints.push({
+          x: x2,
+          y: y2,
+        });
+        return `M ${x1},${y1} ${x2},${y2}`;
       })
-      return `M ${x1},${y1} ${x2},${y2}`
-    }).join(" ")
+      .join(" ");
 
     const getYLabel = (index: number, tot: number) => {
-      const blockWidth = maxY / tot
-      const currValue = blockWidth * (index + 1)
-      return currValue
-    }
-    const xLabels = xLabelPoints.map((item, index) => makeScaleLabel(item, typeof labels.x === "number" ? `${paddingLeft + item.x}` : labels.x[index], "horizontal"))
+      const blockWidth = maxY / tot;
+      const currValue = blockWidth * (index + 1);
+      return currValue;
+    };
+    const xLabels = xLabelPoints.map((item, index) =>
+      makeScaleLabel(
+        item,
+        typeof labels.x === "number"
+          ? `${paddingLeft + item.x}`
+          : labels.x[index],
+        "horizontal"
+      )
+    );
 
-    const yLabels = yLabelPoints.map((item, index) => makeScaleLabel(item, typeof labels.y === "number" ? `${getYLabel(index, labels.y)}` : labels.y[index], "vertical"))
+    const yLabels = yLabelPoints.map((item, index) =>
+      makeScaleLabel(
+        item,
+        typeof labels.y === "number"
+          ? `${getYLabel(index, labels.y)}`
+          : labels.y[index],
+        "vertical"
+      )
+    );
 
-    setScaleLabel([...xLabels, ...yLabels])
+    setScaleLabel([...xLabels, ...yLabels]);
 
     return (
       <>
         <path
-          d={`M ${paddingLeft},0 ${origin.x},${origin.y} ${svgSize.width},${svgSize.height - paddingBottom}`}
+          d={`M ${paddingLeft},0 ${origin.x},${origin.y} ${svgSize.width},${
+            svgSize.height - paddingBottom
+          }`}
           strokeWidth={graphScale.lineWidth}
           stroke={graphScale.color}
-          fill='none'
+          fill="none"
         />
       </>
-    )
-  }
+    );
+  };
 
   const drawCurve = () => {
-    const xPoints = Array(xBlockCount).fill(0).map((_, index) => getPointsFromIndex(index, "horizontal"))
+    const xPoints = Array(xBlockCount)
+      .fill(0)
+      .map((_, index) => getPointsFromIndex(index, "horizontal"));
     const curvesEquations = dataSet.map((item, _) => {
       let currPoints = xPoints.map((x, index) => {
-        return ({
+        return {
           x: x,
-          y: getYPixels(item.points[index])
-        })
-      })
+          y: getYPixels(item.points[index]),
+        };
+      });
       if (item.beginAtOrigin) {
-        currPoints = [{ x: paddingLeft, y: svgSize.height - paddingBottom }, ...currPoints]
+        currPoints = [
+          { x: paddingLeft, y: svgSize.height - paddingBottom },
+          ...currPoints,
+        ];
       }
       return cubicSplineInterpolation(
         currPoints,
@@ -214,288 +278,353 @@ const LineChart = ({
         0,
         svgSize.width,
         svgSize.height - paddingBottom
-      )
-    })
+      );
+    });
 
-    const curvesPoint = lineType === "curved" ? curvesEquations.map((equation, index) => {
-      const points: Point[] = []
-      for (let i = paddingLeft + 1; i < svgSize.width; i++) {
-        points.push({
-          x: i,
-          y: equation(i)
-        })
-      }
-      return points
-    }) : dataSet.map((item, index) => {
-      let points: Point[] = [];
-      for (let i = 0; i < xPoints.length; i++) {
-        points.push({
-          x: xPoints[i],
-          y: getYPixels(item.points[i])
-        })
-      }
-      if (item.beginAtOrigin) {
-        points = [{ x: paddingLeft, y: svgSize.height - paddingBottom }, ...points]
-      }
-      return points
-    })
+    const curvesPoint =
+      lineType === "curved"
+        ? curvesEquations.map((equation, index) => {
+            const points: Point[] = [];
+            for (let i = paddingLeft + 1; i < svgSize.width; i++) {
+              points.push({
+                x: i,
+                y: equation(i),
+              });
+            }
+            return points;
+          })
+        : dataSet.map((item, index) => {
+            let points: Point[] = [];
+            for (let i = 0; i < xPoints.length; i++) {
+              points.push({
+                x: xPoints[i],
+                y: getYPixels(item.points[i]),
+              });
+            }
+            if (item.beginAtOrigin) {
+              points = [
+                { x: paddingLeft, y: svgSize.height - paddingBottom },
+                ...points,
+              ];
+            }
+            return points;
+          });
 
     const curveLines = curvesPoint.map((item, index) => {
-      let path = ''
-      item.forEach(p => path += `${p.x},${p.y} `)
+      let path = "";
+      item.forEach((p) => (path += `${p.x},${p.y} `));
       return (
         <path
-          className='inte-LineChart__dataLine'
+          className="inte-LineChart__dataLine"
           style={{
-            animationDuration: `${dataSet[index].animationDuration ?? 300}ms`
+            animationDuration: `${dataSet[index].animationDuration ?? 300}ms`,
           }}
           d={`M ${path}`}
           strokeWidth={graphScale.lineWidth * 3}
           stroke={dataSet[index].color}
           fill="none"
-          strokeLinecap='round'
+          strokeLinecap="round"
         />
-      )
-    })
+      );
+    });
 
-    return curveLines
-  }
+    return curveLines;
+  };
 
   const handelMouseOver = (e: MouseEvent) => {
     const currPoint = {
       x: e.clientX - (chartRef.current?.getBoundingClientRect().left ?? 0),
-      y: e.clientY - (chartRef.current?.getBoundingClientRect().top ?? 0)
-    }
-    if (currPoint.x < paddingLeft || currPoint.y < 0 || currPoint.x > svgSize.width || currPoint.y > svgSize.height - paddingBottom) {
-      setCurrentHoveredBlock(undefined)
-    }
-    else {
+      y: e.clientY - (chartRef.current?.getBoundingClientRect().top ?? 0),
+    };
+    if (
+      currPoint.x < paddingLeft ||
+      currPoint.y < 0 ||
+      currPoint.x > svgSize.width ||
+      currPoint.y > svgSize.height - paddingBottom
+    ) {
+      setCurrentHoveredBlock(undefined);
+    } else {
       setCurrentHoveredBlock({
         x: Math.floor((currPoint.x - origin.x) / xBlockWidth),
         y: Math.floor((origin.y - currPoint.y) / yBlockWidth),
-      })
+      });
     }
-  }
+  };
 
   const drawGraph = () => {
-    setCurveLines(drawCurve())
-    setGraphScaleLine(drawScale())
-  }
+    setCurveLines(drawCurve());
+    setGraphScaleLine(drawScale());
+  };
 
   const setSvgGraphSize = () => {
-    if (!containerRef.current) return
+    if (!containerRef.current) return;
     setSvgSize({
       height: containerRef.current.clientHeight,
       width: containerRef.current.clientWidth,
-    })
-    handelGraphLabelSize()
-  }
+    });
+    handelGraphLabelSize();
+  };
 
   const handelCurvePointHover = (datasetIndex: number) => {
-    if (!currentHoveredBlock) return
-    const hoveredDataSet = dataSet[datasetIndex]
-    const currentYvalue = hoveredDataSet.points[currentHoveredBlock.x]
-    const currentHoveredPoints = dataSet.filter((item, ind) => !disableCurves.includes(ind) && currentYvalue === item.points[currentHoveredBlock.x])
+    if (!currentHoveredBlock) return;
+    const hoveredDataSet = dataSet[datasetIndex];
+    const currentYvalue = hoveredDataSet.points[currentHoveredBlock.x];
+    const currentHoveredPoints = dataSet.filter(
+      (item, ind) =>
+        !disableCurves.includes(ind) &&
+        currentYvalue === item.points[currentHoveredBlock.x]
+    );
 
     const style: React.CSSProperties = {
-      ['--color' as any]: graphScale.color,
-      ["--height" as any]: `${origin.y - getYPixels(currentYvalue) - (graphScale.lineWidth * 6)}px`,
+      ["--color" as any]: graphScale.color,
+      ["--height" as any]: `${
+        origin.y - getYPixels(currentYvalue) - graphScale.lineWidth * 6
+      }px`,
       ["--lineWidth" as any]: graphScale.lineWidth + "px",
       top: getYPixels(currentYvalue) + "px",
-      left: getXPixels(currentHoveredBlock.x * xBlockWidth) + (graphScale.cutPosition === "center" ? xBlockWidth / 2 : graphScale.cutPosition === "right" ? xBlockWidth : 0) + "px",
-    }
+      left:
+        getXPixels(currentHoveredBlock.x * xBlockWidth) +
+        (graphScale.cutPosition === "center"
+          ? xBlockWidth / 2
+          : graphScale.cutPosition === "right"
+          ? xBlockWidth
+          : 0) +
+        "px",
+    };
 
-    const label = typeof labels.x !== "number" ? labels.x[currentHoveredBlock.x] : "customLabel"
+    const label =
+      typeof labels.x !== "number"
+        ? labels.x[currentHoveredBlock.x]
+        : "customLabel";
 
     const div = (
       <div
-        className='inte-LineChart__toolTipBox'
+        className="inte-LineChart__toolTipBox"
         style={style}
         onMouseLeave={() => setToolTipDiv(undefined)}
       >
         <ToolTip
-          activator={<div
-            className='inte-LineChart__tooltip-circle'
-            style={{
-              width: graphScale.lineWidth * 15 + "px",
-              height: graphScale.lineWidth * 15 + "px",
-              borderRadius: "50%",
-              border: "3px solid #ffffff",
-              backgroundColor: currentHoveredPoints[0].color,
-            }}
-          />}
+          activator={
+            <div
+              className="inte-LineChart__tooltip-circle"
+              style={{
+                width: graphScale.lineWidth * 15 + "px",
+                height: graphScale.lineWidth * 15 + "px",
+                borderRadius: "50%",
+                border: "3px solid #ffffff",
+                backgroundColor: currentHoveredPoints[0].color,
+              }}
+            />
+          }
           helpText={
-            <div className='inte-LineChart__toolTipBody'>
-              <div className='toolTip__title'>{label}</div>
-              {
-                currentHoveredPoints.map((item, index) => {
-                  return (
-                    <div key={index} className="inte-LineChart__tooltip__dataItem">
-                      <Badge dot customBgColor={item.color} />
-                      <span>{item.name}</span>
-                      <span>{typeof labels.y !== "number" ? labels.y[currentHoveredBlock.y] : currentYvalue}</span>
-                    </div>
-                  )
-                })
-              }
+            <div className="inte-LineChart__toolTipBody">
+              <div className="toolTip__title">{label}</div>
+              {currentHoveredPoints.map((item, index) => {
+                return (
+                  <div
+                    key={index}
+                    className="inte-LineChart__tooltip__dataItem"
+                  >
+                    <Badge dot customBgColor={item.color} />
+                    <span>{item.name}</span>
+                    <span>
+                      {typeof labels.y !== "number"
+                        ? labels.y[currentHoveredBlock.y]
+                        : currentYvalue}
+                    </span>
+                  </div>
+                );
+              })}
             </div>
           }
         />
-
       </div>
-    )
+    );
 
-    setToolTipDiv(div)
-  }
+    setToolTipDiv(div);
+  };
 
-  const chartLegend = useMemo(() => (
-    <ul style={{ marginLeft: `${paddingLeft}px` }} className={`inte-Legend__list inte-Legend--lineChart inte-Legend__list--${legend.position}`}>
-      {
-        dataSet.map((item, index) => {
-          const color = item.color
+  const chartLegend = useMemo(
+    () => (
+      <ul
+        style={{ marginLeft: `${paddingLeft}px` }}
+        className={`inte-Legend__list inte-Legend--lineChart inte-Legend__list--${legend.position}`}
+      >
+        {dataSet.map((item, index) => {
+          const color = item.color;
           return (
             <li
               key={index}
               className={getClassNames({
                 "inte-Legend": true,
-                "inte-Legend--disabled": disableCurves.includes(index)
+                "inte-Legend--disabled": disableCurves.includes(index),
               })}
-              onClick={() => setDisableCurves(prev => prev.includes(index) ? prev.filter(i => i !== index) : [...prev, index])}
+              onClick={() =>
+                setDisableCurves((prev) =>
+                  prev.includes(index)
+                    ? prev.filter((i) => i !== index)
+                    : [...prev, index]
+                )
+              }
             >
-              <Badge size='large' dot customBgColor={color} />
+              <Badge size="large" dot customBgColor={color} />
               <Text>{item.name}</Text>
             </li>
-          )
-        })
-      }
-    </ul>
-  ), [legend, disableCurves])
+          );
+        })}
+      </ul>
+    ),
+    [legend, disableCurves]
+  );
 
   const handelGraphLabelSize = () => {
-    if (!labelListRef.current || !containerRef.current) return
-    const totalWidth = containerRef.current.clientWidth - paddingLeft
-    const widthTaken = Array.from(labelListRef.current.getElementsByClassName("inte-scaleLabel--horizontal")).map(ele => ele.clientWidth).reduce((accumulator, currentValue) => accumulator + currentValue + 24, 0);
-    if (totalWidth <= widthTaken) labelListRef.current.classList.add("inte-scaleLabel--small")
-    else labelListRef.current.classList.remove("inte-scaleLabel--small")
-  }
+    if (!labelListRef.current || !containerRef.current) return;
+    const totalWidth = containerRef.current.clientWidth - paddingLeft;
+    const widthTaken = Array.from(
+      labelListRef.current.getElementsByClassName("inte-scaleLabel--horizontal")
+    )
+      .map((ele) => ele.clientWidth)
+      .reduce(
+        (accumulator, currentValue) => accumulator + currentValue + 24,
+        0
+      );
+    if (totalWidth <= widthTaken)
+      labelListRef.current.classList.add("inte-scaleLabel--small");
+    else labelListRef.current.classList.remove("inte-scaleLabel--small");
+  };
 
   useEffect(() => {
-    if (!chartRef) return
-    drawGraph()
+    if (!chartRef) return;
+    drawGraph();
 
-    window?.addEventListener('resize', setSvgGraphSize)
-    window?.addEventListener('mousemove', handelMouseOver)
+    window?.addEventListener("resize", setSvgGraphSize);
+    window?.addEventListener("mousemove", handelMouseOver);
     return () => {
-      window?.removeEventListener('mousemove', handelMouseOver)
-      window?.removeEventListener('resize', setSvgGraphSize)
-    }
-  }, [dataSet, lineType, svgSize, paddingLeft, paddingBottom])
+      window?.removeEventListener("mousemove", handelMouseOver);
+      window?.removeEventListener("resize", setSvgGraphSize);
+    };
+  }, [dataSet, lineType, svgSize, paddingLeft, paddingBottom]);
 
   useEffect(() => {
-    if (!containerRef.current) return
-    setSvgGraphSize()
-  }, [width, height])
+    if (!containerRef.current) return;
+    setSvgGraphSize();
+  }, [width, height]);
 
   useEffect(() => {
-    handelGraphLabelSize()
-  }, [scaleLabel])
+    handelGraphLabelSize();
+  }, [scaleLabel]);
 
   return (
-    <div className={getClassNames({
-      'inte-LineChart__container': true,
-      [customClass as string]: customClass
-    })}>
-      {
-        legend.position === "top" ? (
-          chartLegend
-        ) : null
-      }
+    <div
+      className={getClassNames({
+        "inte-LineChart__container": true,
+        [customClass as string]: customClass,
+      })}
+    >
+      {legend.position === "top" ? chartLegend : null}
       <div
-        className='inte-LineChart'
+        className="inte-LineChart"
         ref={containerRef}
         style={{
           ["--lineColor" as any]: graphScale.color,
-          ['--lineWidth' as any]: graphScale.lineWidth + 'px',
+          ["--lineWidth" as any]: graphScale.lineWidth + "px",
           width: width,
-          height: height
+          height: height,
         }}
       >
-        <svg
-          ref={chartRef}
-          width={svgSize.width}
-          height={svgSize.height}
-        >
-          {
-            graphScaleLine
-          }
-          {
-            !!backgroundGrid && (
-              <>
-                <path
-                  d={`${backgroundGrid.yLines?.show === false ? "" : Array(xBlockCount).fill(0).map((_, ind) => {
-                    const x = getPointsFromIndex(ind, "horizontal") - (graphScale.lineWidth / 2);
-                    const y1 = origin.y;
-                    const y2 = 0
-                    return `M ${x},${y1} ${x},${y2}`
-                  }).join(' ')}`}
-                  stroke={backgroundGrid.yLines?.color ?? "#E7E1F6"}
-                  strokeDasharray={backgroundGrid.yLines?.type === "dashed" ? "5" : "0"}
-                  strokeWidth={graphScale.lineWidth}
-                />
-                <path
-                  d={`${backgroundGrid.xLines?.show === false ? "" : Array(yBlockCount).fill(0).map((_, ind) => {
-                    const y = getPointsFromIndex(ind, "vertical") - (graphScale.lineWidth / 2);
-                    const x1 = origin.x;
-                    const x2 = svgSize.width
-                    return `M ${x1},${y} ${x2},${y}`
-                  }).join(' ')}`}
-                  stroke={backgroundGrid.xLines?.color ?? "#E7E1F6"}
-                  strokeDasharray={backgroundGrid.xLines?.type === "dashed" ? "5" : "0"}
-                  strokeWidth={graphScale.lineWidth}
-                />
-              </>
-            )
-          }
-          {
-            curveLines.map((line, ind) => !disableCurves.includes(ind) ? <React.Fragment key={ind}>{line}</React.Fragment> : null)
-          }
-          {
-            (!!currentHoveredBlock && !toolTipDiv) && (
-              dataSet.map((item, ind) => !disableCurves.includes(ind) ? (
+        <svg ref={chartRef} width={svgSize.width} height={svgSize.height}>
+          {graphScaleLine}
+          {!!backgroundGrid && (
+            <>
+              <path
+                d={`${
+                  backgroundGrid.yLines?.show === false
+                    ? ""
+                    : Array(xBlockCount)
+                        .fill(0)
+                        .map((_, ind) => {
+                          const x =
+                            getPointsFromIndex(ind, "horizontal") -
+                            graphScale.lineWidth / 2;
+                          const y1 = origin.y;
+                          const y2 = 0;
+                          return `M ${x},${y1} ${x},${y2}`;
+                        })
+                        .join(" ")
+                }`}
+                stroke={backgroundGrid.yLines?.color ?? "#E7E1F6"}
+                strokeDasharray={
+                  backgroundGrid.yLines?.type === "dashed" ? "5" : "0"
+                }
+                strokeWidth={graphScale.lineWidth}
+              />
+              <path
+                d={`${
+                  backgroundGrid.xLines?.show === false
+                    ? ""
+                    : Array(yBlockCount)
+                        .fill(0)
+                        .map((_, ind) => {
+                          const y =
+                            getPointsFromIndex(ind, "vertical") -
+                            graphScale.lineWidth / 2;
+                          const x1 = origin.x;
+                          const x2 = svgSize.width;
+                          return `M ${x1},${y} ${x2},${y}`;
+                        })
+                        .join(" ")
+                }`}
+                stroke={backgroundGrid.xLines?.color ?? "#E7E1F6"}
+                strokeDasharray={
+                  backgroundGrid.xLines?.type === "dashed" ? "5" : "0"
+                }
+                strokeWidth={graphScale.lineWidth}
+              />
+            </>
+          )}
+          {curveLines.map((line, ind) =>
+            !disableCurves.includes(ind) ? (
+              <React.Fragment key={ind}>{line}</React.Fragment>
+            ) : null
+          )}
+          {!!currentHoveredBlock &&
+            !toolTipDiv &&
+            dataSet.map((item, ind) =>
+              !disableCurves.includes(ind) ? (
                 <circle
-                  className='inte-lineChart__circle'
+                  className="inte-lineChart__circle"
                   key={ind}
-                  cx={getXPixels(currentHoveredBlock.x * xBlockWidth) + (graphScale.cutPosition === "center" ? xBlockWidth / 2 : graphScale.cutPosition === "right" ? xBlockWidth : 0)}
+                  cx={
+                    getXPixels(currentHoveredBlock.x * xBlockWidth) +
+                    (graphScale.cutPosition === "center"
+                      ? xBlockWidth / 2
+                      : graphScale.cutPosition === "right"
+                      ? xBlockWidth
+                      : 0)
+                  }
                   cy={getYPixels(item.points[currentHoveredBlock.x])}
                   fill={item.color}
                   strokeWidth={graphScale.lineWidth * 3}
-                  stroke='#ffffff'
+                  stroke="#ffffff"
                   r={graphScale.lineWidth * 6}
                   style={{
-                    cursor: 'pointer'
+                    cursor: "pointer",
                   }}
                   onMouseOver={() => handelCurvePointHover(ind)}
                 />
-              ) : null)
-            )
-          }
+              ) : null
+            )}
         </svg>
-        <ul ref={labelListRef} className='inte-LineChart__labelsList'>
-          {
-            scaleLabel.map((label, index) => <React.Fragment key={index}>{label}</React.Fragment>)
-          }
+        <ul ref={labelListRef} className="inte-LineChart__labelsList">
+          {scaleLabel.map((label, index) => (
+            <React.Fragment key={index}>{label}</React.Fragment>
+          ))}
         </ul>
-        {
-          toolTipDiv && toolTipDiv
-        }
+        {toolTipDiv && toolTipDiv}
       </div>
-      {
-        legend.position === "bottom" ? (
-          chartLegend
-        ) : null
-      }
+      {legend.position === "bottom" ? chartLegend : null}
     </div>
-  )
-}
+  );
+};
 
-export default LineChart
+export default LineChart;

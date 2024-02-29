@@ -713,22 +713,22 @@ export default BarChart;
 //       let odd = 15;
 //       let groupPath;
 //       console.clear();
-//       for (let j = 1; j <= total; j++) {
-//         // even
-//         if (dataSet.length % 2 == 0) {
-//           if (total / 2 >= j) {
-//             console.log("if");
-//             groupPath = `M ${x - even},${y1} ${x - even},${y2}`;
-//             even = even + 31;
-//           } else {
-//             console.log("if else");
-//             groupPath = `M ${x + odd},${y1} ${x + odd},${y2}`;
-//             odd = odd + 31;
-//           }
-//         } else {
-//           // odd
-//           console.log("else");
-//         }
+// for (let j = 1; j <= total; j++) {
+//   // even
+//   if (dataSet.length % 2 == 0) {
+//     if (total / 2 >= j) {
+//       console.log("if");
+//       groupPath = `M ${x - even},${y1} ${x - even},${y2}`;
+//       even = even + 31;
+//     } else {
+//       console.log("if else");
+//       groupPath = `M ${x + odd},${y1} ${x + odd},${y2}`;
+//       odd = odd + 31;
+//     }
+//   } else {
+//     // odd
+//     console.log("else");
+//   }
 //       }
 
 //       type === "group"
