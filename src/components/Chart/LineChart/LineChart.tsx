@@ -184,7 +184,7 @@ const LineChart = ({
     const getYLabel = (index: number, tot: number) => {
       const blockWidth = maxY / tot
       const currValue = blockWidth * (index + 1)
-      return currValue.toFixed(2)
+      return currValue.toFixed(1)
     }
     const xLabels = xLabelPoints.map((item, index) => makeScaleLabel(item, typeof labels.x === "number" ? `${paddingLeft + item.x}` : labels.x[index], "horizontal"))
 

@@ -174,26 +174,27 @@ const LineChartTemplate = () => {
     setSelectedDate([newData[0].date, newData[newData.length - 1].date])
     setBadgeSelect(0)
   }, [])
-
   useEffect(() => {
     if (selectedDate[0] && selectedDate[1]) {
       let startDate = new Date(selectedDate[0])
       const endDate = new Date(selectedDate[1])
       const differenceInTime: number = endDate.getTime() - startDate.getTime();
-      const daysInBetween: number = Math.ceil(differenceInTime / (1000 * 3600 * 24)) + 1;
+      const daysInBetween: number = Math.ceil(differenceInTime / (1000 * 3600 * 24));
 
       let xLabels: string[] = []
       let points: number[] = []
 
-      if (daysInBetween <= 14) { // for day Wise
-        while (startDate.getDate() <= endDate.getDate()) {
+      console.log(daysInBetween)
+
+      if (daysInBetween <= 30) { // for day Wise
+        while (startDate.getTime() < endDate.getTime()) {
           xLabels.push(startDate.toLocaleDateString())
           const currData = data.filter(item => item.date.toLocaleDateString() === startDate.toLocaleDateString())
           points.push(currData[0].value)
           startDate.setDate(startDate.getDate() + 1);
         }
       }
-      else if (daysInBetween <= 14 * 7) { // for week wise
+      else if (daysInBetween < 14 * 10) { // for week wise
         while (startDate.getTime() <= endDate.getTime()) {
           const currDate = new Date(startDate)
           const dummy = new Date(startDate)
