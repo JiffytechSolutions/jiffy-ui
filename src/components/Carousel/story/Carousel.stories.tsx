@@ -758,12 +758,12 @@ CarouselWithBeforeChangeAndAfterChangeFunction.decorators = [
         <Carousel
           slidesToShow={3}
           isEndless={true}
-          beforeSlideChange={(currentSlide: number, nextSlide: number) =>
-            console.log("before", currentSlide, nextSlide)
-          }
-          afterSlideChange={(currentSlide: number) =>
-            console.log("after", currentSlide)
-          }
+          beforeSlideChange={(currentSlide: number, nextSlide: number) => {
+            // console.log("before", currentSlide, nextSlide)
+          }}
+          afterSlideChange={(currentSlide: number) => {
+            // console.log("after", currentSlide)
+          }}
         >
           {renderSlidesWithoutImages()}
         </Carousel>

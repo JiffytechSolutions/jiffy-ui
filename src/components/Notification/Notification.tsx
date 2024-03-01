@@ -18,7 +18,6 @@ const Notification: React.FC<NotificationI> = ({
     neutral: neutral,
   };
   const typeNotify = type && checkNotificationType[type];
-  console.log(typeNotify);
   return (
     <div
       className={`inte-notification  ${customClass ? customClass : ""}`

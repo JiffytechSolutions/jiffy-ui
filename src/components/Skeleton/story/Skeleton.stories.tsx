@@ -11,6 +11,10 @@ export default {
       description: {
         component: "<div style='margin-top: 15px;'><div class='inte- flex inte- flex--wrap          inte- flex--spacing- Extraloose inte - flex--vertical'><div class='inte - flex__item'><h4 class='Paragraph  inte__text--light none inte__font--normal inte__Paragraph--font--large'>Footers are important website components because they display helpful information, including navigational links, contact details, policies, copyright info, and social media links, so users can learn more about your business. </h4></div><div class='inte - flex__item'><p><blockquote>A website's footer is an area located at the bottom of every page on a website, below the main body content.</blockquote></p></div></div>"
       },
+    },
+    design : {
+      type : "figma",
+      url : "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=1994-143765&mode=design&t=JpmkWVh9faGpjD3H-0"
     }
   },
   argTypes: {

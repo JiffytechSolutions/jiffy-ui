@@ -223,29 +223,13 @@ const LineChart = ({
       .join(" ");
 
     const getYLabel = (index: number, tot: number) => {
-      const blockWidth = maxY / tot;
-      const currValue = blockWidth * (index + 1);
-      return currValue.toFixed(2);
-    };
-    const xLabels = xLabelPoints.map((item, index) =>
-      makeScaleLabel(
-        item,
-        typeof labels.x === "number"
-          ? `${paddingLeft + item.x}`
-          : labels.x[index],
-        "horizontal"
-      )
-    );
+      const blockWidth = maxY / tot
+      const currValue = blockWidth * (index + 1)
+      return currValue.toFixed(1)
+    }
+    const xLabels = xLabelPoints.map((item, index) => makeScaleLabel(item, typeof labels.x === "number" ? `${paddingLeft + item.x}` : labels.x[index], "horizontal"))
 
-    const yLabels = yLabelPoints.map((item, index) =>
-      makeScaleLabel(
-        item,
-        typeof labels.y === "number"
-          ? `${getYLabel(index, labels.y)}`
-          : labels.y[index],
-        "vertical"
-      )
-    );
+    const yLabels = yLabelPoints.map((item, index) => makeScaleLabel(item, typeof labels.y === "number" ? `${getYLabel(index, labels.y)}` : labels.y[index], "vertical"))
 
     setScaleLabel([...xLabels, ...yLabels]);
 
