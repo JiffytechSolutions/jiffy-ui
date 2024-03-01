@@ -237,13 +237,17 @@ export const FontColorPicker = ({ onChange, color }: FontColorPickerI) => {
 
   const isMobile = useMobileDevice()
 
-  const activator = <ToolTip
-    activator={<Button
-      icon={<TextColorSvg />}
-      type='textButton'
-      onClick={() => setOpen(prev => !prev)}
-    />}
-    helpText={"Change Text Color"}
+  const activator = !isMobile ? <ToolTip
+  activator={<Button
+    icon={<TextColorSvg />}
+    type='textButton'
+    onClick={() => setOpen(prev => !prev)}
+  />}
+  helpText={"Change Text Color"}
+/> : <Button
+    icon={<TextColorSvg />}
+    type='textButton'
+    onClick={() => setOpen(prev => !prev)}
   />
 
   useEffect(() => {

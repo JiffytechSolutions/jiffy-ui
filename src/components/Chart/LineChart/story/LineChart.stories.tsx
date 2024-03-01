@@ -18,20 +18,20 @@ export default {
       description: "Set the width of LineChart",
       control: {
         type: "text",
-        disable: true
+        disable: true,
       },
     },
     height: {
       description: "Set the height of LineChart",
       control: {
         type: "text",
-        disable: true
+        disable: true,
       },
     },
     lineType: {
       description: "Set the type of line",
       control: {
-        type: 'radio',
+        type: "radio",
         options: ["curved", "straight"],
       },
     },
@@ -50,7 +50,7 @@ export default {
         </tbody>
       </table>`,
       control: {
-        disable: true
+        disable: true,
       },
     },
     dataSet: {
@@ -83,7 +83,7 @@ export default {
         </tbody>
       </table>`,
       control: {
-        disable: true
+        disable: true,
       },
     },
     backgroundGrid: {
@@ -135,31 +135,31 @@ export default {
         </tbody>
       </table>`,
       control: {
-        disable: true
+        disable: true,
       },
     },
     legend: {
       description: "Whether to show the legend and its positioning",
       control: {
-        type: 'radio',
-        options: ["top", "bottom"]
+        type: "radio",
+        options: ["top", "bottom"],
       },
-      defaultValue: "bottom"
+      defaultValue: "bottom",
     },
     customClass: {
       description: "Add custom class to the Chart",
       control: {
-        type: 'text',
+        type: "text",
       },
-      defaultValue: ""
-    }
-  }
-}
+      defaultValue: "",
+    },
+  },
+};
 
 const demoDataSetLineChart: LineChartI = {
   labels: {
-    x: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-    y: 10
+    x: ["Jan", "Feb", "Mar", "Apr", "May"],
+    y: 10,
   },
   dataSet: [
     {
@@ -194,23 +194,23 @@ const Template = ({ ...rest }) => {
           xLines: {
             color: "steelblue",
             type: "dashed",
-            show: true
+            show: true,
           },
           yLines: {
             color: "red",
             type: "solid",
-            show: true
-          }
+            show: true,
+          },
         }}
         legend={{ show: true, position: rest.legend }}
         dataSet={[demoDataSetLineChart.dataSet[2]]}
         labels={demoDataSetLineChart.labels}
       />
     </Card>
-  )
-}
+  );
+};
 
-export const Primary = Template.bind({})
+export const Primary = Template.bind({});
 
 export const LineChartWithStraightLines = ({ ...rest }) => {
   return (
@@ -225,8 +225,8 @@ export const LineChartWithStraightLines = ({ ...rest }) => {
         legend={{ show: true, position: rest.legend }}
       />
     </Card>
-  )
-}
+  );
+};
 
 export const LineChartWith3Lines = ({ ...rest }) => {
   return (
@@ -242,14 +242,14 @@ export const LineChartWith3Lines = ({ ...rest }) => {
         backgroundGrid={{}}
       />
     </Card>
-  )
-}
+  );
+};
 
 export const LineChartCurveBeginAtOrigin = ({ ...rest }) => {
-  const dataSet = [...demoDataSetLineChart.dataSet].map(i => {
-    const curritem = { ...i, beginAtOrigin: true }
-    return curritem
-  })
+  const dataSet = [...demoDataSetLineChart.dataSet].map((i) => {
+    const curritem = { ...i, beginAtOrigin: true };
+    return curritem;
+  });
   return (
     <Card>
       <LineChart
@@ -262,14 +262,14 @@ export const LineChartCurveBeginAtOrigin = ({ ...rest }) => {
         backgroundGrid={{}}
       />
     </Card>
-  )
-}
+  );
+};
 
 export const LineChartWithBackgroundGrid = ({ ...rest }) => {
-  const dataSet = [...demoDataSetLineChart.dataSet].map(i => {
-    const curritem = { ...i, beginAtOrigin: true }
-    return curritem
-  })
+  const dataSet = [...demoDataSetLineChart.dataSet].map((i) => {
+    const curritem = { ...i, beginAtOrigin: true };
+    return curritem;
+  });
   return (
     <Card>
       <LineChart
@@ -283,24 +283,24 @@ export const LineChartWithBackgroundGrid = ({ ...rest }) => {
           xLines: {
             color: "slategrey",
             type: "dashed",
-            show: true
+            show: true,
           },
           yLines: {
             color: "grey",
             type: "solid",
-            show: true
-          }
+            show: true,
+          },
         }}
       />
     </Card>
-  )
-}
+  );
+};
 
 export const LineChartWithBackgroundGridHavingOnlyXLines = ({ ...rest }) => {
-  const dataSet = [...demoDataSetLineChart.dataSet].map(i => {
-    const curritem = { ...i, beginAtOrigin: true }
-    return curritem
-  })
+  const dataSet = [...demoDataSetLineChart.dataSet].map((i) => {
+    const curritem = { ...i, beginAtOrigin: true };
+    return curritem;
+  });
   return (
     <Card>
       <LineChart
@@ -312,19 +312,19 @@ export const LineChartWithBackgroundGridHavingOnlyXLines = ({ ...rest }) => {
         legend={{ show: true, position: rest.legend }}
         backgroundGrid={{
           yLines: {
-            show: false
-          }
+            show: false,
+          },
         }}
       />
     </Card>
-  )
-}
+  );
+};
 
 export const LineChartWithBackgroundGridHavingOnlyYLines = ({ ...rest }) => {
-  const dataSet = [...demoDataSetLineChart.dataSet].map(i => {
-    const curritem = { ...i, beginAtOrigin: true }
-    return curritem
-  })
+  const dataSet = [...demoDataSetLineChart.dataSet].map((i) => {
+    const curritem = { ...i, beginAtOrigin: true };
+    return curritem;
+  });
   return (
     <Card>
       <LineChart
@@ -336,16 +336,16 @@ export const LineChartWithBackgroundGridHavingOnlyYLines = ({ ...rest }) => {
         legend={{ show: true, position: rest.legend }}
         backgroundGrid={{
           xLines: {
-            show: false
-          }
+            show: false,
+          },
         }}
       />
     </Card>
-  )
-}
+  );
+};
 
 export const LineChartWithLegendAtTop = ({ ...rest }) => {
-  const dataSet = [...demoDataSetLineChart.dataSet]
+  const dataSet = [...demoDataSetLineChart.dataSet];
   return (
     <Card>
       <LineChart
@@ -359,30 +359,38 @@ export const LineChartWithLegendAtTop = ({ ...rest }) => {
           xLines: {
             color: "slategrey",
             type: "dashed",
-            show: true
+            show: true,
           },
           yLines: {
             color: "grey",
             type: "solid",
-            show: true
-          }
+            show: true,
+          },
         }}
       />
     </Card>
-  )
-}
+  );
+};
 
 export const LineChartWithSmallLabels = ({ ...rest }) => {
-  const dataSet = [...demoDataSetLineChart.dataSet]
+  const dataSet = [...demoDataSetLineChart.dataSet];
 
   const labels = {
-    x: ['January', 'February', 'March', 'April', 'May'],
-    y: 10
-  }
+    x: ["January", "February", "March", "April", "May"],
+    y: 10,
+  };
 
   return (
-    <Card cardType="filled" title="Resize screen to small size to see the samll labels">
-      <FlexLayout desktopWidth="50" mobileWidth="50" tabWidth="50" spacing="extraLoose">
+    <Card
+      cardType="filled"
+      title="Resize screen to small size to see the samll labels"
+    >
+      <FlexLayout
+        desktopWidth="50"
+        mobileWidth="50"
+        tabWidth="50"
+        spacing="extraLoose"
+      >
         <Card>
           <LineChart
             {...rest}
@@ -407,9 +415,9 @@ export const LineChartWithSmallLabels = ({ ...rest }) => {
         </Card>
       </FlexLayout>
     </Card>
-  )
-}
+  );
+};
 
 export const LineChartTemplateWithDemoData = () => {
-  return  <LineChartTemplate />
-}
+  return <LineChartTemplate />;
+};

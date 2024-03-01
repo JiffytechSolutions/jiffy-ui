@@ -8,15 +8,15 @@ export interface DonutChartI {
   size?: number;
   tooltip?: boolean;
   border?: showBorderI;
-  totalItems?: tooltipI;
+  showTotalValue?: boolean;
   customClass?: string;
-  animationDuration?: number
-  valueType?: "number" | "percentage"
+  animationDuration?: number;
+  valueType?: "number" | "percentage";
   legend?: {
-    tab?: boolean
-    mobile?: boolean
-    desktop?: boolean
-  }
+    tab?: boolean;
+    mobile?: boolean;
+    desktop?: boolean;
+  };
 }
 
 export interface donutChartData {
@@ -24,10 +24,7 @@ export interface donutChartData {
   label: string;
   color: string;
 }
-export interface tooltipI {
-  show: boolean;
-  type?: "number" | "percentage";
-}
+
 export interface showBorderI {
   show?: boolean;
   width?: number;
@@ -39,23 +36,25 @@ export const DonutChart: React.FC<DonutChartI> = ({
   border = { show: false, width: 1, color: "#fff" },
   size = 250,
   animationDuration = 2000,
+  showTotalValue = false,
   valueType,
   tooltip,
-  legend
+  legend,
 }) => {
-  const [deviceType, setDeviceType] = useState<"desktop" | "tab" | "mobile">("desktop")
+  const [deviceType, setDeviceType] =
+    useState<"desktop" | "tab" | "mobile">("desktop");
   const [handleIndex, setHandleIndex] = useState(-1);
-  const chartRef = useRef<SVGSVGElement>(null)
+  const chartRef = useRef<SVGSVGElement>(null);
   const [showValue, setShowValue] = useState<{
     label: string;
     value: number;
     percentage: number;
-    color: string
+    color: string;
   }>({
     label: "",
     value: 0,
     percentage: 0,
-    color: ""
+    color: "",
   });
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
@@ -63,13 +62,17 @@ export const DonutChart: React.FC<DonutChartI> = ({
     item: donutChartData,
     event: React.MouseEvent<SVGPathElement>
   ) => {
-    setShowValue({ label: item.label, value: item.value, percentage: 0, color: item.color, });
-    const pathRect = (event.target as HTMLElement).getBoundingClientRect()
-    if (!pathRect) return
-    const left = pathRect.left + (pathRect.width / 2)
-    const top = pathRect.top + (pathRect.height / 2)
+    setShowValue({
+      label: item.label,
+      value: item.value,
+      percentage: 0,
+      color: item.color,
+    });
+    const pathRect = (event.target as HTMLElement).getBoundingClientRect();
+    if (!pathRect) return;
+    const left = pathRect.left + pathRect.width / 2;
+    const top = pathRect.top + pathRect.height / 2;
     setTooltipPosition({ x: left, y: top });
-
   };
 
   const handleMouseLeave = () => {
@@ -123,7 +126,6 @@ export const DonutChart: React.FC<DonutChartI> = ({
             A ${innerRadius} ${innerRadius} 0 ${largeArcFlag} 0 ${x1Inner} ${y1Inner} Z`;
   };
 
-
   let startAngle = -90; // Start angle at the top
 
   // creating path
@@ -145,8 +147,14 @@ export const DonutChart: React.FC<DonutChartI> = ({
         d={pathData}
         fill={chartData[index].color}
         className="inte-donutChart__path"
-        onMouseOver={(e) => { handleMouseOver(item, e); setHandleIndex(index) }}
-        onMouseLeave={() => { handleMouseLeave(); setHandleIndex(-1) }}
+        onMouseOver={(e) => {
+          handleMouseOver(item, e);
+          setHandleIndex(index);
+        }}
+        onMouseLeave={() => {
+          handleMouseLeave();
+          setHandleIndex(-1);
+        }}
         style={{
           transform: `scale(${handleIndex === index ? 1.04 : 1})`,
         }}
@@ -161,9 +169,7 @@ export const DonutChart: React.FC<DonutChartI> = ({
   let start: number, previousTimeStamp: number;
   let done = false;
 
-  useEffect(() => {
-
-  }, [tooltip])
+  useEffect(() => {}, [tooltip]);
 
   const animatePath = (timeStamp: number) => {
     if (start === undefined) {
@@ -172,31 +178,40 @@ export const DonutChart: React.FC<DonutChartI> = ({
     const elapsed = timeStamp - start;
 
     if (previousTimeStamp !== timeStamp) {
-
-      const paths = Array.from(chartRef.current?.querySelectorAll(".inte-donutChart__path") ?? [])
+      const paths = Array.from(
+        chartRef.current?.querySelectorAll(".inte-donutChart__path") ?? []
+      );
 
       if (paths && paths.length && newArr) {
-        const animationCompletePercentage = Math.min(Math.ceil((elapsed / animationDuration) * 100), 100)
-        let startAngel = -90
+        const animationCompletePercentage = Math.min(
+          Math.ceil((elapsed / animationDuration) * 100),
+          100
+        );
+        let startAngel = -90;
         const innerRadius = radius / 2;
         paths.map((path, index) => {
-          const currPathPer = (newArr[index]?.percentage * animationCompletePercentage) / 100;
+          const currPathPer =
+            (newArr[index]?.percentage * animationCompletePercentage) / 100;
           const endAngle = startAngel + (currPathPer * 360) / 100;
-          const currPathD = getDonutSegmentPath(startAngel, endAngle, innerRadius, radius)
-          path.setAttribute("d", currPathD)
-          startAngel = endAngle
-        })
-
+          const currPathD = getDonutSegmentPath(
+            startAngel,
+            endAngle,
+            innerRadius,
+            radius
+          );
+          path.setAttribute("d", currPathD);
+          startAngel = endAngle;
+        });
       }
-      const count = Math.min(elapsed, animationDuration)
-      if (count === animationDuration) done = true
+      const count = Math.min(elapsed, animationDuration);
+      if (count === animationDuration) done = true;
     }
 
     if (elapsed < animationDuration) {
-      previousTimeStamp = timeStamp
-      if (!done) window.requestAnimationFrame(animatePath)
+      previousTimeStamp = timeStamp;
+      if (!done) window.requestAnimationFrame(animatePath);
     }
-  }
+  };
 
   const checkDeviceType = () => {
     const width = window.innerWidth
@@ -206,21 +221,23 @@ export const DonutChart: React.FC<DonutChartI> = ({
   }
 
   useEffect(() => {
-    window.requestAnimationFrame(animatePath)
+    window.requestAnimationFrame(animatePath);
   }, [chartData]);
 
   useEffect(() => {
-    checkDeviceType()
-    window.addEventListener('resize', checkDeviceType)
+    checkDeviceType();
+    window.addEventListener("resize", checkDeviceType);
     return () => {
-      window.removeEventListener('resize', checkDeviceType)
-    }
-  }, [legend])
-
+      window.removeEventListener("resize", checkDeviceType);
+    };
+  }, [legend]);
 
   return (
     <div className="inte-donutChart__wrapper">
-      <div className="inte-donutChart" style={{height:`${size}px`, width : `${size}px`}}>
+      <div
+        className="inte-donutChart"
+        style={{ height: `${size}px`, width: `${size}px` }}
+      >
         <svg
           ref={chartRef}
           width={size}
@@ -230,10 +247,20 @@ export const DonutChart: React.FC<DonutChartI> = ({
         >
           <g transform={`translate(${size / 2}, ${size / 2})`}>{paths}</g>
         </svg>
+        {showTotalValue && (
+          <div className="inte-pieChart__percentage">
+            {valueType === "percentage" ? 100 + "%" : total}
+          </div>
+        )}
       </div>
-      {
-        legend && (legend[deviceType] !== false) ? <Legend chartData={chartData} renderIndex={(index) => setHandleIndex(index)} valueType={valueType ?? "number"} /> : null
-      }
+      {legend && legend[deviceType] !== false ? (
+        <Legend
+          chartData={chartData}
+          renderIndex={(index) => setHandleIndex(index)}
+          valueType={valueType ?? "number"}
+        />
+      ) : null}
+
       {showValue.label && showValue.value && tooltip && (
         <div
           className="inte-chart__tooltip"
@@ -243,10 +270,11 @@ export const DonutChart: React.FC<DonutChartI> = ({
           }}
         >
           <Badge size="large" dot customBgColor={showValue.color} />
-          {`${showValue.label}:  ${valueType === "percentage"
-            ? ((showValue.value / total) * 100).toFixed(2) + "%"
-            : showValue.value
-            }`}
+          {`${showValue.label}:  ${
+            valueType === "percentage"
+              ? ((showValue.value / total) * 100).toFixed(2) + "%"
+              : showValue.value
+          }`}
         </div>
       )}
     </div>

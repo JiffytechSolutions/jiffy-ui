@@ -29,24 +29,22 @@ export default {
       defaultValue: 250,
     },
     tooltip: {
-      description:
-        "show or hide the tooltip",
+      description: "show or hide the tooltip",
       control: {
         type: "boolean",
       },
       defaultValue: true,
     },
-    totalItems: {
+    showTotalValue: {
       description:
-        "If you can showing totalItems value then use totalItems prop  and totalItems is an object type",
+        "If you can showing  TotalValue value then use showTotalValue prop ",
       control: {
-        type: "object",
+        type: "boolean",
       },
-      defaultValue: { show: false, type: "number" || "percentage" },
+      defaultValue: false,
     },
     legend: {
-      description:
-        `Show the legend
+      description: `Show the legend
           <table>
             <tbody>
               <tr>
@@ -67,7 +65,7 @@ export default {
       control: {
         type: "object",
       },
-      defaultValue: { mobile: true, tab: true , desktop: true },
+      defaultValue: { mobile: true, tab: true, desktop: true },
     },
     animationDuration: {
       description:
@@ -100,10 +98,7 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <FlexLayout halign="center">
-        <DonutChart 
-          {...rest} 
-          chartData={chartData} 
-        />
+        <DonutChart {...rest} chartData={chartData} />
       </FlexLayout>
     </Card>
   );
@@ -111,5 +106,4 @@ const Template = ({ ...rest }) => {
 
 export const Primary = Template.bind({});
 
-export const DonutChartTemplateWithDemoData = () => <DonutChartTemplate />
-
+export const DonutChartTemplateWithDemoData = () => <DonutChartTemplate />;

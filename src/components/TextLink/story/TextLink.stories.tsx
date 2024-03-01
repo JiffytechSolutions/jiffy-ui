@@ -98,7 +98,8 @@ const Template = (rest: NewI) => {
     <>
       <Card title={"Primary Text Link"}>
         <TextLink
-          {...rest}
+          // {...rest}
+          url="https://aws.amazon.com/s3/"
           target={rest.target}
           label={rest.label}
           isDisabled={rest.isDisabled}
@@ -106,7 +107,7 @@ const Template = (rest: NewI) => {
             size: `16`,
             color: `currentColor`,
           })}
-          onClick={() => alert("Link clicked")}
+          // onClick={() => alert("Link clicked")}
         />
       </Card>
     </>

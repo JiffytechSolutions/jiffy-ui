@@ -1,4 +1,4 @@
-.inte-LineChart {
+.inte-barChart {
   position: relative;
 }
 
@@ -18,7 +18,7 @@
   position: absolute;
   top: calc(50% - var(--lineWidth));
   left: calc(100% + var(--left));
-  width: .9rem;
+  width: 9px;
   border-top: var(--lineWidth) solid var(--lineColor);
 }
 
@@ -31,98 +31,72 @@
   position: absolute;
   top: var(--top);
   left: calc(50% - var(--lineWidth));
-  height: .9rem;
+  height: 9px;
   border-left: var(--lineWidth) solid var(--lineColor);
 }
 
-.inte-LineChart__toolTipBox {
+.inte-barChart__toolTipBox {
   display: flex;
-  gap: .2rem;
+  gap: 2px;
   position: absolute;
   transform-origin: center;
   transform: translate(-50%, -50%);
   cursor: pointer;
-  padding: .1rem;
-}
-
-.inte-LineChart__toolTipBox::after {
-  content: "";
-  height: var(--height);
-  border-left: var(--lineWidth) dashed var(--color);
-  position: absolute;
-  top: 100%;
-  left: calc(50% - calc(var(--lineWidth)));
+  padding: 1px;
 }
 
 .inte-LineChart__toolTipData {
   display: flex;
-  gap: 3.0rem;
+  gap: 30px;
 }
 
 .inte-lineChart__circle:hover {
   visibility: hidden;
 }
 
-.inte-LineChart__dataLine {
-  animation-name: lineAnimation;
-  animation-timing-function: linear;
-  transform-origin: center calc(100% - var(--animateBottom));
-}
-
-.inte-LineChart__toolTipBody {
+.inte-barChart__toolTipBody {
   display: flex;
   flex-direction: column;
-  gap: .6rem;
+  gap: 6px;
 }
 
-.inte-LineChart__tooltip__dataItem {
+.inte-barChart__tooltip__dataItem {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
-  gap: .8rem;
+  gap: 8px;
   width: 100%;
 }
 
-.inte-LineChart__toolTipBody .toolTip__title {
+.inte-barChart__toolTipBody .inte-barChart__toolTipTitle {
   line-height: var(--inte-LH2-0);
   font-size: var(--inte-FS1-6);
   font-weight: var(--weight-bolder);
 }
 
-.inte-LineChart__tooltip__dataItem span:last-child {
+.inte-barChart__tooltip__dataItem span:last-child {
   margin-left: auto;
-  padding-left: 2.0rem;
-}
-
-@keyframes lineAnimation {
-  0% {
-    transform: scaleY(0);
-    opacity: 0;
-  }
-  100% {
-    transform: scaleY(1);
-    opacity: 1;
-  }
+  padding-left: 20px;
 }
 
 .inte-Legend__list {
   display: flex;
-  gap: 2.0rem;
+  gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .inte-Legend__list--top {
-  margin-bottom: 2.0rem;
+  margin-bottom: 20px;
 }
 
 .inte-Legend__list--bottom {
-  margin-top: 2.0rem;
+  margin-top: 20px;
 }
 
 .inte-Legend {
   display: flex;
-  gap: .8rem;
+  gap: 8px;
   align-items: center;
   cursor: pointer;
   user-select: none;
@@ -136,17 +110,41 @@
   content: "";
   position: absolute;
   width: 100%;
-  height: .2rem;
+  height: 2px;
   background-color: grey;
-  top: calc(50% - .1rem);
+  top: calc(50% - 1px);
 }
 
 .inte-scaleLabel--small .inte-scaleLabel--horizontal div {
   position: relative;
-  transform-origin: top right;
-  transform: translate(-50%, 0%) rotate(-45deg);
+  transform: translateX(-50%) rotate(-45deg);
 }
 
-.inte-scaleLabel div {
-  white-space: pre;
+.inte-barChart__tooltipActivator {
+  height: 1.4rem;
+  width: 1.4rem;
+  border: 0.2rem solid #fff;
+}
+
+.inte-barChart__dataLine {
+  animation-name: bottomToTop;
+  animation-timing-function: linear;
+  transform-origin: center calc(100% - 50px);
+}
+
+@keyframes bottomToTop {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+.inte-barChart__dataLine ~ .Circle {
+  display: none;
+}
+.inte-barChart__dataLine:hover ~ .Circle {
+  display: block;
 }

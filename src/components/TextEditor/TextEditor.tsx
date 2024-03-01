@@ -29,6 +29,7 @@ import DragDropPaste from './plugin/DragDropPastePlugin';
 import { AutoFocusPlugin } from '@lexical/react/LexicalAutoFocusPlugin';
 import useMobileDevice from '../../utilities/useMobileDevice';
 import getClassNames from '../../utilities/getClassnames';
+import OnChangePlugin from './plugin/OnChangePlugin';
 
 
 const editorConfig : InitialConfigType = {
@@ -55,19 +56,18 @@ const editorConfig : InitialConfigType = {
 
 export interface TextEditorI {
   placeholder?: string
+  onChange?:(newState : EditorState) => void;
 }
 
-const TextEditor = ({ placeholder }: TextEditorI) => {
+const TextEditor = ({ placeholder , onChange }: TextEditorI) => {
 
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
 
   const isMobileDevice = useMobileDevice()
 
-  const onChange = (e: EditorState) => {
-    e.read(() => {
-      console.log(e)
-    })
+  const onChange1 = (e: EditorState) => {
+    onChange && onChange(e)
   }
 
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
@@ -101,6 +101,7 @@ const TextEditor = ({ placeholder }: TextEditorI) => {
             <CustomLinkPlugin />
             <ImagesPlugin />
             <CodeHighlightPlugin />
+            <OnChangePlugin onChange={onChange1} />
             {
               !!floatingAnchorElem && <FloatingLinkEditorPlugin
                 anchorElem={floatingAnchorElem}

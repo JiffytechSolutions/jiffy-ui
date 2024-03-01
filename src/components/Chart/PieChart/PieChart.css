@@ -58,7 +58,7 @@
   border-radius: 0.6rem;
   z-index: var(--inte-Z-10);
   background-color: var(--inte-G800);
-  transform: translate(-50% , -50%);
+  transform: translate(-50%, -50%);
   pointer-events: none;
   transition: all 0.5s ease-in;
   display: flex;

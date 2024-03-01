@@ -11,12 +11,13 @@ export interface PieChartI {
   tooltip?: boolean;
   border?: showBorderI;
   valueType?: "percentage" | "number";
+  showTotalValue?: boolean;
   customClass?: string;
   legend?: {
-    tab?: boolean
-    mobile?: boolean
-    desktop?: boolean
-  }
+    tab?: boolean;
+    mobile?: boolean;
+    desktop?: boolean;
+  };
 }
 
 export interface PieChartData {
@@ -24,10 +25,7 @@ export interface PieChartData {
   label: string;
   color: string;
 }
-export interface tooltipI {
-  show: boolean;
-  type?: "number" | "percentage";
-}
+
 export interface showBorderI {
   show?: boolean;
   width?: number;
@@ -45,10 +43,12 @@ const PieChart: React.FC<PieChartI> = ({
   tooltip,
   // showBorder,
   customClass = "",
-  valueType="number",
+  valueType = "number",
   border = { show: false, width: 1, color: "#fff" },
+  showTotalValue = false,
 }) => {
-  const [deviceType, setDeviceType] = useState<"desktop" | "tab" | "mobile">("desktop")
+  const [deviceType, setDeviceType] =
+    useState<"desktop" | "tab" | "mobile">("desktop");
   const [handleIndex, setHandleIndex] = useState(-1);
   const moveRef = useRef<HTMLDivElement>(null);
   const totalPercentage = getTotalPercentage(chartData);
@@ -57,12 +57,12 @@ const PieChart: React.FC<PieChartI> = ({
     label: string;
     value: number;
     percentage: number;
-    color:string
+    color: string;
   }>({
     label: "",
     value: 0,
     percentage: 0,
-    color:""
+    color: "",
   });
   const [tooltipPosition, setTooltipPosition] = useState({ x: 0, y: 0 });
 
@@ -72,20 +72,24 @@ const PieChart: React.FC<PieChartI> = ({
   );
 
   const handleMouseOver = (
-    item:PieChartData ,
+    item: PieChartData,
     event: React.MouseEvent<SVGPathElement>
   ) => {
-    setShowValue({ label: item.label, value: item.value , percentage:0 , color:item.color, });
-    const pathRect = (event.target as HTMLElement).getBoundingClientRect()
-    if(!pathRect) return
-    const left = pathRect.left + (pathRect.width / 2)
-    const top = pathRect.top + (pathRect.height / 2)
-    setTooltipPosition({ x: left, y: top});
-
+    setShowValue({
+      label: item.label,
+      value: item.value,
+      percentage: 0,
+      color: item.color,
+    });
+    const pathRect = (event.target as HTMLElement).getBoundingClientRect();
+    if (!pathRect) return;
+    const left = pathRect.left + pathRect.width / 2;
+    const top = pathRect.top + pathRect.height / 2;
+    setTooltipPosition({ x: left, y: top });
   };
 
   const handleMouseLeave = () => {
-    setShowValue({ label: "", value: 0, percentage:0 , color : "" });
+    setShowValue({ label: "", value: 0, percentage: 0, color: "" });
   };
 
   // percentage format
@@ -95,60 +99,70 @@ const PieChart: React.FC<PieChartI> = ({
     return `${formattedValue}%`;
   };
 
-  const getPathData = (startAngle : number , endAngle : number , value : number ) => {
+  const getPathData = (startAngle: number, endAngle: number, value: number) => {
     return `
     M ${size / 2} ${size / 2}
-    L ${size / 2 +
-      Math.cos((startAngle - 90) * (Math.PI / 180)) * (size / 2)
-      } ${size / 2 +
-      Math.sin((startAngle - 90) * (Math.PI / 180)) * (size / 2)
-      }
-    A ${size / 2} ${size / 2} 0 ${Number(value) / totalPercentage >= 0.5 ? 1 : 0
-      } 1
-    ${size / 2 +
-      Math.cos((endAngle - 90) * (Math.PI / 180)) * (size / 2)
-      } ${size / 2 +
-      Math.sin((endAngle - 90) * (Math.PI / 180)) * (size / 2)
-      }
+    L ${
+      size / 2 + Math.cos((startAngle - 90) * (Math.PI / 180)) * (size / 2)
+    } ${size / 2 + Math.sin((startAngle - 90) * (Math.PI / 180)) * (size / 2)}
+    A ${size / 2} ${size / 2} 0 ${
+      Number(value) / totalPercentage >= 0.5 ? 1 : 0
+    } 1
+    ${size / 2 + Math.cos((endAngle - 90) * (Math.PI / 180)) * (size / 2)} ${
+      size / 2 + Math.sin((endAngle - 90) * (Math.PI / 180)) * (size / 2)
+    }
     Z
-  `
-  }
+  `;
+  };
 
-  let start:number, previousTimeStamp:number;
+  let start: number, previousTimeStamp: number;
   let done = false;
 
-  const pathPercentage = chartData.map(item => (item.value / totalPercentage)*100)
+  const pathPercentage = chartData.map(
+    (item) => (item.value / totalPercentage) * 100
+  );
 
-  const animatePath = (timeStamp:number) => {
+  const animatePath = (timeStamp: number) => {
     if (start === undefined) {
       start = timeStamp;
     }
     const elapsed = timeStamp - start;
 
-    if(previousTimeStamp !== timeStamp){
-      const paths = Array.from(moveRef.current?.getElementsByClassName("inte-pieChart__path") ?? [])
-      
-      if(paths && paths.length){
-        const animationCompletePercentage = Math.min(Math.ceil((elapsed / animationDuration) * 100) , 100)
+    if (previousTimeStamp !== timeStamp) {
+      const paths = Array.from(
+        moveRef.current?.getElementsByClassName("inte-pieChart__path") ?? []
+      );
+
+      if (paths && paths.length) {
+        const animationCompletePercentage = Math.min(
+          Math.ceil((elapsed / animationDuration) * 100),
+          100
+        );
         let startAngel = paths.length < 2 ? 0.001 : 0;
-        paths.map((path, index) =>{
-          const currPathPer = (pathPercentage[index] * animationCompletePercentage)/100
-          const endAngel = Math.min(startAngel + (currPathPer * 360) / 100 , 360)
-          const currValue = Number(chartData[index].value) * animationCompletePercentage / 100
-          const currPathD = getPathData(startAngel , endAngel , currValue)
-          path.setAttribute("d", currPathD)
-          startAngel = endAngel
-        })
+        paths.map((path, index) => {
+          const currPathPer =
+            (pathPercentage[index] * animationCompletePercentage) / 100;
+          const endAngel = Math.min(
+            startAngel + (currPathPer * 360) / 100,
+            360
+          );
+          const currValue =
+            (Number(chartData[index].value) * animationCompletePercentage) /
+            100;
+          const currPathD = getPathData(startAngel, endAngel, currValue);
+          path.setAttribute("d", currPathD);
+          startAngel = endAngel;
+        });
       }
-      const count = Math.min(elapsed , animationDuration)
-      if(count === animationDuration) done = true
+      const count = Math.min(elapsed, animationDuration);
+      if (count === animationDuration) done = true;
     }
 
-    if(elapsed < animationDuration){
-      previousTimeStamp = timeStamp
-      if(!done) window.requestAnimationFrame(animatePath)
+    if (elapsed < animationDuration) {
+      previousTimeStamp = timeStamp;
+      if (!done) window.requestAnimationFrame(animatePath);
     }
-  }
+  };
 
   useEffect(() => {
     window.requestAnimationFrame(animatePath)
@@ -161,21 +175,20 @@ const PieChart: React.FC<PieChartI> = ({
   else setDeviceType("desktop")
 }
 
- useEffect(() => {
-  checkDeviceType()
-  window.addEventListener('resize', checkDeviceType)
-  return () => {
-    window.removeEventListener('resize', checkDeviceType)
-  }
-}, [legend])
-
+  useEffect(() => {
+    checkDeviceType();
+    window.addEventListener("resize", checkDeviceType);
+    return () => {
+      window.removeEventListener("resize", checkDeviceType);
+    };
+  }, [legend]);
 
   return (
     <div className="inte-pieChart__wrapper">
       <div
         className={getClassNames({
           "inte-pieChart": true,
-     
+
           [customClass]: customClass,
         })}
         ref={moveRef}
@@ -203,13 +216,12 @@ const PieChart: React.FC<PieChartI> = ({
 
             cumulativePercentage += Number(item.value);
 
-          const pathData = getPathData(startAngle, endAngle , item.value)
+            const pathData = getPathData(startAngle, endAngle, item.value);
             return (
               <path
                 key={index}
                 className={getClassNames({
                   "inte-pieChart__path": true,
-          
                 })}
                 d={pathData}
                 fill={item.color || ""}
@@ -232,9 +244,12 @@ const PieChart: React.FC<PieChartI> = ({
               />
             );
           })}
-
-        
         </svg>
+        {showTotalValue && (
+          <div className="inte-pieChart__percentage">
+            {valueType === "percentage" ? 100 + "%" : totalValue * 100}
+          </div>
+        )}
         {showValue.label && showValue.value && tooltip && (
           <div
             className="inte-chart__tooltip"
@@ -244,17 +259,21 @@ const PieChart: React.FC<PieChartI> = ({
             }}
           >
             <Badge size="large" dot customBgColor={showValue.color} />
-            {`${showValue.label}:  ${valueType === "percentage"
+            {`${showValue.label}:  ${
+              valueType === "percentage"
                 ? formatPercentage(showValue.value / totalValue)
                 : showValue.value
-              }`}
+            }`}
           </div>
         )}
-       
       </div>
-      {
-        legend && (legend[deviceType] !== false) ? <Legend chartData={chartData} renderIndex={(index) => setHandleIndex(index)} valueType={valueType ?? "number"} /> : null
-      }
+      {legend && legend[deviceType] !== false ? (
+        <Legend
+          chartData={chartData}
+          renderIndex={(index) => setHandleIndex(index)}
+          valueType={valueType ?? "number"}
+        />
+      ) : null}
     </div>
   );
 };
