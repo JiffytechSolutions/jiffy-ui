@@ -5,7 +5,7 @@ import PieChart, { PieChartData } from "../PieChart";
 
 export default {
   title: "Components/Chart/PieChart",
-  component:PieChart ,
+  component: PieChart,
   parameters: {
     design: {
       type: "figma",
@@ -43,17 +43,16 @@ export default {
       },
       defaultValue: { show: false, type: "number" },
     },
-    totalItems: {
+    showTotalValue: {
       description:
-        "If you can showing  totalItems value then use totalItems prop and totalItems is an object type",
+        "If you can showing  TotalValue value then use showTotalValue prop ",
       control: {
-        type: "object",
+        type: "boolean",
       },
-      defaultValue: { show: true, type: "number" },
+      defaultValue: false,
     },
     legend: {
-      description:
-        `Show the legend
+      description: `Show the legend
           <table>
             <tbody>
               <tr>
@@ -74,7 +73,7 @@ export default {
       control: {
         type: "object",
       },
-      defaultValue: { mobile: true, tab: true , desktop: true },
+      defaultValue: { mobile: true, tab: true, desktop: true },
     },
     customClass: {
       description: "Add custom class if need to change the design",
@@ -105,11 +104,11 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <FlexLayout halign="center">
-        <PieChart 
-          {...rest} 
-          chartData={chartData} 
-          size={rest.height} 
-          animationDuration={500}  
+        <PieChart
+          {...rest}
+          chartData={chartData}
+          size={rest.height}
+          animationDuration={500}
         />
       </FlexLayout>
     </Card>
@@ -201,10 +200,7 @@ export const PieChartAll = ({ ...rest }) => {
   return (
     <Card title="Pie Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="loose" wrap="wrap">
-        <PieChart
-          chartData={chartData}
-          size={250}
-        />
+        <PieChart chartData={chartData} size={250} />
         <PieChart
           chartData={[
             { value: 25, label: "Series A", color: "#F0EDFA" },
