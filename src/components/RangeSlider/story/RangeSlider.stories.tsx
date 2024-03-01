@@ -99,13 +99,11 @@ const Template = ({ ...rest }) => {
   const [single, setSingle] = useState(16);
   function singleRange(e: number) {
     setSingle(e);
-    // console.log(e, "ele");
   }
 
   const [double, setDouble] = useState<[number, number]>([20, 60]);
   function doubleRange(e: any) {
     setDouble(e);
-    // console.log(e, "ele");
   }
 
   return (

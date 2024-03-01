@@ -126,8 +126,6 @@ const Template = ({ ...rest }) => {
         <PieChart
           {...rest}
           chartData={chartData}
-          size={rest.height}
-          animationDuration={500}
         />
       </FlexLayout>
     </Card>

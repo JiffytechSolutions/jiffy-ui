@@ -184,8 +184,6 @@ const LineChartTemplate = () => {
       let xLabels: string[] = []
       let points: number[] = []
 
-      console.log(daysInBetween)
-
       if (daysInBetween <= 30) { // for day Wise
         while (startDate.getTime() < endDate.getTime()) {
           xLabels.push(startDate.toLocaleDateString())

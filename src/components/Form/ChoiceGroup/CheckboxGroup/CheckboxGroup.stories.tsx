@@ -112,7 +112,6 @@ const Template = ({ ...rest }) => {
   const [grpVal, setGrpVal] = useState<any[]>([]);
 
   const handleCheckboxGroupChange = useCallback((val: any[]) => {
-    console.log(val);
     setGrpVal([...val]);
   }, []);
 
