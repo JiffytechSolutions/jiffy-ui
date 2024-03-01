@@ -16,6 +16,10 @@ export default {
           "<blockquote>A choice list is an interactive component that allows users to select one or more options from a list of predefined choices.</blockquote>",
       },
     },
+    design : {
+      type : "figma",
+      design : "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=5974-259599&mode=design&t=JpmkWVh9faGpjD3H-0"
+    }
   },
   argTypes: {
     name: {

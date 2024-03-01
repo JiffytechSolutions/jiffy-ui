@@ -10,6 +10,12 @@ const allIcons: any = { ...Icon };
 export default {
   title: "Components/Form/InputPhone",
   component: InputPhone,
+  parameters : {
+    design : {
+      type : "figma",
+      url : "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=15299-10925&mode=design&t=JpmkWVh9faGpjD3H-0"
+    }
+  },
   argTypes: {
     label: {
       description: "Enter label",

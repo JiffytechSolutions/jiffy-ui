@@ -15,6 +15,10 @@ export default {
           "<blockquote>Checkbox is used to select or deselect action items.</blockquote>",
       },
     },
+    design : {
+      type : 'figma',
+      url : "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=6921-280316&mode=design&t=JpmkWVh9faGpjD3H-0"
+    }
   },
 
   argTypes: {

@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./DonutChart.css";
 import Badge from "../../Badge/Badge";
-import Text from "../../Text/Text";
 import Legend from "../Legend/Legend";
 
 export interface DonutChartI {
@@ -9,7 +8,6 @@ export interface DonutChartI {
   size?: number;
   tooltip?: boolean;
   border?: showBorderI;
-  type?: "piechart" | "donutchart";
   totalItems?: tooltipI;
   customClass?: string;
   animationDuration?: number
@@ -202,8 +200,8 @@ export const DonutChart: React.FC<DonutChartI> = ({
 
   const checkDeviceType = () => {
     const width = window.innerWidth
-    if (width < 480) setDeviceType("mobile")
-    else if (width < 768) setDeviceType("tab")
+    if (width < 768) setDeviceType("mobile")
+    else if (width < 992) setDeviceType("tab")
     else setDeviceType("desktop")
   }
 

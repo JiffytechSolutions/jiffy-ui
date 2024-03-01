@@ -82,6 +82,7 @@ export default {
       control: {
         type: "text",
       },
+      defaultValue: "",
     },
   },
 };

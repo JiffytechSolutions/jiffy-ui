@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import getClassNames from "../../../utilities/getClassnames";
 import "./PieChart.css";
 import Badge from "../../Badge/Badge";
-import Text from "../../Text/Text";
 import Legend from "../Legend/Legend";
 
 export interface PieChartI {
@@ -157,8 +156,8 @@ const PieChart: React.FC<PieChartI> = ({
 
  const checkDeviceType = () => {
   const width = window.innerWidth
-  if (width < 480) setDeviceType("mobile")
-  else if (width < 768) setDeviceType("tab")
+  if (width < 768) setDeviceType("mobile")
+  else if (width < 992) setDeviceType("tab")
   else setDeviceType("desktop")
 }
 

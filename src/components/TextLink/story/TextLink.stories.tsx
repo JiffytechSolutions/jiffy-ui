@@ -20,6 +20,10 @@ export default {
           "<div style='margin-top: 15px;'><div class='inte- flex inte- flex--wrap inte- flex--spacing- Extraloose inte - flex--vertical'><div class='inte - flex__item'><h4 class='Paragraph  inte__text--light none inte__font--normal inte__Paragraph--font--large'>Text Link is an actionable text component with connection to another web pages. They are used as navigational elements that may appear on their own, within a sentence or paragraph, or directly following the content.</h4></div><div class='inte - flex__item'><p><blockquote>A link is a reference to a resource.</blockquote></p></div></div>",
       },
     },
+    design : {
+      type : 'figma',
+      url : "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=165-12056&mode=design&t=JpmkWVh9faGpjD3H-0"
+    }
   },
   argTypes: {
     label: {
