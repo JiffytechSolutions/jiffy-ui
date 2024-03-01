@@ -6,10 +6,10 @@ import getClassNames from "../../../utilities/getClassnames";
 import "./BarChart.css";
 
 export interface barChartI {
+  barWidth?: number;
   width?: string;
   height?: number;
   type?: "group" | "stack";
-  direction?: "vertical" | "horizontal";
   labels: {
     x: string[] | number;
     y: string[] | number;
@@ -21,8 +21,7 @@ export interface barChartI {
     animationDuration?: number;
     beginAtOrigin?: boolean;
   }[];
-  paddingLeft?: number;
-  paddingBottom?: number;
+
   backgroundGrid?: {
     xLines?: {
       color?: string;
@@ -37,6 +36,8 @@ export interface barChartI {
   };
   legend?: { show?: boolean; position?: "top" | "bottom" };
   customClass?: string;
+  paddingLeft?: number; // remove this
+  paddingBottom?: number; // remove this
 }
 
 type Point = { x: number; y: number };
@@ -59,6 +60,7 @@ const BarChart = ({
   backgroundGrid,
   paddingLeft = 60,
   paddingBottom = 50,
+  barWidth = 30,
   customClass,
   legend = { show: true, position: "bottom" },
 }: barChartI) => {
@@ -338,7 +340,7 @@ const BarChart = ({
 
     setToolTipDiv(div);
   };
-
+  console.log(showPoint, disableCurves);
   const chartLegend = useMemo(
     () => (
       <ul
@@ -409,6 +411,20 @@ const BarChart = ({
     handelGraphLabelSize();
   }, [scaleLabel]);
 
+  const handleMouseOver = (
+    item: {
+      name?: string;
+      color: any;
+      points?: number[];
+      animationDuration?: number;
+    },
+    i: number,
+    index: number
+  ) => {
+    setShowPoint(Number(`${i}${index}`));
+    setCurrentColor(item.color);
+  };
+
   // render all dynamic paths
   const renderPaths = () => {
     const paths: any = [];
@@ -427,46 +443,45 @@ const BarChart = ({
         const y1 = origin.y;
         const y2 = getYPixels(currValue);
         const pathD = `M ${x},${y1} ${x},${y2}`;
-        const width = 30;
+
         let total = dataSet.length;
 
-        let evenPlus = width / 2; // 15
-        let evenMinus = width / 2; // 15
+        let evenPlus = barWidth / 2; // 15
+        let evenMinus = barWidth / 2; // 15
         // odd
-        let oddPlus = width; //30
-        let oddnMinus = width; // 30
+        let oddPlus = barWidth; //30
+        let oddnMinus = barWidth; // 30
         const empty: any = [];
         const newX: any = [];
 
         if (total > 0) {
           for (let j = 1; j <= total; j++) {
-            // even
             if (total % 2 == 0) {
               if (total / 2 >= j) {
-                // console.log("if");
-                empty.push(`M ${x - evenMinus},${y1} ${x - evenMinus},${y2}`);
-                newX.push(x - evenMinus);
-                evenMinus = evenMinus + width;
+                empty.unshift(
+                  `M ${x - evenMinus},${y1} ${x - evenMinus},${y2}`
+                );
+                newX.unshift(x - evenMinus);
+                evenMinus = evenMinus + barWidth;
               } else {
-                // console.log("if else");
                 empty.push(`M ${x + evenPlus},${y1} ${x + evenPlus},${y2}`);
                 newX.push(x + evenPlus);
-                evenPlus = evenPlus + width;
+                evenPlus = evenPlus + barWidth;
               }
             } else {
-              // odd
-              // console.log("else");
               if (Math.ceil(total / 2) > j) {
-                empty.push(`M ${x - oddnMinus},${y1} ${x - oddnMinus},${y2}`);
-                newX.push(x - oddnMinus);
-                oddnMinus = oddnMinus + width;
+                empty.unshift(
+                  `M ${x - oddnMinus},${y1} ${x - oddnMinus},${y2}`
+                );
+                newX.unshift(x - oddnMinus);
+                oddnMinus = oddnMinus + barWidth;
               } else if (Math.ceil(total / 2) === j) {
                 empty.push(`M ${x},${y1} ${x},${y2}`);
                 newX.push(x);
               } else {
                 empty.push(`M ${x + oddPlus},${y1} ${x + oddPlus},${y2}`);
                 newX.push(x + oddPlus);
-                oddPlus = oddPlus + width;
+                oddPlus = oddPlus + barWidth;
               }
             }
           }
@@ -479,18 +494,12 @@ const BarChart = ({
               <>
                 <path
                   key={index}
-                  id={`inte-barChart__dataLine${i}${index}`}
                   d={empty[index]}
                   stroke={color}
-                  strokeWidth={width}
+                  strokeWidth={barWidth}
                   className="inte-barChart__dataLine"
-                  onMouseOver={() => {
-                    // setShowPoint(`${i}${index}`);
-                    setShowPoint(Number(`${i}${index}`));
-                    setCurrentColor(item.color);
-                    // hoverDot(item, newX, y2, i, index);
-                  }}
-                  // onMouseOut={() => setShowPoint(-1)}
+                  onMouseOver={() => handleMouseOver(item, i, index)}
+                  onMouseOut={() => setShowPoint(-1)}
                   style={{
                     animationDuration: `${
                       dataSet[index].animationDuration ?? 300
@@ -498,39 +507,41 @@ const BarChart = ({
                   }}
                 />
 
-                <>
-                  <defs>
-                    <linearGradient
-                      id="gradient"
-                      x1="0%"
-                      y1="0%"
-                      x2="0%"
-                      y2="100%"
-                    >
-                      <stop offset="30%" stop-color="white" />
-                      <stop offset="100%" stop-color={currentColor} />
-                    </linearGradient>
-                  </defs>
-                  <circle
-                    cx={newX[index]}
-                    cy={y2}
-                    r="6.667"
-                    stroke="#fff"
-                    className="Circle"
-                    strokeWidth="2"
-                    fill="url(#gradient)"
-                    onMouseOver={() => {
-                      handelCurvePointHover(
-                        newX[index],
-                        y2,
-                        item.name,
-                        item.color,
-                        dataSet[index].points[i],
-                        index
-                      );
-                    }}
-                  />
-                </>
+                {showPoint == Number(`${i}${index}`) && (
+                  <>
+                    <defs>
+                      <linearGradient
+                        id="gradient"
+                        x1="0%"
+                        y1="0%"
+                        x2="0%"
+                        y2="100%"
+                      >
+                        <stop offset="30%" stop-color="white" />
+                        <stop offset="100%" stop-color={currentColor} />
+                      </linearGradient>
+                    </defs>
+                    <circle
+                      cx={newX[index]}
+                      cy={y2}
+                      r="6.667"
+                      stroke="#fff"
+                      className="Circle"
+                      strokeWidth="2"
+                      fill="url(#gradient)"
+                      onMouseOver={() => {
+                        handelCurvePointHover(
+                          newX[index],
+                          y2,
+                          item.name,
+                          item.color,
+                          dataSet[index].points[i],
+                          index
+                        );
+                      }}
+                    />
+                  </>
+                )}
               </>
             )
           : paths.push(
@@ -541,7 +552,7 @@ const BarChart = ({
                   stroke={color}
                   strokeWidth={31}
                   className="inte-barChart__dataLine"
-                  onMouseOver={() => setShowPoint(index)}
+                  onMouseOver={() => handleMouseOver(item, i, index)}
                   onMouseOut={() => setShowPoint(-1)}
                   style={{
                     animationDuration: `${
@@ -549,7 +560,7 @@ const BarChart = ({
                     }ms`,
                   }}
                 />
-                {showPoint === index && (
+                {showPoint == Number(`${i}${index}`) && (
                   <>
                     <defs>
                       <linearGradient
@@ -576,7 +587,7 @@ const BarChart = ({
                           y2,
                           item.name,
                           item.color,
-                          item.points[0],
+                          dataSet[index].points[i],
                           index
                         )
                       }
@@ -611,8 +622,8 @@ const BarChart = ({
         <svg ref={chartRef} width={svgSize.width} height={svgSize.height}>
           {graphScaleLine}
 
-          <>
-            {!!backgroundGrid && (
+          {!!backgroundGrid && (
+            <>
               <path
                 d={`${
                   backgroundGrid.yLines?.show === false
@@ -635,9 +646,7 @@ const BarChart = ({
                 }
                 strokeWidth={graphScale.lineWidth}
               />
-            )}
 
-            {!!backgroundGrid && (
               <path
                 d={`${
                   backgroundGrid.xLines?.show === false
@@ -660,9 +669,9 @@ const BarChart = ({
                 }
                 strokeWidth={graphScale.lineWidth}
               />
-            )}
-            {renderPaths()}
-          </>
+            </>
+          )}
+          {renderPaths()}
         </svg>
         <ul ref={labelListRef} className="inte-barChart__labelsList">
           {scaleLabel.map((label, index) => (
