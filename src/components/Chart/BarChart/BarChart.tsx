@@ -60,7 +60,7 @@ const BarChart = ({
   backgroundGrid,
   paddingLeft = 60,
   paddingBottom = 50,
-  barWidth = 30,
+  barWidth = 15,
   customClass,
   legend = { show: true, position: "bottom" },
 }: barChartI) => {
@@ -440,58 +440,80 @@ const BarChart = ({
           getPointsFromIndex(i, "horizontal") - graphScale.lineWidth / 2;
         const y1 = origin.y;
         const y2 = getYPixels(currValue);
-        const pathD = `M ${x},${y1} ${x},${y2}`;
+        const stackP = `M${x - barWidth / 2 - 15 / 2},${y1}
+        v ${y2 - y1}
+        a8 8 0 0 1 8 -8
+         h ${barWidth}
+        a8 8 0 0 1 8 8
+        v ${y1 - y2}
+        z`;
         let total = dataSet.length;
-        let evenPlus = barWidth / 2; // 15
-        let evenMinus = barWidth / 2; // 15
+        let evenPlus = 0;
+        let evenMinus = 15.5 + barWidth;
         // odd
-        let oddPlus = barWidth; //30
-        let oddnMinus = barWidth; // 30
+        let oddPlus = barWidth / 2 + 15 / 2;
+        let oddnMinus = barWidth * 2 + 30 / 2;
         const empty: any = [];
         const newX: any = [];
 
-        if (total > 0) {
+        if (total > 1) {
           for (let j = 1; j <= total; j++) {
             if (total % 2 == 0) {
               if (total / 2 >= j) {
-                empty.unshift(
-                  `M ${x - evenMinus},${y1} ${x - evenMinus},${y2}`
-                );
-                newX.unshift(x - evenMinus);
-                evenMinus = evenMinus + barWidth;
+                // even
+                empty.unshift(`M${x - evenMinus},${y1}
+                v ${y2 - y1}
+                a8 8 0 0 1 8 -8
+                 h ${barWidth}
+                a8 8 0 0 1 8 8
+                v ${y1 - y2}
+                z`);
+                newX.unshift(x - evenMinus + barWidth / 2 + 15 / 2);
+                evenMinus = evenMinus + barWidth + 15.5;
               } else {
-                empty.push(`M ${x + evenPlus},${y1} ${x + evenPlus},${y2}`);
-                newX.push(x + evenPlus);
-                evenPlus = evenPlus + barWidth;
+                empty.push(`M${x + evenPlus},${y1}
+                v ${y2 - y1}
+                a8 8 0 0 1 8 -8
+                 h ${barWidth}
+                a8 8 0 0 1 8 8
+                v ${y1 - y2}
+                z`);
+                newX.push(x + evenPlus + barWidth / 2 + 15 / 2);
+                evenPlus = evenPlus + barWidth + 15.5;
               }
             } else {
+              // odd
               if (Math.ceil(total / 2) > j) {
-                empty.unshift(
-                  `M ${x - oddnMinus},${y1} ${x - oddnMinus},${y2}`
-                );
-                newX.unshift(x - oddnMinus);
-                oddnMinus = oddnMinus + barWidth;
+                empty.unshift(`M${x - oddnMinus},${y1}
+                v ${y2 - y1}
+                a8 8 0 0 1 8 -8
+                 h ${barWidth}
+                a8 8 0 0 1 8 8
+                v ${y1 - y2}
+                z`);
+                newX.unshift(x - oddnMinus + barWidth / 2 + 15 / 2);
+                oddnMinus = oddnMinus + barWidth + 15.5;
               } else if (Math.ceil(total / 2) === j) {
-                empty.push(`M ${x},${y1} ${x},${y2}`);
+                // center odd
+                empty.push(stackP);
                 newX.push(x);
               } else {
-                empty.push(`M ${x + oddPlus},${y1} ${x + oddPlus},${y2}`);
-                newX.push(x + oddPlus);
-                oddPlus = oddPlus + barWidth;
+                empty.push(`M${x + oddPlus},${y1}
+                v ${y2 - y1}
+                a8 8 0 0 1 8 -8
+                 h ${barWidth}
+                a8 8 0 0 1 8 8
+                v ${y1 - y2}
+                z`);
+                newX.push(x + oddPlus + barWidth / 2 + 15 / 2);
+                oddPlus = oddPlus + barWidth + 15.5;
               }
             }
           }
         } else {
-          empty.push(`M ${x},${y1} ${x},${y2}`);
+          empty.push(stackP);
+          newX.push(x);
         }
-
-        const stackP = `M${x - Math.ceil(barWidth / 2)},${y1}
-        v ${y2 - y1}
-        a8 8 0 0 1 8 -8
-         h 30
-        a8 8 0 0 1 8 8
-        v ${y1 - y2}
-        z`;
 
         type === "group"
           ? paths.push(
@@ -500,8 +522,7 @@ const BarChart = ({
                   <path
                     key={index}
                     d={empty[index]}
-                    stroke={color}
-                    strokeWidth={barWidth}
+                    fill={color}
                     className="inte-barChart__dataLine"
                     onMouseOver={() => handleMouseOver(item, i, index)}
                     onMouseOut={() => setShowPoint(-1)}
@@ -512,7 +533,6 @@ const BarChart = ({
                     }}
                   />
                 )}
-                <path d={stackP} fill="#ff3600" />
 
                 {showPoint == Number(`${i}${index}`) && (
                   <>
@@ -553,20 +573,22 @@ const BarChart = ({
             )
           : paths.push(
               <>
-                <path
-                  key={index}
-                  d={pathD}
-                  stroke={color}
-                  strokeWidth={31}
-                  className="inte-barChart__dataLine"
-                  onMouseOver={() => handleMouseOver(item, i, index)}
-                  onMouseOut={() => setShowPoint(-1)}
-                  style={{
-                    animationDuration: `${
-                      dataSet[index].animationDuration ?? 300
-                    }ms`,
-                  }}
-                />
+                {!disableCurves.includes(index) && (
+                  <path
+                    key={index}
+                    d={stackP}
+                    fill={color}
+                    strokeWidth={barWidth}
+                    className="inte-barChart__dataLine"
+                    onMouseOver={() => handleMouseOver(item, i, index)}
+                    onMouseOut={() => setShowPoint(-1)}
+                    style={{
+                      animationDuration: `${
+                        dataSet[index].animationDuration ?? 300
+                      }ms`,
+                    }}
+                  />
+                )}
                 {showPoint == Number(`${i}${index}`) && (
                   <>
                     <defs>
@@ -607,180 +629,6 @@ const BarChart = ({
     }
     return paths;
   };
-
-  //Done render all dynamic paths
-  // const renderPaths = () => {
-  //   const paths: any = [];
-  //   for (
-  //     let i = 0;
-  //     i < (typeof labels.x === "number" ? labels.x : labels.x.length);
-  //     i++
-  //   ) {
-  //     dataSet.map((item, index) => {
-  //       const color = item.color;
-  //       const currValue = item.points[i];
-  //       const x =
-  //         getPointsFromIndex(i, "horizontal") - graphScale.lineWidth / 2;
-  //       const y1 = origin.y;
-  //       const y2 = getYPixels(currValue);
-  //       const pathD = `M ${x},${y1} ${x},${y2}`;
-  //       let total = dataSet.length;
-  //       let evenPlus = barWidth / 2; // 15
-  //       let evenMinus = barWidth / 2; // 15
-  //       // odd
-  //       let oddPlus = barWidth; //30
-  //       let oddnMinus = barWidth; // 30
-  //       const empty: any = [];
-  //       const newX: any = [];
-
-  //       if (total > 0) {
-  //         for (let j = 1; j <= total; j++) {
-  //           if (total % 2 == 0) {
-  //             if (total / 2 >= j) {
-  //               empty.unshift(
-  //                 `M ${x - evenMinus},${y1} ${x - evenMinus},${y2}`
-  //               );
-  //               newX.unshift(x - evenMinus);
-  //               evenMinus = evenMinus + barWidth;
-  //             } else {
-  //               empty.push(`M ${x + evenPlus},${y1} ${x + evenPlus},${y2}`);
-  //               newX.push(x + evenPlus);
-  //               evenPlus = evenPlus + barWidth;
-  //             }
-  //           } else {
-  //             if (Math.ceil(total / 2) > j) {
-  //               empty.unshift(
-  //                 `M ${x - oddnMinus},${y1} ${x - oddnMinus},${y2}`
-  //               );
-  //               newX.unshift(x - oddnMinus);
-  //               oddnMinus = oddnMinus + barWidth;
-  //             } else if (Math.ceil(total / 2) === j) {
-  //               empty.push(`M ${x},${y1} ${x},${y2}`);
-  //               newX.push(x);
-  //             } else {
-  //               empty.push(`M ${x + oddPlus},${y1} ${x + oddPlus},${y2}`);
-  //               newX.push(x + oddPlus);
-  //               oddPlus = oddPlus + barWidth;
-  //             }
-  //           }
-  //         }
-  //       } else {
-  //         empty.push(`M ${x},${y1} ${x},${y2}`);
-  //       }
-
-  //       type === "group"
-  //         ? paths.push(
-  //             <>
-  //               {!disableCurves.includes(index) && (
-  //                 <path
-  //                   key={index}
-  //                   d={empty[index]}
-  //                   stroke={color}
-  //                   strokeWidth={barWidth}
-  //                   className="inte-barChart__dataLine"
-  //                   onMouseOver={() => handleMouseOver(item, i, index)}
-  //                   onMouseOut={() => setShowPoint(-1)}
-  //                   style={{
-  //                     animationDuration: `${
-  //                       dataSet[index].animationDuration ?? 300
-  //                     }ms`,
-  //                   }}
-  //                 />
-  //               )}
-
-  //               {showPoint == Number(`${i}${index}`) && (
-  //                 <>
-  //                   <defs>
-  //                     <linearGradient
-  //                       id="gradient"
-  //                       x1="0%"
-  //                       y1="0%"
-  //                       x2="0%"
-  //                       y2="100%"
-  //                     >
-  //                       <stop offset="30%" stop-color="white" />
-  //                       <stop offset="100%" stop-color={currentColor} />
-  //                     </linearGradient>
-  //                   </defs>
-  //                   <circle
-  //                     cx={newX[index]}
-  //                     cy={y2}
-  //                     r="6.667"
-  //                     stroke="#fff"
-  //                     className="Circle"
-  //                     strokeWidth="2"
-  //                     fill="url(#gradient)"
-  //                     onMouseOver={() => {
-  //                       handelCurvePointHover(
-  //                         newX[index],
-  //                         y2,
-  //                         item.name,
-  //                         item.color,
-  //                         dataSet[index].points[i],
-  //                         index
-  //                       );
-  //                     }}
-  //                   />
-  //                 </>
-  //               )}
-  //             </>
-  //           )
-  //         : paths.push(
-  //             <>
-  //               <path
-  //                 key={index}
-  //                 d={pathD}
-  //                 stroke={color}
-  //                 strokeWidth={31}
-  //                 className="inte-barChart__dataLine"
-  //                 onMouseOver={() => handleMouseOver(item, i, index)}
-  //                 onMouseOut={() => setShowPoint(-1)}
-  //                 style={{
-  //                   animationDuration: `${
-  //                     dataSet[index].animationDuration ?? 300
-  //                   }ms`,
-  //                 }}
-  //               />
-  //               {showPoint == Number(`${i}${index}`) && (
-  //                 <>
-  //                   <defs>
-  //                     <linearGradient
-  //                       id="gradient"
-  //                       x1="0%"
-  //                       y1="0%"
-  //                       x2="0%"
-  //                       y2="100%"
-  //                     >
-  //                       <stop offset="30%" stop-color="white" />
-  //                       <stop offset="100%" stop-color={item.color} />
-  //                     </linearGradient>
-  //                   </defs>
-  //                   <circle
-  //                     cx={x}
-  //                     cy={y2}
-  //                     r="6.667"
-  //                     stroke="#fff"
-  //                     strokeWidth="2"
-  //                     fill="url(#gradient)"
-  //                     onMouseOver={() =>
-  //                       handelCurvePointHover(
-  //                         x,
-  //                         y2,
-  //                         item.name,
-  //                         item.color,
-  //                         dataSet[index].points[i],
-  //                         index
-  //                       )
-  //                     }
-  //                   />
-  //                 </>
-  //               )}
-  //             </>
-  //           );
-  //     });
-  //   }
-  //   return paths;
-  // };
 
   return (
     <div

@@ -36,19 +36,17 @@ export default {
       defaultValue: { show: false, width: 1, color: "#fff" },
     },
     tooltip: {
-      description:
-        "Show toolTip while hover on chart or not",
+      description: "Show toolTip while hover on chart or not",
       control: {
         type: "boolean",
       },
       defaultValue: false,
     },
     valueType: {
-      description:
-        "Type of value to be shown in legend and tooltip",
+      description: "Type of value to be shown in legend and tooltip",
       control: {
         type: "radio",
-        options : ['number' , 'percentage']
+        options: ["number", "percentage"],
       },
       defaultValue: "number",
     },
@@ -98,9 +96,7 @@ export default {
       },
       defaultValue: "",
     },
-    
   },
-  
 };
 
 const chartData: PieChartData[] = [
@@ -123,10 +119,7 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <FlexLayout halign="center">
-        <PieChart
-          {...rest}
-          chartData={chartData}
-        />
+        <PieChart {...rest} chartData={chartData} />
       </FlexLayout>
     </Card>
   );
@@ -138,8 +131,14 @@ export const Primary = Template.bind({});
 export const PieChartTotalitems = ({ ...rest }) => {
   return (
     <Card title="Pie Chart with showing total percentage">
-      <FlexLayout halign="center">
-        <PieChart chartData={chartData} size={250} />
+      <FlexLayout halign="center" spacing="extraLoose">
+        <PieChart chartData={chartData} size={250} showTotalValue />
+        <PieChart
+          chartData={chartData}
+          size={250}
+          showTotalValue
+          valueType="percentage"
+        />
       </FlexLayout>
     </Card>
   );
@@ -164,7 +163,7 @@ export const PieChartTooltip = ({ ...rest }) => {
         />
 
         <PieChart
-        {...rest}
+          {...rest}
           chartData={[
             { value: 250, label: "Series A", color: "#F0EDFA" },
             { value: 400, label: "Series B", color: "#C5B8EA" },

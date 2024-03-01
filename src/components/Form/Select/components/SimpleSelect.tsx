@@ -125,11 +125,7 @@ const SimpleSelect = ({
         setSelectedValues(opt);
       }
     };
-    // if (options.length === 0) return;
-    if (options.length === 0) {
-      setSelectedValues([]);
-      return;
-    }
+    if (options.length === 0) return;
 
     if ("group" in options[0]) {
       const matchingLabels = (options as GroupedObjI[]).reduce(
