@@ -17,7 +17,7 @@ export default {
       control: {
         type: "number",
       },
-      defaultValue: 30,
+      defaultValue: 15,
     },
     width: {
       description: "Set the width of Bar Chart",
@@ -158,6 +158,16 @@ export default {
         type: "text",
       },
     },
+    paddingLeft: {
+      control: {
+        disable: true,
+      },
+    },
+    paddingBottom: {
+      control: {
+        disable: true,
+      },
+    },
   },
 };
 
@@ -216,8 +226,6 @@ const Template = ({ ...rest }) => {
     <Card>
       <BarChart
         {...rest}
-        // width={"100%"}
-        // height={500}
         backgroundGrid={{
           xLines: {
             color: "steelblue",
@@ -337,6 +345,7 @@ export const OneChart = ({ ...rest }) => {
   return (
     <Card>
       <BarChart
+        {...rest}
         width={"100%"}
         height={500}
         backgroundGrid={{
@@ -544,6 +553,7 @@ export const StackWithOutBGLine = ({ ...rest }) => {
   return (
     <Card title="Bar chart stack with out background border">
       <BarChart
+        {...rest}
         type="stack"
         height={500}
         legend={{ show: true, position: rest.legend }}
