@@ -8,22 +8,156 @@ export default {
   parameters: {
     design: {
       type: "figma",
-      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=16849-32209&mode=design&t=Uw1cX8yCxV8aUaWj-0",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=16849-32209&mode=design&t=7qQbcrOlutiCJwvn-0",
     },
   },
   argTypes: {
-    // chartData: {
-    //   description: `<div><strong>chartData is an array of object:-</strong></div><i>Accepted key value pairs:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>value<span style="color:red">*</span></td><td>Number</td></tr><tr><td>label<span style="color:red">*</span></td><td>String</td></tr><tr><td>color<span style="color:red">*</span></td><td>String</td></tr><tr><td>total<span style="color:red">*</span></td><td>Number</td></tr></tbody></table>`,
-    //   control: {
-    //     type: false,
-    //   },
-    // },
-    // customClass: {
-    //   description: "Add custom class if need to change the design",
-    //   control: {
-    //     type: "text",
-    //   },
-    // },
+    barWidth: {
+      description: "You can change bar width",
+      control: {
+        type: "number",
+      },
+      defaultValue: 30,
+    },
+    width: {
+      description: "Set the width of Bar Chart",
+      control: {
+        type: "text",
+      },
+      defaultValue: "100%",
+    },
+    height: {
+      description: "Set the height of Bar Chart",
+      control: {
+        type: "number",
+      },
+      defaultValue: 350,
+    },
+    type: {
+      description: "Set the type of Bar Chart",
+      control: {
+        type: "radio",
+        options: ["group", "stack"],
+      },
+      defaultValue: "group",
+    },
+    labels: {
+      description: `Set the labels of chart  
+      <table>
+        <tbody>
+          <tr>
+            <td>x</td>
+            <td>give array of string <code>or</code> total number of label (For X-axis)</td>
+          </tr>
+          <tr>
+            <td>y</td>
+            <td>give array of string <code>or</code> total number of label (For Y-axis)</td>
+          </tr>
+        </tbody>
+      </table>`,
+      control: {
+        disable: true,
+      },
+    },
+    dataSet: {
+      description: `Set The dataPoints of chart according to Y-axis <code>Takes Array of object and every object have below properties</code>
+        <table>
+        <tbody>
+          <tr>
+            <td>name</td>
+            <td>Name for the dataSet points</td>
+          </tr>
+          <tr>
+            <td>color</td>
+            <td>Color for the dataSet Points</td>
+          </tr>
+          <tr>
+            <td>points</td>
+            <td>Array of Number (Points on Y-axis)</td>
+          </tr>
+          <tr>
+            <td>beginAtOrigin</td>
+            <td>Set the starting of curve at origin (0)</td>
+          </tr>
+          <tr>
+            <td>animationDuration</td>
+            <td>Set the duration of animation of dataSet in <code>millisecond</code></td>
+          </tr>
+          <tr>
+            <td colspan="2">Note<span style="color:red">*</span> Length of Points >= labels.length</td>
+          </tr>
+        </tbody>
+      </table>`,
+      control: {
+        disable: true,
+      },
+    },
+    backgroundGrid: {
+      description: `Customize the background grid
+      <table>
+        <tbody>
+          <tr>
+            <td>xLines</td>
+            <td>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>show</td>
+                    <td>show or hide the horizontal grid line</td>
+                  </tr>
+                  <tr>
+                    <td>color</td>
+                    <td>Color of the horizontal lines of background grid <code> string </code></td>
+                  </tr>
+                  <tr>
+                  <td>type</td>
+                  <td>Type of horizontal lines of grid i.e <code> solid | dashed </code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          <tr>
+          <tr>
+            <td>yLines</td>
+            <td>
+              <table>
+                <tbody>
+                  <tr>
+                    <td>show</td>
+                    <td>show or hide the Vertical grid line</td>
+                  </tr>
+                  <tr>
+                    <td>color</td>
+                    <td>Color of the Vertical lines of background grid <code> string </code></td>
+                  </tr>
+                  <tr>
+                  <td>type</td>
+                  <td>Type of Vertical lines of grid i.e <code> solid | dashed </code></td>
+                  </tr>
+                </tbody>
+              </table>
+            </td>
+          <tr>
+        </tbody>
+      </table>`,
+      control: {
+        disable: true,
+      },
+    },
+    legend: {
+      description: "Whether to show the legend and its positioning",
+      control: {
+        type: "radio",
+        options: ["top", "bottom"],
+      },
+      defaultValue: "bottom",
+    },
+    customClass: {
+      description: "Add any desired custom class on dropdown",
+      control: {
+        type: "text",
+      },
+    },
   },
 };
 
@@ -81,9 +215,9 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <BarChart
-        // {...rest}
-        width={"100%"}
-        height={500}
+        {...rest}
+        // width={"100%"}
+        // height={500}
         backgroundGrid={{
           xLines: {
             color: "steelblue",
@@ -278,18 +412,18 @@ const threeBarData = {
   dataSet: [
     {
       name: "Orders",
-      color: "magenta",
+      color: "red",
       points: [45, 50, 70],
     },
 
     {
       name: "Variants",
-      color: "steelblue",
+      color: "green",
       points: [30, 45, 50],
     },
     {
       name: "Variants",
-      color: "purple",
+      color: "blue",
       points: [35, 40, 65],
     },
   ],
