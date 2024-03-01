@@ -28,6 +28,14 @@ export default {
       },
       defaultValue: 250,
     },
+    border: {
+      description:
+        "If you can showing  border in Donut chart then use border prop, and border prop accept object",
+      control: {
+        type: "object",
+      },
+      defaultValue: { show: false, width: 1, color: "#fff" },
+    },
     tooltip: {
       description: "show or hide the tooltip",
       control: {
@@ -42,6 +50,15 @@ export default {
         type: "boolean",
       },
       defaultValue: false,
+    },
+    valueType: {
+      description:
+        "Type of value to be shown in legend and tooltip",
+      control: {
+        type: "radio",
+        options : ['number' , 'percentage']
+      },
+      defaultValue: "number",
     },
     legend: {
       description: `Show the legend
@@ -80,6 +97,7 @@ export default {
       control: {
         type: "text",
       },
+      defaultValue: "",
     },
   },
 };

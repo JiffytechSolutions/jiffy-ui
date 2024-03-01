@@ -93,7 +93,6 @@ const TopNavBar = ({
 
   const renderSlidesWithImg = () =>
     menu?.map((item: any, pIndex: number) => {
-      console.log(item);
       return (
         <React.Fragment key={pIndex}>
           {item?.children ? (
@@ -139,7 +138,6 @@ const TopNavBar = ({
             >
               <div>
                 {item?.children?.map((child: any, cIndex: number) => {
-                  // console.log(child);
                   return (
                     <div
                       key={cIndex}

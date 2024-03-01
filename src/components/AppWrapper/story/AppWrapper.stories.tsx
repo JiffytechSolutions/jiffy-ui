@@ -386,7 +386,6 @@ const sideBar = () => {
   ];
 
   const handelMenuChange = (newPath: string) => {
-    // console.log("newPath => ", newPath);
   };
 
   const makeStore = () => {

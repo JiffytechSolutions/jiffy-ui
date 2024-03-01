@@ -2,7 +2,6 @@ import React, { useEffect, useRef, useState } from "react";
 import getClassNames from "../../../utilities/getClassnames";
 import "./PieChart.css";
 import Badge from "../../Badge/Badge";
-import Text from "../../Text/Text";
 import Legend from "../Legend/Legend";
 
 export interface PieChartI {
@@ -166,15 +165,15 @@ const PieChart: React.FC<PieChartI> = ({
   };
 
   useEffect(() => {
-    window.requestAnimationFrame(animatePath);
-  }, [chartData]);
+    window.requestAnimationFrame(animatePath)
+ }, [chartData]);
 
-  const checkDeviceType = () => {
-    const width = window.innerWidth;
-    if (width < 480) setDeviceType("mobile");
-    else if (width < 768) setDeviceType("tab");
-    else setDeviceType("desktop");
-  };
+ const checkDeviceType = () => {
+  const width = window.innerWidth
+  if (width < 768) setDeviceType("mobile")
+  else if (width < 992) setDeviceType("tab")
+  else setDeviceType("desktop")
+}
 
   useEffect(() => {
     checkDeviceType();

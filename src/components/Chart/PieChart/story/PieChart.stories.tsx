@@ -37,11 +37,20 @@ export default {
     },
     tooltip: {
       description:
-        "If you can showing tooltip then use tooltip prop and tooltip is an object type",
+        "Show toolTip while hover on chart or not",
       control: {
-        type: "object",
+        type: "boolean",
       },
-      defaultValue: { show: false, type: "number" },
+      defaultValue: false,
+    },
+    valueType: {
+      description:
+        "Type of value to be shown in legend and tooltip",
+      control: {
+        type: "radio",
+        options : ['number' , 'percentage']
+      },
+      defaultValue: "number",
     },
     showTotalValue: {
       description:
@@ -75,13 +84,23 @@ export default {
       },
       defaultValue: { mobile: true, tab: true, desktop: true },
     },
+    animationDuration: {
+      description: "Set the duration of animation",
+      control: {
+        type: "text",
+      },
+      defaultValue: "100",
+    },
     customClass: {
       description: "Add custom class if need to change the design",
       control: {
         type: "text",
       },
+      defaultValue: "",
     },
+    
   },
+  
 };
 
 const chartData: PieChartData[] = [
@@ -107,8 +126,6 @@ const Template = ({ ...rest }) => {
         <PieChart
           {...rest}
           chartData={chartData}
-          size={rest.height}
-          animationDuration={500}
         />
       </FlexLayout>
     </Card>
@@ -134,6 +151,7 @@ export const PieChartTooltip = ({ ...rest }) => {
     <Card title="Pie Chart with tooltip (Mouse hover any particular area then showing tooltip)">
       <FlexLayout spacing="mediumLoose" wrap="wrap" halign="center">
         <PieChart
+          {...rest}
           chartData={[
             { value: 250, label: "Series A", color: "#F0EDFA" },
             { value: 400, label: "Series B", color: "#C5B8EA" },
@@ -146,6 +164,7 @@ export const PieChartTooltip = ({ ...rest }) => {
         />
 
         <PieChart
+        {...rest}
           chartData={[
             { value: 250, label: "Series A", color: "#F0EDFA" },
             { value: 400, label: "Series B", color: "#C5B8EA" },
