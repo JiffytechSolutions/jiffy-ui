@@ -19,6 +19,7 @@ export type SelectI = {
   accessibilityLabel?: string;
   controlStates?: "success" | "warning" | "error" | "default";
   heading?: string;
+  footer?: React.ReactNode;
   customClass?: string;
   width?: number;
 };

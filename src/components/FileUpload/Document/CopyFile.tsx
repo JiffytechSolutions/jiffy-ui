@@ -1,9 +1,10 @@
 import React, { useId, useRef, useState } from "react";
-import FileDetails from "./component/FileDetails";
-import getClassNames from "../../utilities/getClassnames";
-import TextLink from "../TextLink/TextLink";
-import Text from "../Text/Text";
+
 import "./FileUpload.css";
+import getClassNames from "../../../utilities/getClassnames";
+import Text from "../../Text/Text";
+import TextLink from "../../TextLink/TextLink";
+import FileDetails from "../component/FileDetails";
 
 const FileUpload = ({
   id,
@@ -21,7 +22,6 @@ const FileUpload = ({
   maxSizeAllowed,
   customClass = "",
   clearAll = false,
-  customNotification,
 }: UploadI) => {
   const [filesData, setFilesData] = useState<any | null>([]);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -148,10 +148,6 @@ const FileUpload = ({
     isFound && onRemove(removedFile);
     setFilesData([...files]);
   };
-
-  const dottedArray = accept?.map((item) => "." + item);
-  const acceptValue = dottedArray?.join(", ");
-
   return (
     <div
       className={getClassNames({
@@ -184,7 +180,6 @@ const FileUpload = ({
           onChange={(e) => handleInputChange(e)}
           multiple={isMultiple}
           disabled={isDisabled || filesData.length === maxCount}
-          accept={`${acceptValue}`}
         />
         <div className="inte-fileUpload__dropZoneText">
           {type === "primary" && (
@@ -338,9 +333,7 @@ const FileUpload = ({
           <span>{helpText}</span>
         </span>
       )}
-
-      {customNotification}
-      {filesData.length !== 0 && !customNotification && (
+      {filesData.length !== 0 && (
         <>
           {clearAll && (
             <div className="inte-fileUpload__clearWrapper">
@@ -371,7 +364,6 @@ export interface UploadI {
   id?: string;
   innerLabel?: React.ReactNode;
   type?: "primary" | "secondary";
-  customNotification?: React.ReactNode;
   accept?: string[];
   isMultiple?: boolean;
   isDragable?: boolean;

@@ -13,6 +13,10 @@ export default {
           "<div style='margin-top: 15px;'><div class='inte- flex inte- flex--wrap inte- flex--spacing- Extraloose inte - flex--vertical'><div class='inte - flex__item'><h4 class='Paragraph  inte__text--light none inte__font--normal inte__Paragraph--font--large'>The Switcher component provides app visitors with the ability to choose from a range of options. Switcher consists of a drop-down menu of options.</h4></div><div class='inte - flex__item'><p><blockquote>Switcher is used for currency, language , accounts, etc.</blockquote></p></div></div>",
       },
     },
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=1380-77772&mode=design&t=JpmkWVh9faGpjD3H-4",
+    },
   },
   argTypes: {
     checked: {

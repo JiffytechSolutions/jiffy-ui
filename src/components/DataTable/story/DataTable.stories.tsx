@@ -247,11 +247,7 @@ const primaryColumns: columnI[] = [
     fixed: "left",
     width: 100,
     sortable: {
-      // comparator: (a: any, b: any, order: any) => {
-      //   return order === "asec" ? a - b : b - a;
-      // },
       onSort: (item: columnI, order: "asec" | "desc") => {
-        // console.log("item => ", item, "order => ", order);
       },
     },
   },

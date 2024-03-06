@@ -48,6 +48,7 @@ const SimpleSelect = ({
   value,
   heading,
   width,
+  footer,
 }: SelectI): JSX.Element => {
   const isMobile: boolean = useMobileDevice();
   const rID = useId();
@@ -68,6 +69,7 @@ const SimpleSelect = ({
   const dropdownListRef = useRef<any>(null);
   const scrollRef = useRef<any>();
   const showDiv = useDelayUnmount(dropdownActive, 300);
+
   useBodyLock(showDiv && isMobile);
   useEffect(() => {
     const handleClick = handleClickOutside(
@@ -109,6 +111,7 @@ const SimpleSelect = ({
       );
     };
   }, [isDisabled]);
+
   useEffect(() => {
     const addOptions = (opt: any) => {
       if (isCreatable) {
@@ -122,7 +125,11 @@ const SimpleSelect = ({
         setSelectedValues(opt);
       }
     };
-    if (options.length === 0) return;
+    if (options.length === 0){
+      setSelectedValues('')
+      return
+    };
+
     if ("group" in options[0]) {
       const matchingLabels = (options as GroupedObjI[]).reduce(
         (acc: any, option: any) => {
@@ -699,10 +706,13 @@ const SimpleSelect = ({
           onTouchStart={(e: any) => handleTouchStart(e)}
           {...(isMobile && {
             style: {
-              maxHeight:
-                selectedValues.length === 0
-                  ? "calc(100vh - 20.2rem)"
-                  : "calc(100vh - 23.4rem)",
+              maxHeight: footer
+                ? selectedValues.length === 0
+                  ? "calc(100vh - 22.2rem)" // calc(100vh - 22.4rem);
+                  : "calc(100vh - 26.5rem)"
+                : selectedValues.length === 0
+                ? "calc(100vh - 22.4rem)"
+                : "calc(100vh - 23.4rem)", // calc(100vh - 23.4rem)
             },
           })}
         >
@@ -733,12 +743,24 @@ const SimpleSelect = ({
             </li>
           )}
         </ul>
+        {isLoading && footer ? (
+          <div className="inte-select__footer">
+            <Skeleton height="38px" type="custom" width="100%" />
+          </div>
+        ) : (
+          <>
+            {footer && !isLoading && optionsToShow?.length !== 0 && (
+              <div className="inte-select__footer">{footer}</div>
+            )}
+          </>
+        )}
       </div>
+
       {isMobile && (
         <div
           className="inte-select__overlay"
           onClick={() => setDropdownActive(false)}
-        ></div>
+        />
       )}
     </>
   );

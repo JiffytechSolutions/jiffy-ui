@@ -21,7 +21,8 @@
   box-shadow: 0 -4px 17px 0px var(--inte-G80);
   transition: 100ms box-shadow linear;
 }
-.inte-shadow__bottom .inte-actionList__footer {
+.inte-shadow__bottom .inte-actionList__footer,
+.inte-shadow__bottom .inte-select__footer {
   box-shadow: 0 4px 17px 0px var(--inte-G80);
   transition: 100ms box-shadow linear;
 }

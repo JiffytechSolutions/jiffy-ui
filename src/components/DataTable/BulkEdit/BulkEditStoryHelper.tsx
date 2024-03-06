@@ -84,7 +84,6 @@ import Modal from "../../Modal/Modal";
 
 //     const [selectedRowKeys, setSelectedRowKeys] = useState<{ [key: number]: boolean }>({})
 
-//     console.log(selectedRowKeys)
 
 //     const bulkEditDataSource = useMemo(() => {
 //         return editiedData.filter(item => !!selectedRowKeys[item.key])
@@ -534,22 +533,16 @@ const BulkEditStoryHelper = ({ ...rest }) => {
     {
       key: "Dangerous Goods Regulations",
       width: 200,
-      // align : "center",
       dataIndex: "Dangerous Goods Regulations",
       title: "Dangerous Goods Regulations",
     },
     {
       key: "Fulfillment Centre ID",
       width: 200,
-      // align : "center",
       dataIndex: "Fulfillment Centre ID",
       title: "Fulfillment Centre ID",
     },
   ];
-
-  // console.log(priceEditorData , "priceEditorData" , descriptionEditorData , "descriptionEditorData")
-
-  // console.log(currData , "currData" , data , "Original Data")
 
 
   useEffect(() => {

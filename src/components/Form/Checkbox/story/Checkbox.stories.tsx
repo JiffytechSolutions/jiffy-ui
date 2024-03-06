@@ -7,7 +7,12 @@ import CheckboxDoc from "../Document/CheckboxDoc";
 export default {
   title: "Components/Form/Checkbox",
   component: Checkbox,
+
   parameters: {
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=4314-249188&mode=design&t=JpmkWVh9faGpjD3H-4",
+    },
     docs: {
       description: {
         component:
@@ -118,9 +123,8 @@ export const Primary = Template.bind({});
 export const CheckboxRequired: any = Template.bind({});
 CheckboxRequired.decorators = [
   () => {
-    const [checked, setChecked] = useState<boolean | "indeterminate">(
-      "indeterminate"
-    );
+    const [checked, setChecked] =
+      useState<boolean | "indeterminate">("indeterminate");
     return (
       <Card title={"Required Checkbox"}>
         <Checkbox

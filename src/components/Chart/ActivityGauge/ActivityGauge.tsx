@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import getClassNames from "../../../utilities/getClassnames";
 import useDelayUnmount from "../../../utilities/useDelayTimeout";
-import "./ActivityGauge.css";
 import Badge from "../../Badge/Badge";
 import Text from "../../Text/Text";
 import useWindowResize from "../../../utilities/useWindowResize";
+import "./ActivityGauge.css";
+import "../Legend/Legend.css";
+import Legend from "../Legend/Legend";
 export interface ActivityGaugeI {
   chartData: activityGaugeData[];
   size?: "small" | "medium" | "large";
-  enableValue?: "number" | "percentage";
+  valueType?: "number" | "percentage";
   animationDuration?: number;
+  legend?: legendI;
   customClass?: string;
 }
 
@@ -19,14 +22,21 @@ export interface activityGaugeData {
   label: string;
   color: string;
 }
+export interface legendI {
+  desktop?: boolean;
+  tab?: boolean;
+  mobile?: boolean;
+}
 
 const ActivityGauge: React.FC<ActivityGaugeI> = ({
   size = "large",
   chartData,
   customClass = "",
   animationDuration = 1,
-  enableValue = "number",
+  valueType = "number",
+  legend = { desktop: false, tab: false, mobile: true },
 }) => {
+  const [handleIndex, setHandleIndex] = useState(-1);
   const { width } = useWindowResize();
   const [showValue, setShowValue] = useState<{
     label: string;
@@ -44,9 +54,9 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
     if (size === "small") {
       return index === 0 ? 4 : calculateValue(index - 1) + 10; // Small space 2px
     } else if (size === "medium") {
-      return index === 0 ? 5 : calculateValue(index - 1) + 15; // Medium space 5px
+      return index === 0 ? 5 : calculateValue(index - 1) + 14; // Medium space 4px
     } else {
-      return index === 0 ? 6 : calculateValue(index - 1) + 15; // Large space 3px
+      return index === 0 ? 6 : calculateValue(index - 1) + 18; // Large space 6px
     }
   };
 
@@ -83,7 +93,6 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
           "inte-activityGauge__hoverAnimation": toggleAnimationClass,
           [customClass]: customClass,
         })}
-        // style={{ height: sizeFun(), width: sizeFun() }}
         onMouseEnter={() => setToggleAnimationClass(true)}
         onMouseLeave={() => setToggleAnimationClass(false)}
       >
@@ -143,11 +152,7 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                   r={sizeFun() / 2 - calculateValue(index)}
                   strokeWidth={size == "small" ? 4 : size == "medium" ? 6 : 8}
                   opacity={
-                    showValue.value === 0
-                      ? 1
-                      : showValue.value == Math.abs(item.value)
-                      ? 1
-                      : 0.4
+                    handleIndex == -1 ? 1 : handleIndex === index ? 1 : 0.4
                   }
                   fill="none"
                   style={{
@@ -169,13 +174,10 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                   strokeDashoffset="0"
                   strokeLinecap="round"
                   opacity={
-                    showValue.value === 0
-                      ? 1
-                      : showValue.value == Math.abs(item.value)
-                      ? 1
-                      : 0.7
+                    handleIndex == -1 ? 1 : handleIndex === index ? 1 : 0.7
                   }
                   onMouseOver={() => {
+                    setHandleIndex(index);
                     setShowValue({
                       label: item.label,
                       value:
@@ -185,9 +187,10 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
                       percentage: percentage <= 100 ? percentage : 100,
                     });
                   }}
-                  onMouseOut={() =>
-                    setShowValue({ label: "", value: 0, percentage: 0 })
-                  }
+                  onMouseOut={() => {
+                    setHandleIndex(-1);
+                    setShowValue({ label: "", value: 0, percentage: 0 });
+                  }}
                   className="inte-activityGauge__circle"
                 />
               </g>
@@ -204,7 +207,7 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
           >
             <div className="inte-activityGauge__label">{showValue.label}</div>
             <div className="inte-activityGauge__value">
-              {enableValue === "percentage"
+              {valueType === "percentage"
                 ? formatValue(showValue.percentage) !== "" &&
                   formatValue(showValue.percentage) + "%"
                 : formatValue(showValue.value)}
@@ -212,55 +215,65 @@ const ActivityGauge: React.FC<ActivityGaugeI> = ({
           </div>
         )}
       </div>
-      {width < 768 && (
-        <div className="inte-chartLegend__wrapper">
-          {chartData.map((item) => {
-            const percentage =
-              typeof item.value === "string" && String(item.value).includes("%")
-                ? Math.abs(item.value) <= 100
-                  ? Math.abs(item.value)
-                  : 100
-                : Math.abs(item.value) <= Math.abs(item.total)
-                ? (Math.abs(item.value) / Math.abs(item.total)) * 100
-                : 100;
-            return (
-              <div
-                className="inte-chartLegend"
-                onMouseOver={() => {
-                  setShowValue({
-                    label: item.label,
-                    value:
-                      Math.abs(item.value) <= Math.abs(item.total)
-                        ? Math.abs(item.value)
-                        : Math.abs(item.total),
-                    percentage: percentage <= 100 ? percentage : 100,
-                  });
-                }}
-                onMouseOut={() =>
-                  setShowValue({ label: "", value: 0, percentage: 0 })
-                }
-              >
-                <div className="inte-legend__name">
-                  <Badge
-                    dot
-                    size="large"
-                    type="primary"
-                    customBgColor={item.color}
-                  />
-                  <Text>{item.label}</Text>
-                </div>
-                <div className="inte-legend__value">
-                  <Text>
-                    {enableValue === "percentage"
-                      ? formatValue(showValue.percentage) !== "" &&
-                        formatValue(showValue.percentage) + "%"
-                      : formatValue(showValue.value)}
-                  </Text>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+      {/* for single device  */}
+      {width > 991 && legend.desktop && !legend.mobile && !legend.tab && (
+        <Legend
+          chartData={chartData}
+          valueType={valueType}
+          renderIndex={(index) => setHandleIndex(index)}
+        />
+      )}
+      {width < 991 &&
+        width > 768 &&
+        legend.tab &&
+        !legend.desktop &&
+        !legend.mobile && (
+          <Legend
+            chartData={chartData}
+            valueType={valueType}
+            renderIndex={(index) => setHandleIndex(index)}
+          />
+        )}
+      {width < 768 && legend.mobile && !legend.desktop && !legend.tab && (
+        <Legend
+          chartData={chartData}
+          valueType={valueType}
+          renderIndex={(index) => setHandleIndex(index)}
+        />
+      )}
+      {/*  for two devices */}
+      {width > 768 && legend.desktop && legend.tab && !legend.mobile && (
+        <Legend
+          chartData={chartData}
+          valueType={valueType}
+          renderIndex={(index) => setHandleIndex(index)}
+        />
+      )}
+      {width < 991 && legend.tab && legend.mobile && !legend.desktop && (
+        <Legend
+          chartData={chartData}
+          valueType={valueType}
+          renderIndex={(index) => setHandleIndex(index)}
+        />
+      )}
+
+      {legend.desktop &&
+        !legend.tab &&
+        (width > 991 || width < 768) &&
+        legend.mobile && (
+          <Legend
+            chartData={chartData}
+            valueType={valueType}
+            renderIndex={(index) => setHandleIndex(index)}
+          />
+        )}
+
+      {legend.desktop && legend.tab && legend.mobile && (
+        <Legend
+          chartData={chartData}
+          valueType={valueType}
+          renderIndex={(index) => setHandleIndex(index)}
+        />
       )}
     </div>
   );
