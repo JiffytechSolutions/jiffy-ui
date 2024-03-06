@@ -5,12 +5,6 @@ import AspectRatio from "./AspectRatio";
 export default {
   title: "Components/Layout/AspectRatio",
   component: AspectRatio,
-  parameters: {
-    design: {
-      type: "figma",
-      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-3.0-(Production)?node-id=5984-312505&t=vybTUvZSW4IIqAUa-0",
-    },
-  },
   argTypes : {
     ratio: {
       description:"Ratio of box width/height (default 16/9 === 1.77777)",

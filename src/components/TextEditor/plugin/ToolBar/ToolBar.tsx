@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import './ToolBar.css'
-import { Code, RotateCcw, RotateCw } from '../../../../icons'
+import { RotateCcw, RotateCw } from '../../../../icons'
 import Button from '../../../Button/Button'
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext'
 import { $INTERNAL_isPointSelection, $getSelection, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
-import { $isAtNodeEnd, $getSelectionStyleValueForProperty,  $patchStyleText } from "@lexical/selection"
+import { $isAtNodeEnd, $getSelectionStyleValueForProperty, $patchStyleText } from "@lexical/selection"
 import { $isLinkNode } from "@lexical/link";
 import { mergeRegister, $getNearestNodeOfType, $findMatchingParent } from "@lexical/utils";
 import TextAlignBox from './TextAlignBox'
@@ -194,14 +194,21 @@ const ToolBar = () => {
           <FontStyle editor={editor} />
           <FontSizeToggle editor={editor} value={fontSize} />
           <div className='inte-textEditor__blockStyle'>
-            <ToolTip
-              activator={<ListSelectBox editor={editor} currListType={isList} />}
-              helpText={"Insert List"}
-            />
-            <ToolTip
-              activator={<TextAlignBox onClick={changeElementFormat} currAlign={currAlign} />}
-              helpText={"Change Text Align"}
-            />
+            {
+              !isMobileDevice ? <>
+                <ToolTip
+                  activator={<ListSelectBox editor={editor} currListType={isList} />}
+                  helpText={"Insert List"}
+                />
+                <ToolTip
+                  activator={<TextAlignBox onClick={changeElementFormat} currAlign={currAlign} />}
+                  helpText={"Change Text Align"}
+                />
+              </> : <>
+                <ListSelectBox editor={editor} currListType={isList} />
+                <TextAlignBox onClick={changeElementFormat} currAlign={currAlign} />
+              </>
+            }
           </div>
           <Line />
           <SpecialNodes
@@ -212,22 +219,34 @@ const ToolBar = () => {
           />
           <Line />
           <div className="inte-textEditor__history">
-            <ToolTip
-              activator={<Button
+            {
+              !isMobileDevice ? <ToolTip
+                activator={<Button
+                  icon={<RotateCcw size="20" color='#1C2433' />}
+                  type='textButton'
+                  onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}
+                />}
+                helpText="Undo"
+              /> : <Button
                 icon={<RotateCcw size="20" color='#1C2433' />}
                 type='textButton'
                 onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}
-              />}
-              helpText="Undo"
-            />
-            <ToolTip
-              activator={<Button
+              />
+            }
+            {
+              !isMobileDevice ? <ToolTip
+                activator={<Button
+                  icon={<RotateCw size="20" color='#1C2433' />}
+                  type='textButton'
+                  onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}
+                />}
+                helpText="Redo"
+              /> : <Button
                 icon={<RotateCw size="20" color='#1C2433' />}
                 type='textButton'
                 onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}
-              />}
-              helpText="Redo"
-            />
+              />
+            }
           </div>
         </div> : (
           <div className='inte-TextEditor__toolBar--mobile'>
@@ -238,22 +257,37 @@ const ToolBar = () => {
             </div>
             <div className="inte-textEditor__toolBar__actions">
               <div className="inte-textEditor__history">
-                <ToolTip
-                  activator={<Button
-                    icon={<RotateCcw size="20" color='#1C2433' />}
-                    type='textButton'
-                    onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}
-                  />}
-                  helpText="Undo"
-                />
-                <ToolTip
-                  activator={<Button
-                    icon={<RotateCw size="20" color='#1C2433' />}
-                    type='textButton'
-                    onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}
-                  />}
-                  helpText="Redo"
-                />
+                {
+                  !isMobileDevice ? <>
+                    <ToolTip
+                      activator={<Button
+                        icon={<RotateCcw size="20" color='#1C2433' />}
+                        type='textButton'
+                        onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}
+                      />}
+                      helpText="Undo"
+                    />
+                    <ToolTip
+                      activator={<Button
+                        icon={<RotateCw size="20" color='#1C2433' />}
+                        type='textButton'
+                        onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}
+                      />}
+                      helpText="Redo"
+                    />
+                  </> : <>
+                    <Button
+                      icon={<RotateCcw size="20" color='#1C2433' />}
+                      type='textButton'
+                      onClick={() => editor.dispatchCommand(UNDO_COMMAND, undefined)}
+                    />
+                    <Button
+                      icon={<RotateCw size="20" color='#1C2433' />}
+                      type='textButton'
+                      onClick={() => editor.dispatchCommand(REDO_COMMAND, undefined)}
+                    />
+                  </>
+                }
               </div>
               <Line />
               <FontStyle editor={editor} />

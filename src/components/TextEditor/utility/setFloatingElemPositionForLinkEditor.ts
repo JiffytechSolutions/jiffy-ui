@@ -1,4 +1,6 @@
-const VERTICAL_GAP = 10;
+import useMobileDevice from "../../../utilities/useMobileDevice";
+
+const VERTICAL_GAP = 15;
 const HORIZONTAL_OFFSET = 5;
 
 export function setFloatingElemPositionForLinkEditor(
@@ -35,5 +37,5 @@ export function setFloatingElemPositionForLinkEditor(
   left -= anchorElementRect.left;
 
   floatingElem.style.opacity = '1';
-  floatingElem.style.transform = `translate(${left}px, ${top + 60}px)`;
+  floatingElem.style.transform = `translate(${left}px, ${top}px)`;
 }

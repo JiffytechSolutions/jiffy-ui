@@ -8,7 +8,7 @@ export default {
   parameters: {
     design: {
       type: "figma",
-      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-3.0-(Production)?node-id=5842-242181&t=4D7MxfpNKQKbShCl-0",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=5743-246103&mode=design&t=fJIBZJVp9olvgZpq-0",
     },
     docs: {
       description: {

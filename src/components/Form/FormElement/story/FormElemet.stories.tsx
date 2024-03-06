@@ -5,6 +5,13 @@ import TextField from "../../TextField/TextField";
 
 export default {
   title: "Components/Form/FormElement",
+  parameters: {
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=5146-273661&mode=design&t=fJIBZJVp9olvgZpq-0",
+    },
+  },
+
   component: FormElement,
   argTypes: {
     horizontal: {

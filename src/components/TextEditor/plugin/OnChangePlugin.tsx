@@ -1,5 +1,6 @@
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import { EditorState } from "lexical";
+import React from "react";
 import { useEffect } from "react";
 
 export interface OnChangePluginI {
@@ -13,5 +14,7 @@ function OnChangePlugin({ onChange }:OnChangePluginI) {
         onChange(editorState);
       });
     }, [editor, onChange]);
+
+    return <></>
   }
 export default OnChangePlugin

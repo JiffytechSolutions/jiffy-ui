@@ -5,17 +5,18 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ArrowLeft, ArrowRight, ChevronRight } from "../../icons";
-import Button from "../Button/Button";
+import { ChevronRight } from "../../icons";
 import getClassNames from "../../utilities/getClassnames";
 import AppBar from "../AppBar/AppBar";
 import useWindowResize from "../../utilities/useWindowResize";
 import Popover from "../Popover/Popover";
+import Carousel from "../Carousel/Carousel";
 import "./TopNavBar.css";
 
 export interface TopNavBarI {
   onChange: (newPath: string) => void;
   stickyTop?: boolean;
+  slidesToShow?: number;
   connectLeft?: React.ReactNode;
   connectRight?: React.ReactNode;
   customClass?: string;
@@ -36,16 +37,13 @@ const TopNavBar = ({
   customClass = "",
   connectLeft,
   connectRight,
+  slidesToShow = 6,
   stickyTop = true,
 }: TopNavBarI) => {
   const { width } = useWindowResize();
   const [path, setPath] = useState("");
   const [toggle, setToggle] = useState(-1);
   const id = useId();
-  const listRef = useRef<HTMLUListElement>(null);
-  const [scrollLeft, setScrollLeft] = useState(0);
-  const [showLeftButton, setShowLeftButton] = useState(false);
-  const [showRightButton, setShowRightButton] = useState(false);
   const popoverItemRef = useRef<any>(null);
   const [storewidth, setStoreWidth] = useState();
 
@@ -55,27 +53,6 @@ const TopNavBar = ({
     }
   }, [popoverItemRef?.current, toggle]);
 
-  // button click scroll
-  useEffect(() => {
-    if (listRef.current) {
-      const containerWidth = listRef.current.clientWidth;
-      const contentWidth = listRef.current.scrollWidth;
-      const isOverflowing = contentWidth > containerWidth;
-
-      setShowLeftButton(isOverflowing && scrollLeft > 0);
-      setShowRightButton(
-        isOverflowing && scrollLeft < contentWidth - containerWidth
-      );
-    }
-  }, [scrollLeft, menu, width]);
-
-  const handleScroll = (scrollAmount: number) => {
-    if (listRef.current) {
-      const newScrollLeft = scrollLeft + scrollAmount;
-      listRef.current.scrollLeft = newScrollLeft;
-      setScrollLeft(newScrollLeft);
-    }
-  };
   // get parent path
   function getParentAndChildPaths(fullPath: any) {
     const pathSegments = fullPath
@@ -94,12 +71,120 @@ const TopNavBar = ({
 
   const { parent, child } = getParentAndChildPaths(path);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const appEle = document.querySelector(".inte-appWrapper");
-    if (!appEle?.classList?.contains("inte-topNavBar--active")) {
-      appEle?.classList?.add("inte-topNavBar--active");
+    if (appEle?.classList) {
+      document.body.classList.add("inte-topNavBar--active");
+      stickyTop && document.body.classList.add("inte-topNav__sticky");
+      !stickyTop && document.body.classList.remove("inte-topNav__sticky");
     }
   }, [width]);
+  useLayoutEffect(() => {
+    const appEle = document.querySelector(".inte-appWrapper");
+
+    if (
+      appEle?.classList &&
+      appEle?.classList?.contains("inte-sideBar--active") &&
+      width > 991
+    ) {
+      appEle?.classList?.remove("inte-sideBar--active");
+    }
+  }, [width]);
+
+  const renderSlidesWithImg = () =>
+    menu?.map((item: any, pIndex: number) => {
+      return (
+        <React.Fragment key={pIndex}>
+          {item?.children ? (
+            <Popover
+              direction="left"
+              popoverWidth={storewidth}
+              isOpen={toggle === pIndex}
+              onClose={() => !item?.isDisabled && setToggle(-1)}
+              activator={
+                <div
+                  className={getClassNames({
+                    "inte-top__listItem": true,
+                    "inte-topNavBar--disable": item?.isDisabled,
+                    "inte-active":
+                      !item?.isDisabled && path === item.path + child,
+                    "inte-topNavBar--toggle":
+                      !item?.isDisabled && pIndex === toggle,
+                  })}
+                  onClick={() => {
+                    !item?.isDisabled
+                      ? pIndex === toggle
+                        ? setToggle(-1)
+                        : setToggle(pIndex)
+                      : null;
+                  }}
+                  ref={toggle === pIndex ? popoverItemRef : null}
+                >
+                  <div className="inte-topNav__listItemWrapper">
+                    {item?.icon && (
+                      <div className="inte-top__listItem--icon">
+                        {item.icon}
+                      </div>
+                    )}
+                    <div className="inte-top__listItem--label">
+                      {item.label}
+                    </div>
+
+                    {item.badge && <span className="badge">{item.badge}</span>}
+                    {item.children && <ChevronRight size={20} />}
+                  </div>
+                </div>
+              }
+            >
+              <div>
+                {item?.children?.map((child: any, cIndex: number) => {
+                  return (
+                    <div
+                      key={cIndex}
+                      className={getClassNames({
+                        "inte-top__itemPopup": true,
+                        "inte-topNav--childActive":
+                          path === item.path + child.path,
+                      })}
+                      onClick={() => {
+                        onChange(item.path + child.path);
+                        setPath(item.path + child.path);
+                        setToggle(-1);
+                      }}
+                    >
+                      {child.label}
+                    </div>
+                  );
+                })}
+              </div>
+            </Popover>
+          ) : (
+            <div
+              className={getClassNames({
+                "inte-top__listItem": true,
+                "inte-topNav--active": path === item.path,
+              })}
+              onClick={() => {
+                if (!item?.children) {
+                  onChange(item.path);
+                  setPath(item.path);
+                }
+              }}
+            >
+              <div className="inte-topNav__listItemWrapper">
+                {item?.icon && (
+                  <div className="inte-top__listItem--icon">{item.icon}</div>
+                )}
+                <div className="inte-top__listItem--label">{item.label}</div>
+
+                {item.badge && <span className="badge">{item.badge}</span>}
+                {item.children && <ChevronRight size={20} />}
+              </div>
+            </div>
+          )}
+        </React.Fragment>
+      );
+    });
 
   return (
     <div
@@ -112,7 +197,7 @@ const TopNavBar = ({
       <AppBar
         connectLeft={connectLeft}
         connectRight={connectRight}
-        stickyTop={false}
+        stickyTop={stickyTop}
       />
       {width > 991 && (
         <div
@@ -121,127 +206,16 @@ const TopNavBar = ({
             "inte-TopNav": true,
           })}
         >
-          {showLeftButton && (
-            <Button
-              onClick={() => {
-                handleScroll(-100);
-              }}
-              type="outlined"
-              icon={<ArrowLeft />}
-              customClass="inte-arrowLeft__scroll"
-            />
-          )}
-
-          <ul className="inte-top__list" ref={listRef}>
-            {menu?.map((item: any, Pindex: number) => {
-              return (
-                <>
-                  {item?.children ? (
-                    <Popover
-                      key={Pindex}
-                      direction="left"
-                      popoverWidth={storewidth}
-                      isOpen={toggle === Pindex}
-                      onClose={() => setToggle(-1)}
-                      activator={
-                        <li
-                          className={getClassNames({
-                            "inte-top__listItem": true,
-                            "inte-active": path === item.path + child,
-                            "inte-topNavBar--toggle": Pindex === toggle,
-                          })}
-                          onClick={() => {
-                            Pindex === toggle
-                              ? setToggle(-1)
-                              : setToggle(Pindex);
-                          }}
-                          ref={toggle === Pindex ? popoverItemRef : null}
-                        >
-                          <div className="inte-topNav__listItemWrapper">
-                            {item?.icon && (
-                              <div className="inte-top__listItem--icon">
-                                {item.icon}
-                              </div>
-                            )}
-                            <div className="inte-top__listItem--label">
-                              {item.label}
-                            </div>
-
-                            {item.badge && (
-                              <span className="badge">{item.badge}</span>
-                            )}
-                            {item.children && <ChevronRight size={20} />}
-                          </div>
-                        </li>
-                      }
-                    >
-                      <ul>
-                        {item?.children?.map((child: any, Cindex: number) => {
-                          return (
-                            <li
-                              key={Cindex}
-                              className={getClassNames({
-                                "inte-top__itemPopup": true,
-                                "inte-topNav--childActive":
-                                  path === item.path + child.path,
-                              })}
-                              onClick={() => {
-                                onChange(item.path + child.path);
-                                setPath(item.path + child.path);
-                                setToggle(-1);
-                              }}
-                            >
-                              {child.label}
-                            </li>
-                          );
-                        })}
-                      </ul>
-                    </Popover>
-                  ) : (
-                    <li
-                      key={Pindex}
-                      className={getClassNames({
-                        "inte-top__listItem": true,
-                        "inte-topNav--active": path === item.path,
-                      })}
-                      onClick={() => {
-                        if (!item?.children) {
-                          onChange(item.path);
-                          setPath(item.path);
-                        }
-                      }}
-                    >
-                      <div className="inte-topNav__listItemWrapper">
-                        {item?.icon && (
-                          <div className="inte-top__listItem--icon">
-                            {item.icon}
-                          </div>
-                        )}
-                        <div className="inte-top__listItem--label">
-                          {item.label}
-                        </div>
-
-                        {item.badge && (
-                          <span className="badge">{item.badge}</span>
-                        )}
-                        {item.children && <ChevronRight size={20} />}
-                      </div>
-                    </li>
-                  )}
-                </>
-              );
-            })}
-          </ul>
-          {showRightButton && (
-            <div>
-              <Button
-                onClick={() => handleScroll(100)}
-                type="outlined"
-                icon={<ArrowRight />}
-                customClass="inte-arrowRight__scroll"
-              />
-            </div>
-          )}
+          <Carousel
+            showDots={false}
+            arrowPosition="horizontalCenter"
+            slidesToShow={slidesToShow}
+            slideUsingMouse={false}
+            slideUsingTouch={false}
+            spaceBetweenSlides={10}
+          >
+            {renderSlidesWithImg()}
+          </Carousel>
         </div>
       )}
     </div>

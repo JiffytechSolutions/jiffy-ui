@@ -3,7 +3,7 @@ import React from "react";
 import { FallBack } from "../FallBack";
 import Button from "../../Button/Button";
 import { Card } from "../../Card";
-import { Plus } from '../../../storybook/Foundation/Icons/Icons';
+import { Plus } from "../../../storybook/Foundation/Icons/Icons";
 import Text from "../../Text/Text";
 import TextLink from "../../TextLink/TextLink";
 import { FlexLayout } from "../../FlexLayout";
@@ -12,6 +12,12 @@ import AnimatingIllustration from "../../AnimationingIllustration/Illustration";
 export default {
   title: "Components/Feedback/FallBack",
   component: FallBack,
+  parameters: {
+    design: {
+      type: "figma",
+      url: "https://www.figma.com/file/hjetwOUBL1uSAMRcn5MAkl/Ounce-ver3.0.2-(Production)?type=design&node-id=16734-19158&mode=design&t=fJIBZJVp9olvgZpq-0",
+    },
+  },
   argTypes: {
     title: {
       description: "Enter the main title",
@@ -72,7 +78,12 @@ const Template: ComponentStory<typeof FallBack> = ({ ...rest }) => {
     <>
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="CreateCampaign" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="CreateCampaign"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title={rest.title}
           subTitle={rest.subTitle}
           action={
@@ -104,7 +115,12 @@ Empty_Campaign_page.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="NoCampaignAvailabel" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="NoCampaignAvailabel"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="Create your First Campaign"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -154,7 +170,12 @@ Search_Empty_Campaign_page.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="NoCampaignAvailabel" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="NoCampaignAvailabel"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="No Campaigns found"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -184,7 +205,12 @@ Empty_Notification.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="Nonotification" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="Nonotification"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="No Notification"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -225,7 +251,12 @@ Empty_Products.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="NoProductAvailabel1" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="NoProductAvailabel1"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="Oops. . No Product found!"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -262,7 +293,12 @@ Empty_Connected_Account.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="NoAccountConnect" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="NoAccountConnect"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="Add an account"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -303,7 +339,12 @@ Page_Not_Found_404.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="PageNotFound" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="PageNotFound"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="Page Not Found"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -351,7 +392,12 @@ Broken_Page.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="BrokenPage" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="BrokenPage"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="Broken Page"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -399,7 +445,12 @@ Broken_Link.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="BrokenLink" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="BrokenLink"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="Broken Page"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -447,7 +498,12 @@ No_Search_Result.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="NoSearchResult" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="NoSearchResult"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="No Search Result"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -485,7 +541,12 @@ Session_Expire.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="SessionExpire" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="SessionExpire"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="Session Expired"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -534,7 +595,12 @@ No_Responce_from_server.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="SessionExpire" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="SessionExpire"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="refresh this page"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -545,7 +611,6 @@ No_Responce_from_server.decorators = [
                 as="p"
                 type="T-8"
                 customClass="none"
-
               >
                 We have encountered some problem kindly refresh the page
               </Text>
@@ -572,7 +637,12 @@ Facing_Some_Issue.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="Journal" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="Journal"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="refresh this page"
           subTitle={
             <FlexLayout direction="vertical" halign="center">
@@ -605,7 +675,12 @@ Page_Logout.decorators = [
     return (
       <Card cardType="filled">
         <FallBack
-          illustration={<AnimatingIllustration animationData="Logout" style={{height:"200px", width:"200px"}} />}
+          illustration={
+            <AnimatingIllustration
+              animationData="Logout"
+              style={{ height: "200px", width: "200px" }}
+            />
+          }
           title="Logout Successfully"
           action={
             <Button
