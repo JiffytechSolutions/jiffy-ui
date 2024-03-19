@@ -435,12 +435,53 @@ const threeBarData = {
       color: "blue",
       points: [35, 40, 65],
     },
+    // {
+    //   name: "Variants",
+    //   color: "red",
+    //   points: [45, 35, 55],
+    // },
+    // {
+    //   name: "Variants",
+    //   color: "magenta",
+    //   points: [25, 39, 45],
+    // },
+    // {
+    //   name: "Variants",
+    //   color: "blue",
+    //   points: [30, 45, 50],
+    // },
+    // {
+    //   name: "Variants",
+    //   color: "green",
+    //   points: [30, 45, 50],
+    // },
+    // {
+    //   name: "Variants",
+    //   color: "red",
+    //   points: [45, 35, 55],
+    // },
+    // {
+    //   name: "Variants",
+    //   color: "pink",
+    //   points: [25, 39, 45],
+    // },
+    // {
+    //   name: "Variants",
+    //   color: "blue",
+    //   points: [35, 40, 65],
+    // },
+    // {
+    //   name: "Variants",
+    //   color: "pink",
+    //   points: [25, 39, 45],
+    // },
   ],
 };
 export const ThreeBarChart = ({ ...rest }) => {
   return (
     <Card>
       <BarChart
+        {...rest}
         width={"100%"}
         height={500}
         backgroundGrid={{
@@ -465,34 +506,34 @@ export const ThreeBarChart = ({ ...rest }) => {
 
 const aniBarData = {
   labels: {
-    x: ["Jan", "Feb", "Mar"],
+    x: ["Jan", "Feb", "Mar", "Apr", "May"],
     y: 10,
   },
   dataSet: [
     {
       name: "Orders",
       color: "blue",
-      points: [90, 100, 85],
+      points: [90, 100, 85, 90, 95],
       animationDuration: 800,
     },
 
     {
       name: "Variants",
       color: "green",
-      points: [70, 80, 75],
+      points: [70, 80, 75, 75, 82],
       animationDuration: 800,
     },
 
     {
       name: "Orders",
       color: "magenta",
-      points: [50, 60, 55],
+      points: [50, 60, 55, 59, 50],
       animationDuration: 800,
     },
     {
       name: "Variants",
       color: "purple",
-      points: [30, 40, 25],
+      points: [30, 40, 25, 35, 30],
       animationDuration: 800,
     },
   ],
@@ -528,6 +569,7 @@ export const BarChartAnimationStack = ({ ...rest }) => {
       <BarChart
         type="stack"
         height={500}
+        barWidth={25}
         backgroundGrid={{
           xLines: {
             color: "steelblue",
