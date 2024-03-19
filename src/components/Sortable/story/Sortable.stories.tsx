@@ -32,6 +32,13 @@ export default {
       description:
         "This function trigger when the order of the items changes <code>(newAlignedData: sortableArray) => void</code>",
     },
+    isSortable: {
+      description: "set isSortable=false to stop sorting",
+      control: {
+        type: "boolean",
+      },
+      defaultValue: true,
+    },
   },
 };
 
@@ -163,6 +170,7 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <Sortable
+        {...rest}
         data={data.slice(0, 9)}
         onChange={(newArr) => setData(newArr)}
         animationDuration={rest.animationDuration}
@@ -178,7 +186,6 @@ export const Primary = Template.bind({});
 const verticalData: sortableArray = dragData.map((item) => ({
   content: (
     <Card title={item.title + " " + item.id}>
-      Vertical
       <Text>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro iste
         libero asperiores velit possimus. Ab fugiat veniam possimus perspiciatis
@@ -278,6 +285,22 @@ export const SortableGrid = ({ ...rest }) => {
         data={data}
         onChange={(newArr) => setData(newArr)}
         customClass="sortableGrid"
+      />
+    </Card>
+  );
+};
+
+// Sortable Horizontal With Images
+export const SortableFalse = ({ ...rest }) => {
+  const [data, setData] = useState(sortableArr);
+  return (
+    <Card title="set isSortable=false to stop sorting">
+      <Sortable
+        data={data}
+        onChange={(newArr) => setData(newArr)}
+        animationDuration={rest.animationDuration}
+        customClass="sortableHorizontal"
+        isSortable={false}
       />
     </Card>
   );
