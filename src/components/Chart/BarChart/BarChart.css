@@ -45,6 +45,15 @@
   padding: 1px;
 }
 
+.inte-LineChart__toolTipData {
+  display: flex;
+  gap: 30px;
+}
+
+.inte-lineChart__circle:hover {
+  visibility: hidden;
+}
+
 .inte-barChart__toolTipBody {
   display: flex;
   flex-direction: column;

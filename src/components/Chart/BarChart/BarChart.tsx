@@ -1,16 +1,9 @@
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import ToolTip from "../../ToolTip/ToolTip";
 import Badge from "../../Badge/Badge";
 import Text from "../../Text/Text";
 import getClassNames from "../../../utilities/getClassnames";
 import "./BarChart.css";
-import useWindowResize from "../../../utilities/useWindowResize";
 
 export interface barChartI {
   barWidth?: number;
@@ -71,7 +64,6 @@ const BarChart = ({
   customClass,
   legend = { show: true, position: "bottom" },
 }: barChartI) => {
-  const windowWidth = useWindowResize().width;
   const [showPoint, setShowPoint] = useState(-1);
   const [currentColor, setCurrentColor] = useState("");
   const [graphScaleLine, setGraphScaleLine] = useState<React.JSX.Element>();
@@ -83,15 +75,11 @@ const BarChart = ({
   const chartRef = useRef<SVGSVGElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const labelListRef = useRef<HTMLUListElement>(null);
-  const [firstMValue, setFirstMValue] = useState<number>(0);
   const [svgSize, setSvgSize] = useState<{ width: number; height: number }>({
     width: 300,
     height: height,
   });
 
-  const newBarWidth =
-    firstMValue > 61 ? barWidth : barWidth - (firstMValue - 61);
-  // console.log(newBarWidth);
   const origin = useMemo(() => {
     return {
       x: paddingLeft,
@@ -307,7 +295,7 @@ const BarChart = ({
         origin.y - getYPixels(currentYvalue) - graphScale.lineWidth * 6
       }px`,
       ["--lineWidth" as any]: graphScale.lineWidth + "px",
-      top: y - 8,
+      top: y,
       left: x,
     };
 
@@ -328,11 +316,11 @@ const BarChart = ({
             <div
               className="inte-barChart__tooltip-circle"
               style={{
-                width: graphScale.lineWidth * 15.334 + "px",
-                height: graphScale.lineWidth * 15.334 + "px",
+                width: graphScale.lineWidth * 15 + "px",
+                height: graphScale.lineWidth * 15 + "px",
                 borderRadius: "50%",
                 border: "2px solid #fff",
-                backgroundImage: `linear-gradient(to bottom, white 30%, ${color} 100%)`,
+                backgroundImage: `linear-gradient(white, ${color})`,
               }}
             />
           }
@@ -463,9 +451,8 @@ const BarChart = ({
         let evenPlus = 0;
         let evenMinus = 15.5 + barWidth;
         // odd
-        let oddPlus = barWidth / 2 + 15 / 2 + 1;
-        let oddnMinus = barWidth / 2 + barWidth + 45 / 2 + 1;
-        // let oddnMinus = barWidth * 2 + 30 / 2 + 1;
+        let oddPlus = barWidth / 2 + 15 / 2;
+        let oddnMinus = barWidth * 2 + 30 / 2;
         const empty: any = [];
         const newX: any = [];
 
@@ -495,7 +482,7 @@ const BarChart = ({
                 evenPlus = evenPlus + barWidth + 15.5;
               }
             } else {
-              // odd left
+              // odd
               if (Math.ceil(total / 2) > j) {
                 empty.unshift(`M${x - oddnMinus},${y1}
                 v ${y2 - y1}
@@ -504,14 +491,13 @@ const BarChart = ({
                 a8 8 0 0 1 8 8
                 v ${y1 - y2}
                 z`);
-                newX.unshift(x - oddnMinus + barWidth / 2 + 15 / 2 + 0.5);
-                oddnMinus = oddnMinus + barWidth + 16;
+                newX.unshift(x - oddnMinus + barWidth / 2 + 15 / 2);
+                oddnMinus = oddnMinus + barWidth + 15.5;
               } else if (Math.ceil(total / 2) === j) {
-                // odd center
+                // center odd
                 empty.push(stackP);
                 newX.push(x);
               } else {
-                // odd right
                 empty.push(`M${x + oddPlus},${y1}
                 v ${y2 - y1}
                 a8 8 0 0 1 8 -8
@@ -519,8 +505,8 @@ const BarChart = ({
                 a8 8 0 0 1 8 8
                 v ${y1 - y2}
                 z`);
-                newX.push(x + oddPlus + barWidth / 2 + 15 / 2 + 0.5);
-                oddPlus = oddPlus + barWidth + 16;
+                newX.push(x + oddPlus + barWidth / 2 + 15 / 2);
+                oddPlus = oddPlus + barWidth + 15.5;
               }
             }
           }
@@ -558,13 +544,13 @@ const BarChart = ({
                         x2="0%"
                         y2="100%"
                       >
-                        <stop offset="30%" stopColor="white" />
-                        <stop offset="100%" stopColor={currentColor} />
+                        <stop offset="30%" stop-color="white" />
+                        <stop offset="100%" stop-color={currentColor} />
                       </linearGradient>
                     </defs>
                     <circle
                       cx={newX[index]}
-                      cy={y2 - 8}
+                      cy={y2}
                       r="6.667"
                       stroke="#fff"
                       className="Circle"
@@ -613,13 +599,13 @@ const BarChart = ({
                         x2="0%"
                         y2="100%"
                       >
-                        <stop offset="30%" stopColor="white" />
-                        <stop offset="100%" stopColor={item.color} />
+                        <stop offset="30%" stop-color="white" />
+                        <stop offset="100%" stop-color={item.color} />
                       </linearGradient>
                     </defs>
                     <circle
                       cx={x}
-                      cy={y2 - 8}
+                      cy={y2}
                       r="6.667"
                       stroke="#fff"
                       strokeWidth="2"
@@ -643,26 +629,6 @@ const BarChart = ({
     }
     return paths;
   };
-
-  useLayoutEffect(() => {
-    // Check if the ref has been assigned
-    if (chartRef.current) {
-      // Access the children of the parent div using the ref
-      const children = chartRef.current.children;
-      // Check if the fourth child exists
-      if (children.length >= 4) {
-        // Access the fourth child
-        const fourthChild = children[3];
-        const dAttributeValue = fourthChild.getAttribute("d");
-        const match = dAttributeValue?.match(/M(\S+),(\S+)/);
-        if (match && match[1] && match[2]) {
-          const firstX = match[1];
-          // console.log(Number(firstX));
-          setFirstMValue(Number(firstX));
-        }
-      }
-    }
-  }, [windowWidth, chartRef.current]);
 
   return (
     <div
