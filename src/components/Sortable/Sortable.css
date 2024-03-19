@@ -2,10 +2,9 @@
   position: relative;
 }
 
-.inte-sortable__item {
-  cursor: pointer;
-  /* transform-origin:left top ; */
-}
+/* .inte-sortable__item {
+  cursor: grabbing;
+} */
 
 .inte-sortable__item--dummy {
   position: fixed;

@@ -38,6 +38,7 @@ export interface SortableI {
   onChange: (newAlignedData: sortableArray) => void;
   animationDuration?: number;
   customClass?: string;
+  isSortable?: boolean;
 }
 
 const Sortable = ({
@@ -45,6 +46,7 @@ const Sortable = ({
   onChange,
   animationDuration = 300,
   customClass,
+  isSortable = true,
 }: SortableI) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const dummyContainerRef = useRef<HTMLDivElement>(null);
@@ -83,11 +85,13 @@ const Sortable = ({
       <div
         ref={fixedElementRef}
         className="inte-sortable__item inte-sortable__item--dummy"
+        data-sortable={isSortable}
         style={{
           top: eleRect.top,
           left: eleRect.left,
           width: eleRect.width,
           height: eleRect.height,
+          cursor: isSortable ? "grabbing" : "auto",
         }}
       >
         {data[index].content}
@@ -255,13 +259,20 @@ const Sortable = ({
             <div
               key={ele.id}
               className="inte-sortable__item"
-              onMouseDown={(event) => handelMouseDown(event, ind)}
-              onTouchStart={(event) => handelMouseDown(event, ind)}
+              onMouseDown={(event) => isSortable && handelMouseDown(event, ind)}
+              onTouchStart={(event) =>
+                isSortable && handelMouseDown(event, ind)
+              }
+              data-sortable={isSortable}
               style={{
-                opacity: sortableData?.index === ind ? ".2" : "",
+                opacity:
+                  sortableData?.index === ind && sortableData.isMouseMove
+                    ? ".2"
+                    : "",
                 transition: sortableData
                   ? `transform ${animationDuration}ms `
                   : "",
+                cursor: isSortable ? "grabbing" : "auto",
                 transform: sortableData ? transitionArray[ind] : "",
                 position: sortableData ? "relative" : undefined,
                 userSelect: sortableData ? "none" : undefined,
@@ -291,6 +302,10 @@ const Sortable = ({
                 key={ele.id}
                 id={`d-${ele.id}`}
                 className="inte-sortable__item"
+                data-sortable={isSortable}
+                style={{
+                  cursor: isSortable ? "grabbing" : "auto",
+                }}
               >
                 {ele.content}
               </div>
