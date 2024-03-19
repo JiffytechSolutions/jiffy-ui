@@ -178,6 +178,7 @@ export const Primary = Template.bind({});
 const verticalData: sortableArray = dragData.map((item) => ({
   content: (
     <Card title={item.title + " " + item.id}>
+      Vertical
       <Text>
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro iste
         libero asperiores velit possimus. Ab fugiat veniam possimus perspiciatis

@@ -258,7 +258,10 @@ const Sortable = ({
               onMouseDown={(event) => handelMouseDown(event, ind)}
               onTouchStart={(event) => handelMouseDown(event, ind)}
               style={{
-                opacity: sortableData?.index === ind ? ".2" : "",
+                opacity:
+                  sortableData?.index === ind && sortableData.isMouseMove
+                    ? ".2"
+                    : "",
                 transition: sortableData
                   ? `transform ${animationDuration}ms `
                   : "",
