@@ -749,11 +749,12 @@ const SimpleSelect = ({
           </div>
         ) : (
           <>
-            {footer && !isLoading && optionsToShow?.length !== 0 && (
+            {footer && !isLoading && (
               <div className="inte-select__footer">{footer}</div>
             )}
           </>
         )}
+        <>{console.log(optionsToShow)}</>
       </div>
 
       {isMobile && (
