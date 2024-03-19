@@ -26,7 +26,12 @@ type SortableDataI = {
   isMouseMove: boolean;
 };
 
-type transitionArr = { top: number, left: number, scaleX: number, scaleY: number }[]
+type transitionArr = {
+  top: number;
+  left: number;
+  scaleX: number;
+  scaleY: number;
+}[];
 
 export interface SortableI {
   data: sortableArray;
@@ -35,9 +40,7 @@ export interface SortableI {
   customClass?: string;
 }
 
-
-
-const NewSortable = ({
+const Sortable = ({
   data,
   onChange,
   animationDuration = 300,
@@ -50,7 +53,9 @@ const NewSortable = ({
   const [dummyData, setDummyData] = useState<sortableArray>([]);
   const [sortableData, setSortableData] = useState<SortableDataI>();
 
-  const [originalRangeArray, setOriginalRangeArray] = useState<elementRect[]>([]);
+  const [originalRangeArray, setOriginalRangeArray] = useState<elementRect[]>(
+    []
+  );
 
   const [transitionArray, setTransitionArray] = useState<string[]>([]);
 
@@ -82,7 +87,7 @@ const NewSortable = ({
           top: eleRect.top,
           left: eleRect.left,
           width: eleRect.width,
-          height: eleRect.height
+          height: eleRect.height,
         }}
       >
         {data[index].content}
@@ -94,7 +99,7 @@ const NewSortable = ({
       element: fixedEle,
       index: index,
       thresholdCursor: thresholdCursor,
-      isMouseMove: false
+      isMouseMove: false,
     });
 
     setDummyData([...data]);
@@ -114,30 +119,41 @@ const NewSortable = ({
       y: clientY + containerRef.current.scrollTop - top,
     });
     if (latestIndex !== -1) {
-      let newThresholdCursor = sortableData.thresholdCursor
+      let newThresholdCursor = sortableData.thresholdCursor;
       if (dummyContainerRef.current && fixedElementRef.current) {
+        const fixedElementRect =
+          fixedElementRef.current.getBoundingClientRect();
+        const { width, height } =
+          dummyContainerRef.current.children[
+            latestIndex
+          ].getBoundingClientRect();
 
-        const fixedElementRect = fixedElementRef.current.getBoundingClientRect();
-        const { width, height } = dummyContainerRef.current.children[latestIndex].getBoundingClientRect()
-
-        const widthIncreaseRatio = width / fixedElementRect.width
-        const heightIncreaseRatio = height / fixedElementRect.height
-
+        const widthIncreaseRatio = width / fixedElementRect.width;
+        const heightIncreaseRatio = height / fixedElementRect.height;
 
         newThresholdCursor = {
           top: sortableData.thresholdCursor.top * heightIncreaseRatio,
-          left: sortableData.thresholdCursor.left * widthIncreaseRatio
-        }
+          left: sortableData.thresholdCursor.left * widthIncreaseRatio,
+        };
 
-        fixedElementRef.current.style.width = width + 'px'
-        fixedElementRef.current.style.height = height + 'px'
-        fixedElementRef.current.style.top = clientY - newThresholdCursor.top + "px";
-        fixedElementRef.current.style.left = clientX - newThresholdCursor.left + "px";
+        fixedElementRef.current.style.width = width + "px";
+        fixedElementRef.current.style.height = height + "px";
+        fixedElementRef.current.style.top =
+          clientY - newThresholdCursor.top + "px";
+        fixedElementRef.current.style.left =
+          clientX - newThresholdCursor.left + "px";
       }
       setSortableData((prev) =>
-        prev ? { ...prev, dummyIndex: latestIndex, isMouseMove: true, thresholdCursor: newThresholdCursor } : prev
+        prev
+          ? {
+              ...prev,
+              dummyIndex: latestIndex,
+              isMouseMove: true,
+              thresholdCursor: newThresholdCursor,
+            }
+          : prev
       );
-      setDummyData(swapArray(sortableData.index, latestIndex, data))
+      setDummyData(swapArray(sortableData.index, latestIndex, data));
     }
   };
 
@@ -174,36 +190,36 @@ const NewSortable = ({
   }, [sortableData]);
 
   useEffect(() => {
-    let res: transitionArr = []
+    let res: transitionArr = [];
     if (!dummyContainerRef.current || !containerRef.current) return;
 
     const t: string[] = data.map((item, index) => {
-      const prevPosition = dummyContainerRef.current?.children[index]
-      const currentPosition = dummyContainerRef.current?.querySelector(`#d-${item.id}`)
+      const prevPosition = dummyContainerRef.current?.children[index];
+      const currentPosition = dummyContainerRef.current?.querySelector(
+        `#d-${item.id}`
+      );
 
       if (prevPosition && currentPosition) {
-        const prevRect = prevPosition.getBoundingClientRect()
-        const currRect = currentPosition.getBoundingClientRect()
+        const prevRect = prevPosition.getBoundingClientRect();
+        const currRect = currentPosition.getBoundingClientRect();
 
-        const widthIncrease = currRect.width / prevRect.width
-        const heightIncrease = currRect.height / prevRect.height
+        const widthIncrease = currRect.width / prevRect.width;
+        const heightIncrease = currRect.height / prevRect.height;
 
-        const xTranslate = currRect.x - prevRect.x
-        const yTranslate = currRect.y - prevRect.y
+        const xTranslate = currRect.x - prevRect.x;
+        const yTranslate = currRect.y - prevRect.y;
 
-        const newXtranslate = xTranslate / widthIncrease
-        const newYtranslate = yTranslate / heightIncrease
+        const newXtranslate = xTranslate / widthIncrease;
+        const newYtranslate = yTranslate / heightIncrease;
 
-        const newTransform = `scale(${widthIncrease} , ${heightIncrease}) translate(${newXtranslate}px , ${newYtranslate}px)`
+        const newTransform = `scale(${widthIncrease} , ${heightIncrease}) translate(${newXtranslate}px , ${newYtranslate}px)`;
 
-        return newTransform
+        return newTransform;
       }
-      return ""
-    })
+      return "";
+    });
 
-    setTransitionArray([...t])
-
-
+    setTransitionArray([...t]);
   }, [dummyData]);
 
   useEffect(() => {
@@ -227,10 +243,13 @@ const NewSortable = ({
 
   return (
     <>
-      <div ref={containerRef} className={getClassNames({
-        "inte-sortable": true,
-        [customClass as string]: customClass
-      })}>
+      <div
+        ref={containerRef}
+        className={getClassNames({
+          "inte-sortable": true,
+          [customClass as string]: customClass,
+        })}
+      >
         {data.map((ele, ind) => {
           return (
             <div
@@ -243,10 +262,10 @@ const NewSortable = ({
                 transition: sortableData
                   ? `transform ${animationDuration}ms `
                   : "",
-                transform: sortableData ? transitionArray[ind] : '',
+                transform: sortableData ? transitionArray[ind] : "",
                 position: sortableData ? "relative" : undefined,
                 userSelect: sortableData ? "none" : undefined,
-                transformOrigin: sortableData ? 'top left' : ''
+                transformOrigin: sortableData ? "top left" : "",
               }}
             >
               {ele.content}
@@ -260,7 +279,7 @@ const NewSortable = ({
           className={getClassNames({
             "inte-sortable inte-sortable--dummy": true,
             "inte-sortable": true,
-            [customClass as string]: customClass
+            [customClass as string]: customClass,
           })}
           style={{
             width: containerRef.current?.getBoundingClientRect().width + "px",
@@ -268,7 +287,11 @@ const NewSortable = ({
         >
           {dummyData.map((ele) => {
             return (
-              <div key={ele.id} id={`d-${ele.id}`} className="inte-sortable__item">
+              <div
+                key={ele.id}
+                id={`d-${ele.id}`}
+                className="inte-sortable__item"
+              >
                 {ele.content}
               </div>
             );
@@ -282,4 +305,4 @@ const NewSortable = ({
   );
 };
 
-export default NewSortable;
+export default Sortable;

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Card, Image, Text } from "../../..";
 import Sortable, { sortableArray } from "../Sortable";
-import './Sortable.stories.css'
+import "./Sortable.stories.css";
 
 export default {
   title: "Components/Behaviour/Sortable",
@@ -26,11 +26,12 @@ export default {
       control: {
         type: "text",
       },
-      defaultValue:"",
+      defaultValue: "",
     },
-    onChange : {
-      description : "This function trigger when the order of the items changes <code>(newAlignedData: sortableArray) => void</code>"
-    }
+    onChange: {
+      description:
+        "This function trigger when the order of the items changes <code>(newAlignedData: sortableArray) => void</code>",
+    },
   },
 };
 
@@ -140,15 +141,7 @@ const dragData = [
   },
 ];
 const sortableArr: sortableArray = itemsData.map((item) => ({
-  content: (
-    <img
-      src={item.imageUrl}
-      alt="img"
-      width={150}
-      height={150}
-
-    />
-  ),
+  content: <img src={item.imageUrl} alt="img" width={150} height={150} />,
   id: item.id,
 }));
 
@@ -162,7 +155,7 @@ const tempData = itemsData.map((item) => ({
     />
   ),
   id: item.id,
-}))
+}));
 
 const Template = ({ ...rest }) => {
   const [data, setData] = useState<sortableArray>(tempData);
@@ -276,7 +269,7 @@ const gridData: sortableArray = itemsData.map((item) => ({
   content: <Image src={item.imageUrl} width={200} height={200} />,
   id: item.id,
 }));
-export const SortableGrid = () => {
+export const SortableGrid = ({ ...rest }) => {
   const [data, setData] = useState(gridData);
   return (
     <Card title="Sortable Grid">
