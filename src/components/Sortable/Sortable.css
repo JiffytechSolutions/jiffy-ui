@@ -3,7 +3,7 @@
 }
 
 .inte-sortable__item {
-  cursor: pointer;
+  cursor: grabbing;
   /* transform-origin:left top ; */
 }
 
