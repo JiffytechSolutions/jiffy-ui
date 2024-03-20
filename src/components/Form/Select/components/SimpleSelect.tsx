@@ -125,10 +125,10 @@ const SimpleSelect = ({
         setSelectedValues(opt);
       }
     };
-    if (options.length === 0){
-      setSelectedValues('')
-      return
-    };
+    if (options.length === 0) {
+      setSelectedValues(isMultiSelect ? [] : "");
+      return;
+    }
 
     if ("group" in options[0]) {
       const matchingLabels = (options as GroupedObjI[]).reduce(
@@ -749,7 +749,7 @@ const SimpleSelect = ({
           </div>
         ) : (
           <>
-            {footer && !isLoading && optionsToShow?.length !== 0 && (
+            {footer && !isLoading && (
               <div className="inte-select__footer">{footer}</div>
             )}
           </>
