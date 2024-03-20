@@ -9,29 +9,30 @@ import { NoProducts } from "../../illustrations";
 export interface columnI {
   title: string | React.ReactNode;
   dataIndex?: string;
+  dataTableHead?: string;
   key: string | number;
   width?: number;
   align?:
-  | "start"
-  | "end"
-  | "left"
-  | "right"
-  | "center"
-  | "justify"
-  | "match-parent";
-  fixed?: "left" | 'right';
+    | "start"
+    | "end"
+    | "left"
+    | "right"
+    | "center"
+    | "justify"
+    | "match-parent";
+  fixed?: "left" | "right";
   sortable?: {
-    onSort?: (clickedColumn: columnI, order: 'asec' | 'desc') => void;
+    onSort?: (clickedColumn: columnI, order: "asec" | "desc") => void;
     comparator?: (a: any, b: any, order: any) => number;
   };
   render?: (item: any, wholeObj: DataSourceI) => React.ReactNode;
   onCell?: (rowNum: number) => any;
-  editor?: React.ReactNode
+  editor?: React.ReactNode;
 }
 
 export interface DataSourceI {
-  key: string | number,
-  [key: string]: any
+  key: string | number;
+  [key: string]: any;
 }
 
 export interface DataTableI {
@@ -47,10 +48,14 @@ export interface DataTableI {
   isResizable?: boolean;
   emptyTableUi?: React.ReactNode;
   customClass?: string;
-  tableLayout?: "fixed" | "auto"
+  tableLayout?: "fixed" | "auto";
   bulkEditTable?: boolean;
   stickyScrollBar?: boolean;
-  isCellEdited?: (columnKey: string | number, rowKey: string | number, cell: DataSourceI) => boolean;
+  isCellEdited?: (
+    columnKey: string | number,
+    rowKey: string | number,
+    cell: DataSourceI
+  ) => boolean;
 }
 
 export interface expandableI {
@@ -60,15 +65,17 @@ export interface expandableI {
 
 export interface rowSelectionI {
   multi?: boolean;
-  onSelectChange?: (newSelectedRow: { [key: string]: boolean | "indeterminate" }) => void;
+  onSelectChange?: (newSelectedRow: {
+    [key: string]: boolean | "indeterminate";
+  }) => void;
   selectedRowKeys?: {};
 }
 
 export interface bulkEditRowI {
   editior?: React.ReactNode;
   colSpan?: number;
-  key: string
-  fixed?: "left" | 'right';
+  key: string;
+  fixed?: "left" | "right";
 }
 
 const getCellByClassName = (arr: any, className: string) => {
@@ -90,7 +97,8 @@ const removeClassName = (arr: any, elements: any) => {
 };
 
 const giveHeaderCheckboxState = (selChkObj: any) => {
-  if (Object.values(selChkObj).every((i) => (i === false) || (i === undefined))) return false;
+  if (Object.values(selChkObj).every((i) => i === false || i === undefined))
+    return false;
   else if (Object.values(selChkObj).every((i) => i === true)) return true;
   else return "indeterminate";
 };
@@ -111,7 +119,7 @@ const DataTable = ({
   tableLayout,
   isCellEdited,
   bulkEditTable,
-  stickyScrollBar
+  stickyScrollBar,
 }: DataTableI) => {
   const [dataTableKey, setDataTableKey] = useState(1);
   const [data, setData] = useState(dataSource);
@@ -213,37 +221,35 @@ const DataTable = ({
   };
 
   const handelSort = (item: columnI, ind: number, rowNum: number) => {
-    if (!item.sortable) return
+    if (!item.sortable) return;
     if (item.sortable.comparator) {
       sortTheData(
         item.dataIndex,
-        [
-          rowNum,
-          ind + (expandable ? 1 : 0) + (rowSelection ? 1 : 0),
-        ],
+        [rowNum, ind + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)],
         item.sortable?.comparator
-      )
-    }
-    else if (item.sortable.onSort && tableCellRefs.current) {
-      let classList = tableCellRefs.current[rowNum][ind + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)]?.classList;
+      );
+    } else if (item.sortable.onSort && tableCellRefs.current) {
+      let classList =
+        tableCellRefs.current[rowNum][
+          ind + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
+        ]?.classList;
       if (classList?.contains("inte-dataTable__cell--asec")) {
         removeClassName(tableCellRefs.current[0], [
           "inte-dataTable__cell--asec",
           "inte-dataTable__cell--desc",
         ]);
         classList.add("inte-dataTable__cell--desc");
-        item.sortable.onSort(item, 'desc')
-      }
-      else {
+        item.sortable.onSort(item, "desc");
+      } else {
         removeClassName(tableCellRefs.current[0], [
           "inte-dataTable__cell--asec",
           "inte-dataTable__cell--desc",
         ]);
         classList?.add("inte-dataTable__cell--asec");
-        item.sortable.onSort(item, 'asec')
+        item.sortable.onSort(item, "asec");
       }
     }
-  }
+  };
 
   const expandIconClickHandler = (key: string) => {
     if (expandedRows.includes(key))
@@ -293,7 +299,7 @@ const DataTable = ({
       if (
         isHeader &&
         (GridWrapperRef.current?.scrollHeight ?? 0) >
-        (GridWrapperRef.current?.clientHeight ?? 0)
+          (GridWrapperRef.current?.clientHeight ?? 0)
       ) {
         ele.style[pos] =
           prev +
@@ -324,33 +330,26 @@ const DataTable = ({
     e.stopPropagation();
 
     let colList1 = Array.from(
-      fixHeaderRef.current?.children as HTMLCollectionOf<HTMLElement> ?? []
+      (fixHeaderRef.current?.children as HTMLCollectionOf<HTMLElement>) ?? []
     );
     let colList2 = Array.from(
-      tableColRef.current?.children as HTMLCollectionOf<HTMLElement> ?? []
+      (tableColRef.current?.children as HTMLCollectionOf<HTMLElement>) ?? []
     );
-    colList1[colNum]?.classList.add(
-      "inte-DataTable__resizeHandler--active"
-    );
+    colList1[colNum]?.classList.add("inte-DataTable__resizeHandler--active");
 
-    colList2[colNum]?.classList.add(
-      "inte-DataTable__resizeHandler--active"
-    );
+    colList2[colNum]?.classList.add("inte-DataTable__resizeHandler--active");
 
-    tableCellRefs.current?.map(item => item[colNum]?.classList.add(
-      "inte-DataTable__resizeHandler--active"
-    ))
+    tableCellRefs.current?.map((item) =>
+      item[colNum]?.classList.add("inte-DataTable__resizeHandler--active")
+    );
 
     setCurrentResizeCol({
       target: isFixedHeader
-        ? [
-          colList1[colNum],
-          colList2[colNum],
-        ]
+        ? [colList1[colNum], colList2[colNum]]
         : [colList2[colNum]],
       start: e.pageX,
       startWidth: colList2[colNum]?.offsetWidth,
-      colNum: colNum
+      colNum: colNum,
     });
   };
 
@@ -366,20 +365,20 @@ const DataTable = ({
   const handelMouseUpResize = (e: MouseEvent) => {
     e.stopImmediatePropagation();
     currentResizeCol.target.map((i: any) => {
-      i.classList.remove(
-        "inte-DataTable__resizeHandler--active"
-      );
+      i.classList.remove("inte-DataTable__resizeHandler--active");
     });
-    tableCellRefs.current?.map(item => item[currentResizeCol.colNum]?.classList.remove(
-      "inte-DataTable__resizeHandler--active"
-    ))
+    tableCellRefs.current?.map((item) =>
+      item[currentResizeCol.colNum]?.classList.remove(
+        "inte-DataTable__resizeHandler--active"
+      )
+    );
     setCurrentResizeCol(null);
   };
 
   const rowRadioChangeHandler = (item: any) => {
-    if (rowSelection?.onSelectChange) rowSelection?.onSelectChange({ [item.key]: true });
+    if (rowSelection?.onSelectChange)
+      rowSelection?.onSelectChange({ [item.key]: true });
   };
-
 
   useEffect(() => {
     if (currentResizeCol) {
@@ -418,7 +417,7 @@ const DataTable = ({
   const makeDataTableHeaderRows = (columns: columnI[]) => {
     let columnNum = 0,
       rowNum = 0,
-      bulkEditColNum = 0
+      bulkEditColNum = 0;
     return (
       <>
         <tr
@@ -434,7 +433,7 @@ const DataTable = ({
                 "inte-dataTable__cell": true,
                 "inte-dataTable__cell--expand": true,
                 "inte-dataTable__cell--spaced": true,
-                "inte-dataTable__cell--Fixedleft": columns[0].fixed
+                "inte-dataTable__cell--Fixedleft": columns[0].fixed,
               })}
             ></th>
           )}
@@ -444,8 +443,9 @@ const DataTable = ({
               className={getClassNames({
                 "inte-dataTable__checkbox": true,
                 "inte-dataTable__cell": true,
-                "inte-dataTable__cell--Fixedleft": columns[0].fixed
+                "inte-dataTable__cell--Fixedleft": columns[0].fixed,
               })}
+              data-table-head="row-selection"
             >
               {rowSelection.multi !== false && (
                 <Checkbox
@@ -466,11 +466,13 @@ const DataTable = ({
                 }}
                 className={getClassNames({
                   "inte-dataTable__cell": true,
-                  [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]: item.fixed,
+                  [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]:
+                    item.fixed,
                   "inte-dataTable__cell--sortable": item.sortable,
-                  "inte-dataTable__cell--lastCell": ind === columns.length - 1
+                  "inte-dataTable__cell--lastCell": ind === columns.length - 1,
                 })}
                 onClick={() => handelSort(item, ind, rowNum)}
+                data-table-head={item.dataTableHead ?? ""}
               >
                 {item.sortable ? (
                   <div className="sortedIcon__th">
@@ -524,51 +526,51 @@ const DataTable = ({
             );
           })}
         </tr>
-        {
-          !!bulkEditTable && (
-            <tr className="inte-dataTable__bulkEditRow">
-              {expandable && (
-                <th
-                  ref={(cell) => makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)}
-                  className={getClassNames({
-                    "inte-dataTable__cell": true,
-                    "inte-dataTable__cell--expand": true,
-                    "inte-dataTable__cell--spaced": true,
-                    "inte-dataTable__cell--Fixedleft": columns[0].fixed
-                  })}
-                ></th>
-              )}
-              {rowSelection && (
-                <th
-                  ref={(cell) => makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)}
-                  className={getClassNames({
-                    "inte-dataTable__checkbox": true,
-                    "inte-dataTable__cell": true,
-                    "inte-dataTable__cell--Fixedleft": columns[0].fixed
-                  })}
-                >
-                </th>
-              )}
-              {
-                columns.map(item => (
-                  <th
-                    ref={(cell) => makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)}
-                    key={item.key}
-                    className={getClassNames({
-                      "inte-dataTable__cell inte-dataTable__cell--bulkEditCell": true,
-                      [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]: item.fixed,
-
-                    })}
-                  >
-                    {
-                      item.editor
-                    }
-                  </th>
-                ))
-              }
-            </tr>
-          )
-        }
+        {!!bulkEditTable && (
+          <tr className="inte-dataTable__bulkEditRow">
+            {expandable && (
+              <th
+                ref={(cell) =>
+                  makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)
+                }
+                className={getClassNames({
+                  "inte-dataTable__cell": true,
+                  "inte-dataTable__cell--expand": true,
+                  "inte-dataTable__cell--spaced": true,
+                  "inte-dataTable__cell--Fixedleft": columns[0].fixed,
+                })}
+              ></th>
+            )}
+            {rowSelection && (
+              <th
+                ref={(cell) =>
+                  makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)
+                }
+                className={getClassNames({
+                  "inte-dataTable__checkbox": true,
+                  "inte-dataTable__cell": true,
+                  "inte-dataTable__cell--Fixedleft": columns[0].fixed,
+                })}
+              ></th>
+            )}
+            {columns.map((item) => (
+              <th
+                ref={(cell) =>
+                  makeCellRefsArray(rowNum + 1, bulkEditColNum++, cell)
+                }
+                key={item.key}
+                className={getClassNames({
+                  "inte-dataTable__cell inte-dataTable__cell--bulkEditCell":
+                    true,
+                  [`inte-dataTable__cell--Fixed` + item.fixed?.toLowerCase()]:
+                    item.fixed,
+                })}
+              >
+                {item.editor}
+              </th>
+            ))}
+          </tr>
+        )}
       </>
     );
   };
@@ -587,8 +589,10 @@ const DataTable = ({
             "inte-dataTable__row": true,
             "inte-dataTable__row--selected": isRowSelected,
             "inte-dataTable__row--expandable": expandable && isRowExpandable,
-            "inte-dataTable__row--expandActive": expandedRows.includes(item.key),
-            "inte-dataTable__row--lastChild": index === dataSource.length - 1
+            "inte-dataTable__row--expandActive": expandedRows.includes(
+              item.key
+            ),
+            "inte-dataTable__row--lastChild": index === dataSource.length - 1,
           })}
         >
           {expandable ? (
@@ -598,13 +602,13 @@ const DataTable = ({
                 "inte-dataTable__cell": true,
                 "inte-dataTable__cell--expand": true,
                 "inte-dataTable__cell--spaced": !isRowExpandable,
-                "inte-dataTable__cell--Fixedleft": columns[0].fixed
+                "inte-dataTable__cell--Fixedleft": columns[0].fixed,
               })}
               onClick={
                 isRowExpandable
                   ? () => {
-                    expandIconClickHandler(item.key);
-                  }
+                      expandIconClickHandler(item.key);
+                    }
                   : void 0
               }
             >
@@ -637,8 +641,9 @@ const DataTable = ({
               className={getClassNames({
                 "inte-dataTable__cell": true,
                 "inte-dataTable__checkbox": true,
-                "inte-dataTable__cell--Fixedleft": columns[0].fixed
+                "inte-dataTable__cell--Fixedleft": columns[0].fixed,
               })}
+              data-table-head="row-selection"
             >
               {rowSelection.multi !== false ? (
                 <Checkbox
@@ -662,35 +667,45 @@ const DataTable = ({
             if (span === -1) return null;
             let ele = i.dataIndex ? item[i.dataIndex] : item;
             ele = i.render ? i.render(ele, item) : ele;
-            const isEdited = isCellEdited ? isCellEdited(dataSource[index]?.key, columns[ind]?.key, i) : false;
+            const isEdited = isCellEdited
+              ? isCellEdited(dataSource[index]?.key, columns[ind]?.key, i)
+              : false;
             return (
               <td
                 {...span}
                 key={ind}
-                style={{
-
-                  textAlign: i.align ? i.align : "left",
-                }}
                 ref={(cell) => makeCellRefsArray(rowNum, columnNum++, cell)}
                 className={getClassNames({
-                  'inte-dataTable__cell': true,
-                  [`inte-dataTable__cell--Fixed` + i.fixed?.toLowerCase()]: i.fixed,
-                  'inte-dataTable__cell--edited': isEdited
+                  "inte-dataTable__cell": true,
+                  [`inte-dataTable__cell--Fixed` + i.fixed?.toLowerCase()]:
+                    i.fixed,
+                  "inte-dataTable__cell--edited": isEdited,
                 })}
+                data-table-head={i.dataTableHead ?? ""}
+                style={{
+                  textAlign: i.align ? i.align : "left",
+                }}
               >
                 {ele}
               </td>
             );
           })}
         </tr>
-        <tr aria-expanded={expandedRows.includes(item.key)} className={"inte-dataTable__row--appendWithExpand"}>
+        <tr
+          aria-expanded={expandedRows.includes(item.key)}
+          className={"inte-dataTable__row--appendWithExpand"}
+        >
           <td
             className="inte-dataTable__expanded-td"
             colSpan={
               columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
             }
           >
-            <AnimationWrapper show={expandedRows.includes(item.key)} inAnimation="inte-dataTable-inAnimate" outAnimation="inte-dataTable-outAnimate">
+            <AnimationWrapper
+              show={expandedRows.includes(item.key)}
+              inAnimation="inte-dataTable-inAnimate"
+              outAnimation="inte-dataTable-outAnimate"
+            >
               <div
                 className="inte-dataTable__row--Fixed"
                 style={{
@@ -731,75 +746,83 @@ const DataTable = ({
   const DataTableEmptyRow = (
     <tr>
       <td
-        colSpan={
-          columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
-        }
+        colSpan={columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)}
       >
         {emptyTableUi ? emptyTableUi : <NoProducts />}
       </td>
     </tr>
-  )
-
+  );
 
   const scrollGrid = () => {
-    const scrollLeft = stickyScrollBarRef.current?.scrollLeft
-    if (GridWrapperRef.current && scrollLeft !== undefined) GridWrapperRef.current.scrollLeft = scrollLeft
-  }
+    const scrollLeft = stickyScrollBarRef.current?.scrollLeft;
+    if (GridWrapperRef.current && scrollLeft !== undefined)
+      GridWrapperRef.current.scrollLeft = scrollLeft;
+  };
 
   const handelStickyScroll = () => {
-    if (!GridWrapperRef.current || !stickyScrollBarRef.current) return
+    if (!GridWrapperRef.current || !stickyScrollBarRef.current) return;
     const containerRect = GridWrapperRef.current.getBoundingClientRect();
     const currentScrollHeight = window.innerHeight;
     if (
       containerRect.bottom <= currentScrollHeight ||
-      (GridWrapperRef.current.clientWidth === GridWrapperRef.current?.scrollWidth) ||
+      GridWrapperRef.current.clientWidth ===
+        GridWrapperRef.current?.scrollWidth ||
       containerRect.top > currentScrollHeight
     ) {
-      stickyScrollBarRef.current.style.visibility = "hidden"
-    }
-    else {
+      stickyScrollBarRef.current.style.visibility = "hidden";
+    } else {
       stickyScrollBarRef.current.style.visibility = "visible";
     }
-  }
+  };
 
   useEffect(() => {
-    if (!stickyScrollBar) return
-    handelStickyScroll()
-    window.addEventListener('scroll', handelStickyScroll)
+    if (!stickyScrollBar) return;
+    handelStickyScroll();
+    window.addEventListener("scroll", handelStickyScroll);
     return () => {
-      window.removeEventListener('scroll', handelStickyScroll)
-    }
-  }, [stickyScrollBarRef.current, GridWrapperRef.current, dataSource, window.innerWidth, stickyScrollBar])
+      window.removeEventListener("scroll", handelStickyScroll);
+    };
+  }, [
+    stickyScrollBarRef.current,
+    GridWrapperRef.current,
+    dataSource,
+    window.innerWidth,
+    stickyScrollBar,
+  ]);
 
   return (
     <div
       className={getClassNames({
         "inte-dataTable__container": true,
         "inte-dataTable__container--hasFixedHeader": isFixedHeader,
-        [customClass as string]: customClass
+        [customClass as string]: customClass,
       })}
       key={data.length}
     >
       {isFixedHeader && hasHeader && (
         <div className="inte-dataTable__fixHeader--handler">
-          <table className="inte-dataTable" style={{ tableLayout: tableLayout ? tableLayout : "fixed", width: scrollX ? scrollX / 10 + "rem" : "" }}>
+          <table
+            className="inte-dataTable"
+            style={{
+              tableLayout: tableLayout ? tableLayout : "fixed",
+              width: scrollX ? scrollX / 10 + "rem" : "",
+            }}
+          >
             <colgroup ref={fixHeaderRef}>
-              {
-                expandable ? <col style={{ width: "5.2rem" }} /> : null
-              }
-              {
-                rowSelection ? <col style={{ width: "5.2rem" }} /> : null
-              }
-              {Array(
-                columns.length
-              )
+              {expandable ? <col style={{ width: "5.2rem" }} /> : null}
+              {rowSelection ? <col style={{ width: "5.2rem" }} /> : null}
+              {Array(columns.length)
                 .fill(0)
                 .map((i, ind) => {
-                  let columnWidth = ""
+                  let columnWidth = "";
                   if (columns[ind].width) {
-                    columnWidth = `${columns && columns[ind]?.width ? `${(columns[ind].width ?? 0) / 10}rem` : ''}`
+                    columnWidth = `${
+                      columns && columns[ind]?.width
+                        ? `${(columns[ind].width ?? 0) / 10}rem`
+                        : ""
+                    }`;
                   }
-                  return <col style={{ width: columnWidth }} key={ind}></col>
+                  return <col style={{ width: columnWidth }} key={ind}></col>;
                 })}
             </colgroup>
             <thead>{makeDataTableHeaderRows(columns)}</thead>
@@ -811,32 +834,35 @@ const DataTable = ({
         ref={GridWrapperRef}
         onScroll={handelGridScroll}
       >
-        <table className={`inte-dataTable`}
+        <table
+          className={`inte-dataTable`}
           style={{
-            tableLayout: tableLayout ? tableLayout : isFixedHeader ? "fixed" : "auto",
-            width: scrollX ? scrollX / 10 + "rem" : ""
+            tableLayout: tableLayout
+              ? tableLayout
+              : isFixedHeader
+              ? "fixed"
+              : "auto",
+            width: scrollX ? scrollX / 10 + "rem" : "",
           }}
         >
           <colgroup ref={tableColRef}>
-            {
-              expandable ? <col style={{ width: "5.2rem" }} /> : null
-            }
-            {
-              rowSelection ? <col style={{ width: "5.2rem" }} /> : null
-            }
-            {Array(
-              columns.length
-            )
+            {expandable ? <col style={{ width: "5.2rem" }} /> : null}
+            {rowSelection ? <col style={{ width: "5.2rem" }} /> : null}
+            {Array(columns.length)
               .fill(0)
               .map((i, ind) => {
-                let columnWidth = ""
+                let columnWidth = "";
                 if (columns[ind].width) {
-                  columnWidth = `${columns && columns[ind]?.width ? `${(columns[ind].width ?? 0) / 10}rem` : ''}`
+                  columnWidth = `${
+                    columns && columns[ind]?.width
+                      ? `${(columns[ind].width ?? 0) / 10}rem`
+                      : ""
+                  }`;
                 }
-                return <col style={{ width: columnWidth }} key={ind}></col>
+                return <col style={{ width: columnWidth }} key={ind}></col>;
               })}
           </colgroup>
-          {(!isFixedHeader && hasHeader) && (
+          {!isFixedHeader && hasHeader && (
             <thead className="inte-dataTable__header">
               {makeDataTableHeaderRows(columns)}
             </thead>
@@ -845,29 +871,31 @@ const DataTable = ({
             {isLoading
               ? makeTableSkeleton()
               : data.length
-                ? data.map((item: any, index: number) => {
+              ? data.map((item: any, index: number) => {
                   return makeDataTableBodyRows(item, index);
                 })
-                : DataTableEmptyRow}
+              : DataTableEmptyRow}
           </tbody>
         </table>
       </div>
-      {
-        stickyScrollBar ? <div
+      {stickyScrollBar ? (
+        <div
           className="inte-dataTable__stickyScrollBar--wrapper"
           style={{
-            width: GridWrapperRef.current?.clientWidth + "px"
+            width: GridWrapperRef.current?.clientWidth + "px",
           }}
           ref={stickyScrollBarRef}
           onScroll={scrollGrid}
         >
           <div
             className="inte-dataTable__stickyScrollBar"
-            style={{ width: GridWrapperRef.current?.children[0].scrollWidth + "px" }}
+            style={{
+              width: GridWrapperRef.current?.children[0].scrollWidth + "px",
+            }}
           ></div>
-        </div> : null
-      }
-      {(pagination && dataSource.length) ? (
+        </div>
+      ) : null}
+      {pagination && dataSource.length ? (
         <div className="inte-dataTable__pagination">{pagination}</div>
       ) : null}
     </div>
