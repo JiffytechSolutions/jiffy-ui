@@ -66,6 +66,11 @@ export default {
           <td><code>string</code></td>
         </tr>
         <tr>
+          <td><code>dataTableHead</code></td>
+          <td>The dataTableHead of the data to display in the column inside data-table-head attribute</td>
+          <td><code>string</code></td>
+        </tr>
+        <tr>
           <td><code>key<span style="color: red;">*</span></code></td>
           <td>The unique key of the column.</td>
           <td><code>string</code></td>
@@ -243,17 +248,18 @@ const primaryColumns: columnI[] = [
   {
     title: "Id",
     dataIndex: "id",
+    dataTableHead: "Id",
     key: "id",
     fixed: "left",
     width: 100,
     sortable: {
-      onSort: (item: columnI, order: "asec" | "desc") => {
-      },
+      onSort: (item: columnI, order: "asec" | "desc") => {},
     },
   },
   {
     title: "Name",
     dataIndex: "name",
+    dataTableHead: "Name",
     key: "name",
     render: (item: any) => {
       return <Text>{item}</Text>;
@@ -270,6 +276,7 @@ const primaryColumns: columnI[] = [
     title: "Email",
     dataIndex: "email",
     key: "email",
+    // dataTableHead: "Email",
     // width: 300,
     render: (item: any) => {
       return <Text>{item}</Text>;
@@ -279,6 +286,7 @@ const primaryColumns: columnI[] = [
     title: "Phone",
     dataIndex: "phone",
     key: "phone",
+    dataTableHead: "Phone",
     width: 200,
     render: (item: any) => {
       return <Text>{item}</Text>;
@@ -288,6 +296,7 @@ const primaryColumns: columnI[] = [
     title: "Website",
     dataIndex: "website",
     key: "website",
+    dataTableHead: "Website",
     fixed: "right",
     render: (item: any) => {
       return <a href={`http://${item}`}>{item}</a>;
@@ -313,23 +322,28 @@ const InternalDataTable = ({
       title: "User Id",
       dataIndex: "userId",
       key: "UserId",
+      dataTableHead: "User Id",
     },
     {
       title: "Post Id",
       dataIndex: "id",
       key: "id",
+      dataTableHead: "Post Id",
     },
     {
       title: "Title",
       dataIndex: "title",
       key: "title",
+      dataTableHead: "Title",
     },
     {
       title: "Body",
       dataIndex: "body",
       key: "body",
+      dataTableHead: "Body",
     },
   ];
+
   useEffect(() => {
     setLoading(true);
     fetch(`https://jsonplaceholder.typicode.com/posts?userId=${parent.key}`)
