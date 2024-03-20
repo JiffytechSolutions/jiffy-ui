@@ -754,7 +754,6 @@ const SimpleSelect = ({
             )}
           </>
         )}
-        <>{console.log(optionsToShow)}</>
       </div>
 
       {isMobile && (
