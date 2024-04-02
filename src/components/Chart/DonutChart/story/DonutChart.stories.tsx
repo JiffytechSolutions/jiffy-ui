@@ -1,6 +1,6 @@
 import React from "react";
 import { Card } from "../../../Card";
-import { DonutChart, donutChartData } from "../DonutChart";
+import DonutChart, { donutChartData } from "../DonutChart";
 import { FlexLayout } from "../../../FlexLayout";
 import DonutChartTemplate from "./DonutChartTemplate";
 
@@ -52,11 +52,10 @@ export default {
       defaultValue: false,
     },
     valueType: {
-      description:
-        "Type of value to be shown in legend and tooltip",
+      description: "Type of value to be shown in legend and tooltip",
       control: {
         type: "radio",
-        options : ['number' , 'percentage']
+        options: ["number", "percentage"],
       },
       defaultValue: "number",
     },
