@@ -1,4 +1,4 @@
-import React, { useId, useRef, useState } from "react";
+import React, { useEffect, useId, useRef, useState } from "react";
 import FileDetails from "./component/FileDetails";
 import getClassNames from "../../utilities/getClassnames";
 import TextLink from "../TextLink/TextLink";
@@ -20,6 +20,9 @@ const FileUpload = ({
   helpIcon,
   maxSizeAllowed,
   customClass = "",
+  onError = () => {
+    //
+  },
   clearAll = false,
   customNotification,
 }: UploadI) => {
@@ -27,6 +30,7 @@ const FileUpload = ({
   const [isDragOver, setIsDragOver] = useState(false);
   const inputUploadRef = useRef<HTMLInputElement>(null);
   const inputWrapperRef = useRef<HTMLLabelElement>(null);
+  const [items, setItems] = useState<any>([]);
   const rID = useId();
   // type
   const checkType = {
@@ -71,15 +75,18 @@ const FileUpload = ({
       handleFiles(files);
     }
   };
+
   const isValidFileType = (item: any) => {
     const validTypes = new Set(accept);
     const fileExtension = item.data.name.split(".").pop().toLowerCase();
     return validTypes.has(fileExtension);
   };
+
   const isFileSizeValid = (item: any) => {
     return !maxSizeAllowed || item.data.size <= maxSizeAllowed;
   };
   const isFileValid = (item: any) => {
+    setItems(item);
     if (accept && maxSizeAllowed) {
       return isValidFileType(item) && isFileSizeValid(item);
     } else if (accept && !maxSizeAllowed) {
@@ -148,6 +155,17 @@ const FileUpload = ({
     isFound && onRemove(removedFile);
     setFilesData([...files]);
   };
+
+  useEffect(() => {
+    if (items.length === 0) {
+      return; // Exit early if items is empty
+    }
+
+    if (!maxSizeAllowed || items?.data?.size <= maxSizeAllowed) {
+      return; // Exit early if conditions are met
+    }
+    onError(items, "This size  is not allowed");
+  }, [onError, items, maxSizeAllowed]);
 
   const dottedArray = accept?.map((item) => "." + item);
   const acceptValue = dottedArray?.join(", ");
@@ -382,6 +400,7 @@ export interface UploadI {
   helpText?: string;
   helpIcon?: React.ReactNode;
   onChange?: (e: any, single?: any) => void;
+  onError?: (errorData: any, message: string) => void;
   onRemove?: (e: any) => void;
   customClass?: string;
 }

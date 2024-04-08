@@ -187,38 +187,6 @@ const demoDataSetLineChart = {
       color: "blue",
       points: [45, 50, 70],
     },
-
-    // {
-    //   name: "Variants",
-    //   color: "green",
-    //   points: [30, 40, 50],
-    // },
-    // {
-    //   name: "Variants",
-    //   color: "yellow",
-    //   points: [26, 30, 45],
-    // },
-
-    // {
-    //   name: "Orders",
-    //   color: "magenta",
-    //   points: [45, 50, 70],
-    // },
-    // {
-    //   name: "Variants",
-    //   color: "purple",
-    //   points: [30, 40, 50],
-    // },
-    // {
-    //   name: "Variants",
-    //   color: "steelblue",
-    //   points: [30, 40, 50],
-    // },
-    // {
-    //   name: "Variants",
-    //   color: "slategray",
-    //   points: [26, 30, 45],
-    // },
   ],
 };
 const Template = ({ ...rest }) => {
@@ -441,6 +409,7 @@ export const ThreeBarChart = ({ ...rest }) => {
   return (
     <Card>
       <BarChart
+        {...rest}
         width={"100%"}
         height={500}
         backgroundGrid={{
@@ -465,34 +434,34 @@ export const ThreeBarChart = ({ ...rest }) => {
 
 const aniBarData = {
   labels: {
-    x: ["Jan", "Feb", "Mar"],
+    x: ["Jan", "Feb", "Mar", "Apr", "May"],
     y: 10,
   },
   dataSet: [
     {
       name: "Orders",
       color: "blue",
-      points: [90, 100, 85],
+      points: [90, 100, 85, 90, 95],
       animationDuration: 800,
     },
 
     {
       name: "Variants",
       color: "green",
-      points: [70, 80, 75],
+      points: [70, 80, 75, 75, 82],
       animationDuration: 800,
     },
 
     {
       name: "Orders",
       color: "magenta",
-      points: [50, 60, 55],
+      points: [50, 60, 55, 59, 50],
       animationDuration: 800,
     },
     {
       name: "Variants",
       color: "purple",
-      points: [30, 40, 25],
+      points: [30, 40, 25, 35, 30],
       animationDuration: 800,
     },
   ],
@@ -528,6 +497,7 @@ export const BarChartAnimationStack = ({ ...rest }) => {
       <BarChart
         type="stack"
         height={500}
+        barWidth={25}
         backgroundGrid={{
           xLines: {
             color: "steelblue",

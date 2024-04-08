@@ -121,6 +121,16 @@ export { default as InputPhone } from "./Form/InputPhone/InputPhone";
 export type { InputPhoneI } from "./Form/InputPhone/InputPhone";
 export { default as SpyTabs } from "./Tabs/SpyTabs";
 export type { SpyTabsI } from "./Tabs/SpyTabs";
+export { default as ActivityGauge } from "./Chart/ActivityGauge/ActivityGauge";
+export type { ActivityGaugeI } from "./Chart/ActivityGauge/ActivityGauge";
+export { default as BarChart } from "./Chart/BarChart/BarChart";
+export type { BarChartI } from "./Chart/BarChart/BarChart";
+export { default as DonutChart } from "./Chart/DonutChart/DonutChart";
+export type { DonutChartI } from "./Chart/DonutChart/DonutChart";
+export { default as LineChart } from "./Chart/LineChart/LineChart";
+export type { LineChartI } from "./Chart/LineChart/LineChart";
+export { default as PieChart } from "./Chart/PieChart/PieChart";
+export type { PieChartI } from "./Chart/PieChart/PieChart";
 
 export { default as VirtualScroll } from "./VirtualScroll/VirtualScroll";
 export { default as VirtualSelect } from "./Form/VirtualSelect/VirtualSelect";
