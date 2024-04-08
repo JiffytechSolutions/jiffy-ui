@@ -124,6 +124,12 @@ export default {
         type: false,
       },
     },
+    onError: {
+      description: "onError is working only when use customNotification prop",
+      control: {
+        type: false,
+      },
+    },
     customClass: {
       description: "Set custom class",
       control: {
