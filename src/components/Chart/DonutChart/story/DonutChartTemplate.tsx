@@ -1,17 +1,18 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import dataString from '../../BTC-USD'
-import RangePicker, { SelectedTimeI } from '../../../Form/DatePicker/RangePicker/RangePicker';
-import { TimeI } from '../../../Form/DatePicker/TimePicker/TimePicker';
-import { Card } from '../../../Card';
-import { FlexLayout } from '../../../FlexLayout';
-import { DonutChart, DonutChartI } from '../DonutChart';
-import PieChart from '../../PieChart/PieChart';
-import Badge from '../../../Badge/Badge';
+import React, { useEffect, useMemo, useState } from "react";
+import dataString from "../../BTC-USD";
+import RangePicker, {
+  SelectedTimeI,
+} from "../../../Form/DatePicker/RangePicker/RangePicker";
+import { TimeI } from "../../../Form/DatePicker/TimePicker/TimePicker";
+import { Card } from "../../../Card";
+import { FlexLayout } from "../../../FlexLayout";
+import DonutChart from "../DonutChart";
+import PieChart from "../../PieChart/PieChart";
+import Badge from "../../../Badge/Badge";
 
 const make2Words = (n: number) => {
   return n < 10 ? "0" + n : `${n}`;
 };
-
 
 const makeTextString = (date: Date | undefined, time: TimeI | undefined) => {
   let res = "";
@@ -24,42 +25,42 @@ const makeTextString = (date: Date | undefined, time: TimeI | undefined) => {
   return res;
 };
 
-
 const DonutChartTemplate = () => {
-
   const [data, setData] = useState<any>([]);
 
   const [textFieldValue, setTextFieldValue] = useState<string[]>([]);
   const [selectedDate, setSelectedDate] = useState<(Date | undefined)[]>([]);
   const [selectedTime, setSelectedTime] = useState<SelectedTimeI>();
   const [isTyping, setIsTyping] = useState(false);
-  const [chartData, setChartData] = useState<{ label: string, value: number, color: string }[]>([
+  const [chartData, setChartData] = useState<
+    { label: string; value: number; color: string }[]
+  >([
     {
       label: "Open",
       color: "red",
-      value: 67550
+      value: 67550,
     },
     {
       label: "High",
       color: "green",
-      value: 68790
+      value: 68790,
     },
     {
       label: "Low",
       color: "blue",
-      value: 66383
+      value: 66383,
     },
     {
       label: "Close",
       color: "yellow",
-      value: 67567
-    }
-  ])
+      value: 67567,
+    },
+  ]);
 
   const handelDateChange = (newDates: (Date | undefined)[]) => {
     setIsTyping(false);
     setSelectedDate([...newDates]);
-    setBadgeSelect(0)
+    setBadgeSelect(0);
   };
 
   const handelTextFieldValueChange = (newValues: string[]) => {
@@ -123,18 +124,18 @@ const DonutChartTemplate = () => {
             start:
               pos === "start"
                 ? {
-                  hh: Number(hour),
-                  mm: Number(m),
-                  meridian: meridian,
-                }
+                    hh: Number(hour),
+                    mm: Number(m),
+                    meridian: meridian,
+                  }
                 : prev?.start,
             end:
               pos === "end"
                 ? {
-                  hh: Number(hour),
-                  mm: Number(m),
-                  meridian: meridian,
-                }
+                    hh: Number(hour),
+                    mm: Number(m),
+                    meridian: meridian,
+                  }
                 : prev?.end,
           }));
           timeFlag = false;
@@ -164,74 +165,83 @@ const DonutChartTemplate = () => {
   }, [selectedDate, selectedTime]);
 
   useEffect(() => {
-    let res: any = []
-    const dataS = dataString.split('\n');
-    const keys = dataS[0].split(",")
+    let res: any = [];
+    const dataS = dataString.split("\n");
+    const keys = dataS[0].split(",");
     for (let i = 1; i < dataS.length; i++) {
-      let currObj: any = {}
-      const currVal = dataS[i].split(",")
+      let currObj: any = {};
+      const currVal = dataS[i].split(",");
       for (let j = 0; j < keys.length; j++) {
-        if (keys[j] !== "Date") currObj[keys[j]] = isNaN(Number(currVal[j])) ? 0 : Number(currVal[j])
-        else currObj[keys[j]] = currVal[j]
-
+        if (keys[j] !== "Date")
+          currObj[keys[j]] = isNaN(Number(currVal[j])) ? 0 : Number(currVal[j]);
+        else currObj[keys[j]] = currVal[j];
       }
-      res.push(currObj)
+      res.push(currObj);
     }
-    setData(res)
-    setSelectedDate([new Date(res[0].Date), new Date(res[res.length - 1].Date)])
-    setBadgeSelect(0)
-  }, [])
+    setData(res);
+    setSelectedDate([
+      new Date(res[0].Date),
+      new Date(res[res.length - 1].Date),
+    ]);
+    setBadgeSelect(0);
+  }, []);
   useEffect(() => {
     if (selectedDate[0] && selectedDate[1]) {
-      let startDate = new Date(selectedDate[0]).getTime()
-      const endDate = new Date(selectedDate[1]).getTime()
+      let startDate = new Date(selectedDate[0]).getTime();
+      const endDate = new Date(selectedDate[1]).getTime();
 
-      const currData = data.filter((item: any) => {
-        const currTime = new Date(item.Date).getTime()
-        if (currTime >= startDate && currTime <= endDate) return true
-        return false
-      })
-        .reduce((acc: any, item: any) => {
-          return {
-            // Open: Math.max(acc.Open, Number(item.Open)) % 100,
-            // High: Math.max(acc.High, Number(item.High)) % 100,
-            // Low: Math.max(acc.Low, Number(item.Low)) % 100,
-            // Close: Math.max(acc.Close, Number(item.Close)) % 100,
-
-            Open: (Math.random() * 100).toFixed(0),
-            High: (Math.random() * 100).toFixed(0),
-            Low: (Math.random() * 100).toFixed(0),
-            Close: (Math.random() * 100).toFixed(0),
-          }
-        }, {
-          Open: 0,
-          High: 0,
-          Low: 0,
-          Close: 0,
+      const currData = data
+        .filter((item: any) => {
+          const currTime = new Date(item.Date).getTime();
+          if (currTime >= startDate && currTime <= endDate) return true;
+          return false;
         })
+        .reduce(
+          (acc: any, item: any) => {
+            return {
+              // Open: Math.max(acc.Open, Number(item.Open)) % 100,
+              // High: Math.max(acc.High, Number(item.High)) % 100,
+              // Low: Math.max(acc.Low, Number(item.Low)) % 100,
+              // Close: Math.max(acc.Close, Number(item.Close)) % 100,
 
-      const colors = ["red", "green", "blue", "yellow", "magenta", "cyan"]
+              Open: (Math.random() * 100).toFixed(0),
+              High: (Math.random() * 100).toFixed(0),
+              Low: (Math.random() * 100).toFixed(0),
+              Close: (Math.random() * 100).toFixed(0),
+            };
+          },
+          {
+            Open: 0,
+            High: 0,
+            Low: 0,
+            Close: 0,
+          }
+        );
 
-      setChartData([...Object.keys(currData).map((key, i) => ({
-        label: key,
-        color: colors[i],
-        value: Math.ceil(currData[key])
-      }))])
+      const colors = ["red", "green", "blue", "yellow", "magenta", "cyan"];
+
+      setChartData([
+        ...Object.keys(currData).map((key, i) => ({
+          label: key,
+          color: colors[i],
+          value: Math.ceil(currData[key]),
+        })),
+      ]);
     }
-  }, [selectedDate])
+  }, [selectedDate]);
 
-  const [badgeSelect, setBadgeSelect] = useState(0)
+  const [badgeSelect, setBadgeSelect] = useState(0);
 
   const handelBadgeClick = (days: number) => {
-    setBadgeSelect(days)
-    const startDate = new Date(data[data.length - 1].Date)
-    const endDate = new Date(startDate.setDate(startDate.getDate() - days))
-    setSelectedDate([endDate, new Date(data[data.length - 1].Date)])
-  }
+    setBadgeSelect(days);
+    const startDate = new Date(data[data.length - 1].Date);
+    const endDate = new Date(startDate.setDate(startDate.getDate() - days));
+    setSelectedDate([endDate, new Date(data[data.length - 1].Date)]);
+  };
 
   return (
-    <Card title="Bitcoin price" cardType='filled'>
-      <FlexLayout direction='vertical' spacing='extraLoose'>
+    <Card title="Bitcoin price" cardType="filled">
+      <FlexLayout direction="vertical" spacing="extraLoose">
         <RangePicker
           selectedDates={selectedDate}
           onDateChange={handelDateChange}
@@ -244,18 +254,51 @@ const DonutChartTemplate = () => {
           onEndTextFieldClear={handelEndTextFieldClear}
           isDateDisable={(testDate) => {
             if (data.length) {
-              if (testDate < data[0].date || testDate > data[data.length - 1].date) return true;
+              if (
+                testDate < data[0].date ||
+                testDate > data[data.length - 1].date
+              )
+                return true;
               else return false;
-            } else return true
+            } else return true;
           }}
         />
-        <FlexLayout spacing='mediumLoose'>
-          <span style={{ cursor: "pointer" }} onClick={() => handelBadgeClick(365)}> <Badge variant={badgeSelect === 365 ? "filled" : 'accent'}>Last 365 days</Badge></span>
-          <span style={{ cursor: "pointer" }} onClick={() => handelBadgeClick(120)}><Badge variant={badgeSelect === 120 ? "filled" : 'accent'}>Last 120 days</Badge></span>
-          <span style={{ cursor: "pointer" }} onClick={() => handelBadgeClick(30)}><Badge variant={badgeSelect === 30 ? "filled" : 'accent'}>Last 30 days</Badge></span>
-          <span style={{ cursor: "pointer" }} onClick={() => handelBadgeClick(7)}><Badge variant={badgeSelect === 7 ? "filled" : 'accent'}>Last 7 days</Badge></span>
+        <FlexLayout spacing="mediumLoose">
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => handelBadgeClick(365)}
+          >
+            {" "}
+            <Badge variant={badgeSelect === 365 ? "filled" : "accent"}>
+              Last 365 days
+            </Badge>
+          </span>
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => handelBadgeClick(120)}
+          >
+            <Badge variant={badgeSelect === 120 ? "filled" : "accent"}>
+              Last 120 days
+            </Badge>
+          </span>
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => handelBadgeClick(30)}
+          >
+            <Badge variant={badgeSelect === 30 ? "filled" : "accent"}>
+              Last 30 days
+            </Badge>
+          </span>
+          <span
+            style={{ cursor: "pointer" }}
+            onClick={() => handelBadgeClick(7)}
+          >
+            <Badge variant={badgeSelect === 7 ? "filled" : "accent"}>
+              Last 7 days
+            </Badge>
+          </span>
         </FlexLayout>
-        <FlexLayout spacing='extraLoose' childWidth='fullWidth'>
+        <FlexLayout spacing="extraLoose" childWidth="fullWidth">
           <Card>
             <DonutChart
               border={{ show: true, color: "black" }}
@@ -277,11 +320,9 @@ const DonutChartTemplate = () => {
             />
           </Card>
         </FlexLayout>
-
       </FlexLayout>
-
     </Card>
-  )
-}
+  );
+};
 
-export default DonutChartTemplate
+export default DonutChartTemplate;

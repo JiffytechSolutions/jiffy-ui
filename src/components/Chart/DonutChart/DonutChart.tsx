@@ -31,7 +31,7 @@ export interface showBorderI {
   color?: string;
 }
 
-export const DonutChart: React.FC<DonutChartI> = ({
+const DonutChart: React.FC<DonutChartI> = ({
   chartData,
   border = { show: false, width: 1, color: "#fff" },
   size = 250,
@@ -214,11 +214,11 @@ export const DonutChart: React.FC<DonutChartI> = ({
   };
 
   const checkDeviceType = () => {
-    const width = window.innerWidth
-    if (width < 768) setDeviceType("mobile")
-    else if (width < 992) setDeviceType("tab")
-    else setDeviceType("desktop")
-  }
+    const width = window.innerWidth;
+    if (width < 768) setDeviceType("mobile");
+    else if (width < 992) setDeviceType("tab");
+    else setDeviceType("desktop");
+  };
 
   useEffect(() => {
     window.requestAnimationFrame(animatePath);
@@ -280,3 +280,5 @@ export const DonutChart: React.FC<DonutChartI> = ({
     </div>
   );
 };
+
+export default DonutChart;
