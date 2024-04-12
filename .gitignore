@@ -11,6 +11,7 @@ dist
 bin/
 lib/
 /storybook-static
+.DS_Store
 
 #files
 .npmrc

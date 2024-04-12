@@ -1,0 +1,89 @@
+# Send email notification with GitHub actions on package release
+
+name: Send email
+
+# Controls when the workflow will run
+on:
+
+  # Triggers the workflow pull request events but only for the "main" branch
+  registry_package:
+    types: [published]
+
+  # Trigger the workflow manually
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      GLOBAL_EMAIL: ${{ vars.ALLOWED_EMAILS }} 
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Execute pug script
+      - name: Transform pug template to HTML
+        run: |
+          version=$(cat package.json | jq .version)
+          str=$(node src/notification/main --call=fetch_html --version=$version)
+          if [ $? -eq 0 ]; then
+            {
+              echo 'JSON_RESPONSE<<EOF'
+              echo $str
+              echo EOF
+            } >> "$GITHUB_ENV"
+          else
+            exit 1;
+          fi
+
+      # Generate email template under $GITHUB_WORKSPACE
+      - name: Generate email template
+        run: |
+          touch template.html
+          echo $JSON_RESPONSE >> template.html
+      
+      # Fetch collaborators from GitHub repository
+      - name: Fetch collaborators
+        run: echo "users=$(node src/notification/main --call=fetch_collaborators --owner=${{ github.repository_owner }} --url=${{ github.repositoryUrl }} --token=${{ github.token }})" >> "$GITHUB_ENV"
+
+      # Setup recipients for email
+      - name: Setup recipients
+        if: ${{ env.GLOBAL_EMAIL }}
+        run: |
+          str=$(echo "${{ env.GLOBAL_EMAIL }},${{ env.users }}" |sed 's/,$//')
+          echo "users=$str" >> "$GITHUB_ENV"
+
+      # Send email via gmail SMTP
+      - name: Send mail
+        if: ${{ env.users }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          # Required mail server address if not connection_url:
+          server_address: smtp.gmail.com
+          # Server port, default 25:
+          server_port: 465
+          # Optional whether this connection use TLS (default is true if server_port is 465)
+          secure: true
+          # Optional (recommended) mail server username:
+          username: ${{ secrets.MAIL_USERNAME }}
+          # Optional (recommended) mail server password:
+          password: ${{ secrets.MAIL_PASSWORD }}
+          # Required mail subject:
+          subject: Ounce release
+          # Required recipients' addresses:
+          to: ${{ env.users }}
+          # Required sender full name (address can be skipped):
+          from: Ankush Katiyar
+          # Optional HTML body read from file:
+          html_body: file://template.html
