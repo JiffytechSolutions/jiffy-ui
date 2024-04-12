@@ -55,7 +55,7 @@ jobs:
       
       # Fetch collaborators from GitHub repository
       - name: Fetch collaborators
-        run: echo "users=$(node src/notification/main --call=fetch_collaborators --owner=${{ github.repository_owner }} --url=${{ github.repositoryUrl }} --token=${{ github.token }})" >> "$GITHUB_ENV"
+        run: echo "users=$(node src/notification/main --call=fetch_collaborators --owner=${{ github.repository_owner }} --url=${{ github.repositoryUrl }} --token=${{ secrets.ACCESS_TOKEN }})" >> "$GITHUB_ENV"
 
       # Setup recipients for email
       - name: Setup recipients
