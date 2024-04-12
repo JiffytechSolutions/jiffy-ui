@@ -6,8 +6,8 @@ name: Send email
 on:
 
   # Triggers the workflow pull request events but only for the "main" branch
-  registry_package:
-    types: [published]
+  # registry_package:
+  #   types: [published]
 
   # Trigger the workflow manually
   workflow_dispatch:
