@@ -4,19 +4,6 @@ import { RotateCcw, RotateCw } from "../../../../icons";
 import Button from "../../../Button/Button";
 import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext";
 import {
-  $INTERNAL_isPointSelection,
-  $getSelection,
-  $isElementNode,
-  $isRangeSelection,
-  $isRootOrShadowRoot,
-  ElementFormatType,
-  FORMAT_ELEMENT_COMMAND,
-  REDO_COMMAND,
-  RangeSelection,
-  SELECTION_CHANGE_COMMAND,
-  UNDO_COMMAND,
-} from "lexical";
-import {
   $isAtNodeEnd,
   $getSelectionStyleValueForProperty,
   $patchStyleText,
@@ -38,6 +25,10 @@ import FontFamilyChanger from "./FontFamilyChanger";
 import ToolTip from "../../../ToolTip/ToolTip";
 import SpecialNodes from "./SpecialNodes";
 import useMobileDevice from "../../../../utilities/useMobileDevice";
+import { $generateNodesFromDOM } from '@lexical/html';
+import { $generateHtmlFromNodes } from '@lexical/html';
+import OnChangePlugin from '../OnChangePlugin'
+import { $INTERNAL_isPointSelection, $getRoot, $getSelection, $insertNodes, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, EditorState, ElementFormatType, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
 
 const rootTypeToRootName = {
   root: "Root",
@@ -78,7 +69,12 @@ export const blockTypeToBlockName = {
   quote: "Quote",
 };
 
-const ToolBar = () => {
+interface ToolBarI {
+  value?: string;
+  onChange?: (newState: string) => void;
+}
+const textHtmlMimeType = 'text/html';
+const ToolBar = ({ value, onChange }: ToolBarI) => {
   const [editor] = useLexicalComposerContext();
   const [rootType, setRootType] =
     useState<keyof typeof rootTypeToRootName>("root");
@@ -100,9 +96,9 @@ const ToolBar = () => {
         anchorNode.getKey() === "root"
           ? anchorNode
           : $findMatchingParent(anchorNode, (e) => {
-              const parent = e.getParent();
-              return parent !== null && $isRootOrShadowRoot(parent);
-            });
+            const parent = e.getParent();
+            return parent !== null && $isRootOrShadowRoot(parent);
+          });
 
       if (element === null) {
         element = anchorNode.getTopLevelElementOrThrow();
@@ -159,8 +155,8 @@ const ToolBar = () => {
         $isElementNode(matchingParent)
           ? matchingParent.getFormatType()
           : $isElementNode(node)
-          ? node.getFormatType()
-          : parent?.getFormatType() || "left"
+            ? node.getFormatType()
+            : parent?.getFormatType() || "left"
       );
       setFontSize(
         $getSelectionStyleValueForProperty(selection, "font-size", "14px")
@@ -202,8 +198,25 @@ const ToolBar = () => {
     });
   };
 
+  useEffect(() => {
+    if (!value) return;
+    editor.update(() => {
+      const parser = new DOMParser();
+      const dom = parser.parseFromString(value, textHtmlMimeType);
+      const nodes = $generateNodesFromDOM(editor, dom);
+      $getRoot().clear();
+      $insertNodes(nodes);
+    });
+  }, [value]);;
+  const handelEditorChange = (editorState: EditorState) => {
+    editorState.read(() => {
+      const newHtml = $generateHtmlFromNodes(editor, null);
+      onChange && onChange(newHtml);
+    });
+  };
   return (
     <>
+      <OnChangePlugin onChange={handelEditorChange} />
       {!isMobileDevice ? (
         <div className="inte-TextEditor__toolBar">
           <div className="inte-TextEditor__fontFormat">
