@@ -43,7 +43,7 @@
 }
 
 .inte-textEditor--customHeight {
-  max-height: unset;
+  max-height: unset !important;
 }
 
 .inte-textEditor__popover--specialNodes .inte-btn  {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import {
   InitialConfigType,
@@ -18,7 +18,6 @@ import { AutoLinkNode, LinkNode } from "@lexical/link";
 import EditorTheme from "./EditorTheme";
 import "./TextEditor.css";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
-import { EditorState } from "lexical";
 import CustomLinkPlugin from "./plugin/CustomLinkPlugin";
 import ToolBar from "./plugin/ToolBar/ToolBar";
 import { ImageNode } from "./nodes/ImageNode";
@@ -32,78 +31,60 @@ import DragDropPaste from "./plugin/DragDropPastePlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import useMobileDevice from "../../utilities/useMobileDevice";
 import getClassNames from "../../utilities/getClassnames";
-import OnChangePlugin from "./plugin/OnChangePlugin";
-
-const editorConfig: InitialConfigType = {
-  namespace: "TextEditor",
-  theme: EditorTheme,
-  onError(error: Error) {
-    throw error;
-  },
-  nodes: [
-    HeadingNode,
-    ListNode,
-    ListItemNode,
-    QuoteNode,
-    CodeNode,
-    CodeHighlightNode,
-    TableNode,
-    TableCellNode,
-    TableRowNode,
-    AutoLinkNode,
-    LinkNode,
-    ImageNode,
-  ],
-};
 
 export interface TextEditorI {
-  placeholder?: string;
-  onChange?: (newState: EditorState) => void;
+  placeholder?: string
+  onChange?: (newState: string) => void;
+  value?: string;
+  onError?: (error: Error) => void;
+  customClass?: string;
 }
-
-const TextEditor = ({ placeholder, onChange }: TextEditorI) => {
-  const [floatingAnchorElem, setFloatingAnchorElem] =
-    useState<HTMLDivElement | null>(null);
+const TextEditor = ({ placeholder, onChange, value, onError, customClass }: TextEditorI) => {
+  const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
-
-  const isMobileDevice = useMobileDevice();
-
-  const onChange1 = (e: EditorState) => {
-    onChange && onChange(e);
-  };
-
+  const isMobileDevice = useMobileDevice()
   const onRef = (_floatingAnchorElem: HTMLDivElement) => {
     if (_floatingAnchorElem !== null) {
       setFloatingAnchorElem(_floatingAnchorElem);
     }
   };
-
+  const editorConfig: InitialConfigType = {
+    namespace: "TextEditor",
+    theme: EditorTheme,
+    onError: onError ? onError : (err: Error) => new Error(err.message),
+    nodes: [
+      HeadingNode,
+      ListNode,
+      ListItemNode,
+      QuoteNode,
+      CodeNode,
+      CodeHighlightNode,
+      TableNode,
+      TableCellNode,
+      TableRowNode,
+      AutoLinkNode,
+      LinkNode,
+      ImageNode
+    ]
+  };
   return (
-    <div className="inte-TextEditor">
+    <div className={getClassNames({
+      "inte-TextEditor": true,
+      [customClass as string]: customClass
+    })}>
       <LexicalComposer initialConfig={editorConfig}>
         <TableContext>
           <>
-            <ToolBar />
+            <ToolBar value={value} onChange={onChange} />
             <AutoFocusPlugin />
             <DragDropPaste />
-            <div className="inte-TextEditor__body--wrapper">
+            <div className='inte-TextEditor__body--wrapper'>
               <RichTextPlugin
-                contentEditable={
-                  <div ref={onRef}>
-                    <ContentEditable
-                      spellCheck={false}
-                      className={getClassNames({
-                        "inte-TextEditor__body": true,
-                        "inte-TextEditor--mobile": isMobileDevice,
-                      })}
-                    />
-                  </div>
-                }
-                placeholder={
-                  <div className="inte-TextEditor__placeholder">
-                    {placeholder}
-                  </div>
-                }
+                contentEditable={<div ref={onRef}><ContentEditable spellCheck={false} className={getClassNames({
+                  "inte-TextEditor__body": true,
+                  'inte-TextEditor--mobile': isMobileDevice
+                })} /></div>}
+                placeholder={<div className="inte-TextEditor__placeholder">{placeholder}</div>}
                 ErrorBoundary={LexicalErrorBoundary}
               />
             </div>
@@ -114,19 +95,17 @@ const TextEditor = ({ placeholder, onChange }: TextEditorI) => {
             <CustomLinkPlugin />
             <ImagesPlugin />
             <CodeHighlightPlugin />
-            <OnChangePlugin onChange={onChange1} />
-            {!!floatingAnchorElem && (
-              <FloatingLinkEditorPlugin
+            {
+              !!floatingAnchorElem && <FloatingLinkEditorPlugin
                 anchorElem={floatingAnchorElem}
                 isLinkEditMode={isLinkEditMode}
                 setIsLinkEditMode={setIsLinkEditMode}
               />
-            )}
+            }
           </>
         </TableContext>
       </LexicalComposer>
     </div>
-  );
-};
-
-export default TextEditor;
+  )
+}
+export default TextEditor
