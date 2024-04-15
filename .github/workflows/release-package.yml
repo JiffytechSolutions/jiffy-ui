@@ -1,23 +1,21 @@
 # Send email notification with GitHub actions on package release
 
-name: Send email
+name: Email notification
 
 # Controls when the workflow will run
 on:
-
-  # Pull request opened and synchronize events
-  pull_request:
-    types: [opened, synchronize]
-    branches: [ "main" ]
 
   # Triggers the workflow pull request events but only for the "main" branch
   registry_package:
     types: [published]
 
+  # Trigger the workflow manually
+  workflow_dispatch:
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  email:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     timeout-minutes: 10
@@ -58,19 +56,19 @@ jobs:
       
       # Fetch collaborators from GitHub repository
       - name: Fetch collaborators
-        if: contains(fromJSON('["push"]'), github.event_name)
+        if: contains(fromJSON('["registry_package"]'), github.event_name)
         run: echo "users=$(node src/notification/main --call=fetch_collaborators --owner=${{ github.repository_owner }} --url=${{ github.repositoryUrl }} --token=${{ secrets.ACCESS_TOKEN }})" >> "$GITHUB_ENV"
 
       # Setup recipients for email
       - name: Setup recipients
-        if: ${{ contains(fromJSON('["push"]'), github.event_name) && env.GLOBAL_EMAIL }}
+        if: ${{ contains(fromJSON('["registry_package"]'), github.event_name) && env.GLOBAL_EMAIL }}
         run: |
           str=$(echo "${{ env.GLOBAL_EMAIL }},${{ env.users }}" |sed 's/,$//')
           echo "users=$str" >> "$GITHUB_ENV"
 
       # Setup recipients for preview email
       - name: Setup preview recipients
-        if: ${{ contains(fromJSON('["pull_request"]'), github.event_name) && env.PREVIEW_EMAIL }}
+        if: ${{ contains(fromJSON('["workflow_dispatch"]'), github.event_name) && env.PREVIEW_EMAIL }}
         run: |
           echo "users=${{ env.PREVIEW_EMAIL }}" >> "$GITHUB_ENV"
 
