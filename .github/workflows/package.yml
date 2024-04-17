@@ -1,0 +1,76 @@
+name: Publish package
+
+# Controls when the workflow will run
+on:
+
+  # Triggers the workflow when release is published
+  release:
+    types: [published]
+
+  # Trigger the workflow manually
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+
+  # verify permissions
+  permissions:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      role: ${{ steps.verify_permission.outputs.role }}
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+
+      # Verify github actor permission
+      - id: verify_permission
+        name: Verify permissions
+        run: echo "role=$(node src/notification/main --call=get_membership --owner=${{ github.repository_owner }} --token=${{ secrets.ACCESS_TOKEN }} --username=${{ github.actor }})" >> "$GITHUB_OUTPUT"
+
+  # Publish package
+  package:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    needs: permissions
+    timeout-minutes: 5
+
+    if: ${{ needs.permissions.outputs.role == 'admin' }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Checkout GitHub repository
+        uses: actions/checkout@v4
+
+      # Update string case
+      - id: string_conversion
+        name: Change String Case
+        uses: ASzc/change-string-case-action@v6
+        with:
+          string: ${{ github.repository_owner }}
+            
+      # Generate npm config
+      - name: Generate npm config
+        run: |
+          touch .npmrc
+          echo @${{ steps.string_conversion.outputs.lowercase }}:registry=https://npm.pkg.github.com > ./.npmrc
+          echo //npm.pkg.github.com/:_authToken=${{ secrets.PACKAGE_RELEASE_TOKEN }} >> ./.npmrc
+          cat .npmrc
+        
+      # Install dependencies
+      - name: Install dependencies
+        run: npm ci
+      
+      # Generate artifact
+      - name: Generate build
+        run: npm run build
+
+      # Publish package
+      - name: Publish package
+        run: npm publish

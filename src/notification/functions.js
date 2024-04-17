@@ -40,6 +40,25 @@ const fetch_collaborators = async (params = {}) => {
   }
 };
 
+// Get membership of user
+const get_membership = async (params = {}) => {
+  const { org, token, username } = params;
+
+  const octokit = new Octokit({
+    auth: token
+  });
+
+  try {
+    const res = await octokit.rest.orgs.getMembershipForUser({
+      org,
+      username
+    });
+    return res?.data?.role;
+  } catch (error) {
+    throw new Error();
+  }
+};
+
 // Generate html string from pug file
 const fetch_html = async (params = {}) => {
   const { version } = params;
@@ -55,4 +74,4 @@ const fetch_html = async (params = {}) => {
   }
 };
 
-module.exports = { fetch_collaborators, fetch_html };
+module.exports = { fetch_collaborators, fetch_html, get_membership };
