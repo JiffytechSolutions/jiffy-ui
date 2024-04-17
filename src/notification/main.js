@@ -16,6 +16,13 @@ const github_app_info = {
   token: getArg("token")
 };
 
+// Parameters required to access ownership
+const membership_app_info = {
+  org: getArg("owner"),
+  token: getArg("token"),
+  username: getArg("username")
+};
+
 // Parameters required to comment on Pull Request
 const html_info = {
   version: getArg("version")
@@ -30,6 +37,9 @@ switch (caller_function) {
     break;
   case "fetch_html":
     caller_object = html_info;
+    break;
+  case "get_membership":
+    caller_object = membership_app_info;
     break;
 }
 
