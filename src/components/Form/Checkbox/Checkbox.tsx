@@ -51,7 +51,6 @@ const Checkbox: React.FC<CheckboxI> = ({
           }}
           onChange={CheckboxChangeHandler}
           value={value}
-          onClick={CheckboxChangeHandler}
           checked={!checked ? false : true}
           className={getClassNames({
             "inte-checkbox--fake": true,
