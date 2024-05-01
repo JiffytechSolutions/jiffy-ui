@@ -247,6 +247,7 @@ tag_with_popover_and_count.decorators = [
           alert("destroyed cliked");
         }}
         isActive={open}
+        size="small"
       >
         Tag
       </Tag>

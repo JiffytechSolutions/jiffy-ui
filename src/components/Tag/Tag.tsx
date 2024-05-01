@@ -20,14 +20,6 @@ const Tag: React.FC<TagI> = ({
 }: TagI): JSX.Element => {
   const animation =
     onDestroy && isAnimation ? useDelayUnmount(isOpen, 200) : true;
-  const checkSize = () => {
-    if (size === "small" && (count === undefined || !hasPopover)) {
-      return "inte-tag--small";
-    } else {
-      return "inte-tag--large";
-    }
-  };
-  const sizeValue = checkSize();
   const checkOnDismiss = () => {
     if (onDestroy) {
       return (
@@ -81,7 +73,7 @@ const Tag: React.FC<TagI> = ({
             "inte-tagAnimation--out":
               !isOpen && !hasPopover && !isActive && onDestroy && isAnimation,
             "inte-tag--disabled": isDisabled,
-            [sizeValue]: sizeValue,
+            [`inte-tag--${size}`]: true,
             [customClass]: customClass,
           })}
           onClick={() => !isDisabled && onTogglePopup()}
