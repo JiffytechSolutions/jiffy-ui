@@ -120,6 +120,21 @@
   font-weight: bold;
 }
 
+.inte-TextEditor__heading--h4 span {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.inte-TextEditor__heading--h5 span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.inte-TextEditor__heading--h6 span {
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .inte-TextEditor-textCode {
   background-color: #f0f2f5;
   padding: 1px 0.25rem;
@@ -204,4 +219,8 @@
   & .link-edit {
     margin-left: auto !important;
   }
+}
+
+.inte-TextEditor .inte-line + .inte-line {
+  display: none;
 }

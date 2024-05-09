@@ -1,5 +1,5 @@
 import { $INTERNAL_isPointSelection, $createParagraphNode, $getSelection, $isRangeSelection, $isTextNode, FORMAT_TEXT_COMMAND, LexicalEditor, SELECTION_CHANGE_COMMAND } from 'lexical'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import Button from '../../../Button/Button'
 import { Bold, Code, Italic, MoreVertical, Underline } from '../../../../icons'
 import { Strikethrough, TextColorSvg, TextStylesIcon } from './toolBarSvg'
@@ -12,11 +12,13 @@ import { $patchStyleText, $getSelectionStyleValueForProperty } from '@lexical/se
 import ColorPicker from '../../ui/color-picker/ColorPicker'
 import ToolTip from '../../../ToolTip/ToolTip'
 import useMobileDevice from '../../../../utilities/useMobileDevice'
+import { toolbarItems } from '../../TextEditor'
 interface FontStyleI {
   editor: LexicalEditor
+  toolbarItems?: toolbarItems
 }
 
-const FontStyle = ({ editor }: FontStyleI) => {
+const FontStyle = ({ editor, toolbarItems }: FontStyleI) => {
 
   const [open, setOpen] = useState(false)
 
@@ -127,98 +129,124 @@ const FontStyle = ({ editor }: FontStyleI) => {
     );
   }
 
-  const actionListItems = [
-    {
-      prefixIcon: <Strikethrough />,
-      content: "Strikethrough",
-      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough")
-    },
-    {
-      content: "Subscript",
-      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript")
-    },
-    {
-      content: "Superscript",
-      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript")
-    },
-    {
-      prefixIcon: <Code />,
-      content: 'Code',
-      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code")
-    },
-    {
-      content: "Clear Formatting",
-      onClick: clearFormatting
-    },
-  ]
+  const actionListItems = useMemo(() => {
+    let items = [
+      {
+        prefixIcon: <Strikethrough />,
+        content: "Strikethrough",
+        onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "strikethrough")
+      },
+      {
+        content: "Subscript",
+        onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "subscript")
+      },
+      {
+        content: "Superscript",
+        onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "superscript")
+      },
+      {
+        prefixIcon: <Code />,
+        content: 'Code',
+        onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "code")
+      },
+      {
+        content: "Clear Formatting",
+        onClick: clearFormatting
+      },
+    ]
+    if (toolbarItems?.strikeThrough === false) items = items.filter(i => i.content !== "Strikethrough")
+    if (toolbarItems?.subScript === false) items = items.filter(i => i.content !== "Subscript")
+    if (toolbarItems?.superScript === false) items = items.filter(i => i.content !== "Superscript")
+    if (toolbarItems?.code === false) items = items.filter(i => i.content !== "Code")
+    if (toolbarItems?.clearFormatting === false) items = items.filter(i => i.content !== "Clear Formatting")
+    return items
+  }, [toolbarItems])
 
-  const actionListMobileItems = [
-    {
-      prefixIcon: <Bold size="20" color='#1C2433' />,
-      content: "Bold",
-      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold")
-    },
-    {
-      prefixIcon: <Italic size="20" color='#1C2433' />,
-      content: "Italic",
-      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic")
-    },
-    {
-      prefixIcon: <Underline size="20" color='#1C2433' />,
-      content: "Underline",
-      onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline")
-    }
-  ]
+  const actionListMobileItems = useMemo(() => {
+    let items = [
+      {
+        prefixIcon: <Bold size="20" color='#1C2433' />,
+        content: "Bold",
+        onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold")
+      },
+      {
+        prefixIcon: <Italic size="20" color='#1C2433' />,
+        content: "Italic",
+        onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic")
+      },
+      {
+        prefixIcon: <Underline size="20" color='#1C2433' />,
+        content: "Underline",
+        onClick: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline")
+      }
+    ]
+    if (toolbarItems?.bold === false) items = items.filter(i => i.content !== "Bold")
+    if (toolbarItems?.italic === false) items = items.filter(i => i.content !== "Italic")
+    if (toolbarItems?.underline === false) items = items.filter(i => i.content !== "Underline")
+    return items
+  }, [toolbarItems])
+
+  const listOptions = isMobile ? [...actionListMobileItems, ...actionListItems] : [...actionListItems]
 
   return (
     <div className='inte-textEditor__fontStyle'>
       {
         !isMobile && (
           <>
-            <ToolTip
-              activator={<Button
-                onClick={() => {
-                  editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
-                }}
-                icon={<Bold size="20" color='#1C2433' />}
-                type={isBold ? "secondary" : 'textButton'}
-              />}
-              helpText="Bold"
-            />
-            <ToolTip
-              activator={<Button
-                onClick={() => {
-                  editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
-                }}
-                icon={<Italic size="20" color='#1C2433' />}
-                type={isItalic ? "secondary" : 'textButton'}
-              />}
-              helpText={"Italic"}
-            />
-            <ToolTip
-              activator={<Button
-                onClick={() => {
-                  editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
-                }}
-                icon={<Underline size="20" color='#1C2433' />}
-                type={isUnderline ? "secondary" : 'textButton'}
-              />}
-              helpText={"Underline"}
-            />
-            <FontColorPicker onChange={handelColorChange} color={fontColor} />
+            {
+              toolbarItems?.bold === false ? null : <ToolTip
+                activator={<Button
+                  onClick={() => {
+                    editor.dispatchCommand(FORMAT_TEXT_COMMAND, "bold");
+                  }}
+                  icon={<Bold size="20" color='#1C2433' />}
+                  type={isBold ? "secondary" : 'textButton'}
+                />}
+                helpText="Bold"
+              />
+            }
+            {
+              toolbarItems?.italic === false ? null : <ToolTip
+                activator={<Button
+                  onClick={() => {
+                    editor.dispatchCommand(FORMAT_TEXT_COMMAND, "italic");
+                  }}
+                  icon={<Italic size="20" color='#1C2433' />}
+                  type={isItalic ? "secondary" : 'textButton'}
+                />}
+                helpText={"Italic"}
+              />
+            }
+            {
+              toolbarItems?.underline === false ? null : <ToolTip
+                activator={<Button
+                  onClick={() => {
+                    editor.dispatchCommand(FORMAT_TEXT_COMMAND, "underline");
+                  }}
+                  icon={<Underline size="20" color='#1C2433' />}
+                  type={isUnderline ? "secondary" : 'textButton'}
+                />}
+                helpText={"Underline"}
+              />
+            }
+            {
+              toolbarItems?.fontColor === false ? null : <FontColorPicker onChange={handelColorChange} color={fontColor} />
+            }
           </>
         )
       }
 
-      <ActionList
+      {
+        listOptions.length > 0 ? <ActionList
         heading='Styling'
         isOpen={open}
         onClose={onClose}
         activator={activator}
         options={[{
-          items: isMobile ? [...actionListMobileItems, ...actionListItems] : [...actionListItems]
+          items: listOptions
         }]}
-      />
+      /> : null
+      }
 
 
     </div>
@@ -238,13 +266,13 @@ export const FontColorPicker = ({ onChange, color }: FontColorPickerI) => {
   const isMobile = useMobileDevice()
 
   const activator = !isMobile ? <ToolTip
-  activator={<Button
-    icon={<TextColorSvg />}
-    type='textButton'
-    onClick={() => setOpen(prev => !prev)}
-  />}
-  helpText={"Change Text Color"}
-/> : <Button
+    activator={<Button
+      icon={<TextColorSvg />}
+      type='textButton'
+      onClick={() => setOpen(prev => !prev)}
+    />}
+    helpText={"Change Text Color"}
+  /> : <Button
     icon={<TextColorSvg />}
     type='textButton'
     onClick={() => setOpen(prev => !prev)}
@@ -254,7 +282,7 @@ export const FontColorPicker = ({ onChange, color }: FontColorPickerI) => {
     return () => {
       setCurrentColor(color)
     }
-  },[open])
+  }, [open])
 
   return (
     <Popover
