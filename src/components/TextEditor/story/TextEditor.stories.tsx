@@ -157,13 +157,13 @@ export default {
       </tbody>
     </table>`
     },
-    hasAutoFocus: {
-      description: "Set focus to the editor when it loads",
-      control: {
-        type: "boolean"
-      },
-      defaultValue: false,
-    },
+    // hasAutoFocus: {
+    //   description: "Set focus to the editor when it loads",
+    //   control: {
+    //     type: "boolean"
+    //   },
+    //   defaultValue: false,
+    // },
     isDisabled: {
       description: "Make textEditor state disable ",
       control: {
