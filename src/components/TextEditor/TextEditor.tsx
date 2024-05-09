@@ -33,7 +33,7 @@ import useMobileDevice from "../../utilities/useMobileDevice";
 import getClassNames from "../../utilities/getClassnames";
 import OnChangePlugin from "./plugin/OnChangePlugin";
 import UpdatePlugin from "./plugin/UpdatePlugin";
-import ValueContextProvider from "./plugin/ValueContext";
+import ValueContextProvider from "./context/ValueContext";
 
 export type toolbarItems = {
   headings?:boolean
@@ -71,14 +71,14 @@ export interface TextEditorI {
   hasError?:boolean;
   isDisabled?:boolean;
   customClass?: string;
-  // hasAutoFocus?:boolean;
+  hasAutoFocus?:boolean;
   toolbarItems?:toolbarItems;
   onError?: (error: Error) => void;
 }
 
 
 
-const TextEditor = ({ placeholder, onChange, value, onError, customClass  , toolbarItems , isDisabled , hasError }: TextEditorI) => {
+const TextEditor = ({ placeholder, onChange, value, onError, customClass , hasAutoFocus, toolbarItems , isDisabled , hasError }: TextEditorI) => {
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
   const isMobileDevice = useMobileDevice()
@@ -123,9 +123,9 @@ const TextEditor = ({ placeholder, onChange, value, onError, customClass  , tool
         <TableContext>
           <>
             <ToolBar value={value} onChange={onChange} toolbarItems={toolbarItems}/>
-           {/* {
+           {
             hasAutoFocus &&  <AutoFocusPlugin />
-           } */}
+           }
             <DragDropPaste />
             <div className='inte-TextEditor__body--wrapper'>
               <RichTextPlugin

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import TextEditor from "../TextEditor";
 import { Card } from "../../Card";
 import Button from "../../Button/Button";
+import { TextField } from "../../Form";
 
 export default {
   title: "Components/TextEditor",
@@ -157,13 +158,13 @@ export default {
       </tbody>
     </table>`
     },
-    // hasAutoFocus: {
-    //   description: "Set focus to the editor when it loads",
-    //   control: {
-    //     type: "boolean"
-    //   },
-    //   defaultValue: false,
-    // },
+    hasAutoFocus: {
+      description: "Set focus to the editor when it loads",
+      control: {
+        type: "boolean"
+      },
+      defaultValue: false,
+    },
     isDisabled: {
       description: "Make textEditor state disable ",
       control: {
@@ -193,9 +194,10 @@ function generateRandomContent(): string {
 }
 
 const Template = ({ ...rest }) => {
+  const [value, setValue] = useState("")
   return (
     <Card title="Text Editor Primary">
-      <TextEditor {...rest} />
+      <TextEditor {...rest} onChange={(newValue) => console.log(newValue, "editor")} />
     </Card>
   );
 };
@@ -204,6 +206,7 @@ export const Primary: any = Template.bind({});
 export const TextEditorWithDefaultValue: any = ({ ...rest }) => {
 
   const [initialHtml, setinitialHtml] = useState("<p>akdhfjg<b>sdfhkjdasdjhas </b><i><b>aksdkas</b></i></p>")
+
 
   const changeHtml = () => {
     setinitialHtml('<p dir="ltr"><b>asdasdasd</b><i><b>asdasdasdasdasd</b></i><i>asdasdasdasd</i><i><b>asdasdasddddd</b></i><i>ddd</i><i><b>ddddd</b></i></p>')
@@ -216,6 +219,7 @@ export const TextEditorWithDefaultValue: any = ({ ...rest }) => {
     }}>
       {/* <div style={{ minHeight: 1000 }}></div> */}
       <TextEditor
+        {...rest}
         value={initialHtml}
         onChange={(newState) => {
           setinitialHtml(newState);

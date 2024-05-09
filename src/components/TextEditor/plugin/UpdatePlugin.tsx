@@ -3,7 +3,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import { $getRoot, $getSelection, $insertNodes, $setSelection, BaseSelection } from "lexical";
 import { $generateNodesFromDOM } from '@lexical/html';
 import { useEffect } from "react";
-import { ValueContext } from './ValueContext';
+import { ValueContext } from '../context/ValueContext';
 
 interface UpdatePluginI {
     value: string

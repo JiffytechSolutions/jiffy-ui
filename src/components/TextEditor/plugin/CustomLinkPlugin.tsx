@@ -28,7 +28,7 @@ const CustomLinkPlugin = () => {
   return (
     <>
       <LinkPlugin />
-      <AutoLinkPlugin matchers={MATCHERS} />
+      {/* <AutoLinkPlugin matchers={MATCHERS} /> */}
       <LexicalClickableLinkPlugin />
     </>
   )

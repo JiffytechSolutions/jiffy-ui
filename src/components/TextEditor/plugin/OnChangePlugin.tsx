@@ -2,7 +2,7 @@ import { useLexicalComposerContext } from "@lexical/react/LexicalComposerContext
 import React, { useContext } from "react";
 import { useEffect } from "react";
 import { $generateHtmlFromNodes } from '@lexical/html';
-import { ValueContext } from "./ValueContext";
+import { ValueContext } from "../context/ValueContext";
 
 export interface OnChangePluginI {
   onChange?: (e: string) => void
