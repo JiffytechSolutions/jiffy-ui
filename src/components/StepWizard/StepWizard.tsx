@@ -98,7 +98,10 @@ const StepWizard = ({ currentStep, steps, direction = 'horizontal', type = 'icon
     const cStep = currentStep > steps.length ? steps.length : currentStep
     return (
       <div
-        className='inte-stepWizard--mobile'
+        className={getClassNames({
+          'inte-stepWizard--mobile' : true,
+          [customClass as string] : customClass
+        })}
       >
         <div
           className='inte-stepWizard__activeStep'

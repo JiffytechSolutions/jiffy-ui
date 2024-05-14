@@ -51,7 +51,7 @@ export const Strikethrough = () => {
         stroke="#1C2433"
         strokeWidth="1.67"
         strokeLinecap="round"
-        stroke-Linejoin="round" />
+        strokeLinejoin="round" />
     </svg>
   )
 }

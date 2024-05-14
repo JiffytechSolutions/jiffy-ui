@@ -25,10 +25,8 @@ import FontFamilyChanger from "./FontFamilyChanger";
 import ToolTip from "../../../ToolTip/ToolTip";
 import SpecialNodes from "./SpecialNodes";
 import useMobileDevice from "../../../../utilities/useMobileDevice";
-import { $generateNodesFromDOM } from '@lexical/html';
-import { $generateHtmlFromNodes } from '@lexical/html';
-import OnChangePlugin from '../OnChangePlugin'
-import { $INTERNAL_isPointSelection, $getRoot, $getSelection, $insertNodes, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, EditorState, ElementFormatType, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
+import { $INTERNAL_isPointSelection, $getSelection, $isElementNode, $isRangeSelection, $isRootOrShadowRoot, ElementFormatType, FORMAT_ELEMENT_COMMAND, REDO_COMMAND, RangeSelection, SELECTION_CHANGE_COMMAND, UNDO_COMMAND } from 'lexical'
+import { toolbarItems } from "../../TextEditor";
 
 const rootTypeToRootName = {
   root: "Root",
@@ -65,23 +63,24 @@ export const blockTypeToBlockName = {
   h5: "Heading 5",
   h6: "Heading 6",
   number: "Numbered List",
-  paragraph: "Normal",
+  p: "Normal",
   quote: "Quote",
 };
 
 interface ToolBarI {
   value?: string;
   onChange?: (newState: string) => void;
+  toolbarItems?: toolbarItems
 }
-const textHtmlMimeType = 'text/html';
-const ToolBar = ({ value, onChange }: ToolBarI) => {
+
+const ToolBar = ({ value, onChange, toolbarItems }: ToolBarI) => {
   const [editor] = useLexicalComposerContext();
   const [rootType, setRootType] =
     useState<keyof typeof rootTypeToRootName>("root");
   const [isList, setIsList] = useState<undefined | "number" | "bullet">();
   const [isLink, setIsLink] = useState(false);
   const [blockType, setBlockType] =
-    useState<keyof typeof blockTypeToBlockName>("paragraph");
+    useState<keyof typeof blockTypeToBlockName>("p");
   const [currAlign, setCurrAlign] = useState<ElementFormatType>("left");
   const [fontSize, setFontSize] = useState("14px");
   const [fontColor, setFontColor] = useState("");
@@ -198,39 +197,28 @@ const ToolBar = ({ value, onChange }: ToolBarI) => {
     });
   };
 
-  useEffect(() => {
-    if (!value) return;
-    editor.update(() => {
-      const parser = new DOMParser();
-      const dom = parser.parseFromString(value, textHtmlMimeType);
-      const nodes = $generateNodesFromDOM(editor, dom);
-      $getRoot().clear();
-      $insertNodes(nodes);
-    });
-  }, [value]);;
-  const handelEditorChange = (editorState: EditorState) => {
-    editorState.read(() => {
-      const newHtml = $generateHtmlFromNodes(editor, null);
-      onChange && onChange(newHtml);
-    });
-  };
   return (
     <>
-      <OnChangePlugin onChange={handelEditorChange} />
       {!isMobileDevice ? (
         <div className="inte-TextEditor__toolBar">
           <div className="inte-TextEditor__fontFormat">
-            <InsertBlock editor={editor} blockType={blockType} />
-            <FontFamilyChanger editor={editor} />
+            {
+              toolbarItems?.headings === false ? null : <InsertBlock editor={editor} blockType={blockType} />
+            }
+            {
+              toolbarItems?.fontFamily === false ? null : <FontFamilyChanger editor={editor} />
+            }
           </div>
-          <FontStyle editor={editor} />
-          <FontSizeToggle editor={editor} value={fontSize} />
+          <FontStyle editor={editor} toolbarItems={toolbarItems}/>
+          {
+            toolbarItems?.fontSize === false ? null : <FontSizeToggle editor={editor} value={fontSize} />
+          }
           <div className="inte-textEditor__blockStyle">
             {!isMobileDevice ? (
               <>
                 <ToolTip
                   activator={
-                    <ListSelectBox editor={editor} currListType={isList} />
+                    <ListSelectBox editor={editor} currListType={isList} toolbarItems={toolbarItems}/>
                   }
                   helpText={"Insert List"}
                 />
@@ -239,6 +227,7 @@ const ToolBar = ({ value, onChange }: ToolBarI) => {
                     <TextAlignBox
                       onClick={changeElementFormat}
                       currAlign={currAlign}
+                      toolbarItems={toolbarItems}
                     />
                   }
                   helpText={"Change Text Align"}
@@ -246,10 +235,11 @@ const ToolBar = ({ value, onChange }: ToolBarI) => {
               </>
             ) : (
               <>
-                <ListSelectBox editor={editor} currListType={isList} />
+                <ListSelectBox editor={editor} currListType={isList} toolbarItems={toolbarItems} />
                 <TextAlignBox
                   onClick={changeElementFormat}
                   currAlign={currAlign}
+                  toolbarItems={toolbarItems}
                 />
               </>
             )}
@@ -260,6 +250,7 @@ const ToolBar = ({ value, onChange }: ToolBarI) => {
             editor={editor}
             isLink={isLink}
             selectedText={selectedText}
+            toolbarItems={toolbarItems}
           />
           <Line />
           <div className="inte-textEditor__history">
@@ -308,9 +299,15 @@ const ToolBar = ({ value, onChange }: ToolBarI) => {
       ) : (
         <div className="inte-TextEditor__toolBar--mobile">
           <div className="inte-TextEditor__fontFormat">
-            <InsertBlock editor={editor} blockType={blockType} />
-            <FontFamilyChanger editor={editor} />
-            <FontSizeToggle editor={editor} value={fontSize} />
+            {
+              toolbarItems?.headings === false ? null : <InsertBlock editor={editor} blockType={blockType} />
+            }
+            {
+              toolbarItems?.fontFamily === false ? null : <FontFamilyChanger editor={editor} />
+            }
+            {
+              toolbarItems?.fontSize === false ? null : <FontSizeToggle editor={editor} value={fontSize} />
+            }
           </div>
           <div className="inte-textEditor__toolBar__actions">
             <div className="inte-textEditor__history">
@@ -361,15 +358,16 @@ const ToolBar = ({ value, onChange }: ToolBarI) => {
               )}
             </div>
             <Line />
-            <FontStyle editor={editor} />
-            <FontColorPicker color={fontColor} onChange={handelColorChange} />
-            <ListSelectBox editor={editor} currListType={isList} />
-            <TextAlignBox onClick={changeElementFormat} currAlign={currAlign} />
+            <FontStyle editor={editor} toolbarItems={toolbarItems}/>
+            {toolbarItems?.fontColor === false ? null : <FontColorPicker color={fontColor} onChange={handelColorChange} />}
+            <ListSelectBox toolbarItems={toolbarItems} editor={editor} currListType={isList} />
+            <TextAlignBox toolbarItems={toolbarItems} onClick={changeElementFormat} currAlign={currAlign} />
             <SpecialNodes
               blockType={blockType}
               editor={editor}
               isLink={isLink}
               selectedText={selectedText}
+              toolbarItems={toolbarItems}
             />
           </div>
         </div>

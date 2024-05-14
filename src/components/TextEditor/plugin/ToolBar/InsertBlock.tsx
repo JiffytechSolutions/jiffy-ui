@@ -24,7 +24,7 @@ const blockTypeToBlockName = {
   h5: 'Heading 5',
   h6: 'Heading 6',
   number: 'Numbered List',
-  paragraph: 'Normal',
+  p: 'Normal',
   quote: 'Quote',
 };
 
@@ -55,10 +55,13 @@ const InsertBlock = ({ editor, blockType }: InsertBlockI) => {
     <CustomSelect
       heading='Choose Text Type'
       options={[
-        { label: "Normal text", value: "paragraph" },
+        { label: "Normal text", value: "p" },
         { label: 'Heading 1', value: "h1", className: "inte-textType heading1" },
         { label: 'Heading 2', value: "h2", className: "inte-textType heading2" },
         { label: 'Heading 3', value: "h3", className: "inte-textType heading3" },
+        { label: 'Heading 4', value: "h4", className: "inte-textType heading4" },
+        { label: 'Heading 5', value: "h5", className: "inte-textType heading5" },
+        { label: 'Heading 6', value: "h6", className: "inte-textType heading6" },
       ]}
       isMultiSelect={false}
       value={blockType}

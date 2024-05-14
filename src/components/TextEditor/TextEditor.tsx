@@ -31,15 +31,54 @@ import DragDropPaste from "./plugin/DragDropPastePlugin";
 import { AutoFocusPlugin } from "@lexical/react/LexicalAutoFocusPlugin";
 import useMobileDevice from "../../utilities/useMobileDevice";
 import getClassNames from "../../utilities/getClassnames";
+import OnChangePlugin from "./plugin/OnChangePlugin";
+import UpdatePlugin from "./plugin/UpdatePlugin";
+import ValueContextProvider from "./context/ValueContext";
 
+export type toolbarItems = {
+  headings?:boolean
+  fontFamily?:boolean
+  bold?:boolean
+  italic?:boolean
+  underline?:boolean
+  strikeThrough?:boolean
+  subScript?:boolean
+  superScript?:boolean
+  textColor?:boolean
+  fontSize?:boolean
+  code?:boolean
+  fontColor?:boolean
+  clearFormatting?:boolean
+  list?: {
+    orderedList?:boolean
+    unOrderedList?:boolean
+  }
+  textAlign?:{
+    left?:boolean
+    right?:boolean
+    center?:boolean
+    justify?:boolean
+  }
+  link?:boolean
+  image?:boolean
+  table?:boolean
+  codeBlock?:boolean
+}
 export interface TextEditorI {
   placeholder?: string
   onChange?: (newState: string) => void;
   value?: string;
-  onError?: (error: Error) => void;
+  hasError?:boolean;
+  isDisabled?:boolean;
   customClass?: string;
+  hasAutoFocus?:boolean;
+  toolbarItems?:toolbarItems;
+  onError?: (error: Error) => void;
 }
-const TextEditor = ({ placeholder, onChange, value, onError, customClass }: TextEditorI) => {
+
+
+
+const TextEditor = ({ placeholder, onChange, value, onError, customClass , hasAutoFocus, toolbarItems , isDisabled , hasError }: TextEditorI) => {
   const [floatingAnchorElem, setFloatingAnchorElem] = useState<HTMLDivElement | null>(null);
   const [isLinkEditMode, setIsLinkEditMode] = useState<boolean>(false);
   const isMobileDevice = useMobileDevice()
@@ -64,27 +103,49 @@ const TextEditor = ({ placeholder, onChange, value, onError, customClass }: Text
       TableRowNode,
       AutoLinkNode,
       LinkNode,
-      ImageNode
+      ImageNode,
     ]
   };
+
+
   return (
     <div className={getClassNames({
       "inte-TextEditor": true,
+      'inte-TextEditor--disabled': isDisabled,
+      "inte-TextEditor--hasError": hasError,
       [customClass as string]: customClass
     })}>
       <LexicalComposer initialConfig={editorConfig}>
+        <ValueContextProvider>
+          <OnChangePlugin onChange={onChange} />
+          <UpdatePlugin value={value ?? ""} />
+        </ValueContextProvider>
         <TableContext>
           <>
-            <ToolBar value={value} onChange={onChange} />
-            <AutoFocusPlugin />
+            <ToolBar value={value} onChange={onChange} toolbarItems={toolbarItems}/>
+           {
+            hasAutoFocus &&  <AutoFocusPlugin />
+           }
             <DragDropPaste />
             <div className='inte-TextEditor__body--wrapper'>
               <RichTextPlugin
-                contentEditable={<div ref={onRef}><ContentEditable spellCheck={false} className={getClassNames({
-                  "inte-TextEditor__body": true,
-                  'inte-TextEditor--mobile': isMobileDevice
-                })} /></div>}
-                placeholder={<div className="inte-TextEditor__placeholder">{placeholder}</div>}
+                contentEditable={
+                  <div ref={onRef}>
+                    <ContentEditable
+                      spellCheck={false}
+                      className={getClassNames({
+                        "inte-TextEditor__body": true,
+                        'inte-TextEditor--mobile': isMobileDevice
+                      })
+                      }
+                    />
+                  </div>}
+                placeholder={
+                  <div
+                    className="inte-TextEditor__placeholder"
+                  >
+                    {placeholder}
+                  </div>}
                 ErrorBoundary={LexicalErrorBoundary}
               />
             </div>

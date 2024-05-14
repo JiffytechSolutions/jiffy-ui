@@ -10,17 +10,19 @@ import { blockTypeToBlockName } from './ToolBar'
 import { $createCodeNode } from "@lexical/code";
 import { $setBlocksType } from "@lexical/selection"
 import Popover from '../../../Popover/Popover'
+import { toolbarItems } from '../../TextEditor'
 
 interface SpecialNodesI {
   editor: LexicalEditor,
   isLink: boolean,
   selectedText: string,
   blockType: keyof typeof blockTypeToBlockName
+  toolbarItems?: toolbarItems
 }
 
 const insidePopover = true
 
-const SpecialNodes = ({ editor, isLink, selectedText, blockType }: SpecialNodesI) => {
+const SpecialNodes = ({ editor, isLink, selectedText, blockType, toolbarItems }: SpecialNodesI) => {
 
   const [open, setOpen] = useState(false)
 
@@ -63,11 +65,11 @@ const SpecialNodes = ({ editor, isLink, selectedText, blockType }: SpecialNodesI
 
   const body = (
     <>
-      <InsertLink close={onClose} editor={editor} isLink={isLink} selectedText={selectedText} insidePopover={insidePopover} />
-      <InsertImageDialog close={onClose} editor={editor} insidePopover={insidePopover} />
-      <InsertTableModal close={onClose} editor={editor} insidePopover={insidePopover} />
+      {toolbarItems?.link === false ? null : <InsertLink close={onClose} editor={editor} isLink={isLink} selectedText={selectedText} insidePopover={insidePopover} />}
+      {toolbarItems?.image === false ? null : <InsertImageDialog close={onClose} editor={editor} insidePopover={insidePopover} />}
+      {toolbarItems?.table === false ? null : <InsertTableModal close={onClose} editor={editor} insidePopover={insidePopover} />}
       {
-        !insidePopover ? <ToolTip activator={codeBlock} helpText="Insert Code Block" /> : codeBlock
+        toolbarItems?.codeBlock === false ? null : !insidePopover ? <ToolTip activator={codeBlock} helpText="Insert Code Block" /> : codeBlock
       }
     </>
   )
@@ -75,7 +77,7 @@ const SpecialNodes = ({ editor, isLink, selectedText, blockType }: SpecialNodesI
   return (
     <>
       {
-        insidePopover ? (
+        body.props.children.every((i: any) => i === null) === true ? null : insidePopover ? (
           <Popover
             heading='More Options'
             isOpen={open}
