@@ -99,6 +99,7 @@ const removeClassName = (arr: any, elements: any) => {
 };
 
 const giveHeaderCheckboxState = (selChkObj: any) => {
+  console.log(selChkObj)
   if (Object.values(selChkObj).every((i) => i === false || i === undefined))
     return false;
   else if (Object.values(selChkObj).every((i) => i === true)) return true;
@@ -137,9 +138,13 @@ const DataTable = ({
 }: DataTableI) => {
   const [dataTableKey, setDataTableKey] = useState(1);
   const [data, setData] = useState(dataSource);
-  const [selectedCheckbox, setSelectedCheckbox] = useState<any>(
-    rowSelection?.selectedRowKeys ? rowSelection.selectedRowKeys : {}
-  );
+  const [selectedCheckbox, setSelectedCheckbox] = useState<any>(() => {
+    let t: any = {};
+    dataSource.map((i: any) => (t[i.key] = false));
+    if (!rowSelection?.selectedRowKeys) {
+      return t
+    } else return { ...t, ...rowSelection.selectedRowKeys };
+  });
   const [expandedRows, setExpandedRows] = useState<string[]>([]);
 
   const GridWrapperRef = useRef<HTMLDivElement>(null);
