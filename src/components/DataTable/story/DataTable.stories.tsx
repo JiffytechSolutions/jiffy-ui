@@ -171,7 +171,20 @@ export default {
         <tr>
           <td><code>onSelectChange</code></td>
           <td>
-            <code>(newSelectedKeysObj : {dataSourceKey : currentState (i,e :- "true" | "false" | 'indeterminate) , ...}) => void</code> <br><br>
+            <code>(<table>
+              <tr>
+                  <td>newSelectedKeysObj</td>
+                  <td>{dataSourceKey : currentState (i,e :- "true" | "false" | 'indeterminate) , ...}</td>
+              </tr>
+              <tr>
+                  <td>selectionType</td>
+                  <td>"single" | "all"</td>
+              </tr>
+              <tr>
+                  <td>currentRowSelectionChanged</td>
+                  <td>{dataSourceKey : currentState (i,e :- "true" | "false") , ...}</td>
+              </tr>
+          </table>) => void</code> <br><br>
             Note <span style="color: red;">*</span> in case of<code>multi === false </code> in <code>newSelectedKeysObj</code> have only single key value pair and value can only be <code>boolean</code>
           </td>
           <td>Callback function that will be called when the selected rows change</td>
@@ -253,7 +266,7 @@ const primaryColumns: columnI[] = [
     fixed: "left",
     width: 100,
     sortable: {
-      onSort: (item: columnI, order: "asec" | "desc") => {},
+      onSort: (item: columnI, order: "asec" | "desc") => { },
     },
   },
   {
@@ -486,7 +499,7 @@ export const DataTableWithFixedHeader: any = ({ ...rest }) => {
           <Pagination
             currentPage={3}
             totalitem={200}
-            onNext={() => {}}
+            onNext={() => { }}
             onEnter={() => {
               alert("onenter");
             }}
@@ -588,11 +601,11 @@ export const DataTableWithScrollBarSitckyAtBottom = ({ ...rest }) => {
           type="fullLength"
           currentPage={1}
           totalitem={50}
-          onPageChange={() => {}}
-          onEnter={() => {}}
-          onPrevious={() => {}}
-          onNext={() => {}}
-          onCountChange={() => {}}
+          onPageChange={() => { }}
+          onEnter={() => { }}
+          onPrevious={() => { }}
+          onNext={() => { }}
+          onCountChange={() => { }}
           countPerPage={50}
         />
       }
@@ -755,12 +768,6 @@ const TemplateDataTableStory = ({ ...rest }) => {
     return res;
   }, [selectedRowKey, currentPage, itemPerPage]);
 
-  const [selectValue, setSelectValue] = useState<{ [key: string]: string }>({});
-
-  const handelSelectChangeN = (ind: number, value: any) => {
-    setSelectValue((prev) => ({ ...prev, [ind]: value }));
-  };
-
   const TemplateColumnsT: columnI[] = [
     {
       title: "Sr No",
@@ -855,4 +862,100 @@ export const DataTableEmptyBody: any = ({ ...rest }) => {
 
 export function Documentation() {
   return <DataTableDoc />;
+}
+
+const data = Array(100).fill(0).map((_, i) => (
+  {
+    key: i + 1,
+    name: "name",
+    age: "age",
+    gender : "Male",
+    address : "Adderss",
+    email : "examples@example.com",
+    phone : "9194565600",
+    income : "$1000+",
+    description : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, natus."
+
+  }
+))
+
+export const DataTableWithSelection: any = ({ ...rest }) => {
+
+  const [selectedRowKeys, setSelectedRowKeys] = useState<any>({ 1: true, 2: true, 3: true })
+  return (
+    <Card>
+      <DataTable
+        isFixedHeader
+        scrollX={800}
+        columns={[
+          {
+            key: "key",
+            dataIndex: "key",
+            title: "Key",
+            width: 100,
+          },
+          {
+            key: "name",
+            dataIndex: "name",
+            title: "Name",
+            width: 100,
+          },
+          {
+            key: "age",
+            dataIndex: "age",
+            title: "Age",
+            width: 100,
+          },
+          {
+            key: "gender",
+            dataIndex: "gender",
+            title: "Gender",
+            width: 100,
+          },
+          {
+            key: "address",
+            dataIndex: "address",
+            title: "Address",
+            width: 100,
+          },
+          {
+            key: "email",
+            dataIndex: "email",
+            title: "Email",
+            width: 250,
+          },
+          {
+            key: "phone",
+            dataIndex: "phone",
+            title: "Phone",
+            width: 150,
+          },
+          {
+            key: "income",
+            dataIndex: "income",
+            title: "Income",
+            width: 100,
+          },
+          {
+            key: "description",
+            dataIndex: "description",
+            title: "Description",
+            width: 300,
+          },
+        ]}
+        stickyScrollBar
+        dataSource={data}
+        rowSelection={{
+          selectedRowKeys: selectedRowKeys,
+          onSelectChange(newSelectedRow, type, currentRowSelectionChanged) {
+            console.clear()
+            console.log("newStatesOfAllCheckboxes =>", newSelectedRow)
+            console.log("typeOFSelection => " , type )
+            console.log("changed rows =>" , currentRowSelectionChanged)
+            setSelectedRowKeys(newSelectedRow)
+          },
+        }}
+      />
+    </Card>
+  )
 }

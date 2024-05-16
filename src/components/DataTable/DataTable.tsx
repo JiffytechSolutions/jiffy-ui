@@ -6,6 +6,10 @@ import getClassNames from "../../utilities/getClassnames";
 import "./DataTable.css";
 import AnimationWrapper from "../AnimationWrapper/AnimationWrapper";
 import { NoProducts } from "../../illustrations";
+
+type SelectionObjectI = {
+  [key: string]: boolean | "indeterminate";
+}
 export interface columnI {
   title: string | React.ReactNode;
   dataIndex?: string;
@@ -13,13 +17,13 @@ export interface columnI {
   key: string | number;
   width?: number;
   align?:
-    | "start"
-    | "end"
-    | "left"
-    | "right"
-    | "center"
-    | "justify"
-    | "match-parent";
+  | "start"
+  | "end"
+  | "left"
+  | "right"
+  | "center"
+  | "justify"
+  | "match-parent";
   fixed?: "left" | "right";
   sortable?: {
     onSort?: (clickedColumn: columnI, order: "asec" | "desc") => void;
@@ -65,9 +69,7 @@ export interface expandableI {
 
 export interface rowSelectionI {
   multi?: boolean;
-  onSelectChange?: (newSelectedRow: {
-    [key: string]: boolean | "indeterminate";
-  }) => void;
+  onSelectChange?: (newSelectedRow: SelectionObjectI, selectionType: "single" | 'all', currentRowSelectionChanged: SelectionObjectI) => void;
   selectedRowKeys?: {};
 }
 
@@ -101,6 +103,18 @@ const giveHeaderCheckboxState = (selChkObj: any) => {
     return false;
   else if (Object.values(selChkObj).every((i) => i === true)) return true;
   else return "indeterminate";
+};
+
+const getDifferencesObjects = (obj1: SelectionObjectI, obj2: SelectionObjectI): SelectionObjectI => {
+  const differences: SelectionObjectI = {};
+
+  Object.keys(obj1).forEach((key) => {
+    if (obj1[key] !== obj2[key]) {
+      differences[key] = obj2[key];
+    }
+  })
+
+  return differences;
 };
 
 const DataTable = ({
@@ -183,12 +197,12 @@ const DataTable = ({
   const headerCheckboxChangeHandler = (state: any) => {
     let t: any = { ...selectedCheckbox };
     Object.keys(t).map((i) => (t[i] = state));
-    if (rowSelection?.onSelectChange) rowSelection.onSelectChange(t);
+    if (rowSelection?.onSelectChange) rowSelection.onSelectChange(t, "all", getDifferencesObjects(selectedCheckbox, t));
     else setSelectedCheckbox(t);
   };
   const rowCheckboxChangeHandler = (item: any, state: any) => {
     if (rowSelection?.onSelectChange)
-      rowSelection.onSelectChange({ ...selectedCheckbox, [item.key]: state });
+      rowSelection.onSelectChange({ ...selectedCheckbox, [item.key]: state }, "single", getDifferencesObjects(selectedCheckbox, { ...selectedCheckbox, [item.key]: state }));
     else setSelectedCheckbox({ ...selectedCheckbox, [item.key]: state });
   };
   const sortTheData = (
@@ -299,7 +313,7 @@ const DataTable = ({
       if (
         isHeader &&
         (GridWrapperRef.current?.scrollHeight ?? 0) >
-          (GridWrapperRef.current?.clientHeight ?? 0)
+        (GridWrapperRef.current?.clientHeight ?? 0)
       ) {
         ele.style[pos] =
           prev +
@@ -377,7 +391,7 @@ const DataTable = ({
 
   const rowRadioChangeHandler = (item: any) => {
     if (rowSelection?.onSelectChange)
-      rowSelection?.onSelectChange({ [item.key]: true });
+      rowSelection?.onSelectChange({ [item.key]: true }, "single", { [item.key]: true });
   };
 
   useEffect(() => {
@@ -400,11 +414,11 @@ const DataTable = ({
   }, [data, columns, expandedRows]);
 
   useEffect(() => {
+    let t: any = {};
+    dataSource.map((i: any) => (t[i.key] = false));
     if (!rowSelection?.selectedRowKeys) {
-      let t: any = {};
-      dataSource.map((i: any) => (t[i.key] = false));
       setSelectedCheckbox(t);
-    } else setSelectedCheckbox(rowSelection.selectedRowKeys);
+    } else setSelectedCheckbox({ ...t, ...rowSelection.selectedRowKeys });
   }, [rowSelection?.selectedRowKeys, dataSource]);
 
   useEffect(() => {
@@ -607,8 +621,8 @@ const DataTable = ({
               onClick={
                 isRowExpandable
                   ? () => {
-                      expandIconClickHandler(item.key);
-                    }
+                    expandIconClickHandler(item.key);
+                  }
                   : void 0
               }
             >
@@ -691,36 +705,38 @@ const DataTable = ({
             );
           })}
         </tr>
-        <tr
-          aria-expanded={expandedRows.includes(item.key)}
-          className={"inte-dataTable__row--appendWithExpand"}
-        >
-          <td
-            className="inte-dataTable__expanded-td"
-            colSpan={
-              columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
-            }
+        {
+          expandable && <tr
+            aria-expanded={expandedRows.includes(item.key)}
+            className={"inte-dataTable__row--appendWithExpand"}
           >
-            <AnimationWrapper
-              show={expandedRows.includes(item.key)}
-              inAnimation="inte-dataTable-inAnimate"
-              outAnimation="inte-dataTable-outAnimate"
+            <td
+              className="inte-dataTable__expanded-td"
+              colSpan={
+                columns.length + (expandable ? 1 : 0) + (rowSelection ? 1 : 0)
+              }
             >
-              <div
-                className="inte-dataTable__row--Fixed"
-                style={{
-                  position: "sticky",
-                  left: "0",
-                  width: "100%",
-                }}
+              <AnimationWrapper
+                show={expandedRows.includes(item.key)}
+                inAnimation="inte-dataTable-inAnimate"
+                outAnimation="inte-dataTable-outAnimate"
               >
-                {expandable?.expandedRowRender
-                  ? expandable.expandedRowRender(item)
-                  : ""}
-              </div>
-            </AnimationWrapper>
-          </td>
-        </tr>
+                <div
+                  className="inte-dataTable__row--Fixed"
+                  style={{
+                    position: "sticky",
+                    left: "0",
+                    width: "100%",
+                  }}
+                >
+                  {expandable?.expandedRowRender
+                    ? expandable.expandedRowRender(item)
+                    : ""}
+                </div>
+              </AnimationWrapper>
+            </td>
+          </tr>
+        }
       </React.Fragment>
     );
     return row;
@@ -766,7 +782,7 @@ const DataTable = ({
     if (
       containerRect.bottom <= currentScrollHeight ||
       GridWrapperRef.current.clientWidth ===
-        GridWrapperRef.current?.scrollWidth ||
+      GridWrapperRef.current?.scrollWidth ||
       containerRect.top > currentScrollHeight
     ) {
       stickyScrollBarRef.current.style.visibility = "hidden";
@@ -816,11 +832,10 @@ const DataTable = ({
                 .map((i, ind) => {
                   let columnWidth = "";
                   if (columns[ind].width) {
-                    columnWidth = `${
-                      columns && columns[ind]?.width
-                        ? `${(columns[ind].width ?? 0) / 10}rem`
-                        : ""
-                    }`;
+                    columnWidth = `${columns && columns[ind]?.width
+                      ? `${(columns[ind].width ?? 0) / 10}rem`
+                      : ""
+                      }`;
                   }
                   return <col style={{ width: columnWidth }} key={ind}></col>;
                 })}
@@ -840,8 +855,8 @@ const DataTable = ({
             tableLayout: tableLayout
               ? tableLayout
               : isFixedHeader
-              ? "fixed"
-              : "auto",
+                ? "fixed"
+                : "auto",
             width: scrollX ? scrollX / 10 + "rem" : "",
           }}
         >
@@ -853,11 +868,10 @@ const DataTable = ({
               .map((i, ind) => {
                 let columnWidth = "";
                 if (columns[ind].width) {
-                  columnWidth = `${
-                    columns && columns[ind]?.width
-                      ? `${(columns[ind].width ?? 0) / 10}rem`
-                      : ""
-                  }`;
+                  columnWidth = `${columns && columns[ind]?.width
+                    ? `${(columns[ind].width ?? 0) / 10}rem`
+                    : ""
+                    }`;
                 }
                 return <col style={{ width: columnWidth }} key={ind}></col>;
               })}
@@ -871,10 +885,10 @@ const DataTable = ({
             {isLoading
               ? makeTableSkeleton()
               : data.length
-              ? data.map((item: any, index: number) => {
+                ? data.map((item: any, index: number) => {
                   return makeDataTableBodyRows(item, index);
                 })
-              : DataTableEmptyRow}
+                : DataTableEmptyRow}
           </tbody>
         </table>
       </div>
