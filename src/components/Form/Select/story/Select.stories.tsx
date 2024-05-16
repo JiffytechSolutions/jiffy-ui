@@ -290,7 +290,8 @@ const groupOptions: GroupedObjI[] = [
 
 const Template = ({ ...rest }) => {
   const [value1, setValue1] = useState([]);
-  const onSelectChange = (val: React.SetStateAction<never[]>) => {
+  const onSelectChange = (val: React.SetStateAction<never[]> , selectedOptionsData : any) => {
+    console.log(val , selectedOptionsData)
     setValue1(val);
   };
   return (

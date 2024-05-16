@@ -542,10 +542,10 @@ const VirtualSelect = ({
         newSelectedValues.push(item.value);
       }
       setSelectedValues(newSelectedOpt);
-      onChange(newSelectedValues);
+      onChange(newSelectedValues , newSelectedOpt);
     } else {
       setSelectedValues([item]);
-      onChange(item.value);
+      onChange(item.value , item);
     }
     if (inputBoxRef.current !== null) {
       inputBoxRef.current.style.width = "0";
@@ -789,7 +789,7 @@ const VirtualSelect = ({
                   onClick={(e) => {
                     e.stopPropagation();
                     if (!isDisabled) {
-                      onChange([]);
+                      onChange([] , {});
                       setSelectedValues([]);
                       setInputValue("");
                       if (isSearchable && inputBoxRef.current !== null) {

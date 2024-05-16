@@ -2,7 +2,7 @@ export type SelectI = {
   id?: string;
   options: SimpleObjI[] | GroupedObjI[];
   value: string | string[] | number | number[];
-  onChange?: (e: any) => void;
+  onChange?: (e: any , selectedOptionsData:any) => void;
   onInputChange?: (e: any) => void;
   isRequired?: boolean;
   label?: string;

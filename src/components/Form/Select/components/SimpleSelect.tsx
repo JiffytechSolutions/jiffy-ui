@@ -240,9 +240,9 @@ const SimpleSelect = ({
       } else {
         newSelectedValues.push(item);
       }
-      onChange(newSelectedValues.map((ele) => ele.value));
+      onChange(newSelectedValues.map((ele) => ele.value) , newSelectedValues);
     } else {
-      onChange(item.value);
+      onChange(item.value , item);
     }
     !isMultiSelect && setDropdownActive(false);
     selectBoxRef.current?.focus();
@@ -942,7 +942,7 @@ const SimpleSelect = ({
                 <div
                   onClick={() => {
                     if (!isDisabled) {
-                      onChange([]);
+                      onChange([] , {});
                       setInputValue("");
                     }
                   }}
