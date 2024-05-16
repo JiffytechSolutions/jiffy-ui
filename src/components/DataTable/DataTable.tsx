@@ -99,7 +99,6 @@ const removeClassName = (arr: any, elements: any) => {
 };
 
 const giveHeaderCheckboxState = (selChkObj: any) => {
-  console.log(selChkObj)
   if (Object.values(selChkObj).every((i) => i === false || i === undefined))
     return false;
   else if (Object.values(selChkObj).every((i) => i === true)) return true;
