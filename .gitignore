@@ -12,6 +12,7 @@ bin/
 lib/
 /storybook-static
 .DS_Store
+/package-lock.json
 
 #files
 .npmrc
