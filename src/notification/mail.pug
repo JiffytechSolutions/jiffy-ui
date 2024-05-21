@@ -111,11 +111,10 @@ margin: auto;\
                       padding: 0px 40px 24px 40px;\
                       ')
                         | We are thrilled to share the most recent updates and
-                        | enhancements to our Ounce Design System. Your
-                        | feedback and collaboration continue to be invaluable
-                        | in improving our design system, and we are excited
-                        | to bring you the following highlights in our most
-                        | recent change log:
+                        | enhancements to our Ounce Design System. Your feedback
+                        | and collaboration continue to be invaluable in improving
+                        | our design system, and we are excited to bring you the
+                        | following highlights in our most recent change log:
                       td.mob-paddding(style='\
                       font-size: 14px;\
                       color: #1c2433;\
@@ -129,8 +128,7 @@ margin: auto;\
                               td
                                 table(style='\
                                 width: 100%;\
-                                border-bottom: 1px solid\
-                                rgba(0, 0, 0, 0.25);\
+                                border-bottom: 1px solid rgba(0, 0, 0, 0.25);\
                                 padding-bottom: 10px;\
                                 margin-bottom: 10px;\
                                 ')
@@ -149,7 +147,7 @@ margin: auto;\
                                       color: #1c2433;\
                                       font-weight: 600;\
                                       ')
-                                        | New features
+                                        | Enhancements
                                     tr
                                       td(style='width: 52px')
                                       td
@@ -161,8 +159,8 @@ margin: auto;\
                                         color: #1c2433;\
                                         ')
                                           li(style='margin-left: 15px')
-                                            b Charts : 
-                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-chart-activitygauge--primary' target='_blank' alt='File upload')
+                                            b DataTable : 
+                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-datatable-and-list-datatable--data-table-with-selection' target='_blank' alt='DataTable')
                                               img(style='\
                                               width: 14px;\
                                               height: 14px;\
@@ -172,12 +170,44 @@ margin: auto;\
                                             margin-bottom: 10px;\
                                             ')
                                               li
-                                                | Activity Gauge, Bar Chart,
-                                                | Pie Chart, Line Chart, and
-                                                | Donut Chart have been added.
+                                                | In the 
+                                                b rowSelection
+                                                |  object, the 
+                                                b onSelect
+                                                |   callback now receives two additional parameters:
+                                                ol(style='\
+                                                padding: 0;\
+                                                margin-bottom: 10px;\
+                                                ')
+                                                  li(style='margin-top: 4px;')
+                                                    b selectionType :
+                                                    |  Indicates the type of selection (i.e., &quot;all&quot; or &quot;single&quot;).
+                                                  li(style='margin-top: 4px;')
+                                                    b currentRowSelectionChanged :
+                                                    |  Provides the checkboxes whose state is affected by the selection change.
                                           li(style='margin-left: 15px')
-                                            b Text Editor : 
-                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-texteditor--primary' target='_blank' alt='Text editor')
+                                            b TextEditor : 
+                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-texteditor--primary' target='_blank' alt='Text Editor')
+                                              img(style='\
+                                              width: 14px;\
+                                              height: 14px;\
+                                              ' src='https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png')
+                                            ul(style='\
+                                            padding: 0;\
+                                            margin-bottom: 10px;\
+                                            ')
+                                              li(style='margin-top: 4px;')
+                                                b toolbarItems : 
+                                                |  Allows management of the items in the toolbar.
+                                              li(style='margin-top: 4px;')
+                                                b hasError :
+                                                |    Adds an error class to the TextEditor.
+                                              li(style='margin-top: 4px;')
+                                                b isDisabled :
+                                                |   Adds a disabled class to the TextEditor.
+                                          li(style='margin-left: 15px')
+                                            b Select : 
+                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-form-select--primary' target='_blank' alt='Select')
                                               img(style='\
                                               width: 14px;\
                                               height: 14px;\
@@ -187,7 +217,11 @@ margin: auto;\
                                             margin-bottom: 10px;\
                                             ')
                                               li
-                                                | TextEditor have been added.
+                                                b onChange
+                                                |  callback now receives one additional parameter: 
+                                                br
+                                                b selectedOptionData : 
+                                                |   Provides data of all the options that were selected.
                                     tr
                                       td.feature-heading(style='text-align: center')
                                         img(style='\
@@ -214,8 +248,8 @@ margin: auto;\
                                         color: #1c2433;\
                                         ')
                                           li(style='margin-left: 15px')
-                                            b File Upload : 
-                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-form-fileupload--custom-notification' target='_blank' alt='File upload')
+                                            b Tag : 
+                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-actions-tag--primary' target='_blank' alt='Tag')
                                               img(style='\
                                               width: 14px;\
                                               height: 14px;\
@@ -225,11 +259,42 @@ margin: auto;\
                                             margin-bottom: 10px;\
                                             ')
                                               li
-                                                b onError
-                                                |  prop has been
-                                                |                                                     added to receive the file
-                                                |                                                     upload error when using
-                                                |                                                     custom notifications.
+                                                | The 
+                                                b size
+                                                |  prop now works correctly with tags that have 
+                                                b hasPopover
+                                                |  set to true
+                                          li(style='margin-left: 15px')
+                                            b Checkbox : 
+                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-form-checkbox--primary' target='_blank' alt='checkbox')
+                                              img(style='\
+                                              width: 14px;\
+                                              height: 14px;\
+                                              ' src='https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png')
+                                            ul(style='\
+                                            padding: 0;\
+                                            margin-bottom: 10px;\
+                                            ')
+                                              li
+                                                | Fixed the issue where the 
+                                                b onChange
+                                                |  callback was triggered twice.
+                                          li(style='margin-left: 15px')
+                                            b TextEditor : 
+                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-texteditor--primary' target='_blank' alt='TextEditor')
+                                              img(style='\
+                                              width: 14px;\
+                                              height: 14px;\
+                                              ' src='https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png')
+                                            ul(style='\
+                                            padding: 0;\
+                                            margin-bottom: 10px;\
+                                            ')
+                                              li
+                                                b onChange : 
+                                                |  Class names and extra tags are now removed from the string received by this callback.
+                            tr
+                              td
                       td.mob-paddding(style='\
                       font-size: 14px;\
                       line-height: 20px;\
@@ -240,11 +305,10 @@ margin: auto;\
                       padding: 0px 40px 40px 40px;\
                       ')
                         | Please visit our storybook&nbsp;
-                        a(target='_blank' style='text-decoration: none; color: #0769d9' href='https://ounce-storybook.cifapps.com/')
-                          | URL
-                        |                             for a more detailed look at these changes. If you
-                        |                             have any questions, feedback, or suggestions, please
-                        |                             open an issue in our&nbsp;
+                        a(target='_blank' style='text-decoration: none; color: #0769d9' href='https://ounce-storybook.cifapps.com/') URL
+                        |                         for a more detailed look at these changes. If you have
+                        |                         any questions, feedback, or suggestions, please open an
+                        |                         issue in our&nbsp;
                         a(target='_blank' style='text-decoration: none; color: #0769d9' href='https://github.com/CedCommerce-Integration/Ounce/issues') GitHub repository
         table(cellspacing='0' cellpadding='0' style='\
         width: 100%;\
@@ -300,7 +364,7 @@ margin: auto;\
             ')
               | CedCommerce Inc, 1812 N Columbia Blvd,
               br
-              |                   Suite C15-653026, Portland, Oregon, 97217
+              |               Suite C15-653026, Portland, Oregon, 97217
           tr
             td(style='\
             width: 100%;\
