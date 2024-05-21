@@ -860,21 +860,17 @@ export const DataTableEmptyBody: any = ({ ...rest }) => {
   );
 };
 
-export function Documentation() {
-  return <DataTableDoc />;
-}
-
 const data = Array(100).fill(0).map((_, i) => (
   {
     key: i + 1,
     name: "name",
     age: "age",
-    gender : "Male",
-    address : "Adderss",
-    email : "examples@example.com",
-    phone : "9194565600",
-    income : "$1000+",
-    description : "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, natus."
+    gender: "Male",
+    address: "Adderss",
+    email: "examples@example.com",
+    phone: "9194565600",
+    income: "$1000+",
+    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, natus."
 
   }
 ))
@@ -950,12 +946,16 @@ export const DataTableWithSelection: any = ({ ...rest }) => {
           onSelectChange(newSelectedRow, type, currentRowSelectionChanged) {
             console.clear()
             console.log("newStatesOfAllCheckboxes =>", newSelectedRow)
-            console.log("typeOFSelection => " , type )
-            console.log("changed rows =>" , currentRowSelectionChanged)
+            console.log("typeOFSelection => ", type)
+            console.log("changed rows =>", currentRowSelectionChanged)
             setSelectedRowKeys(newSelectedRow)
           },
         }}
       />
     </Card>
   )
+}
+
+export function Documentation() {
+  return <DataTableDoc />;
 }
