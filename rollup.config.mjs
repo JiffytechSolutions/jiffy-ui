@@ -1,18 +1,20 @@
 import babel from "rollup-plugin-babel";
-import commonjs from "rollup-plugin-commonjs";
+import commonjs from '@rollup/plugin-commonjs';
 import images from "rollup-plugin-image-files";
 import resolve from "rollup-plugin-node-resolve";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import autoprefixer from "autoprefixer";
 import smartAsset from "rollup-plugin-smart-asset";
-import pkg from "./package.json";
-import json from "@rollup/plugin-json";
+// import pkg from "./package.json";
+import json from '@rollup/plugin-json';
 
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
 import { terser } from "rollup-plugin-terser";
 import copy from 'rollup-plugin-copy';
+
+import pkg from './package.json' assert { type: 'json' };
 
 export default [
   {
