@@ -1,67 +1,67 @@
-import { babel } from "@rollup/plugin-babel";
-import commonjs from "@rollup/plugin-commonjs";
+import babel from "rollup-plugin-babel";
 import images from "rollup-plugin-image-files";
-import { nodeResolve } from "@rollup/plugin-node-resolve";
+import resolve from "@rollup/plugin-node-resolve";
 import external from "rollup-plugin-peer-deps-external";
 import postcss from "rollup-plugin-postcss";
 import autoprefixer from "autoprefixer";
 import smartAsset from "rollup-plugin-smart-asset";
+import pkg from "./package.json";
 import json from "@rollup/plugin-json";
+
 import peerDepsExternal from "rollup-plugin-peer-deps-external";
 import typescript from "rollup-plugin-typescript2";
-import terser from "@rollup/plugin-terser";
-import copy from "rollup-plugin-copy";
-
-import pkg from "./package.json" assert { type: "json" };
+import { terser } from "rollup-plugin-terser";
+import copy from 'rollup-plugin-copy';
+import commonjs from "@rollup/plugin-commonjs";
 
 export default [
   {
     input: {
-      index: "src/index.ts",
-      icons: "src/icons.ts",
-      illustrations: "src/illustrations.ts"
+      index : "src/index.ts",
+      icons : "src/icons.ts",
+      illustrations:"src/illustrations.ts"
     },
     output: [
       {
         dir: "dist",
         entryFileNames: "[name].js",
         format: "es",
-        exports: "named"
+        exports: 'named',
       },
       {
         dir: "dist",
         entryFileNames: "[name].modern.js",
         format: "cjs",
-        exports: "named"
+        exports: 'named',
       },
       {
         dir: "dist",
         entryFileNames: "[name].js",
         format: "cjs",
-        exports: "named"
+        exports: 'named',
       },
       {
         dir: "dist",
         entryFileNames: "[name].js",
         format: "cjs",
-        exports: "named"
-      }
+        exports: 'named',
+      },
     ],
     external: [
       "react",
       "react-proptypes",
       ...Object.keys(pkg.dependencies || {}),
-      ...Object.keys(pkg.peerDependencies || {})
+      ...Object.keys(pkg.peerDependencies || {}),
     ],
     plugins: [
       json(),
       peerDepsExternal(),
       typescript({
         rollupCommonJSResolveHack: false,
-        clean: true
+        clean: true,
       }),
-      nodeResolve({
-        browser: true
+      resolve({
+        browser: true,
       }),
       commonjs({
         include: ["node_modules/**"],
@@ -70,15 +70,14 @@ export default [
             "Children",
             "Component",
             "PropTypes",
-            "createElement"
+            "createElement",
           ],
           "node_modules/react-dom/index.js": ["render"],
-          "react-dom": ["createPortal"]
-        }
+          "react-dom": ["createPortal"],
+        },
       }),
       babel({
         exclude: "node_modules/**",
-        babelHelpers: "bundled"
       }),
       postcss({
         plugins: [autoprefixer()].filter(Boolean),
@@ -87,11 +86,11 @@ export default [
         // used to modify the name of CSS Class
         // value [name]_[local]_[hash]
         modules: {
-          generateScopedName: "[local]"
+          generateScopedName: "[local]",
         },
         // only write out CSS for the first bundle (avoids pointless extra files):
         inject: false,
-        extract: "index.css"
+        extract: "index.css",
       }),
       smartAsset({
         url: "inline",
@@ -99,7 +98,7 @@ export default [
         keepName: true,
         keepImport: true,
         assetsPath: "/assets",
-        publicPath: "./assets"
+        publicPath: "./assets",
       }),
       external(),
       images(),
@@ -107,9 +106,9 @@ export default [
       copy({
         targets: [
           // Define the font files you want to copy
-          { src: "src/assets/fonts/*", dest: "dist/assets/fonts" }
+          { src: 'src/assets/fonts/*', dest: 'dist/assets/fonts' }
         ]
       })
-    ]
-  }
+    ],
+  },
 ];

@@ -27,6 +27,6 @@
     "build",
     "ounce-demo/src/dist",
     "ounce-demo",
-    "rollup.config.mjs"
+    "rollup.config.js"
   ]
 }

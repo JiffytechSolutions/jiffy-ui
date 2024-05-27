@@ -7,7 +7,7 @@ export type VirtualSelectI = {
   onChange?: (e: any , selectedOptionsData:any) => void;
   onInputChange?: (e: any) => void;
   isRequired?: boolean;
-  label?: string;
+  label?: React.ReactNode;
   placeholder?: string;
   helpText?: string;
   helpIcon?: React.ReactNode;
