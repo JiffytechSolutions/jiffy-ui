@@ -159,53 +159,6 @@ margin: auto;\
                                         color: #1c2433;\
                                         ')
                                           li(style='margin-left: 15px')
-                                            b DataTable : 
-                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-datatable-and-list-datatable--data-table-with-selection' target='_blank' alt='DataTable')
-                                              img(style='\
-                                              width: 14px;\
-                                              height: 14px;\
-                                              ' src='https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png')
-                                            ul(style='\
-                                            padding: 0;\
-                                            margin-bottom: 10px;\
-                                            ')
-                                              li
-                                                | In the 
-                                                b rowSelection
-                                                |  object, the 
-                                                b onSelect
-                                                |   callback now receives two additional parameters:
-                                                ol(style='\
-                                                padding: 0;\
-                                                margin-bottom: 10px;\
-                                                ')
-                                                  li(style='margin-top: 4px;')
-                                                    b selectionType :
-                                                    |  Indicates the type of selection (i.e., &quot;all&quot; or &quot;single&quot;).
-                                                  li(style='margin-top: 4px;')
-                                                    b currentRowSelectionChanged :
-                                                    |  Provides the checkboxes whose state is affected by the selection change.
-                                          li(style='margin-left: 15px')
-                                            b TextEditor : 
-                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-texteditor--primary' target='_blank' alt='Text Editor')
-                                              img(style='\
-                                              width: 14px;\
-                                              height: 14px;\
-                                              ' src='https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png')
-                                            ul(style='\
-                                            padding: 0;\
-                                            margin-bottom: 10px;\
-                                            ')
-                                              li(style='margin-top: 4px;')
-                                                b toolbarItems : 
-                                                |  Allows management of the items in the toolbar.
-                                              li(style='margin-top: 4px;')
-                                                b hasError :
-                                                |    Adds an error class to the TextEditor.
-                                              li(style='margin-top: 4px;')
-                                                b isDisabled :
-                                                |   Adds a disabled class to the TextEditor.
-                                          li(style='margin-left: 15px')
                                             b Select : 
                                             a(href='https://ounce-storybook.cifapps.com/?path=/story/components-form-select--primary' target='_blank' alt='Select')
                                               img(style='\
@@ -217,11 +170,10 @@ margin: auto;\
                                             margin-bottom: 10px;\
                                             ')
                                               li
-                                                b onChange
-                                                |  callback now receives one additional parameter: 
-                                                br
-                                                b selectedOptionData : 
-                                                |   Provides data of all the options that were selected.
+                                                | The 
+                                                b label
+                                                |  prop can now accept 
+                                                b React.ReactNode
                                     tr
                                       td.feature-heading(style='text-align: center')
                                         img(style='\
@@ -248,8 +200,8 @@ margin: auto;\
                                         color: #1c2433;\
                                         ')
                                           li(style='margin-left: 15px')
-                                            b Tag : 
-                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-actions-tag--primary' target='_blank' alt='Tag')
+                                            b AnimatingIllustration : 
+                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-layout-animatingillustration--primary' target='_blank' alt='TextEditor')
                                               img(style='\
                                               width: 14px;\
                                               height: 14px;\
@@ -259,40 +211,9 @@ margin: auto;\
                                             margin-bottom: 10px;\
                                             ')
                                               li
-                                                | The 
-                                                b size
-                                                |  prop now works correctly with tags that have 
-                                                b hasPopover
-                                                |  set to true
-                                          li(style='margin-left: 15px')
-                                            b Checkbox : 
-                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-form-checkbox--primary' target='_blank' alt='checkbox')
-                                              img(style='\
-                                              width: 14px;\
-                                              height: 14px;\
-                                              ' src='https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png')
-                                            ul(style='\
-                                            padding: 0;\
-                                            margin-bottom: 10px;\
-                                            ')
-                                              li
-                                                | Fixed the issue where the 
-                                                b onChange
-                                                |  callback was triggered twice.
-                                          li(style='margin-left: 15px')
-                                            b TextEditor : 
-                                            a(href='https://ounce-storybook.cifapps.com/?path=/story/components-texteditor--primary' target='_blank' alt='TextEditor')
-                                              img(style='\
-                                              width: 14px;\
-                                              height: 14px;\
-                                              ' src='https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png')
-                                            ul(style='\
-                                            padding: 0;\
-                                            margin-bottom: 10px;\
-                                            ')
-                                              li
-                                                b onChange : 
-                                                |  Class names and extra tags are now removed from the string received by this callback.
+                                                | Resolved the issue where the 
+                                                b AnimationIllustration 
+                                                |  component previously threw an error.
                             tr
                               td
                       td.mob-paddding(style='\

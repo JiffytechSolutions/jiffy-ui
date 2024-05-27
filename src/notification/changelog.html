@@ -137,7 +137,7 @@
                           font-weight: 600;
                         "
                       >
-                        <div style="text-align: right"><b>Version 3.1.1</b></div>
+                        <div style="text-align: right"><b>Version 3.1.2</b></div>
                         <div style="margin-top: 20px">Dear user,</div>
                       </td>
                       <td
@@ -219,63 +219,6 @@
                                             "
                                           >
                                             <li style="margin-left: 15px">
-                                              <b>DataTable : </b
-                                              ><a
-                                                href="https://ounce-storybook.cifapps.com/?path=/story/components-datatable-and-list-datatable--data-table-with-selection"
-                                                target="_blank"
-                                                alt="DataTable"
-                                                ><img
-                                                  style="
-                                                    width: 14px;
-                                                    height: 14px;
-                                                  "
-                                                  src="https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png"
-                                              /></a>
-                                              <ul
-                                                style="
-                                                  padding: 0;
-                                                  margin-bottom: 10px;
-                                                "
-                                              >
-                                                <li>
-                                                  In the <b>rowSelection</b> object, the <b>onSelect</b>  callback now receives two additional parameters:
-                                                  <ol style="
-                                                  padding: 0;
-                                                  margin-bottom: 10px;
-                                                ">
-                                                    <li style="margin-top: 4px;"><b>selectionType :</b> Indicates the type of selection (i.e., "all" or "single").</li>
-                                                    <li style="margin-top: 4px;"><b>currentRowSelectionChanged :</b> Provides the checkboxes whose state is affected by the selection change. </li>
-                                                  </ol>
-                                                </li>
-                                              </ul>
-                                            </li>
-                                            <li style="margin-left: 15px">
-                                                <b>TextEditor : </b
-                                                ><a
-                                                    href="https://ounce-storybook.cifapps.com/?path=/story/components-texteditor--primary"
-                                                    target="_blank"
-                                                    alt="Text Editor"
-                                                    ><img
-                                                    style="
-                                                        width: 14px;
-                                                        height: 14px;
-                                                    "
-                                                    src="https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png"
-                                                /></a>
-                                                <ul
-                                                style="
-                                                  padding: 0;
-                                                  margin-bottom: 10px;
-                                                "
-                                              >
-                                                <li style="margin-top: 4px;">
-                                                  <b>toolbarItems : </b> Allows management of the items in the toolbar.
-                                                </li>
-                                                <li style="margin-top: 4px;"><b>hasError :</b>   Adds an error class to the TextEditor.</li>
-                                                <li style="margin-top: 4px;"><b>isDisabled :</b>  Adds a disabled class to the TextEditor.</li>
-                                              </ul>
-                                            </li>
-                                            <li style="margin-left: 15px">
                                                 <b>Select : </b
                                                 ><a
                                                     href="https://ounce-storybook.cifapps.com/?path=/story/components-form-select--primary"
@@ -295,8 +238,7 @@
                                                 "
                                               >
                                                 <li>
-                                                  <b>onChange</b> callback now receives one additional parameter: <br>
-                                                  <b>selectedOptionData : </b>  Provides data of all the options that were selected.
+                                                  The <b>label</b> prop can now accept <b>React.ReactNode</b>
                                                 </li>
                                               </ul>
                                             </li>
@@ -342,57 +284,9 @@
                                           "
                                         >
                                           <li style="margin-left: 15px">
-                                            <b>Tag : </b
+                                            <b>AnimatingIllustration : </b
                                             ><a
-                                              href="https://ounce-storybook.cifapps.com/?path=/story/components-actions-tag--primary"
-                                              target="_blank"
-                                              alt="Tag"
-                                              ><img
-                                                style="
-                                                  width: 14px;
-                                                  height: 14px;
-                                                "
-                                                src="https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png"
-                                            /></a>
-                                            <ul
-                                              style="
-                                                padding: 0;
-                                                margin-bottom: 10px;
-                                              "
-                                            >
-                                              <li>
-                                                The <b>size</b> prop now works correctly with tags that have <b>hasPopover</b> set to true 
-                                              </li>
-                                            </ul>
-                                          </li>
-                                          <li style="margin-left: 15px">
-                                            <b>Checkbox : </b
-                                            ><a
-                                              href="https://ounce-storybook.cifapps.com/?path=/story/components-form-checkbox--primary"
-                                              target="_blank"
-                                              alt="checkbox"
-                                              ><img
-                                                style="
-                                                  width: 14px;
-                                                  height: 14px;
-                                                "
-                                                src="https://i.postimg.cc/pdYdRCBf/output-onlinepngtools-3.png"
-                                            /></a>
-                                            <ul
-                                              style="
-                                                padding: 0;
-                                                margin-bottom: 10px;
-                                              "
-                                            >
-                                              <li>
-                                                Fixed the issue where the <b>onChange</b> callback was triggered twice.
-                                              </li>
-                                            </ul>
-                                          </li>
-                                          <li style="margin-left: 15px">
-                                            <b>TextEditor : </b
-                                            ><a
-                                              href="https://ounce-storybook.cifapps.com/?path=/story/components-texteditor--primary"
+                                              href="https://ounce-storybook.cifapps.com/?path=/story/components-layout-animatingillustration--primary"
                                               target="_blank"
                                               alt="TextEditor"
                                               ><img
@@ -409,7 +303,7 @@
                                               "
                                             >
                                               <li>
-                                                <b>onChange : </b> Class names and extra tags are now removed from the string received by this callback.
+                                                Resolved the issue where the <b>AnimationIllustration </b> component previously threw an error.
                                               </li>
                                             </ul>
                                           </li>
