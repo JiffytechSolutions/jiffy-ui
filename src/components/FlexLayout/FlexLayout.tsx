@@ -200,7 +200,7 @@ const FlexLayout: React.FC<FlexLayoutI> = ({
 
   const childrens: any = React.Children.toArray(children);
   const newChildrens = childrens.map((children: any, index: string) => {
-    if (children.props && children.props?.__TYPE === "FlexChild") {
+    if (children.props && children?.type?.displayName === "FlexChild") {
       return children;
     } else {
       return <FlexChild key={index}>{children}</FlexChild>;
