@@ -499,6 +499,8 @@ const SimpleSelect = ({
       const isSelectedOption = Array.isArray(selectedValues)
         ? selectedValues.some((i) => i.value === opt?.value)
         : selectedValues.value === opt?.value;
+
+      const label = opt.onRender ? opt.onRender(opt) : opt.label
       return (
         <li
           role={"option"}
@@ -543,7 +545,7 @@ const SimpleSelect = ({
             </span>
           )}
           <div className={`inte-select__itemInner`}>
-            <span>{opt.label}</span>
+            <span>{label}</span>
             {opt.description && <span>{opt.description}</span>}
           </div>
         </li>
@@ -584,6 +586,7 @@ const SimpleSelect = ({
     const isSelectedOption = Array.isArray(selectedValues)
       ? selectedValues.some((option) => option.value === item?.value)
       : selectedValues.value === item?.value;
+    const label = item.onRender ? item.onRender(item) : item.label
     return (
       <li
         role={"option"}
@@ -627,7 +630,7 @@ const SimpleSelect = ({
           {item._isNew_ ? (
             <span>Create "{item.label}"</span>
           ) : (
-            <span className="demo">{item.label}</span>
+            <span className="demo">{label}</span>
           )}
           {item.description && <span>{item.description}</span>}
         </div>

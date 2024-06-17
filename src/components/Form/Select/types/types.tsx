@@ -28,9 +28,9 @@ export interface SimpleObjI {
   value: string | number;
   description?: string;
   isDisabled?: boolean;
+  onRender?:(optionData : SimpleObjI) => React.ReactNode;
 }
 export interface GroupedObjI {
   label: string;
-
   group: SimpleObjI[];
 }
