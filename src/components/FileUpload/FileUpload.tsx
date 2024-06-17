@@ -25,6 +25,7 @@ const FileUpload = ({
   },
   clearAll = false,
   customNotification,
+  ...props
 }: UploadI) => {
   const [filesData, setFilesData] = useState<any | null>([]);
   const [isDragOver, setIsDragOver] = useState(false);
@@ -263,8 +264,8 @@ const FileUpload = ({
                 <div className="inte-fileUpload__uploadText">
                   {innerLabel || (
                     <>
-                      <span>Click to upload</span>
-                      <span> or drag and drop</span>
+                      <span>{props.internalText ? props.internalText["Click to upload"] : "Click to upload"}</span>
+                      <span>{props.internalText ? props.internalText["or drag and drop"] : "or drag and drop"}</span>
                     </>
                   )}
                 </div>
@@ -330,8 +331,8 @@ const FileUpload = ({
                 <div className="inte-fileUpload__uploadText">
                   {innerLabel || (
                     <>
-                      <span>Click to upload</span>
-                      <span> or drag and drop</span>
+                      <span>{props.internalText ? props.internalText["Click to upload"] : "Click to upload"}</span>
+                      <span>{props.internalText ? props.internalText["or drag and drop"] : "or drag and drop"}</span>
                     </>
                   )}
                 </div>
@@ -363,7 +364,7 @@ const FileUpload = ({
           {clearAll && (
             <div className="inte-fileUpload__clearWrapper">
               <Text fontweight="bold" type="T-7">
-                Uploaded File
+                {props.internalText ? props.internalText["Uploaded File"] : "Uploaded File"}
               </Text>
               <TextLink label="Clear all" onClick={() => setFilesData([])} />
             </div>
@@ -403,5 +404,10 @@ export interface UploadI {
   onError?: (errorData: any, message: string) => void;
   onRemove?: (e: any) => void;
   customClass?: string;
+  internalText?: {
+    "Click to upload" : string;
+    "Uploaded File" : string;
+    "or drag and drop" : string
+  }
 }
 export default FileUpload;

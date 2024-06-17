@@ -182,6 +182,7 @@ const Template = ({ ...rest }) => {
   return (
     <Card>
       <Pagination
+        {...rest}
         type={rest.type}
         currentPage={currentPage}
         countPerPage={countPerPage}
