@@ -19,6 +19,7 @@ export interface PaginationI {
   onPageChange: (onPage: number) => void;
   optionPerPage?: Array<ObjI> | any;
   customClass?: string;
+  internalText?:{go : string}
 }
 
 interface ObjI {
@@ -49,6 +50,7 @@ const Pagination: React.FC<PaginationI> = ({
   onPageChange = () => {
     //
   },
+  ...props
 }: PaginationI) => {
   const [value, setValue] = useState<any>("");
   const totalPageCount = Math.ceil(totalitem / countPerPage);
@@ -257,7 +259,7 @@ const Pagination: React.FC<PaginationI> = ({
 
             <Button
               icon={<ChevronRight size={20} color="currentColor" />}
-              content="Go"
+              content={props.internalText ? props.internalText.go : "Go"}
               iconAlign="right"
               type="textButton"
               onClick={() => {

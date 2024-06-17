@@ -90,7 +90,7 @@ function PageHeader({
                 size="large"
                 type="outlined"
                 onClick={() => setActive(!active)}
-                content="More Actions"
+                content={props.internalText ? props.internalText["More Actions"] : "More Actions"}
                 isFullWidth={true}
                 halign="center"
               ></Button>
@@ -148,7 +148,7 @@ function PageHeader({
                       type="outlined"
                       size="large"
                       onClick={() => setActive(!active)}
-                      content="More Action"
+                      content={props.internalText ? props.internalText["More Actions"] : "More Actions"}
                       disclosure
                     ></Button>
                   }
@@ -253,6 +253,7 @@ export interface PageHeaderI {
   isSticky?: boolean;
   isEmbededView?: boolean;
   customClass?: string;
+  internalText?:{['More Actions'] : string}
 }
 
 export default PageHeader;
