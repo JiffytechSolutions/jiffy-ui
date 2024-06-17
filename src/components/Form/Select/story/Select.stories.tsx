@@ -7,6 +7,7 @@ import { GroupedObjI, SimpleObjI } from "../types/types";
 import Select from "../Select";
 import { FlexLayout } from "../../../FlexLayout";
 import Button from "../../../Button/Button";
+import Tag from "../../../Tag/Tag";
 
 const allIcons: any = { ...Icon };
 export default {
@@ -20,7 +21,7 @@ export default {
   },
   argTypes: {
     options: {
-      description: `<div><strong>Simple or Multidimensional array:-</strong></div><i>Accepted key value pairs in simple Data:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>label <span style="color:red">*</span></td><td>label(String)</td></tr><tr><td>value <span style="color:red">*</span></td><td>value(String | Number)</td></tr><tr><td>description</td><td>description(String)</td></tr><tr><td>isDisabled</td><td>isDisabled(Boolean)</td></tr></tbody></table><br/><i>Accepted key value pairs in grouped data:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>label <span style="color:red">*</span></td><td>label(String)</td></tr><tr><td>group <span style="color:red">*</span></td><td><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>label <span style="color:red">*</span></td><td>label(String)</td></tr><tr><td>value <span style="color:red">*</span></td><td>value(String | Number)</td></tr><tr><td>description</td><td>description(String)</td></tr><tr><td>isDisabled</td><td>isDisabled(Boolean)</td></tr></tbody></table></td></tr></tbody></table>`,
+      description: `<div><strong>Simple or Multidimensional array:-</strong></div><i>Accepted key value pairs in simple Data:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>label <span style="color:red">*</span></td><td>label(String)</td></tr><tr><td>value <span style="color:red">*</span></td><td>value(String | Number)</td></tr><tr><td>description</td><td>description(String)</td></tr><tr><td>isDisabled</td><td>isDisabled(Boolean)</td></tr><tr><td>onRender</td><td>(optionData) => React.ReactNode</td></tr></tbody></table><br/><i>Accepted key value pairs in grouped data:</i><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>label <span style="color:red">*</span></td><td>label(String)</td></tr><tr><td>group <span style="color:red">*</span></td><td><table bgcolor="#f5f5f5"><thead><tr><th>key</th><th>value</th></tr></thead><tbody><tr><td>label <span style="color:red">*</span></td><td>label(String)</td></tr><tr><td>value <span style="color:red">*</span></td><td>value(String | Number)</td></tr><tr><td>description</td><td>description(String)</td></tr><tr><td>isDisabled</td><td>isDisabled(Boolean)</td></tr><tr><td>onRender</td><td>(optionData) => React.ReactNode</td></tr></tbody></table></td></tr></tbody></table>`,
       control: {
         type: "array",
       },
@@ -219,9 +220,12 @@ export default {
 
 const simpleOptions: SimpleObjI[] = [
   {
-    label: "Afghanistan",
+    label: "CustomLabel",
     value: "AF",
     description: "Lorem ipsum dolor sit amet, consectetur",
+    onRender:(data) => {
+      return <>{data.label} <Tag>Approved</Tag></>
+    }
   },
   { label: "Åland Islands", value: "AX" },
   { label: "Albania", value: "AL" },
@@ -251,9 +255,13 @@ const groupOptions: GroupedObjI[] = [
   {
     label: "This is Colors Heading",
     group: [
-      { value: "ocean", label: "Ocean" },
+      { value: "ocean", label: "Ocean" , onRender:(data) => {
+        return <>{data.label} <Tag>Approved</Tag></>
+      } },
       { value: "blue", label: "Blue" },
-      { value: "purple", label: "Purple" },
+      { value: "purple", label: "Purple", onRender:(data) => {
+        return <>{data.label} <Tag>Not Approved</Tag></>
+      }  },
       { value: "red", label: "Red" },
       { value: "orange", label: "Orange" },
       { value: "yellow", label: "Yellow" },
