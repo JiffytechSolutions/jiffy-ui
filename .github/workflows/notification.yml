@@ -57,24 +57,23 @@ jobs:
       # Fetch collaborators from GitHub repository
       - name: Fetch collaborators
         if: contains(fromJSON('["registry_package"]'), github.event_name)
-        run: echo "users=$(node src/notification/main --call=fetch_collaborators --owner=${{ github.repository_owner }} --url=${{ github.repositoryUrl }} --token=${{ secrets.ACCESS_TOKEN }})" >> "$GITHUB_ENV"
+        run: echo "users_bcc=$(node src/notification/main --call=fetch_collaborators --owner=${{ github.repository_owner }} --url=${{ github.repositoryUrl }} --token=${{ secrets.ACCESS_TOKEN }})" >> "$GITHUB_ENV"
 
       # Setup recipients for email
       - name: Setup recipients
         if: ${{ contains(fromJSON('["registry_package"]'), github.event_name) && env.GLOBAL_EMAIL }}
         run: |
-          str=$(echo "${{ env.GLOBAL_EMAIL }},${{ env.users }}" |sed 's/,$//')
-          echo "users=$str" >> "$GITHUB_ENV"
+          echo "users_to=${{ env.GLOBAL_EMAIL }}" >> "$GITHUB_ENV"
 
       # Setup recipients for preview email
       - name: Setup preview recipients
         if: ${{ contains(fromJSON('["workflow_dispatch"]'), github.event_name) && env.PREVIEW_EMAIL }}
         run: |
-          echo "users=${{ env.PREVIEW_EMAIL }}" >> "$GITHUB_ENV"
+          echo "users_to=${{ env.PREVIEW_EMAIL }}" >> "$GITHUB_ENV"
 
       # Send email via gmail SMTP
       - name: Send mail
-        if: ${{ env.users }}
+        if: ${{ env.users_to }}
         uses: dawidd6/action-send-mail@v3
         with:
           # Required mail server address if not connection_url:
@@ -90,8 +89,10 @@ jobs:
           # Required mail subject:
           subject: Ounce release
           # Required recipients' addresses:
-          to: ${{ env.users }}
+          to: ${{ env.users_to }}
+          # Optional blind carbon copy recipients:
+          bcc: ${{ env.users_bcc }}
           # Required sender full name (address can be skipped):
-          from: Ankush Katiyar
+          from: Design Team
           # Optional HTML body read from file:
           html_body: file://template.html
