@@ -19,7 +19,7 @@ export interface PaginationI {
   onPageChange: (onPage: number) => void;
   optionPerPage?: Array<ObjI> | any;
   customClass?: string;
-  internalText?:{go : string}
+  internalText?:{go : string , of : string}
 }
 
 interface ObjI {
@@ -152,7 +152,7 @@ const Pagination: React.FC<PaginationI> = ({
                 : pageReplica == 0
                 ? 1 * countPerPage
                 : pageReplica * countPerPage}{" "}
-              of {totalitem}
+              {props.internalText?.of ? props.internalText.of : "of"} {totalitem}
             </div>
           )}
         </div>
@@ -179,7 +179,7 @@ const Pagination: React.FC<PaginationI> = ({
           {type == "fullLength" && width < 768 && (
             <div className="inte-pagination__showCurrentLastPage">
               <Text type="T-7" textcolor="subdued">
-                {totalitem === 0 ? 0 : currentPage} of{" "}
+                {totalitem === 0 ? 0 : currentPage} {props.internalText?.of ? props.internalText.of : "of"}{" "}
                 {totalitem === 0 ? 0 : lastPage}
               </Text>
             </div>
