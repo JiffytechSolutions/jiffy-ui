@@ -3,42 +3,28 @@
 /**Font Inclusions**/
 @font-face {
   font-family: "Averta-CY";
-  src: url("assets/fonts/AvertaCY-Regular.eot");
-  src: url("assets/fonts/AvertaCY-Regular.eot?#iefix")
-      format("embedded-opentype"),
-    url("assets/fonts/AvertaCY-Regular.woff2") format("woff2"),
-    url("assets/fonts/AvertaCY-Regular.woff") format("woff"),
-    url("assets/fonts/AvertaCY-Regular.ttf") format("truetype"),
-    url("assets/fonts/AvertaCY-Regular.svg#AvertaCY-Regular") format("svg");
+  src: url("assets/fonts/AvertaCY-Regular.woff2") format("woff2"),
+    url("assets/fonts/AvertaCY-Regular.woff") format("woff");
+  font-style: normal;
   font-weight: 500;
-  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Averta-CY";
-  src: url("assets/fonts/AvertaCY-Semibold.eot");
-  src: url("assets/fonts/AvertaCY-Semibold.eot?#iefix")
-      format("embedded-opentype"),
-    url("assets/fonts/AvertaCY-Semibold.woff2") format("woff2"),
-    url("assets/fonts/AvertaCY-Semibold.woff") format("woff"),
-    url("assets/fonts/AvertaCY-Semibold.ttf") format("truetype"),
-    url("assets/fonts/AvertaCY-Semibold.svg#AvertaCY-Semibold") format("svg");
+  src: url("assets/fonts/AvertaCY-Semibold.woff2") format("woff2"),
+    url("assets/fonts/AvertaCY-Semibold.woff") format("woff");
+  font-style: normal;
   font-weight: 600;
-  font-style: normal;
   font-display: swap;
 }
 
 @font-face {
   font-family: "Averta-CY";
-  src: url("assets/fonts/AvertaCY-Bold.eot");
-  src: url("assets/fonts/AvertaCY-Bold.eot?#iefix") format("embedded-opentype"),
-    url("assets/fonts/AvertaCY-Bold.woff2") format("woff2"),
-    url("assets/fonts/AvertaCY-Bold.woff") format("woff"),
-    url("assets/fonts/AvertaCY-Bold.ttf") format("truetype"),
-    url("assets/fonts/AvertaCY-Bold.svg#AvertaCY-Bold") format("svg");
-  font-weight: 700;
+  src: url("assets/fonts/AvertaCY-Bold.woff2") format("woff2"),
+    url("assets/fonts/AvertaCY-Bold.woff") format("woff");
   font-style: normal;
+  font-weight: 700;
   font-display: swap;
 }
 
