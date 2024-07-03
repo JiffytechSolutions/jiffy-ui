@@ -242,14 +242,17 @@ const vertical_align = ["start", "center", "end", "stretch"];
 export const Children_vertical_align: any = Template.bind({});
 Children_vertical_align.decorators = [
   () => (
-    <FlexLayout
+   <Card>
+     <FlexLayout
       desktopWidth="50"
       tabWidth="50"
       mobileWidth="100"
       spacing="loose"
+      wrap="wrap"
     >
-      {vertical_align.map((valign: any) => (
+      {vertical_align.map((valign: any,ind:any) => (
         <Card
+        key={ind}
           cardType="bordered"
           title={valign.charAt(0).toUpperCase() + valign.slice(1).toLowerCase()}
         >
@@ -263,6 +266,7 @@ Children_vertical_align.decorators = [
         </Card>
       ))}
     </FlexLayout>
+   </Card>
   ),
 ];
 // Halign
@@ -278,14 +282,17 @@ const horizontal_align = [
 export const Children_horizontal_align: any = Template.bind({});
 Children_horizontal_align.decorators = [
   () => (
-    <FlexLayout
+    <Card>
+       <FlexLayout
       desktopWidth="50"
       tabWidth="50"
       mobileWidth="100"
       spacing="loose"
+      wrap="wrap"
     >
-      {horizontal_align.map((halign: any) => (
+      {horizontal_align.map((halign: any,ind:any) => (
         <Card
+         key={ind}
           cardType="bordered"
           title={halign.charAt(0).toUpperCase() + halign.slice(1).toLowerCase()}
         >
@@ -297,6 +304,7 @@ Children_horizontal_align.decorators = [
         </Card>
       ))}
     </FlexLayout>
+    </Card>
   ),
 ];
 // spacing
@@ -333,14 +341,17 @@ const spacing = [
 export const Children_Spacing: any = Template.bind({});
 Children_Spacing.decorators = [
   () => (
-    <FlexLayout
+   <Card>
+     <FlexLayout
       desktopWidth="50"
       tabWidth="50"
       mobileWidth="100"
       spacing="loose"
+      wrap="wrap"
     >
-      {spacing.map((spacing: any) => (
+      {spacing.map((spacing: any,ind:any) => (
         <Card
+          key={ind}
           cardType="bordered"
           title={
             spacing.name.charAt(0).toUpperCase() +
@@ -355,6 +366,7 @@ Children_Spacing.decorators = [
         </Card>
       ))}
     </FlexLayout>
+   </Card>
   ),
 ];
 // direction
@@ -363,14 +375,17 @@ const direction = ["none", "horizontal", "horizontal-reverse", "vertical", "vert
 export const Children_direction: any = Template.bind({});
 Children_direction.decorators = [
   () => (
-    <FlexLayout
+    <Card>
+      <FlexLayout
       desktopWidth="50"
       tabWidth="50"
       mobileWidth="100"
       spacing="loose"
+      wrap="wrap"
     >
-      {direction.map((direction: any) => (
+      {direction.map((direction: any,ind:any) => (
         <Card
+          key={ind}
           cardType="bordered"
           title={
             direction.charAt(0).toUpperCase() + direction.slice(1).toLowerCase()
@@ -384,6 +399,7 @@ Children_direction.decorators = [
         </Card>
       ))}
     </FlexLayout>
+    </Card>
   ),
 ];
 // desktopWidth
@@ -392,9 +408,11 @@ const desktopWidth = ["20", "25", "33", "50", "66", "75", "80", "100"];
 export const Children_Width: any = Template.bind({});
 Children_Width.decorators = [
   () => (
-    <FlexLayout direction="vertical" wrap="noWrap" spacing="loose">
-      {desktopWidth.map((desktopWidth: any) => (
+   <Card>
+     <FlexLayout direction="vertical" wrap="noWrap" spacing="loose">
+      {desktopWidth.map((desktopWidth: any,ind:any) => (
         <FlexChild
+          key={ind}
           desktopWidth={desktopWidth}
           tabWidth={desktopWidth}
           mobileWidth={desktopWidth}
@@ -403,6 +421,7 @@ Children_Width.decorators = [
         </FlexChild>
       ))}
     </FlexLayout>
+   </Card>
   ),
 ];
 // children width via parent
@@ -410,9 +429,11 @@ const parent_width = ["20", "25", "33", "50", "66", "75", "80", "100"];
 export const Children_width_Control_via_parent_width: any = Template.bind({});
 Children_width_Control_via_parent_width.decorators = [
   () => (
-    <FlexLayout direction="vertical" wrap="noWrap" spacing="loose">
-      {parent_width.map((desktopParent: any) => (
+    <Card>
+      <FlexLayout direction="vertical" wrap="noWrap" spacing="loose">
+      {parent_width.map((desktopParent: any,ind:any) => (
         <FlexLayout
+        key={ind}
           desktopWidth="100"
           tabWidth={desktopParent}
           mobileWidth={desktopParent}
@@ -422,5 +443,6 @@ Children_width_Control_via_parent_width.decorators = [
         </FlexLayout>
       ))}
     </FlexLayout>
+    </Card>
   ),
 ];
