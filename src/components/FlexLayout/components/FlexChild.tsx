@@ -75,9 +75,9 @@ const FlexChild: React.FC<FlexChildI> = ({
   );
 };
 
-// FlexChild.defaultProps = {
-//   __TYPE: "FlexChild",
-// };
+FlexChild.defaultProps = {
+  __TYPE: "FlexChild",
+};
 
 export interface FlexChildI {
   children: JSX.Element;
@@ -87,6 +87,6 @@ export interface FlexChildI {
   childWidth?: "fullWidth" | "none";
   customClass?: string,
   order?: string;
-  // __TYPE?: string;
+  __TYPE?: string;
 }
 export default FlexChild;
