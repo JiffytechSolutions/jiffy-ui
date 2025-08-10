@@ -1,0 +1,9 @@
+.color-box {
+    box-shadow: 2px 3px 3px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+.used-color {
+    border-bottom: 1px solid #e4e4e4;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}

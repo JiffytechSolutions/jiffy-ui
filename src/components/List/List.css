@@ -1,11 +1,108 @@
-.inte-list {
-    padding-left: 4rem;
-    margin: 0;
+ol,
+ul,
+.jiffyui-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
 }
-.inte-list li {
-    padding-bottom: 0.8rem;
-    list-style-type: inherit;
+
+.jiffyui-list .jiffyui-list--item {
+  font-size: 1.4rem;
+  line-height: 2.2rem;
+  margin-bottom: 0.8rem;
+  color: var(--jiffyui-naturalDark-900);
+  position: relative;
+  padding-left: 1.6rem;
 }
-.inte-list--withImage li {
-    list-style: unset;
+
+.jiffyui-olList--decimal__style {
+  --listStyleType: decimal;
+}
+
+.jiffyui-olList--roman__style {
+  --listStyleType: lower-roman;
+}
+
+.jiffyui-olList--alfabet__style {
+  --listStyleType: lower-alpha;
+}
+
+ol.jiffyui-list li.jiffyui-list--item::before {
+  margin-right: 1rem;
+  font-family: var(--jiffyui-medium-font);
+  color: var();
+  vertical-align: top;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.jiffyui-olList--decimal__style .jiffyui-olList--decimal {
+  counter-reset: listStyle;
+  list-style-type: none;
+}
+
+.jiffyui-olList--decimal__style .jiffyui-olList--decimal li {
+  counter-increment: listStyle;
+}
+
+.jiffyui-olList--decimal__style .jiffyui-olList--decimal li::before {
+  content: counter(listStyle, var(--listStyleType)) ".";
+}
+.jiffyui-unList--squire .jiffyui-list--item::before {
+  border: var(--jiffyui-borderWidth-thin) solid var(--jiffyui-naturalLight-700);
+}
+
+.jiffyui-olList--roman__style .jiffyui-olList--roman {
+  counter-reset: listStyle;
+  list-style-type: none;
+}
+
+.jiffyui-olList--roman__style .jiffyui-olList--roman li {
+  counter-increment: listStyle;
+}
+
+.jiffyui-olList--roman__style .jiffyui-olList--roman li::before {
+  content: counter(listStyle, var(--listStyleType)) ".";
+}
+
+.jiffyui-olList--alfabet__style .jiffyui-olList--alfabet {
+  counter-reset: listStyle;
+  list-style-type: none;
+}
+
+.jiffyui-olList--alfabet__style .jiffyui-olList--alfabet li {
+  counter-increment: listStyle;
+}
+
+.jiffyui-olList--alfabet__style .jiffyui-olList--alfabet li::before {
+  content: counter(listStyle, var(--listStyleType)) ".";
+}
+
+.jiffyui-list--unordered li.jiffyui-list--item::before {
+  content: '';
+  width: 0.7rem;
+  height: 0.7rem;
+  position: absolute;
+  left: 0;
+  top: 0.7rem;
+}
+
+.jiffyui-unList--disc .jiffyui-list--item::before {
+  background: var(--jiffyui-naturalLight-400);
+  border-radius: 100%;
+}
+
+.jiffyui-unList--squire .jiffyui-list--item::before {
+  border-radius: 0;
+  background-color: var(--jiffyui-borderWidth-thin);
+}
+
+.jiffyui-unList--circle .jiffyui-list--item::before {
+  border-radius: 100%;
+  border: var(--jiffyui-borderWidth-thin) solid var(--jiffyui-naturalLight-400);
+}
+
+.jiffyui-list--ordered .jiffyui-list--item {
+  padding-left: 1.8rem;
 }

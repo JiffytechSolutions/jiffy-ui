@@ -1,26 +1,22 @@
 import React from "react";
 import "./ButtonGroup.css";
-import getClassNames from "../../utilities/getClassnames";
-
-const ButtonGroup: React.FC<ButtonGroupI> = ({
-  segmented = false,
-  children,
-}: ButtonGroupI) => {
-  return (
-    <div
-      className={getClassNames({
-        "inte-buttonGroup": true,
-        "inte-buttonGroup--segmented": segmented
-      })}
-    >
-      {children}
-    </div>
-  );
-};
 
 export interface ButtonGroupI {
   segmented?: boolean;
-  children?: JSX.Element | React.ReactNode;
+  children: string | React.ReactNode;
+}
+
+const ButtonGroup = ({
+  segmented = true,
+  children,
+  ...props
+}: ButtonGroupI) => {
+
+  return (
+    <div className={`buttonGroup ${segmented ? "btn-segmented" : null}`}>
+      {children}
+    </div>
+  );
 }
 
 export default ButtonGroup;

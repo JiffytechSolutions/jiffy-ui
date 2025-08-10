@@ -1,94 +1,125 @@
-.inte-textLink {
+.pixel-textLink {
     display: inline-block;
     cursor: pointer;
 }
 
-.inte-textLink__label {
-    font-size: 1.6rem;
+.pixel-textLink__label {
+    font-size: 1.4rem;
     transition: 0.3s all;
-    color: var(--inte-B90);
+    color: var(--jiffyui-link-color);
     display: flex;
     align-items: center;
     gap: 0.4rem
 }
 
-.inte-textLink__label svg {
+.pixel-textLink__label svg {
     min-width: 16px;
     display: inline-block;
     vertical-align: baseline;
     align-items: center;
 }
 
-.inte-textLink__label:hover {
-    color: var(--inte-B100);
+.pixel-textLink__label:hover {
+    color: var(--jiffyui-link-hover-color);
     text-decoration: underline;
 }
 
-.inte-textLink__label:active {
-    color: var(--inte-P1100) !important;
+.pixel-textLink__label:active {
+    color: var(--jiffyui-link-hover-color) !important;
     text-decoration: underline;
 }
 
 /* Danger TextLink */
-.inte-textLink--danger .inte-textLink__label {
-    color: var(--inte-R200);
+.pixel-textLink--negative .pixel-textLink__label {
+    color: var(--jiffyui--negative-color);
     text-decoration: underline;
 }
 
-.inte-textLink--danger .inte-textLink__label:hover {
-    color: var(--inte-R400);
+.pixel-textLink--negative .pixel-textLink__label:hover {
+    color: var(--jiffyui--negative-hover-color);
     text-decoration: unset;
 }
 
-.inte-textLink--danger .inte-textLink__label:active {
-    color: var(--inte-R400) !important;
+.pixel-textLink--negative .pixel-textLink__label:active {
+    color: var(--jiffyui--negative-hover-color) !important;
     text-decoration: unset;
 }
 
-.inte--textLink--disabled.inte-textLink--danger .inte-textLink__label,
-.inte--textLink--disabled.inte-textLink--danger .inte-textLink__label:hover,
-.inte--textLink--disabled.inte-textLink--danger .inte-textLink__label:active {
-    color: var(--inte-R55) !important;
+.pixel--textLink--disabled.pixel-textLink--negative .pixel-textLink__label,
+.pixel--textLink--disabled.pixel-textLink--negative .pixel-textLink__label:hover,
+.pixel--textLink--disabled.pixel-textLink--negative .pixel-textLink__label:active {
+    color: var(--jiffyui--negative-hover-color) !important;
     text-decoration: unset;
+    opacity: 0.4;
 }
 
 /* Danger TextLink End */
 /* Warning TextLink */
-.inte-textLink--warning .inte-textLink__label {
-    color: var(--inte-Y700);
+.pixel-textLink--waiting .pixel-textLink__label {
+    color: var(--jiffyui--warning-color);
     text-decoration: underline;
 }
 
-.inte-textLink--warning .inte-textLink__label:hover {
-    color: var(--inte-Y800);
+.pixel-textLink--waiting .pixel-textLink__label:hover {
+    color: var(--jiffyui--warning-hover-color);
     text-decoration: unset;
 }
 
-.inte-textLink--warning .inte-textLink__label:active {
-    color: var(--inte-Y900) !important;
+.pixel-textLink--waiting .pixel-textLink__label:active {
+    color: var(--jiffyui--warning-hover-color) !important;
     text-decoration: unset;
 }
 
-.inte--textLink--disabled.inte-textLink--warning .inte-textLink__label,
-.inte--textLink--disabled.inte-textLink--warning .inte-textLink__label:hover,
-.inte--textLink--disabled.inte-textLink--warning .inte-textLink__label:active {
-    color: var(--inte-Y75) !important;
+.pixel--textLink--disabled.pixel-textLink--waiting .pixel-textLink__label,
+.pixel--textLink--disabled.pixel-textLink--waiting .pixel-textLink__label:hover,
+.pixel--textLink--disabled.pixel-textLink--waiting .pixel-textLink__label:active {
+    color: var(--jiffyui--warning-hover-color) !important;
     text-decoration: unset;
 }
+
+
 
 /* Warning TextLink End */
-.inte--textLink--disabled .inte-textLink__label,
-.inte--textLink--disabled .inte-textLink__label:hover,
-.inte--textLink--disabled .inte-textLink__label:active {
-    text-decoration: none;
-    color: var(--inte-B60) !important;
+
+
+/* Successs */
+/* Warning TextLink */
+.pixel-textLink--possitive .pixel-textLink__label {
+    color: var(--jiffyui--success-color);
+    text-decoration: underline;
 }
 
-.inte-textLink.inte--textLink--disabled {
+.pixel-textLink--possitive .pixel-textLink__label:hover {
+    color: var(--jiffyui--success-hover-color);
+    text-decoration: unset;
+}
+
+.pixel-textLink--possitive .pixel-textLink__label:active {
+    color: var(--jiffyui--success-hover-color) !important;
+    text-decoration: unset;
+}
+
+.pixel--textLink--disabled.pixel-textLink--possitive .pixel-textLink__label,
+.pixel--textLink--disabled.pixel-textLink--possitive .pixel-textLink__label:hover,
+.pixel--textLink--disabled.pixel-textLink--possitive .pixel-textLink__label:active {
+    color: var(--jiffyui--success-hover-color) !important;
+    text-decoration: unset;
+    opacity: 0.4;
+}
+
+.pixel--textLink--disabled .pixel-textLink__label,
+.pixel--textLink--disabled .pixel-textLink__label:hover,
+.pixel--textLink--disabled .pixel-textLink__label:active {
+    text-decoration: none;
+    color: var(--jiffyui--success-hover-color) !important;
+    opacity: 0.4;
+}
+
+.pixel-textLink.pixel--textLink--disabled {
     position: relative
 }
 
-.inte-textLink.inte--textLink--disabled::after {
+.pixel-textLink.pixel--textLink--disabled::after {
     content: '';
     width: 100%;
     height: 100%;

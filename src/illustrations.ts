@@ -1,1 +1,0 @@
-export * from "./storybook/Foundation/Illustration/Illustration"

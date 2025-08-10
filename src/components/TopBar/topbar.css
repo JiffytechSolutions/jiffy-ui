@@ -1,0 +1,58 @@
+
+
+.appBar__connectLeft {
+    display: flex;
+    gap: 1.6rem;
+}
+
+.Pixel-appBar--container {
+    padding: 2rem 2.4rem;
+  
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+ 
+}
+
+.Pixel-appBar--stickyTop {
+    position: sticky;
+    top: 0;
+}
+
+.Pixel-appBar__connectLeft {
+    display: flex;
+    gap: 1.2rem;
+}
+
+.Pixel-appBar__logoSection {
+    display: flex;
+}
+
+.Pixel-appBar__toggleButton {
+    display: none;
+
+}
+
+.jiffyui-mobile_toggle {
+    cursor: pointer;
+}
+
+.jiffyui-mobile_logo,
+.jiffyui-mobile_toggle {
+    display: none;
+}
+
+.jiffyui-mobile_toggle svg {
+    width: 35px;
+    color: #333;
+}
+
+@media (max-width: 1279px) {
+
+    .jiffyui-mobile_logo,
+    .jiffyui-mobile_toggle {
+        display: block;
+    }
+
+}

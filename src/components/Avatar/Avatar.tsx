@@ -1,182 +1,61 @@
-import React, { FC, useEffect, useState } from "react";
-import Badge from "../Badge/Badge";
-import getClassNames from "../../utilities/getClassnames";
+import React from "react";
 import "./Avatar.css";
-const Avatar: FC<AvatarI> = ({
-  text = "Jon Doe",
-  color = "primary",
-  size = "small",
-  image,
-  hasBadge = false,
-  animateLines,
-  customClass = "",
+import { User } from "react-feather";
+export interface AvatarI {
+  size: "Small" | "Medium" | "Large" | "Xlarge";
+  shape?: "Circle" | "Squire";
+  icon?: React.ReactNode;
+  srcIco?: string;
+  label?: string;
+  onClick?: () => void;
+  indicator?: React.ReactNode;
+}
+
+const Avatar = ({
+  size = "Medium",
+  shape = "Squire",
+  label = "Label",
+  icon = <User />,
+  srcIco = "",
+  indicator = "",
   onClick,
   ...props
 }: AvatarI) => {
-  const values = [111, 111, 70, 50, 40, 33, 26, 22, 18, 15];
-  const [dashArray, setDashArray] = useState("");
-  useEffect(() => {
-    const inputValue = animateLines && animateLines - 1;
-    if ((inputValue && inputValue < 0) || (inputValue && inputValue > 19))
-      return;
-    const newDashArray =
-      inputValue === 0 ? `${values[0]} 0` : `${values[inputValue || 0]} 10`;
-    setDashArray(newDashArray);
-  }, [animateLines]);
-  //Avatar size code
-  const checkSize: { [key: string]: string } = {
-    large: "inte-avatar--large",
-    medium: "inte-avatar--medium",
-    small: "inte-avatar--small",
+  const checkSize = (): string => {
+    switch (size) {
+      case "Small":
+        return "jiffyui-avatar--small";
+      case "Medium":
+        return "jiffyui-avatar--medium";
+      case "Large":
+        return "jiffyui-avatar--large";
+      case "Xlarge":
+        return "jiffyui-avatar--xLarge";
+      default:
+        return "jiffyui-avatar--medium";
+    }
   };
 
-  //Avatar types code
-  const checkColor: { [key: string]: string } = {
-    primary: "inte-avtar--primary",
-    secondary: "inte-avtar--secondary",
-    red: "inte-avtar--red",
-    green: "inte-avtar--green",
-    yellow: "inte-avtar--yellow",
-  };
-
-  const avtarType = color && checkColor[color];
-  const avtarSize = size && checkSize[size];
-  if (typeof text !== "string") {
-    return <></>;
+  const checkShape = (): string => {
+    switch (shape) {
+      case "Circle":
+        return "jiffyui-avatar--circle";
+      case "Squire":
+        return "jiffyui-avatar--squire";
+      default:
+        return "jiffyui-avatar--squire";
+    }
   }
-  // extracting First letter from the name
-  const displayText = text.includes(" ")
-    ? text.charAt(0) + text.charAt(text.lastIndexOf(" ") + 1)
-    : text.substring(0, 2);
+  const avatarSize = checkSize();
+  const avatarShape = checkShape();
   return (
-    <React.Fragment>
-      {image ? (
-        <div
-          className={getClassNames({
-            "inte-avatar inte-avatar__image": true,
-            "inte-avatar--pointer": onClick,
-            "inte-avatar--animate": animateLines && animateLines !== 0,
-            [avtarType]: avtarType,
-            [customClass]: customClass,
-            [avtarSize]: avtarSize,
-          })}
-          onClick={(e: any) => onClick && onClick(e)}
-        >
-          {animateLines && animateLines !== 0 && (
-            <svg
-              id="loader"
-              viewBox="0 0 100 100"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlSpace="preserve"
-            >
-              <circle
-                cx="50"
-                cy="50"
-                r="40"
-                style={{
-                  strokeDasharray: dashArray,
-                  stroke: "#8a3ab9",
-                  strokeLinecap: "round",
-                  strokeWidth: "3",
-                }}
-              ></circle>
-            </svg>
-          )}
-          <img
-            src={image.toString()}
-            alt={"Avatar"}
-            onError={props.onError}
-            onLoad={props.onLoad}
-          />
-          {hasBadge && (
-            <Badge
-              type="success"
-              dot
-              size={`${
-                size === "small"
-                  ? "small"
-                  : size === "large"
-                  ? "large"
-                  : size === "medium"
-                  ? "medium"
-                  : "small"
-              }`}
-            ></Badge>
-          )}
-        </div>
-      ) : (
-        <div
-          className={getClassNames({
-            "inte-avatar inte-avatar__text": true,
-            "inte-avatar--pointer": onClick,
-            "inte-avatar--animate": animateLines && animateLines !== 0,
-            [avtarType]: avtarType,
-            [customClass]: customClass,
-            [avtarSize]: avtarSize,
-          })}
-          onClick={(e: any) => onClick && onClick(e)}
-        >
-          {typeof text == "string" ? (
-            <>
-              {animateLines && animateLines !== 0 ? (
-                <>
-                  <svg
-                    id="loader"
-                    viewBox="0 0 100 100"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlSpace="preserve"
-                  >
-                    <circle
-                      cx="50"
-                      cy="50"
-                      r="40"
-                      style={{
-                        strokeDasharray: dashArray,
-                        stroke: "#8a3ab9",
-                        strokeLinecap: "round",
-                        strokeWidth: "3",
-                      }}
-                    ></circle>
-                  </svg>
-                  <span>{displayText.toUpperCase()}</span>
-                </>
-              ) : (
-                displayText.toUpperCase()
-              )}
-            </>
-          ) : null}
-          {hasBadge && (
-            <Badge
-              type="success"
-              dot
-              size={`${
-                size === "small"
-                  ? "small"
-                  : size === "large"
-                  ? "large"
-                  : size === "medium"
-                  ? "medium"
-                  : "small"
-              }`}
-            ></Badge>
-          )}
-        </div>
-      )}
-    </React.Fragment>
+    <div onClick={onClick} className={`jiffyui-avatar ${avatarSize} ${avatarShape} ${srcIco ? "jiffyui-has-image-icon" : ""} ${onClick ? "jiffyui-has-action" : ""} ${indicator ? "jiffyui-has-indicator" : ""}`}>
+      {indicator ? <div className="jiffyui-avatar-indicator">{indicator}</div> : null}
+      <div className="jiffyui-avatar-icon" data-labe={label}>
+        {srcIco ? (<img src={`${srcIco}`} alt={label ? label : "Avatar"} />) : icon}
+      </div>
+    </div>
   );
-};
-
-export interface AvatarI {
-  text?: string | React.ReactNode;
-  color?: "primary" | "secondary" | "red" | "yellow" | "green";
-  size?: "small" | "medium" | "large";
-  image?: string;
-  children?: React.ReactNode | any;
-  hasBadge?: boolean;
-  onError?: () => void;
-  onLoad?: () => void;
-  onClick?: (e: any) => void;
-  animateLines?: number;
-  customClass?: string;
 }
+
 export default Avatar;

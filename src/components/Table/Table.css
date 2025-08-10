@@ -1,0 +1,73 @@
+.pixel-table__wrapper {
+
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    border-radius: 5px;
+    border: 1px solid rgba(108, 132, 157, 0.18);
+
+
+    .pixel-table {
+        width: 100%;
+        min-width: 100%;
+        border-collapse: collapse;
+
+
+        .pixel-table__cell,
+        .pixel-table__heading {
+            text-align: left;
+        }
+
+        .pixel-table__row {
+            border-top: 1px solid rgb(235 235 235);
+        }
+
+        .pixel-table__row:hover {
+            background-color: #f7f7f7;
+        }
+
+
+
+        .pixel-table__row:first-child {
+            border-top: 1px solid rgb(227 227 227);
+        }
+
+        .pixel-table__cell {
+            padding: 1.6rem 1.2rem;
+            font-size: 1.4rem;
+            color: #333;
+        }
+
+        .pixel-table__heading {
+            padding: 1.2rem;
+            background-color: #f1f1f1;
+
+            span {
+                font-size: 12px;
+                font-family: var(--jiffyui-medium-font);
+                letter-spacing: 0.06rem;
+            }
+        }
+
+        .pixel-table__heading.c-pointer:hover {
+            background: #efefef !important;
+        }
+
+
+
+        .pixel-table__headingCheckboxCell {
+            padding: 0.8rem 0.8rem 0.8rem 1.2rem;
+        }
+
+        .pixel-table__checkboxCell {
+            padding: 0.6rem 0.6rem 0.6rem 1.2rem;
+        }
+
+        .pixel-table__row--selected {
+            background-color: #f3faff;
+        }
+
+        .pixel-table__row--selected:hover {
+            background-color: #eef8ff;
+        }
+    }
+}

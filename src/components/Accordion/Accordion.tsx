@@ -1,78 +1,42 @@
-import React, { FC, useId } from "react";
-import { ChevronDown } from "../../storybook/Foundation/Icons/Icons";
-import getClassNames from "../../utilities/getClassnames";
-import useDelayUnmount from "../../utilities/useDelayTimeout";
-import "./Accordion.css";
-const Accordion: FC<AccordionI> = ({
-  children,
-  isActive = false,
-  icon,
-  badge,
-  title,
-  subTitle,
-  customClass = "",
+import React from "react";
+import { ChevronDown } from "react-feather";
+import './accordion.css';
+export interface AccordionI {
+  accordionHeader?: string | React.ReactNode;
+  onClick?: any;
+  isExpended: boolean;
+  children?: string | React.ReactNode;
+  icon?: React.ReactNode;
+  withNumber?: boolean;
+}
+const Accordion = ({
+  accordionHeader,
   onClick,
-}: AccordionI) => {
-  const rId = useId();
-  const isOpen=useDelayUnmount(isActive,300)
+  isExpended,
+  children,
+  icon,
+  ...props }:
+  AccordionI) => {
   return (
-    <div
-      className={getClassNames({
-        "inte-accordion": true,
-        "inte-accordion--active": isActive,
-        [customClass]: customClass,
-      })}
-      onClick={onClick}
-    >
-      <div
-        className="inte-accordion__header"
-        aria-expanded={isOpen ? "true" : "false"}
-        aria-controls={`inte-accordion-${rId}`}
-        role="button"
-      >
-        <div
-          className={getClassNames({
-            "inte-accordion__headerContentWrapper": true,
-            "inte-accordion__headerContentWrapper--hasIcon": icon,
-            "inte-accordion__headerContentWrapper--hasSubTitle": subTitle,
-          })}
-        >
-          {icon ?? null}
-          <div className="inte-accordion__headerContent">
-            {badge ? (
-              <div className="inte-accordion__headerContentWithBadge">
-                <h4 className="inte-accordion__title">{title}</h4>
-                {badge}
-              </div>
-            ) : (
-              <h4 className="inte-accordion__title">{title}</h4>
-            )}
-            {subTitle && <p className="inte-accordion__subTitle">{subTitle}</p>}
+    <div className={`accordion`}>
+      <div className={`accordion-header ${!isExpended ? "" : "active"} ${icon ? "accordion-left--icon" : ""}`} onClick={onClick}>
+        {icon &&
+          <div className="accordion-headaer__icon">
+            {icon}
           </div>
-        </div>
-        <div className="inte-accordion__expandIcon">
-          <ChevronDown size={20} color="var(--inte-G800)" />
-        </div>
+        }
+        <h3 className="accordion-header__title">
+          {accordionHeader}
+        </h3>
+        <ChevronDown size="16" />
       </div>
-      <div
-        id={`inte-accordion-${rId}`}
-        onClick={(e) => e.stopPropagation()}
-        className="inte-accordion__body"
-        aria-hidden={isOpen ? "false" : "true"}
-      >
-        {isOpen && <div className="inte-accordion__bodyInner">{children}</div>}
+      <div className={`accordion-body ${!isExpended ? "collapsed" : ""}`}>
+        <div className="accordion-body_content">
+          {children}
+        </div>
       </div>
     </div>
   );
 };
-export interface AccordionI {
-  children: React.ReactNode | string;
-  isActive?: boolean;
-  title: string;
-  subTitle?: string;
-  icon?: React.ReactNode;
-  badge?: React.ReactNode;
-  onClick: () => void;
-  customClass?: string;
-}
+
 export default Accordion;

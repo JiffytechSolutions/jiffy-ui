@@ -1,55 +1,52 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { FC } from "react";
-import { ChevronRight } from "../../storybook/Foundation/Icons/Icons";
-import getClassNames from "../../utilities/getClassnames";
+
+import React from "react";
+import { classnames } from "../../utilities/globalFunction";
 import "./Breadcrumb.css";
 
-const Breadcrumb: FC<BreadcrumbI> = ({
-  items,
-  customClass = "",
-  onClick = () => {},
-}: BreadcrumbI): JSX.Element => {
+const Breadcrumb = (props: BreadcrumbI): JSX.Element => {
+  const { items, onClick } = props;
   return (
     <nav
-      className={getClassNames({
-        "inte-breadCrumb": true,
-        [customClass]: customClass,
+      className={classnames({
+        "Pixel-breadCrumb": true,
       })}
       aria-label="breadCrumb"
     >
-      <ul className="inte-breadCrumb__list">
+      <ul className="Pixel-breadCrumb__list">
         {items.map((e, i) => {
           return (
             <React.Fragment key={i}>
               {i !== 0 ? (
                 <li
-                  className={getClassNames({
-                    "inte-breadCrumb__item": true,
-                    "inte-breadCrumb__item--active":
-                      i == Object.keys(items).length - 1,
+                  className={classnames({
+                    "Pixel-breadCrumb__item": true,
+                    "Pixel-breadCrumb__item--active":
+                      i === Object.keys(items).length - 1,
                   })}
                 >
-                  <ChevronRight size={16} color="var(--inte-G60)" />
-                  {i == Object.keys(items).length - 1 ? (
-                    <span>{e.label}</span>
+                  <span className="Pixel-breadcrumb__separator mr-4">/</span>
+                  {i === Object.keys(items).length - 1 ? (
+                    <span className="Pixel-item__text--active">{e.label}</span>
                   ) : (
                     <span
-                      role="button"
+                      role="none"
                       onClick={() => {
-                        onClick(e.value, e);
+                        onClick?.(e.value, e);
                       }}
+                      className="Pixel-item__text"
                     >
                       {e.label}
                     </span>
                   )}
                 </li>
               ) : (
-                <li className="inte-breadCrumb__item">
+                <li className="Pixel-breadCrumb__item">
                   <span
-                    role="button"
+                    role="none"
                     onClick={() => {
-                      onClick(e.value, e);
+                      onClick?.(e.value, e);
                     }}
+                    className="Pixel-item__text"
                   >
                     {e.label}
                   </span>
@@ -65,7 +62,6 @@ const Breadcrumb: FC<BreadcrumbI> = ({
 export interface BreadcrumbI {
   items: ObjI[];
   onClick?: (value: string, obj?: ObjI) => void;
-  customClass?: string;
 }
 export interface ObjI {
   label: string | React.ReactNode;

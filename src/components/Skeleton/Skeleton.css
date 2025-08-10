@@ -1,45 +1,123 @@
-/*Skeleton*/
-.inte__skeletonWrapper {
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  will-change: opacity;
+.skeletonThumbnail--extraSmall {
+    height: 32px;
+    width: 32px;
 }
 
-.inte__Skeleton--Text {
-  background: var(--inte-G30);
-  overflow: hidden;
-  border-radius: var(--radius-rounded-4);
+.skeletonThumbnail--small {
+    width: 40px;
+    height: 40px;
 }
 
-.inte__Skeleton--Text+.inte__Skeleton--Text {
-  margin-top: 1rem;
+.skeletonThumbnail--medium {
+    width: 50px;
+    height: 50px;
 }
 
-.inte__Skeleton--Text::after {
-  content: "";
-  display: block;
-  height: 100%;
-  width: 100%;
-  animation: loading 1.5s infinite;
-  background: linear-gradient(to right, transparent, var(--inte-G40), transparent);
+.skeletonThumbnail--large {
+    width: 60px;
+    height: 60px;
 }
 
-.inte__Skeleton--TextRounded {
-  border-radius: 50%;
+.skeleton-inner {
+    background: #ecedee;
+    overflow: hidden;
+    border-radius: 4px;
+    height: 100%;
+    width: 100%;
 }
 
-.inte__Skeleton--Text:last-child:not(:first-child) {
-  width: 80%;
+.skeleton-inner::after {
+    content: "";
+    display: block;
+    height: 100%;
+    width: 100%;
+    animation: loading 1.5s infinite;
+    background: linear-gradient(to right, transparent, #e0e1e3, transparent);
 }
-
-/*Skeleton end*/
 
 @keyframes loading {
-  0% {
-    transform: translateX(-100%);
-  }
+    0% {
+        transform: translateX(-100%);
+    }
 
-  100% {
-    transform: translateX(100%);
-  }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.SkeletonButton {
+    width: 100px;
+}
+
+.SkeletonButton--extraSmall {
+    height: 30px;
+}
+
+.SkeletonButton--small {
+    height: 34px;
+}
+
+.SkeletonButton--medium {
+    height: 38px;
+}
+
+.SkeletonButton--large {
+    height: 48px;
+}
+
+.SkeletonBadge {
+    width: 60px;
+}
+.SkeletonBadge--small {
+    height: 1.6rem;
+}
+.SkeletonBadge--medium {
+    height: 2rem;
+}
+.SkeletonBadge--large {
+    height: 2.4rem;
+}
+
+.SkeletonList {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.SkeletonList-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: nowrap;
+}
+.SkeletonList-item__thumbnail {
+    width: 13px;
+    height: 13px;
+}
+.SkeletonList-item__content {
+    flex: 100%;
+    height: 9px;
+}
+
+.SkeletonTabs {
+    display: flex;
+    gap: 2.4rem;
+    border-bottom: 1px solid #e4e4e4;
+    padding-bottom: 1px;
+    overflow-x: auto;
+}
+.SkeletonTabs-item {
+    width: 80px;
+    height: 40px;
+    flex: 0 0 80px;
+}
+
+.SkeletonLine {
+    display: flex;
+    flex-direction: column;
+}
+.SkeletonLine .SkeletonLine-item:last-child {
+    width: 50%;
+}
+.SkeletonLine .SkeletonLine-item:first-child {
+    width: 100%;
 }

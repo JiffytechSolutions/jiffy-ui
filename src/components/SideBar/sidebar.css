@@ -1,0 +1,285 @@
+.Pixel-sideBar {
+  border-right: 0.1rem solid rgb(229 231 235);
+  width: 100%;
+
+  color: rgb(64, 86, 109);
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease-in-out;
+  z-index: 88888;
+  height: 100vh;
+}
+
+.sidebar-header {
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid #e4e4e4;
+  padding-bottom: 18px;
+  padding-top: 17px;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  align-items: center;
+}
+
+.Pixel-sideBar__logo {
+  flex: 0 0 calc(100% - 30px);
+}
+
+.Pixel-sideBar__logo svg {
+  width: 180px;
+  height: 40px;
+}
+
+img.sidebar-logo {
+  width: 50%;
+}
+
+.Pixel-sideBar__closeButton {
+  transition: transform 0.3s ease-in-out;
+  border: none;
+  background: transparent;
+  width: 30px;
+  padding: 0;
+  height: 30px;
+  cursor: pointer;
+  padding: 2px;
+  border-radius: 4px;
+  transition: 0.3s all;
+}
+
+.Pixel-sideBar__closeButton:hover {
+  background-color: #e4e4e4;
+}
+
+.Pixel-sideBar__closeButton svg {
+  width: 100%;
+  display: block;
+}
+
+.Pixel-sideBar__ItemList {
+  position: relative;
+  padding-bottom: var(--footerHeight);
+  flex-grow: 1;
+}
+
+.Pixel-sideBar__title {
+  padding: 0rem 1.6rem;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  margin-bottom: 0.8rem;
+}
+
+.Pixel-sideBar__itemBody {
+  border-radius: 0.6rem;
+}
+
+.Pixel-sideBar .Pixel-sideBar__ItemList {
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.Pixel-sideBar__list>.Pixel-sideBar__listItem>.Pixel-sideBar__itemBody {
+  padding: 1.3rem 1.6rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  cursor: pointer;
+  align-items: center;
+}
+
+.Pixel-sideBar__label {
+  font-weight: 500;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+}
+
+.Pixel-sideBar__linkBody,
+.Pixel-sideBar__Icon,
+.Pixel-sideBar__badge,
+.Pixel-sideBar__label {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+
+.Pixel-sideBar__label {
+  color: #000;
+}
+
+.Pixel-sideBar__list,
+.Pixel-sideBar__childList {
+  margin-bottom: 0;
+}
+
+.Pixel-sideBar__childList {
+  max-height: 0;
+  transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+  overflow: hidden;
+}
+
+.Pixel-sideBar__listItem--expandable--active .Pixel-sideBar__childList {
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+  height: auto;
+  max-height: 9999px;
+}
+
+li.Pixel-sideBar__listItem {
+  border-radius: 4px;
+  transition: 0.3s all;
+}
+
+.Pixel-sideBar__listItem:not(.Pixel-sideBar__listItem--expandable):hover,
+.Pixel-sideBar__listItem--expandable .Pixel-sideBar__itemBody:hover {
+  background-color: rgb(46 91 255 / 9%);
+}
+
+.Pixel-sideBar__listItem--expandable--active>.Pixel-sideBar__itemBody {
+  background: rgba(46, 91, 255, 0.09);
+}
+
+.Pixel-sideBar__list>.Pixel-sideBar__listItem--active>.Pixel-sideBar__itemBody {
+  position: relative;
+}
+
+.Pixel-sideBar__listItem--expandable--active .Pixel-sideBar__itemBody .Pixel-sideBar__Icon svg {
+  stroke: rgb(46, 91, 255);
+}
+
+.Pixel-sideBar__list>.Pixel-sideBar__listItem--active>.Pixel-sideBar__itemBody .Pixel-sideBar__Icon svg {
+  stroke: rgb(46, 91, 255);
+}
+
+.Pixel-sideBar__expandIcon--active svg {
+  stroke: rgb(46, 91, 255);
+}
+
+.Pixel-sideBar__childList .Pixel-sideBar__listItem--active .Pixel-sideBar__label {
+  color: rgb(46, 91, 255);
+}
+
+.Pixel-sideBar__childList .Pixel-sideBar__listItem--active .Pixel-sideBar__itemBody {
+  background-color: rgb(46 91 255 / 9%);
+}
+
+.Pixel-sideBar__expandIcon--active svg:first-child {
+  transform: rotate(180deg);
+  transition: all 0.3s ease-in-out;
+}
+
+.Pixel-sideBar__expandIcon:not(.Pixel-sideBar__expandIcon--active) svg:first-child {
+  transform: rotate(0deg);
+  transition: all 0.3s ease-in-out;
+}
+
+.Pixel-sideBar__expandIcon svg {
+  display: block;
+  width: 100%;
+}
+
+.Pixel-sideBar__listItem--expandable--active>.Pixel-sideBar__itemBody .Pixel-sideBar__label {
+  color: rgb(46, 91, 255);
+}
+
+.Pixel-sideBar__childList .Pixel-sideBar__itemBody {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.2rem;
+  position: relative;
+  padding: 0.8rem 1.6rem;
+  cursor: pointer;
+}
+
+.Pixel-sideBar__Item--footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-top: 1.6rem;
+  padding-bottom: 2.4rem;
+}
+
+.Pixel-sideBar__Item:not(.Pixel-sideBar__Item--footer) {
+  padding-bottom: 1.6rem;
+}
+
+.Pixel-sideBar__Item {
+  border-bottom: 1px dashed #e4e4e4;
+}
+
+.Pixel-sideBar__Item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.Pixel-sideBar__Item+.Pixel-sideBar__Item:not(.Pixel-sideBar__Item--footer) {
+  padding-top: 1.6rem;
+}
+
+.Pixel-sideBar__listItem--disabled {
+  cursor: not-allowed;
+}
+
+.Pixel-sideBar__listItem--disabled>div {
+  opacity: 0.5;
+  pointer-events: none;
+  user-select: none;
+}
+
+.Pixel-sideBar__listItem.Pixel-sideBar__listItem--expandable::before {
+  content: "";
+  height: calc(100% - 75px);
+  width: 1px;
+  background: #d7cccc;
+  position: absolute;
+  top: 50px;
+  left: 23px;
+}
+
+.Pixel-sideBar__listItem.Pixel-sideBar__listItem--expandable .Pixel-sideBar__childList {
+  padding-left: 45px;
+}
+
+.Pixel-sideBar__listItem.Pixel-sideBar__listItem--expandable,
+.Pixel-sideBar__listItem.Pixel-sideBar__listItem--expandable .Pixel-sideBar__childList>.Pixel-sideBar__listItem {
+  position: relative;
+}
+
+.Pixel-sideBar__listItem.Pixel-sideBar__listItem--expandable .Pixel-sideBar__childList>.Pixel-sideBar__listItem::after {
+  content: "";
+  width: 14px;
+  height: 15px;
+  position: absolute;
+  border-left: 1px solid #d7cccc;
+  border-bottom: 1px solid #d7cccc;
+  border-bottom-left-radius: 6px;
+  top: 7px;
+  left: -22px;
+}
+
+.sidebar-footer {
+  padding: 1.2rem;
+  border-top: 1px solid #e4e4e4;
+  box-shadow: 0px -1px 6px 0px rgba(0, 0, 0, 0.05);
+}
+
+.Pixel-sideBar--logout__Item {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding: 1.3rem 1.6rem;
+  cursor: pointer;
+  background: var(--jiffyui-Negative-050);
+  border-radius: 0.4rem;
+  color: var(--jiffyui-Negative-050);
+  transition: 0.3s all;
+}
+
+.Pixel-sideBar--logout__Item:hover {
+  background-color: var(--jiffyui-Negative-100);
+}
+
+.Pixel-sideBar--logout__Item svg,
+.Pixel-sideBar--logout__Item .Pixel-sideBar__label {
+  color: var(--jiffyui-Negative-500);
+}

@@ -1,0 +1,183 @@
+.pixel-Text--root {
+    margin: 0;
+    padding: 0;
+    line-height: 22px;
+    color: var(--jiffyui-naturalDark-1200);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+dd,
+dt,
+strong,
+legend {
+    /* font-size: 1.5rem; */
+    font-weight: normal;
+}
+
+p,
+span,
+dd,
+dt,
+legend {
+    font-family: var(--jiffyui-regular-font);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--jiffyui-bold-font);
+}
+
+strong,
+b {
+    font-family: var(--jiffyui-medium-font);
+}
+
+.pixel-Text--2XlHeading {
+    font-size: 3rem;
+    font-family: var(--jiffyui-bold-font);
+}
+
+.pixel-Text--XlHeading {
+    font-size: 2.4rem;
+    font-family: var(--jiffyui-bold-font);
+}
+
+.pixel-Text--LgHeading {
+    font-size: 2rem;
+    font-family: var(--jiffyui-bold-font);
+}
+
+.pixel-Text--MdHeading {
+    font-size: 1.4rem;
+    font-family: var(--jiffyui-bold-font);
+}
+
+.pixel-Text--SmHeading {
+    font-size: 1.3rem;
+    font-family: var(--jiffyui-bold-font);
+}
+
+.pixel-Text--XsHeading {
+    font-size: 1.2rem;
+    font-family: var(--jiffyui-bold-font);
+}
+
+.pixel-Text--LgBody {
+    font-size: 1.4rem;
+}
+
+.pixel-Text--MdBody {
+    font-size: 1.3rem;
+}
+
+.pixel-Text--SmBody {
+    font-size: 1.2rem;
+}
+
+.pixel-Text--xsBody {
+    font-size: 1.1rem;
+}
+
+.pixel-Text-light {
+    font-family: var(--jiffyui-light-font);
+}
+
+.pixel-Text-regular {
+    font-family: var(--jiffyui-regular-font);
+}
+
+.pixel-Text-medium {
+    font-family: var(--jiffyui-medium-font);
+}
+
+.pixel-Text-bold {
+    font-family: var(--jiffyui-bold-font);
+}
+
+.pixel-Text--alignLeft {
+    text-align: left;
+}
+
+.pixel-Text--alignCenter {
+    text-align: center;
+}
+
+.pixel-Text--alignRight {
+    text-align: right;
+}
+
+.pixel-Text--alignJustify {
+    text-align: justify;
+}
+
+.pixel-Text-linethrough {
+    text-decoration: line-through;
+}
+
+.pixel-Text-underline {
+    text-decoration: underline;
+}
+
+.pixel-Text-italic {
+    font-style: italic;
+}
+
+/* text color */
+.pixel-text__dark {
+    color: var(--jiffyui-naturalDark-1300);
+}
+
+.pixel-text__primary {
+    color: var(--jiffyui-Cerulean-600);
+}
+
+.pixel-text__secondary {
+    color: var(--jiffyui-naturalDark-900)
+}
+
+.pixel-text__disabled {
+    color: var(--jiffyui-naturalLight-300);
+}
+
+.pixel-text__possitive {
+    color: var(--jiffyui-Possitive-600);
+}
+
+.pixel-text_negative {
+    color: var(--jiffyui-Negative-600);
+}
+
+.pixel-text__waiting {
+    color: var(--jiffyui-Notice-600);
+}
+
+.pixel-text__invert {
+    color: var(--jiffyui-white);
+}
+
+/* .pixel-Text--success {
+    color: var(--jiffyui--success-color);
+}
+.pixel-Text--critical {
+    color: var(--jiffyui--negative-color);
+}
+.pixel-Text--warning {
+    color: var(--jiffyui--warning-color);
+}
+.pixel-Text--primary {
+    color: var(--jiffyui-primary-color);
+}
+.pixel-Text--secondry {
+    color: var(--jiffyui-secondary-color);
+} */

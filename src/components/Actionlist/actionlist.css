@@ -1,0 +1,66 @@
+.jiffyui-actionlist__item {
+    &:hover {
+        background-color: rgba(108, 132, 157, 0.09);
+        border-radius: 0.4rem;
+        transition: 0.3s all;
+    }
+}
+
+.jiffyui-actionlist__title {
+    color: var(--jiffyui-naturalLight-500);
+    font-family: var(--jiffyui-regular-font);
+    display: block;
+    padding: 0;
+    border-bottom: 0.1rem solid var(--jiffyui-naturalLight-300);
+    padding-bottom: 0.4rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
+}
+
+.jiffyui-actionlist_item__label {
+    color: var(--jiffyui-naturalDark-1300);
+}
+
+.jiffyui-actionlist_item__prefix__suffix {
+    display: flex;
+    gap: 0.8rem;
+    align-items: start;
+}
+
+.jiffyui-actionlist_item_description {
+    color: var(--jiffyui-naturalDark-900);
+    font-size: 1.2rem;
+}
+
+.jiffyui-actionlist_item__prefix--icon svg,
+.jiffyui-actionlist_item__suffix--icon svg {
+    display: block;
+    width: 1.5rem;
+    height: 1.6rem;
+    color: var(--jiffyui-naturalDark-1300);
+}
+
+.jiffyui-actionlist__item--destructive .jiffyui-actionlist_item__prefix--icon svg {
+    color: var(--jiffyui-Negative-600);
+}
+
+.jiffyui-actionlist__item--destructive .jiffyui-actionlist_item__label {
+    color: var(--jiffyui-Negative-600);
+}
+
+.jiffyui-actionlist__item--destructive .jiffyui-actionlist_item__suffix--icon {
+    svg {
+        color: var(--jiffyui-Negative-600);
+    }
+}
+
+.jiffyui-actionlist__item--destructive {
+    &:hover {
+        background-color: var(--jiffyui-Negative-050);
+    }
+}
+
+.jiffyui-actionlist__item--disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}

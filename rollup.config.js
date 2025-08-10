@@ -18,8 +18,6 @@ export default [
   {
     input: {
       index : "src/index.ts",
-      icons : "src/icons.ts",
-      illustrations:"src/illustrations.ts"
     },
     output: [
       {
@@ -63,6 +61,7 @@ export default [
       resolve({
         browser: true,
       }),
+
       commonjs({
         include: ["node_modules/**"],
         namedExports: {
@@ -100,15 +99,15 @@ export default [
         assetsPath: "/assets",
         publicPath: "./assets",
       }),
-      external(),
-      images(),
-      terser(),
       copy({
         targets: [
           // Define the font files you want to copy
           { src: 'src/assets/fonts/*', dest: 'dist/assets/fonts' }
         ]
-      })
+      }),
+      external(),
+      images(),
+      terser(),
     ],
   },
 ];

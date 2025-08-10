@@ -1,0 +1,28 @@
+.app_wrapper .Pixel-appBar--container {
+    position: fixed;
+    top: 0;
+    width: calc(100% - 28rem);
+    right: 0;
+}
+header.Pixel-appBar--container.header-sticky {
+    box-shadow: 0 1px 0 rgba(0,0,0,.02),0 2px 6px rgba(0,0,0,.05);
+    /* filter: blur(24px); */
+    background: #fff;
+}
+/* .app_content_wrapper {
+    padding-top: 80px;
+    padding-left: 1.6rem;
+    padding-right: 1.6rem;
+    margin-left: 28rem;
+    width: calc(100% - 28rem);
+} */
+
+.Pixel-appBar__connectLeft img {
+    width: 120px;
+}
+
+.app_wrapper .Pixel-sideBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+}

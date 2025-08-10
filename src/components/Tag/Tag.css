@@ -1,116 +1,90 @@
-/*Tags and Swatches*/
-.inte-tag {
-  text-align: center;
-  font-weight: var(--weight-normal);
-  display: inline-flex;
-  transition: 300ms all linear;
-  background-color: var(--inte-G30);
-  color: var(--inte-G800);
-  align-items: center;
-}
-.inte-tag--small {
-  padding: 0.2rem 0.8rem;
-  border-radius: var(--radius-rounded-4);
-}
-.inte-tag--large {
-  padding: 0.8rem 1.2rem;
-  height: 3.6rem;
-  border-radius: var(--radius-rounded-6);
-}
-.inte-tag--hasPopover {
-  cursor: pointer;
+.tag {
+    justify-content: flex-start;
+    position: relative;
+    display: inline-flex;
+    max-width: 100%;
+    align-items: center;
+    padding: 0.1rem 0.8rem;
+    background-color: var(--jiffyui-naturalLight-200);
+    border-radius: 0.4rem;
+    color: var(--jiffyui-naturalDark-1000);
+
+    .tag-label {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .tag-clear {
+        cursor: pointer;
+        border-radius: 0.4rem;
+        transition: 0.3s all;
+        text-align: center;
+        display: block;
+        height: 2rem;
+        width: 2rem;
+        max-height: 100%;
+        max-width: 100%;
+        margin-left: 0.5rem;
+    }
+
+    .tag-clear:hover {
+        background-color: var(--jiffyui-naturalLight-300);
+    }
+    
+    .tag-clear svg {
+        display: block;
+        height: 100%;
+        width: 100%;
+    }
 }
 
-.inte-tag--disabled {
-  user-select: none;
-  cursor: not-allowed;
-  color: var(--inte-G80);
+.tag.hasDismis {
+    padding-right: 0.4rem;
 }
-.inte-tag__body {
-  display: flex;
-  gap: 0.8rem;
-  align-items: center;
-}
-.inte-tag--disabled .inte-tag__body .inte-tag__clear svg {
-  background-color: var(--inte-G30);
-  cursor: not-allowed;
-}
-.inte-tag--disabled .inte-tag__clear {
-  cursor: not-allowed;
-}
-.inte-tag__clear {
-  border: 0;
-  display: flex;
-  justify-content: center;
-  cursor: pointer;
-  padding: 0.2rem;
-  background: transparent;
-}
-.inte-tag__clear svg {
-  background: var(--inte-G40);
-  border-radius: 50%;
-}
-.inte-tag__clear svg:hover {
-  background-color: var(--inte-G50);
-  transition: 300ms all linear;
-}
-.inte-tag--small .inte-tag__content span {
-  font-size: 1.4rem;
-}
-.inte-tag--large .inte-tag__content span {
-  font-size: 1.6rem;
-}
-.inte-tag__content *,
-.inte-tag__content {
-  display: flex;
-  line-height: 2rem;
-  word-break: break-all;
-  text-align: left;
-}
-.inte-tag__popover {
-  display: flex;
-  gap: 0.8rem;
-  align-items: center;
-}
-/*Tags and Swatches end*/
 
-/* DARK MODE */
-[data-theme="dark"] .inte-tag {
-  opacity: 0.7;
+.tag.tag--small {
+    height: 1.6rem;
+
+    span.tag-label {
+        font-size: 1rem;
+        line-height: 1.6rem;
+    }
+
+    span.tag-clear {
+        height: 1.2rem;
+        width: 1.2rem;
+        padding: 0;
+        border-radius: 0.1rem;
+    }
 }
-/* animation tags css */
-.inte-tagAnimation--in {
-  animation: tagAnimationIn 200ms linear forwards;
+
+.tag.tag--medium {
+    height: 2rem;
+
+    span.tag-label {
+        font-size: 1.2rem;
+        line-height: 2rem;
+    }
+
+    span.tag-clear {
+        height: 1.4rem;
+        width: 1.4rem;
+        padding: 0;
+        border-radius: 0.3rem;
+    }
 }
-.inte-tagAnimation--out {
-  animation: tagAnimationOut 200ms linear forwards;
-}
-/* inte-tag inte-tag--activePopover inte-tagAnimation--in inte-tag--small */
-@keyframes tagAnimationIn {
-  100% {
-    -webkit-transform: scale(1, 1);
-    transform: scale(1);
-    -webkit-opacity: 1;
-    opacity: 1;
-  }
-  0% {
-    -webkit-transform: scale(0, 0);
-    transform: scale(0);
-    -webkit-opacity: 0;
-    opacity: 0;
-  }
-}
-@keyframes tagAnimationOut {
-  100% {
-    -webkit-transform: scale(0, 0);
-    transform: scale(0);
-    -webkit-opacity: 0;
-    opacity: 0;
-  }
-  0% {
-    -webkit-transform: scale(1, 1);
-    transform: scale(1);
-    -webkit-opacity: 1;
-    opacity: 1;
-  }
+
+.tag.tag--large {
+    height: 2.4rem;
+
+    .tag-label {
+        font-size: 1.4rem;
+        line-height: 2.4rem;
+    }
+
+    .tag-clear {
+        height: 1.8rem;
+        width: 1.8rem;
+        padding: 0.1rem;
+    }
 }

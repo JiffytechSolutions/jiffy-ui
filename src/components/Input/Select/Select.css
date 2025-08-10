@@ -1,0 +1,193 @@
+/* .pixel-sc__container input::placeholder {
+    color: #a3b1c2;
+}
+
+.pixel-sc__label {
+    margin-bottom: 0.4rem;
+
+    p {
+        color: rgb(64, 86, 109);
+        font-size: 1.2rem;
+        font-weight: 600;
+        line-height: 1.8rem;
+        letter-spacing: 0px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+    }
+}
+
+.pixel-ac__item {
+    border-width: 4px;
+    border-style: solid;
+    border-color: transparent;
+    text-align: left;
+    background-color: transparent;
+    padding: 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.pixel-ac__item--group {
+    cursor: auto;
+}
+
+.pixel-ac__item:not(.pixel-ac__item--group):hover {
+    background-color: rgba(108, 132, 157, 0.09);
+}
+
+.pixel-sc__activator {
+    display: flex;
+    overflow: auto hidden;
+    flex: 1 1 0%;
+    flex-wrap: nowrap;
+
+    padding-left: 12px;
+    min-height: 36px;
+
+    button,
+    .pixel-sc__tags {
+        color: rgb(64, 86, 109);
+        font-size: 1.4rem;
+        font-weight: 400;
+        font-style: normal;
+        text-decoration-line: none;
+        line-height: 2rem;
+        letter-spacing: 0px;
+        text-align: left;
+        margin: 0px;
+
+        background-color: transparent;
+        padding: 8px 8px 8px 0px;
+
+        min-height: 3.6rem;
+        resize: none;
+        outline: none;
+        border: none;
+        cursor: pointer;
+    }
+}
+
+.pixel-ac__item.pixel-sc__item--selected:hover {
+    background-color: rgba(46, 91, 255, 0.18);
+} */
+
+.pixel-sc__container {
+    border-radius: 0.4rem;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    position: relative;
+    height: auto;
+    border: 1px solid var(--jiffyui-naturalLight-300);
+    transition: 0.2s all;
+}
+.pixel-sc__container:hover {
+    border-color: var(--jiffyui-Cerulean-600);
+}
+.pixel-sc__container:focus,
+.pixel-sc__container:active {
+    box-shadow: 0px 0px 8px -4px var(--jiffyui-Cerulean-600) !important;
+}
+
+.pixel-sc__container input::placeholder {
+    color: #a3b1c2;
+}
+
+.pixel-sc__label {
+    margin-bottom: 0.4rem;
+
+}
+
+.pixel-sc__label p {
+    color: rgb(64, 86, 109);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.8rem;
+    letter-spacing: 0px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.pixel-ac__helpText {
+    display: block;
+    margin-top: 0.8rem;
+    color: rgb(64, 86, 109);
+    font-size: 1.2rem;
+    font-weight: 600;
+    line-height: 1.8rem;
+    letter-spacing: 0px;
+    overflow: hidden;
+}
+
+.pixel-ac__item {
+    border-width: 4px;
+    border-style: solid;
+    border-color: transparent;
+    text-align: left;
+    background-color: transparent;
+    padding: 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+.pixel-ac__item--group {
+    cursor: auto;
+}
+
+.pixel-ac__item:not(.pixel-ac__item--group):hover {
+    background-color: rgba(108, 132, 157, 0.09);
+}
+
+.pixel-sc__activator {
+    display: flex;
+    overflow: auto hidden;
+    flex: 1 1 0%;
+    flex-wrap: nowrap;
+    padding-left: 12px;
+    min-height: 36px;
+}
+
+.pixel-sc__activator button,
+.pixel-sc__activator .pixel-sc__tags {
+    color: rgb(64, 86, 109);
+    font-size: 1.4rem;
+    font-weight: 400;
+    font-style: normal;
+    text-decoration-line: none;
+    line-height: 2rem;
+    letter-spacing: 0px;
+    text-align: left;
+    margin: 0px;
+    background-color: transparent;
+    padding: 8px 8px 8px 0px;
+    min-height: 3.6rem;
+    resize: none;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.pixel-sc__icon {
+    display: flex;
+    flex-direction: row;
+    -webkit-box-align: center;
+    align-items: center;
+    align-self: center;
+    padding-right: 12px;
+}
+
+.pixel-sc__item--selected {
+    background-color: rgba(46, 91, 255, 0.09);
+}
+
+.pixel-ac__item.pixel-sc__item--selected:hover {
+    background-color: rgba(46, 91, 255, 0.18);
+}

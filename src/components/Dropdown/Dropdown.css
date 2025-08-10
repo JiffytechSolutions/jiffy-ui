@@ -1,0 +1,8 @@
+.pixel-dropdown {
+    border: 1px solid #6C849D2E;
+    box-shadow: 0px 8px 24px 0px #1928391F;
+    background-color: #ffffff;
+    max-height: 25rem;
+    overflow: auto;
+    border-radius: 4px;
+}

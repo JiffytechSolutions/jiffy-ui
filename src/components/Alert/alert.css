@@ -1,0 +1,245 @@
+.jiffyui-alert {
+    padding: 1.6rem;
+    border: var(--jiffyui-borderWidth-thin) solid var(--jiffyui-naturalLight-050);
+    border-radius: 0.5rem;
+    background: var(--jiffyui-white);
+    position: relative;
+}
+
+.jiffyui-alert_inner {
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+
+}
+
+.jiffyui-alert_content {
+    display: flex;
+    flex-direction: column;
+}
+
+.jiffyui-alert_tile {
+    margin-top: 0;
+    font-size: 1.6rem;
+    font-family: var(--jiffyui-medium-font);
+    margin-bottom: 0.4rem;
+}
+
+.jiffyui-alert_description {
+    color: var(--jiffyui-naturalDark-1000);
+}
+
+.jiffyui-alert_actions {
+    margin-top: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.jiffyui-alert {
+    .pixel-textLink {
+        a {
+            font-family: var(--jiffyui-medium-font);
+        }
+    }
+}
+
+.jiffyui-alert--subtile {
+    h3 {
+        .jiffyui-alert_tile {
+            color: var(--jiffyui-naturalDark-1300);
+        }
+    }
+}
+
+.jiffyui-alert--negative {
+    &.jiffyui-alert--subtile {
+        border-color: var(--jiffyui-Negative-200);
+        background: var(--jiffyui-Negative-100);
+        .btn {
+            &.btn--secondry span {
+                color: var(--jiffyui-Negative-500);
+            }
+        }
+    }
+
+    &.jiffyui-alert--subtile {
+        .jiffyui-alert_icon {
+            svg {
+                color: var(--jiffyui-Negative-500);
+            }
+        }
+    }
+}
+
+.jiffyui-alert--negative.jiffyui-alert--subtile .pixel-textLink a {
+    color: var(--jiffyui-Negative-500);
+}
+
+.jiffyui-alert--possitive.jiffyui-alert--subtile {
+    border-color: var(--jiffyui-Possitive-200);
+    background: var(--jiffyui-Possitive-100);
+}
+
+.jiffyui-alert--possitive.jiffyui-alert--subtile .jiffyui-alert_icon svg {
+    color: var(--jiffyui-Possitive-500);
+}
+
+.jiffyui-alert--possitive.jiffyui-alert--subtile .btn.btn--secondry {
+    background: var(--jiffyui-Possitive-200);
+    border-color: var(--jiffyui-Possitive-500);
+}
+
+.jiffyui-alert--possitive.jiffyui-alert--subtile .btn.btn--secondry span {
+    color: var(--jiffyui-Possitive-500);
+}
+
+.jiffyui-alert--possitive.jiffyui-alert--subtile .pixel-textLink a {
+    color: var(--jiffyui-Possitive-500);
+}
+
+.jiffyui-alert--waiting.jiffyui-alert--subtile {
+    border-color: var(--jiffyui-Notice-200);
+    background: var(--jiffyui-Notice-100);
+}
+
+.jiffyui-alert--waiting.jiffyui-alert--subtile .jiffyui-alert_icon svg {
+    color: var(--jiffyui-Notice-500);
+}
+
+.jiffyui-alert--waiting.jiffyui-alert--subtile .btn.btn--secondry {
+    background: var(--jiffyui-Notice-100);
+    border-color: var(--jiffyui-Notice-400);
+}
+
+.jiffyui-alert--waiting.jiffyui-alert--subtile .btn.btn--secondry span {
+    color: var(--jiffyui-Notice-500);
+}
+
+.jiffyui-alert--waiting.jiffyui-alert--subtile .pixel-textLink a {
+    color: var(--jiffyui-Notice-400);
+}
+
+.jiffyui-alert--primary.jiffyui-alert--subtile {
+    border-color: var(--jiffyui-Sapphire-200);
+    background: var(--jiffyui-Sapphire-100);
+}
+
+.jiffyui-alert--primary.jiffyui-alert--subtile .jiffyui-alert_icon svg {
+    color: var(--jiffyui-Sapphire-500);
+}
+
+.jiffyui-alert--primary.jiffyui-alert--subtile .btn.btn--secondry {
+    background: var(--jiffyui-Sapphire-100);
+    border-color: var(--jiffyui-Sapphire-500);
+}
+
+.jiffyui-alert--primary.jiffyui-alert--subtile .btn.btn--secondry span {
+    color: var(--jiffyui-Sapphire-500);
+}
+
+.jiffyui-alert--primary.jiffyui-alert--subtile .pixel-textLink a {
+    color: var(--jiffyui-Sapphire-500);
+}
+
+.jiffyui-alert--neutral.jiffyui-alert--subtile {
+    border-color: var(--jiffyui-naturalLight-200);
+    background: var(--jiffyui-naturalLight-100);
+}
+
+.jiffyui-alert--neutral.jiffyui-alert--subtile .jiffyui-alert_icon svg {
+    color: var(--jiffyui-naturalDark-1300);
+}
+
+.jiffyui-alert--neutral.jiffyui-alert--subtile .btn.btn--secondry {
+    background: var(--jiffyui-naturalLight-200);
+    border-color: var(--jiffyui-naturalDark-1300);
+}
+
+.jiffyui-alert--neutral.jiffyui-alert--subtile .btn.btn--secondry span {
+    color: var(--jiffyui-naturalDark-1300);
+}
+
+.jiffyui-alert--neutral.jiffyui-alert--subtile .pixel-textLink a {
+    color: var(--jiffyui-naturalDark-1300);
+}
+
+.jiffyui-alert--primary.jiffyui-alert--intense {
+    background-color: var(--jiffyui-Cerulean-600);
+}
+
+.jiffyui-alert--waiting.jiffyui-alert--intense {
+    background-color: var(--jiffyui-Notice-400);
+}
+
+.jiffyui-alert--negative.jiffyui-alert--intense {
+    background-color: var(--jiffyui-Negative-600);
+}
+
+.jiffyui-alert--possitive.jiffyui-alert--intense {
+    background-color: var(--jiffyui-Possitive-600);
+}
+
+.jiffyui-alert--neutral.jiffyui-alert--intense {
+    background-color: var(--jiffyui-naturalDark-1300);
+}
+
+.jiffyui-alert--intense .jiffyui-alert_icon svg,
+.jiffyui-alert--intense .jiffyui-alert_tile,
+.jiffyui-alert--intense .btn.btn--secondry span,
+.jiffyui-alert--intense .pixel-textLink a {
+    color: var(--jiffyui-white);
+}
+
+.jiffyui-alert--intense .btn.btn--secondry {
+    background-color: transparent;
+    border-color: var(--jiffyui-white);
+}
+
+.jiffyui-alert--intense .jiffyui-alert_description {
+    color: var(--jiffyui-naturalLight-050);
+}
+
+.jiffyui-alert-dismiss {
+    position: absolute;
+    right: 1rem;
+    top: 1rem;
+}
+
+.jiffyui-alert-dismiss .btn.btn--tertiary {
+    padding: 0.3rem;
+    width: 2.5rem;
+    height: 2.5rem;
+    text-align: center;
+    background: transparent;
+    border-color: transparent;
+    opacity: 0.5;
+}
+
+.jiffyui-alert-dismiss .btn.btn--tertiary:hover {
+    background: #d6d6d6;
+    border-color: #d6d6d6;
+    opacity: 1;
+}
+
+.jiffyui-alert-dismiss .btn.btn--tertiary:hover svg {
+    color: var(--jiffyui-black);
+}
+
+.jiffyui-alert-dismiss .btn.btn--tertiary .btn-icon {
+    height: 100%;
+    width: 100%;
+}
+
+.jiffyui-alert--intense .jiffyui-alert-dismiss .btn.btn--tertiary {
+    opacity: 1;
+}
+
+.jiffyui-alert--intense .jiffyui-alert-dismiss .btn.btn--tertiary .btn-icon svg {
+    color: var(--jiffyui-white);
+}
+
+.jiffyui-alert--intense .jiffyui-alert-dismiss .btn.btn--tertiary:hover {
+    background: rgba(0, 0, 0, 0.1);
+    border-color: transparent;
+}

@@ -1,0 +1,303 @@
+.Pixel-toolTip {
+  display: inline-flex;
+}
+
+.Pixel-toolTip__pointer {
+  position: absolute;
+  display: inline-flex;
+}
+
+/* ToolTip-pointer  css*/
+.Pixel-toolTip--rightCenter {
+  left: 0.1rem;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.Pixel-toolTip--center {
+  top: 0.1rem;
+  left: 49%;
+  transform: rotate(90deg) translateX(-50%);
+}
+
+.Pixel-toolTip--bottomRight,
+.Pixel-toolTip--bottomLeft {
+  top: 0.1rem;
+  transform: rotate(90deg) translateX(-50%);
+}
+
+.Pixel-toolTip--topCenter {
+  bottom: 0.1rem;
+  left: 49%;
+  transform: rotate(270deg) translateX(-50%);
+}
+
+.Pixel-toolTip--leftCenter {
+  top: 50%;
+  right: 0.1rem;
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.Pixel-toolTip--topRight,
+.Pixel-toolTip--topLeft {
+  bottom: 0.1rem;
+  transform: rotate(270deg) translateX(-50%);
+}
+
+.Pixel-toolTip--leftTop,
+.Pixel-toolTip--leftBottom {
+  right: 0.4rem;
+  transform: rotate(180deg) translateX(-50%);
+}
+
+/* Tooltip Message */
+.Pixel-toolTip__message {
+  background: #1F262D;
+  max-width: 30rem;
+  font-size: 1.4rem;
+  border-radius: 0.6rem;
+  color: #ffffff;
+  line-height: 2.2rem;
+  padding: 1.2rem;
+  text-align: left;
+  word-break: break-word;
+}
+
+/* Animation */
+/* Animation Right */
+.Pixel-toolTip--right {
+  padding-left: 0.7rem;
+
+  &.Pixel-toolTip--in {
+    animation: tooltipInRight 0.1s linear forwards;
+    transform-origin: left center;
+  }
+
+  &.Pixel-toolTip--out {
+    animation: tooltipOutRight 0.1s linear forwards;
+    transform-origin: left center;
+  }
+}
+
+/* Animation Left */
+.Pixel-toolTip--left {
+  padding-right: 0.7rem;
+
+  &.Pixel-toolTip--in {
+    animation: tooltipInLeft 0.1s linear forwards;
+    transform-origin: right center;
+  }
+
+  &.Pixel-toolTip--out {
+    animation: tooltipOutLeft 0.1s linear forwards;
+    transform-origin: right center;
+  }
+}
+
+/* Animation Top */
+.Pixel-toolTip--top {
+  padding-bottom: 0.7rem;
+
+  &.Pixel-toolTip--in {
+    animation: tooltipInTop 0.1s linear forwards;
+    transform-origin: bottom center;
+  }
+
+  &.Pixel-toolTip--out {
+    animation: tooltipOutTop 0.1s linear forwards;
+    transform-origin: bottom center;
+  }
+}
+
+/* Animation Bottom */
+.Pixel-toolTip--bottom {
+  padding-top: 0.7rem;
+
+  &.Pixel-toolTip--in {
+    animation: tooltipInBottom 0.1s linear forwards;
+    transform-origin: bottom center;
+  }
+
+  &.Pixel-toolTip--out {
+    animation: tooltipOutBottom 0.1s linear forwards;
+    transform-origin: bottom center;
+  }
+}
+
+/* Amimation Frames */
+@keyframes tooltipInRight {
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+
+  0% {
+    -webkit-transform: translate3d(5px, 0, 0) scale(0.98);
+    transform: translate3d(5px, 0, 0) scale(0.98);
+    opacity: 0.8;
+  }
+}
+
+@keyframes tooltipOutRight {
+  100% {
+    -webkit-transform: translate3d(5px, 0, 0) scale(0.98);
+    transform: translate3d(5px, 0, 0) scale(0.98);
+    opacity: 0;
+  }
+
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Frames Left */
+@keyframes tooltipInLeft {
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+
+  0% {
+    -webkit-transform: translate3d(-5px, 0, 0) scale(0.95);
+    transform: translate3d(-5px, 0, 0) scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+@keyframes tooltipOutLeft {
+  100% {
+    -webkit-transform: translate3d(-5px, 0, 0) scale(0.95);
+    transform: translate3d(-5px, 0, 0) scale(0.95);
+    opacity: 0;
+  }
+
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Frames Top */
+@keyframes tooltipInTop {
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+
+  0% {
+    -webkit-transform: translate3d(0, -5px, 0) scale(0.95);
+    transform: translate3d(0, -5px 0) scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+@keyframes tooltipOutTop {
+  100% {
+    -webkit-transform: translate3d(0, -5px, 0) scale(0.95);
+    transform: translate3d(0, -5px, 0) scale(0.95);
+    opacity: 0;
+  }
+
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* Frames Bottom */
+@keyframes tooltipInBottom {
+  100% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+
+  0% {
+    -webkit-transform: translate3d(0, -5px, 0) scale(0.95);
+    transform: translate3d(0, -5px 0) scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+@keyframes tooltipOutBottom {
+  100% {
+    -webkit-transform: translate3d(0, -5px, 0) scale(0.95);
+    transform: translate3d(0, -5px, 0) scale(0.95);
+    opacity: 0;
+  }
+
+  0% {
+    -webkit-transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 1;
+  }
+}
+
+@media (min-width: 768px) {
+
+  .Pixel-toolTip__footer,
+  .Pixel-toolTip__overlay {
+    display: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .Pixel-toolTip__pointer {
+    display: none;
+  }
+
+  .Pixel-toolTip__footer {
+    margin-top: 15px;
+    text-align: center;
+  }
+
+  .Pixel-toolTip__cancel {
+    border: 1px solid #e4e4e4;
+    display: inline-block;
+    padding: 2px 6px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .Pixel-toolTip__message {
+    text-align: center;
+    padding: 1.8rem;
+    max-width: 100%;
+  }
+
+  .Pixel-toolTip__wrapper {
+    z-index: 999999;
+
+    left: 50% !important;
+    top: 50% !important;
+    opacity: 0;
+    transform: translate(-50%, -50%) !important;
+    transition: 0.3s all;
+    width: calc(100% - 100px);
+  }
+
+  .Pixel-toolTip__wrapper.Pixel-toolTip--in {
+
+    opacity: 1;
+  }
+
+  .Pixel-toolTip__overlay {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    opacity: 0.8;
+    z-index: 99999;
+    filter: blur(5px);
+  }
+}

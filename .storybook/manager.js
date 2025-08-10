@@ -13,22 +13,6 @@ let config = {
   // Text colors
   textColor: "black",
   textInverseColor: "rgba(255,255,255,0.9)",
-
-  // Toolbar default and active colors
-  // barTextColor: 'silver',
-  // barSelectedColor: 'black',
-  // barBg: 'black',
-
-  // Form colors
-  // inputBg: 'black',
-  // inputBorder: 'silver',
-  // inputTextColor: 'white',
-  // inputBorderRadius: 4,
-
-  brandTitle: "Cedcommerce",
-  brandUrl: "https://cedcommerce.com",
-  brandImage:
-    "https://d3vlhkqyz4y38a.cloudfront.net/skin/frontend/cedcomnew/default/images/header/logo/ced-logo-web.svg",
 };
 
 addons.setConfig({

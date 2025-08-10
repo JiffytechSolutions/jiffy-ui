@@ -1,0 +1,45 @@
+
+.jiffyui-form__label {
+  margin-bottom: 0.4rem;
+  display: inline-block;
+  word-break: break-word;
+  color: var(--jiffyui-naturalDark-1300);
+  font-size: 1.4rem;
+  line-height: 2rem;
+  font-family: var(--jiffyui-medium-font);
+}
+
+.jiffyui-formElement .jiffyui-formElement__textField ,
+.jiffyui-formElement__textArea {
+  border: 1px solid var(--jiffyui-naturalLight-300);
+}
+
+.jiffyui-formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.jiffyui-formGroup .jiffyui-formElement__itemHelp {
+  margin-top: 0;
+}
+
+.jiffyui-formGroup__list {
+  margin-bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.jiffyui-formGroup__list--vertical {
+  gap: 0.8rem;
+  flex-direction: column;
+}
+
+.jiffyui-formGroup__list--horizontal {
+  gap: 1.6rem;
+  flex-direction: row;
+}
+
+.jiffyui-formGroup__listitem--clickable {
+  cursor: pointer;
+}

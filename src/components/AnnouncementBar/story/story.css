@@ -1,8 +1,0 @@
-.story-announcement {
-    display: flex;
-    flex-direction: column;
-    gap: 1.6rem;
-}
-.story-announcement .inte-announcementBar {
-    position: relative;
-}

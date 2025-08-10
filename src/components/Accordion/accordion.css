@@ -1,0 +1,62 @@
+.accordion {
+    border-bottom: 1px solid var(--jiffyui-naturalLight-300);
+}
+.accordion-body.collapsed {
+    padding: 0rem;
+    max-height: 0rem;
+    transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
+}
+.accordion-body {
+    overflow: hidden;
+    transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
+    height: auto;
+    max-height: 9999px;
+}
+.accordion-wrapper {
+    margin-bottom: 0.4rem;
+    border-radius: 0.4rem;
+}
+.accordion-header {
+    padding: 1rem 0rem;
+    cursor: pointer;
+    font-size: 1.4rem;
+    position: relative;
+}
+.accordion-header.accordion-left--icon {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.accordion-header__title {
+    line-height: 2.5rem;
+    font-size: 1.4rem;
+    font-family: var(--jiffyui-medium-font);
+    color: var(--jiffyui-naturalDark-1300);
+}
+.accordion-body_content {
+    padding: 1rem 0rem;
+    font-size: 1.4rem;
+    line-height: 2.2rem;
+    color: var(--jiffyui-naturalDark-900);
+}
+.accordion-headaer__icon svg {
+    display: block;
+    color: var(--jiffyui-naturalDark-1300);
+}
+.accordion-header>svg {
+    color: var(--jiffyui-naturalDark-1300);
+    position: absolute;
+    right: 0.1rem;
+    top: 50%;
+    transform: translateY(-50%) rotate(0deg);
+    transition: 0.3s all;
+}
+.accordion-header.active>svg {
+    transform: translateY(-50%) rotate(180deg);
+}
+.icon-align--left .accordion-header {
+    padding-left: 3.5rem;
+}
+.accordion-wrapper.icon-align--left .accordion-header svg {
+    left: 1.2rem;
+}

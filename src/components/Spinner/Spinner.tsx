@@ -1,40 +1,77 @@
-import React, { FC } from "react";
-import getClassNames from "../../utilities/getClassnames";
+import React from "react";
 import "./Spinner.css";
-export interface SpinnerI {
-  color: "default" | "danger" | "primary" | "info";
-  size?: "large" | "medium" | "small";
-  customClass?: string;
-}
 
-const Spinner: FC<SpinnerI> = ({
-  color = "default",
-  size = "large",
-  customClass = "",
+ const Spinner = ({
+  size = "Medium",
+  color = "Neutral",
+  label = "Loading",
+  labelPosition = "Bottom",
+  ...props
 }: SpinnerI) => {
-  const getColor = {
-    default: "inte-spinner--default",
-    danger: "inte-spinner--danger",
-    primary: "inte-spinner--primary",
-    info: "inte-spinner--info",
+  const getSpinnerSize = () => {
+    switch (size) {
+      case "Small":
+        return "spinner-small";
+      case "Medium":
+        return "spinner-medium";
+      case "Large":
+        return "spinner-large";
+      default:
+        return "spinner-large";
+    }
   };
-  const getSize = {
-    large: "inte-spinner--large",
-    medium: "inte-spinner--medium",
-    small: "inte-spinner--small",
+  const getLabelPosition = () => {
+    switch (labelPosition) {
+      case "Right":
+        return "spinner-labelRight";
+      case "Bottom":
+        return "spinner-labelBottom";
+      default:
+        return "";
+    }
   };
-  const colors = getColor[color];
-  const sizes = getSize[size];
+
+  const getSpinnerColor = () => {
+    switch (color) {
+      case "Positive":
+        return "spinner-positive";
+      case "Negative":
+        return "spinner-negative";
+      case "Notice":
+        return "spinner-notice";
+      case "Information":
+        return "spinner-info";
+      case "Neutral":
+        return "spinner-neutral";
+      case "Primary":
+        return "spinner-primary";
+      default:
+        return "spinner-neutral";
+    }
+  };
+
+  const spinnerSize = getSpinnerSize();
+  const labelPosition1 = getLabelPosition();
+  const spinnerColor = getSpinnerColor();
   return (
-    <div
-      className={getClassNames({
-        "inte-spinner": true,
-        [colors]: colors,
-        [sizes]: sizes,
-        [customClass]: customClass,
-      })}
-    ></div>
+    <div className={`spinner ${spinnerSize} ${labelPosition1} ${spinnerColor}`}>
+      <div className="spinner-circle"></div>
+      {label && <label className="spinner-label">{label}</label>}
+    </div>
   );
 };
+
+export interface SpinnerI {
+  size: "Small" | "Medium" | "Large";
+  color?:
+    | "Positive"
+    | "Negative"
+    | "Notice"
+    | "Information"
+    | "Neutral"
+    | "Primary";
+  label?: string;
+  labelPosition?: "Right" | "Bottom";
+}
 
 export default Spinner;

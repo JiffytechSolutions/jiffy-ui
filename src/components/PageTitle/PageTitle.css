@@ -1,0 +1,131 @@
+.pageTitle {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 31px;
+    margin-top: 10px;
+}
+
+.has-reverseNavigation .rev-title__wrapper {
+    display: flex;
+    gap: 1.6rem;
+    align-items: start;
+}
+
+.pageTitle-back__btn {
+    background: transparent;
+    border: none;
+    height: 3.6rem;
+    width: 3.6rem;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: 0.3s all;
+}
+
+.pageTitle-back__btn:hover {
+    background: #e4e4e4;
+}
+
+.pageTitle-actions {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.pageTitle-title {
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.pageTitle-description {
+    color: #6b6262;
+}
+
+.title-with__badge {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin-bottom: 0.8rem;
+
+    .pageTitle-title {
+        margin-bottom: 0;
+    }
+}
+
+.pageTitle-actions_wrapper {
+    position: relative;
+    display: flex;
+    gap: 0.8rem;
+}
+
+.pageTitle-action_wrapper {
+    position: absolute;
+    top: calc(100% + 50px);
+    left: -100%;
+    border: 1px solid #e4e4e4;
+    border-radius: 4px;
+    background: #fff;
+    z-index: 9;
+    min-width: 15rem;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s all;
+    box-shadow: var(--jiffyui-low-elevation);
+    transform: translateX(15%);
+}
+
+.pageTitle-action_wrapper.mobile-actions_open {
+    opacity: 1;
+    visibility: visible;
+    top: 100%;
+}
+
+.pageTitle-action_wrapper button {
+    display: block;
+    width: 100%;
+    background: transparent;
+    border: none;
+    color: #333;
+    text-align: left;
+    padding-left: 1.6rem !important;
+    padding-right: 1.6rem !important;
+}
+
+.pageTitle-action_wrapper button:hover {
+    background: #f2f4ff !important;
+}
+
+.pageTitle-action_wrapper button span.btn-text {
+    color: #000;
+}
+
+@media (max-width: 767px) {
+    .pageTitle {
+        flex-wrap: wrap;
+    }
+
+    .rev-title__wrapper .pageTitle-back__btn {
+        display: none;
+    }
+
+    .pageTitle-back__btn {
+        order: 1;
+    }
+
+    .pageTitle-back__btn .btn-text {
+        color: #333;
+    }
+
+    .pageTitle-actions {
+        order: 2;
+    }
+
+    .has-reverseNavigation .rev-title__wrapper {
+        flex: 0 0 100%;
+        order: 3;
+        border-top: 1px dashed #e4e4e4;
+        padding-top: 1rem;
+        margin-top: 1rem;
+    }
+}

@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { FC } from "react";
-import { Check, Copy } from "../../storybook/Foundation/Icons/Icons";
-import { Button } from "..";
-import Text from "../Text/Text";
-import getClassNames from "../../utilities/getClassnames";
+
+import  TextStyle  from "../TextStyle/TextStyle";
+import  Button  from "../Button/Button";
+import { Check, Copy } from "react-feather";
 import "./CopyClipboard.css";
 export interface CopyClipboardI {
   value: string | any;
   label?: string | any;
-  align?: "start" | "center" | "end" | "fill";
   iconAlign?: "left" | "right";
   timeout?: number;
   customClass?: string;
@@ -19,7 +18,6 @@ const CopyClipboard: FC<CopyClipboardI> = ({
   value = "",
   label,
   iconAlign = "right",
-  align = "start",
   timeout = 3000,
   onClick = () => {
     //
@@ -36,25 +34,15 @@ const CopyClipboard: FC<CopyClipboardI> = ({
   }
   useEffect(() => {
     setTimeout(() => setactive(false), timeout);
-  }, []);
+  }, [timeout]);
   return (
-    <div
-      className={getClassNames({
-        "inte-copyClipboard": true,
-        "inte-copyClip__center": align == "center",
-        "inte-copyClip__end": align == "end",
-        "inte-copyClip__fill": align === "fill",
-
-        [customClass]: customClass,
-      })}
-      onClick={onClick}
+    <div className="copy-to__clipboard" onClick={onClick}
     >
-      {label && iconAlign == "right" && <Text>{label}</Text>}
+      {label && iconAlign === "right" && <TextStyle as="p">{label}</TextStyle>}
       <Button
-        accessibilityLabel="Copy To Clipboard"
-        type="outlined"
-        size="extraThin"
-        icon={active ? <Check /> : <Copy size={20} />}
+        children=""
+        variant="Secondry"
+        icon={active ? <Check color="#00A251" size={20} /> : <Copy size={20} />}
         onClick={() => {
           copyText();
           setstatus(!status);
@@ -62,7 +50,7 @@ const CopyClipboard: FC<CopyClipboardI> = ({
           setTimeout(() => setactive(false), timeout);
         }}
       />
-      {label && iconAlign == "left" && <Text>{label}</Text>}
+      {label && iconAlign === "left" && <TextStyle as="p">{label}</TextStyle>}
     </div>
   );
 };

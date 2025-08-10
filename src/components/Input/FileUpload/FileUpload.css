@@ -1,0 +1,244 @@
+
+
+.jiffyui-fileUpload__dropZone {
+  border-radius: 0.6rem;
+  cursor: pointer;
+  border: 0.1rem dashed rgb(177, 193, 210);
+  background-color: #ffffff;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.jiffyui-fileUpload__inputBox {
+  display: none;
+}
+
+.jiffyui-fileUpload__uploadText {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: pre;
+}
+
+.jiffyui-fileUpload__uploadText span:first-child {
+  margin: 0px;
+  padding: 0px;
+  color: var(--jiffyui-naturalDark-1300);
+  font-size: 1.4rem;
+  line-height: 2rem;
+  font-family: var(--jiffyui-medium-font);
+}
+
+.jiffyui-fileUpload__uploadText span:nth-child(2),
+.jiffyui-fileUpload__fileSize {
+  color: var(--jiffyui-Cerulean-600);
+  font-size: 1.4rem;
+  font-weight: 400;
+  text-decoration: underline;
+  line-height: 1rem;
+  letter-spacing: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+/* Helper text */
+.jiffyui-fileUpload__itemHelp {
+  margin-bottom: 1.6rem;
+  display: block;
+  font-weight: 400;
+  font-style: italic;
+  font-size: 1.3rem;
+  line-height: 1.6rem;
+  text-align: left;
+  margin-top: 0.6rem;
+  color: var(--jiffyui-naturalLight-600);
+}
+
+.jiffyui-fileUpload__itemHelp--HasHelpIcon {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+}
+
+.jiffyui-fileUpload__dropZone:not(.jiffyui-fileUpload__dropZone--disabled):hover,
+.jiffyui-fileUpload--dragOver {
+  background-color: rgb(108 132 157 / 18%);
+}
+
+/* Helper Text End */
+
+.jiffyui-item__wrapper.jiffyui-item--error {
+  border: 0.1rem solid #DF5146;
+  background-color: #FFF4F4;
+}
+
+.jiffyui-item__wrapper {
+  border-radius: 0.6rem;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: #f7f7f7;
+  transition-property: background-color;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+  transition-duration: 70ms;
+  border: 1px solid var(--jiffyui-naturalLight-300);
+  word-break: break-all;
+  padding: 1rem 5px;
+}
+
+.jiffyui-fileUpload__dropZone--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.jiffyui-fileItem {
+  margin-bottom: 0.8rem;
+}
+
+.jiffyui-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.jiffyui-fileItem .jiffyui-item__container {
+  display: flex;
+  flex-direction: row;
+  margin: 8px;
+}
+
+.jiffyui-item__formatIcon {
+  margin-right: 8px;
+}
+
+.jiffyui-item__name {
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+}
+
+.jiffyui-item__clear {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.jiffyui-item__format {
+  display: flex;
+  justify-content: center;
+  position: relative;
+}
+
+.jiffyui-item__formatName {
+  color: rgb(255, 255, 255);
+  font-size: 1rem;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration-line: none;
+  line-height: 1.4rem;
+  letter-spacing: 0px;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  top: 46%;
+}
+
+.jiffyui-item__nameWrapper {
+  display: flex;
+  align-items: center;
+}
+
+.jiffyui-item__size {
+  color: var(--jiffyui-naturalLight-500);
+  font-size: 1.2rem;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration-line: none;
+  line-height: 1.8rem;
+  letter-spacing: 0px;
+  margin: 0px;
+  padding: 0px;
+}
+
+.jiffyui-item__fileName {
+  display: flex;
+  align-items: center;
+  margin-right: 8px;
+  max-width: 70%;
+}
+
+.jiffyui-item__fileName p {
+  color: var(--jiffyui-naturalDark-900);
+  font-size: 1.4rem;
+  font-weight: 500;
+  font-style: normal;
+  text-decoration-line: none;
+  line-height: 2rem;
+  letter-spacing: 0px;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow-wrap: break-word;
+}
+
+.jiffyui-item__button {
+  border: none;
+  cursor: pointer;
+  padding: 0px;
+  border-radius: 2px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--jiffyui-Negative-600);
+  transition-property: color, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.3, 0, 0.2, 1);
+}
+
+.jiffyui-file--progress {
+  overflow: hidden;
+  position: relative;
+  height: 2px;
+  background-color: rgba(108, 132, 157, 0.09);
+}
+
+.jiffyui-file--progressContainer {
+  animation: 900ms linear 0s infinite normal none running loader;
+  position: absolute;
+  width: 4%;
+  height: 100%;
+  background-color: rgb(46, 91, 255);
+}
+
+@keyframes loader {
+  0% {
+    left: -8%;
+    transform: scaleX(1);
+  }
+
+  50% {
+    left: 50%;
+    transform: scaleX(5);
+  }
+
+  100% {
+    left: 103%;
+    transform: scaleX(1);
+  }
+}
+
+.jiffyui-file--progressLoadingItem {
+  position: absolute;
+  width: 2%;
+  height: 100%;
+  opacity: 0;
+  background-color: white;
+  animation: 900ms cubic-bezier(0.5, 0, 0, 1) 3000ms infinite normal none running;
+}

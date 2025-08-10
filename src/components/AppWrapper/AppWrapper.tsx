@@ -1,112 +1,67 @@
-import React, {
-  useContext,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
-import { AppContext } from "../../utilities/context/AppContext";
-import getClassNames from "../../utilities/getClassnames";
-import useBodyLock from "../../utilities/UseBodyLock";
-import { AnnouncementBarI } from "../AnnouncementBar/AnnouncementBar";
-import { AppBarI } from "../AppBar/AppBar";
-import { PageFooterI } from "../PageFooter/PageFooter";
-import { SideBarI } from "../SideBar/SideBar";
-import "./AppWrapper.css";
-import useMobileDevice from "../../utilities/useMobileDevice";
+import React, { useEffect, useRef, useState } from "react";
+import './appwrapper.css';
+// import '../../style.css';
 
 export interface AppWrapperI {
-  children?: any;
-  announcementBar?: React.ReactElement<AnnouncementBarI>;
-  appBar?: React.ReactElement<AppBarI>;
-  sideBar?: React.ReactElement<SideBarI>;
-  appFooter?: React.ReactElement<PageFooterI>;
-  customClass?: string;
-  embeddedView?: boolean;
+  topBar?: string | React.ReactNode;
+  sideBar?: string | React.ReactNode;
+  announcementBar?: string | React.ReactNode;
+  content?: string | React.ReactNode;
+  footer?: string | React.ReactNode;
 }
 
-const AppWrapper = ({
-  announcementBar,
-  sideBar,
-  children,
-  appFooter,
-  appBar,
-  customClass,
-  embeddedView,
-}: AppWrapperI) => {
-  const context = useContext(AppContext);
-  const checkSideBarActive = () => {
-    return context.sideBar[0]
-      ? context.sideBar[0]
-      : !embeddedView && window.innerWidth > 991
-      ? true
-      : false;
-  };
+const AppWrapper = ({ topBar, sideBar, footer, announcementBar, content, ...props }: AppWrapperI) => {
 
-  const [isSideBarActive, setIsSideBarActive] = useState(checkSideBarActive());
-
-  const appRef = useRef<HTMLDivElement>(null);
-
-  const isMobile = useMobileDevice();
-  useBodyLock(context.sideBar[0]);
-
-  const calculateElementHeights = () => {
-    if (!appRef.current) return;
-    const announcementBarElement = appRef.current.getElementsByClassName(
-      "inte-announcementBar"
-    )[0] as HTMLElement;
-    const appBarElement = appRef.current.getElementsByClassName(
-      "inte-appBar--stickyTop"
-    )[0] as HTMLElement;
-    const pageHeaderElement = appRef.current.getElementsByClassName(
-      "inte-pageHeader--fixed"
-    )[0] as HTMLElement;
-    const pageBottomActionElement = document.getElementsByClassName(
-      "inte-pageHeader__action--atBottom"
-    )[0] as HTMLElement;
-    const containerVariable: Record<string, string> = {
-      "--anouncementBarHeight": `${
-        announcementBarElement ? announcementBarElement.offsetHeight : 0
-      }px`,
-      "--appBarHeight": `${appBarElement ? appBarElement.offsetHeight : 0}px`,
-      "--pageHeaderHeight": `${
-        pageHeaderElement ? pageHeaderElement.offsetHeight : 0
-      }px`,
-      "--pageBottomAction": `${
-        pageBottomActionElement ? pageBottomActionElement.offsetHeight : 0
-      }px`,
+  const [scrolled, setScrolled] = useState(false);
+  const [topBarHeight, setTopBarHeight] = useState<number | null>(null);
+  const topBarRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 5) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
     };
-    Object.entries(containerVariable).forEach(([property, value]) => {
-      document.documentElement.style.setProperty(property, value);
-    });
-
-    setIsSideBarActive(checkSideBarActive());
-  };
-  useLayoutEffect(() => {
-    calculateElementHeights();
-    window.addEventListener("resize", calculateElementHeights);
+    window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener("resize", calculateElementHeights);
+      window.removeEventListener('scroll', handleScroll);
     };
-  }, [announcementBar, isMobile, context.sideBar[0]]);
+  }, []);
 
+  useEffect(() => {
+    const handleResize = () => {
+      if (topBarRef.current) {
+        setTopBarHeight(topBarRef.current.offsetHeight + 15);
+      }
+    }
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [topBarRef]);
   return (
-    <div
-      className={getClassNames({
-        "inte-appWrapper": true,
-        "inte-sideBar--active": isSideBarActive,
-        "inte-appWrapper--embeddedView": embeddedView,
-        [customClass ?? ""]: customClass,
-      })}
-      ref={appRef}
-    >
-      {sideBar ?? null}
-      {announcementBar ?? null}
-      {appBar ?? null}
-      <main className="inte-main">{children}</main>
-      {appFooter ?? null}
-    </div>
-  );
+    <main className='jiffyui-app_wrapper'>
+      <div className="jiffyui-announcement_wrapper">
+        {announcementBar}
+      </div>
+      <div className="jiffyui-sidebar__Wrapper">
+        {sideBar}
+      </div>
+      <div className="jiffyui-main__content">
+        <div ref={topBarRef} className={`jiffyui-topbar__wrapper ${scrolled ? "header-sticky" : ""}`}>
+          
+          {topBar}
+        </div>
+        <div className="jiffyui-content_wrapper" style={{ "paddingTop": topBarHeight + 'px' }}>
+          {content}
+        </div>
+        <div className="jiffyui-footer__wrapper">
+          {footer}
+        </div>
+      </div>
+    </main>
+  )
 };
-
 export default AppWrapper;

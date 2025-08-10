@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from "react";
-import Toast from "../../components/Toast/component/Toast";
-interface AppContextType {
+// import Toast from "../../components/Toast/component/Toast";
+interface AppContextI {
   sideBar: [boolean, (value: boolean) => void];
   toast: {
     toastItems: [];
@@ -12,7 +12,7 @@ interface AppProviderI {
   children?: any;
 }
 
-export const AppInitialState: AppContextType = {
+export const initialState: AppContextI = {
   sideBar: [false, () => {}],
   toast: {
     toastItems: [],
@@ -21,7 +21,7 @@ export const AppInitialState: AppContextType = {
   },
 };
 
-export const AppContext = React.createContext<AppContextType>(AppInitialState);
+export const AppContext = React.createContext<AppContextI>(initialState);
 
 const AppProvider = ({ children }: AppProviderI) => {
   const [sideBar, setSideBar] = useState(false);
@@ -51,7 +51,10 @@ const AppProvider = ({ children }: AppProviderI) => {
       }}
     >
       {children}
-      {toastItems.length !== 0 && <Toast />}
+      {toastItems.length !== 0 && 
+        // <Toast />
+        <></>
+      }
     </AppContext.Provider>
   );
 };

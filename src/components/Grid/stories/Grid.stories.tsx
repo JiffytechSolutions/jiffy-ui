@@ -1,6 +1,6 @@
 import React from "react";
 import Grid from "../Grid";
-import { Card } from "../../Card";
+import  Card  from "../../Card/Card";
 
 export default {
   title: "Components/Grid",
@@ -9,7 +9,7 @@ export default {
     children: {
       description: "Provide the children of grid in <Grid.Item> Wrapper",
       control: {
-        disable:true
+        disable: true
       },
     },
     gap: {
@@ -38,11 +38,11 @@ export default {
 
 const Template = ({ ...rest }) => {
   return (
-    <Card>
+    <Card type={"Shadow"}>
       <Grid
-       gap={rest.gap}
-       columns={rest.columns}
-       customClass={rest.customClass}
+        gap={rest.gap}
+        columns={rest.columns}
+        customClass={rest.customClass}
       >
         <Grid.Item>
           <div style={{ backgroundColor: "lightblue", padding: "10px" }}>
@@ -75,11 +75,11 @@ const Template = ({ ...rest }) => {
           </div>
         </Grid.Item>
       </Grid>
-      <Card>
+      <Card type={"Shadow"}>
         <div>Provide the children of grid inside the grid item wrapper</div>
         <pre>
-            <code>
-              {`
+          <code>
+            {`
               <Grid>
                 <Grid.Item> <Button onClick={handleClick}> click me </Button> </Grid.Item>
                 <Grid.Item> <Button onClick={handleClick}> click me </Button> </Grid.Item>
@@ -88,8 +88,8 @@ const Template = ({ ...rest }) => {
             );
           };
         `}
-            </code>
-          </pre>
+          </code>
+        </pre>
       </Card>
     </Card>
   );

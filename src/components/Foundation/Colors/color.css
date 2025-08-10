@@ -1,0 +1,47 @@
+.textstyle--wrapper .pixel-Text--root {
+    padding: 0.4rem 1rem;
+    color: #000;
+}
+.story-color-aria {
+    border-radius: 0.5rem;
+    position: relative;
+}
+.story-color-aria .card {
+    padding: 1.2rem;
+}
+.story-color-aria button.btn {
+    position: absolute;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    border: none;
+    top: 0;
+    left: 0;
+    background: rgba(255,255,255,0.9);
+    border-radius: 0.4rem;
+    transition: 0.3s all;
+    visibility: hidden;
+    opacity: 0;
+}
+.story-color-aria:hover button.btn {
+    opacity: 1;
+    visibility: visible;
+}
+.story-color-box > h3 {
+    color: #ffffff;
+    font-size: 1.4rem;
+}
+.copy-to__clipboard > p {
+    text-align: center;
+    font-size: 1.6rem !important;
+    font-weight: bold;
+    color: #fff;
+    margin-top: 10px;
+}
+.text-color-dark .copy-to__clipboard > p {
+    color: #333;
+}
+.text-color-dark .story-color-box > h3 {
+    color: #333;
+}
+

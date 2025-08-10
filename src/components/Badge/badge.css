@@ -1,0 +1,210 @@
+.badge-wrapp {
+    display: inline-block;
+}
+
+.badge {
+    display: flex;
+    padding: 0.1rem 1rem;
+    background: #e4e4e4;
+    border-radius: 25rem;
+    align-items: center;
+}
+
+.badge.badge--small {
+    height: 1.6rem;
+
+    label {
+        font-size: 1rem;
+        line-height: 1.6rem;
+    }
+}
+
+.badge.badge--medium {
+    height: 2rem;
+
+    label {
+        font-size: 1.2rem;
+        line-height: 2rem;
+    }
+}
+
+.badge.badge--large {
+    height: 2.4rem;
+
+    label {
+        font-size: 1.4rem;
+        line-height: 2.4rem;
+    }
+}
+
+.badge--positive {
+    background-color: var(--jiffyui-Possitive-100);
+
+    .badge-label {
+        color: var(--jiffyui-Possitive-600);
+    }
+}
+
+.badge--negative {
+    background-color: var(--jiffyui-Negative-100);
+
+    .badge-label {
+        color: var(--jiffyui-Negative-600);
+    }
+}
+
+.badge--notice {
+    background-color: var(--jiffyui-Notice-100);
+
+    .badge-label {
+        color: var(--jiffyui-Notice-600);
+    }
+}
+
+.badge--neutral {
+    background-color: var(--jiffyui-Cloud-200);
+
+    .badge-label {
+        color: var(--jiffyui-naturalDark-1300);
+    }
+}
+
+.badge--primary {
+    background-color: var(--jiffyui-Cerulean-100);
+
+    .badge-label {
+        color: var(--jiffyui-Cerulean-600);
+    }
+}
+
+.badge--positive.badge--intense {
+    background-color: var(--jiffyui-Possitive-600);
+}
+
+.badge--negative.badge--intense {
+    background-color: var(--jiffyui-Negative-600);
+}
+
+.badge--notice.badge--intense {
+    background-color: var(--jiffyui-Notice-600);
+}
+
+.badge--neutral.badge--intense {
+    background-color: var(--jiffyui-naturalDark-1300);
+}
+
+.badge--primary.badge--intense {
+    background-color: var(--jiffyui-Cerulean-600);
+}
+
+.badge--intense .badge-label {
+    color: #fff;
+}
+
+.badge--positive {
+    &.badge--outline {
+        background-color: transparent;
+        border: 1px solid var(--jiffyui-Possitive-600);
+    }
+}
+
+.badge--negative {
+    &.badge--outline {
+        background-color: transparent;
+        border: 1px solid var(--jiffyui-Negative-600);
+    }
+}
+
+.badge--notice {
+    &.badge--outline {
+        background-color: transparent;
+        border: 1px solid var(--jiffyui-Notice-600);
+    }
+}
+
+.badge--neutral {
+    &.badge--outline {
+        background-color: transparent;
+        border: 1px solid var(--jiffyui-naturalDark-1300);
+    }
+}
+
+.badge--primary {
+    &.badge--outline {
+        background-color: transparent;
+        border: 1px solid var(--jiffyui-Cerulean-600);
+    }
+}
+
+.badge .complete {
+    display: inline-block;
+
+    margin-right: 0.5rem;
+    border-radius: 100%;
+}
+
+.badge.badge--small .complete {
+    height: 0.6rem;
+    width: .6rem;
+}
+
+.badge.badge--medium .complete {
+    height: 0.7rem;
+    width: .7rem;
+}
+
+.badge.badge--large .complete {
+    height: 0.8rem;
+    width: 0.8rem;
+}
+
+.badge--type__partial .partial {
+    border-radius: 3rem 3rem 0 0;
+    margin-right: 0.5rem;
+    background-color: #333;
+}
+
+.badge--type__partial.badge--small .partial {
+    height: 0.4rem;
+    width: 0.6rem;
+}
+
+.badge--type__partial.badge--medium .partial {
+    height: 0.5rem;
+    width: 0.7rem;
+}
+
+.badge--type__partial.badge--large .partial {
+    height: 0.6rem;
+    width: 0.8rem;
+}
+
+.badge--type__partial.badge--positive .partial,
+.badge--positive .complete {
+    background-color: var(--jiffyui-Possitive-600);
+}
+
+.badge--type__partial.badge--negative .partial,
+.badge--negative .complete {
+    background-color: var(--jiffyui-Negative-600);
+}
+
+.badge--type__partial.badge--notice .partial,
+.badge--notice .complete {
+    background-color: var(--jiffyui-Notice-600);
+}
+
+.badge--type__partial.badge--neutral .partial,
+.badge--neutral .complete {
+    background-color: var(--jiffyui-Cloud-600);
+}
+
+.badge--type__partial.badge--primary .partial,
+.badge--primary .complete {
+    background-color: var(--jiffyui-Cerulean-600);
+}
+
+.badge--intense .partial,
+.badge--intense .complete {
+    background-color: #e4e4e4 !important;
+}

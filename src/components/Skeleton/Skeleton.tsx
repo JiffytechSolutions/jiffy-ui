@@ -1,47 +1,97 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import "./Skeleton.css";
 
-const Skeleton: React.FC<SkeletonI> = ({
-  line = 1,
-  rounded = false,
-  type = "line",
-  width = "50px",
-  height = "50px",
-  customClass,
-}: SkeletonI) => {
-  function renderTypeWise() {
-    switch (type) {
-      case "custom":
-        return (
-          <div
-            style={{ width: width, height: height }}
-            className={`inte__Skeleton--Text ${rounded ? "inte__Skeleton--TextRounded":""}`}
-          ></div>
-        );
-      case "line":
-      default:
-        return new Array(line)
-          .fill(
-            <div
-              style={{ height: height}}
-              className={`inte__Skeleton--Text`}
-            ></div>
-          )
-          .map((line, index) => (
-            <React.Fragment key={index}>{line}</React.Fragment>
-          ));
-    }
-  }
-
-  return <div className={`inte__skeletonWrapper ${customClass}`}>{renderTypeWise()}</div>;
-};
 export interface SkeletonI {
-  type?: "line"  | "custom";
-  width?: string;
-  height?: string;
-  line?: number;
-  rounded?: boolean;
-  customClass?:string;
+  variant?: "Primary" | "Secondry" | "Tertiary" | "Link";
+  size?: "XSmall" | "Small" | "Medium" | "Large";
+  color?: "Primary" | "Positive" | "Negative" | "Waiting" | "Neutral";
+  isDisabled?: boolean;
+  icon?: string | React.ReactNode;
+  isLoading?: boolean;
+  isFullWidth?: boolean;
+  iconOnly?: boolean;
+  alignIcon?: "Left" | "Right";
+  onClick?: () => void;
+  label?: string;
 }
 
-export default Skeleton;
+export const Skeleton = forwardRef(({
+  variant = "Primary",
+  size = "Medium",
+  color = "Primary",
+  icon,
+  isDisabled,
+  isLoading,
+  isFullWidth,
+  iconOnly,
+  alignIcon,
+  label = "Button",
+  ...props
+}: SkeletonI, ref: any) => {
+  const checkSize = (): string => {
+    switch (size) {
+      case "XSmall":
+        return "btn--xsmall";
+      case "Small":
+        return "btn--small";
+      case "Medium":
+        return "btn--medium";
+      case "Large":
+        return "btn--large";
+      default:
+        return "btn--medium";
+    }
+  };
+  const checkVarients = (): string => {
+    switch (variant) {
+      case "Primary":
+        return "btn--primary";
+      case "Secondry":
+        return "btn--secondry";
+      case "Tertiary":
+        return "btn--tertiary";
+      case "Link":
+        return "btn--link";
+      default:
+        return "btn--primary";
+    }
+  };
+  const checkColor = (): string => {
+    switch (color) {
+      case "Primary":
+        return "btn--primary__color";
+      case "Positive":
+        return "btn--positive__color";
+      case "Negative":
+        return "btn--negative__color";
+      case "Waiting":
+        return "btn--waiting__color";
+      case "Neutral":
+        return "btn--neutral__color";
+      default:
+        return "";
+    }
+  };
+
+  const allowSpinnerSize = (): string => {
+    switch (size) {
+      case "XSmall":
+        return "Small";
+      case "Small":
+        return "Small";
+      case "Medium":
+        return "Medium";
+      case "Large":
+        return "Large";
+      default:
+        return "Medium";
+    }
+  }
+  const ButtonVarent = checkVarients();
+  const ButtonSize = checkSize();
+  const ButtonColor = checkColor();
+  const SpinnerSize: any = allowSpinnerSize();
+  return (
+    <>Skeleton</>
+  );
+});

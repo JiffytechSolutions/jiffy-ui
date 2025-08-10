@@ -6,27 +6,27 @@ type ChildrenI = React.ReactNode;
 export interface GridI {
   children: React.ReactElement<ChildrenI>[] | React.ReactElement<ChildrenI>;
   columns:
-    | number
-    | {
-        sm?: number;
-        md?: number;
-        lg?: number;
-        xl?: number;
-      };
+  | number
+  | {
+    sm?: number;
+    md?: number;
+    lg?: number;
+    xl?: number;
+  };
   gap?:
-    | string
-    | {
-        sm?: string;
-        md?: string;
-        lg?: string;
-        xl?: number;
-      };
+  | string
+  | {
+    sm?: string;
+    md?: string;
+    lg?: string;
+    xl?: number;
+  };
   customClass?: string;
 }
 
 const Grid = (props: GridI) => {
   const { columns = 2, gap, children, customClass } = props;
-  const { width } = useWindowResize();
+  const width = useWindowResize();
 
   function getGap() {
     if (!gap || typeof gap === "string") return gap;
