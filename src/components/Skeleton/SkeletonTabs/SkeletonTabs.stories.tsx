@@ -4,7 +4,7 @@ import SkeletonTabs from "./SkeletonTabs";
 export default {
     title: "components(Done)/Skeleton/SkeletonTabs",
     component: SkeletonTabs,
-    tags: ["autodocs"],
+    parameters: { docs: { autodocs: true, }, },
     argTypes: {
 
     },

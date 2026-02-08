@@ -1,57 +1,36 @@
-.jiffyui-indicator {
+.jf-indicator {
     display: inline-flex;
     align-items: center;
 }
-span.jiffyui-indicator-dot {
+span.jf-indicator-dot {
     width: 8px;
     height: 8px;
     display: inline-block;
-    background: var(--jiffyui-naturalDark-1300);
+    background: var(--jf-naturalDark-1300);
     border-radius: 100%;
    
     vertical-align: middle;
 }
-.jiffyui-indicator .jiffyui-indicator-label {
-    color: var(--jiffyui-naturalDark-1100);
+.jf-indicator .jf-indicator-label {
+    color: var(--jf-naturalDark-1100);
     margin-left: 0.5rem;
 }
-.jiffyui-indicator--possitive .jiffyui-indicator-dot {
-    background-color: var(--jiffyui-Possitive-600);
+.jf-indicator--possitive .jf-indicator-dot {
+    background-color: var(--jf-Possitive-600);
 }
-.jiffyui-indicator--negative .jiffyui-indicator-dot {
-    background-color: var(--jiffyui-Negative-600);
+.jf-indicator--negative .jf-indicator-dot {
+    background-color: var(--jf-Negative-600);
 }
-.jiffyui-indicator--waiting .jiffyui-indicator-dot {
-    background-color: var(--jiffyui-Notice-400);
-}
-
-.jiffyui-indicator--primary .jiffyui-indicator-dot {
-    background-color: var(--jiffyui-Cerulean-600);
+.jf-indicator--waiting .jf-indicator-dot {
+    background-color: var(--jf-Notice-400);
 }
 
-.jiffyui-indicator--small .jiffyui-indicator-dot {
-    height: 6px;
-    width: 6px;
-}
-.jiffyui-indicator--small .jiffyui-indicator-label {
-    font-size: 10px;
-}
-.jiffyui-indicator--medium  .jiffyui-indicator-dot {
-    width: 8px;
-    height: 8px;
-}
-.jiffyui-indicator--medium  .jiffyui-indicator-label {
-    font-size: 12px;
-}
-.jiffyui-indicator--large  .jiffyui-indicator-dot {
-    width: 10px;
-    height: 10px;
-}
-.jiffyui-indicator--large  .jiffyui-indicator-label {
-    font-size: 14px;
+.jf-indicator--primary .jf-indicator-dot {
+    background-color: var(--jf-Cerulean-600);
 }
 
-.jiffyui-indicator.has-string .jiffyui-indicator-dot {
+
+.jf-indicator.jf-has-string .jf-indicator-dot {
     width: auto !important;
     height: auto !important;
     min-width: 20px !important;

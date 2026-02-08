@@ -13,7 +13,7 @@ const ButtonGroup = ({
 }: ButtonGroupI) => {
 
   return (
-    <div className={`buttonGroup ${segmented ? "btn-segmented" : null}`}>
+    <div className={`jf-buttonGroup ${segmented ? "jf-btn-segmented" : null}`}>
       {children}
     </div>
   );

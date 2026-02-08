@@ -4,7 +4,7 @@ import SkeletonLine from "./SkeletonLine";
 export default {
   title: "components(Done)/Skeleton/SkeletonLine",
   component: SkeletonLine,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
   argTypes: {},
 };
 const Template = ({ ...rest }) => {

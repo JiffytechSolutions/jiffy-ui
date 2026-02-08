@@ -1,5 +1,5 @@
 import React from "react";
-import HorizontalFlex from "../../HorizontalFlex/HorizontalFlex";
+import FlexLayout from "../../FlexLayout/FlexLayout";
 import SkeletonBadge from "./SkeletonBadge";
 
 const size = ["Small", "Medium", "Large"]
@@ -7,7 +7,7 @@ const size = ["Small", "Medium", "Large"]
 export default {
     title: "components(Done)/Skeleton/SkeletonBadge",
     component: SkeletonBadge,
-    tags: ["autodocs"],
+    parameters: { docs: { autodocs: true, }, },
     argTypes: {
 
     },
@@ -23,11 +23,11 @@ export const Primary = Template.bind({});
 export const ThumbnailWithSize: any = Template.bind({});
 ThumbnailWithSize.decorators = [
     () => {
-        return (<HorizontalFlex gap={20}>
+        return (<FlexLayout gap={2}>
             {size.map((size: any, index) => (
                 <SkeletonBadge key={index} size={size} />
             ))}
-        </HorizontalFlex>
+        </FlexLayout>
         );
     },
 ];

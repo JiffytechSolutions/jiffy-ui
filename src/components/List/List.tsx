@@ -17,36 +17,36 @@ const List = ({
   const checktype = (): string => {
     switch (type) {
       case "ul":
-        return "jiffyui-list--unordered";
+        return "jf-list--unordered";
       case "ol":
-        return "jiffyui-list--ordered";
+        return "jf-list--ordered";
       default:
-        return "jiffyui-list--Unordered";
+        return "jf-list--Unordered";
     }
   };
 
   const checkOrderedStyle = (): string => {
     switch (orderedStyle) {
       case "Decimal":
-        return "jiffyui-olList--decimal";
+        return "jf-olList--decimal";
       case "Roman":
-        return "jiffyui-olList--roman";
+        return "jf-olList--roman";
       case "Alfabet":
-        return "jiffyui-olList--alfabet";
+        return "jf-olList--alfabet";
       default:
-        return "jiffyui-olList--decimal";
+        return "jf-olList--decimal";
     }
   }
   const checkUnorderedStyle = (): string => {
     switch (unorderedStyle) {
       case "Disc":
-        return "jiffyui-unList--disc";
+        return "jf-unList--disc";
       case "Squire":
-        return "jiffyui-unList--squire";
+        return "jf-unList--squire";
       case "Circle":
-        return "jiffyui-unList--circle";
+        return "jf-unList--circle";
       default:
-        return "jiffyui-unList--disc";
+        return "jf-unList--disc";
     }
   }
   const listType = checktype();
@@ -56,11 +56,11 @@ const List = ({
   return (
     <div className={`${type === "ol" ? olListStyle + '__style' : ""} ${type === "ul" ? ulListStyle + '__style' : ""}`}>
       {type === "ul" ? (
-        <ul className={`jiffyui-list ${ulListStyle} ${listType}`}>
+        <ul className={`jf-list ${ulListStyle} ${listType}`}>
           {children.map((item: any, index: number) => <React.Fragment key={index}>{item}</React.Fragment>)}
         </ul>
       ) : (
-        <ol className={`jiffyui-list ${olListStyle} ${listType}`}>
+        <ol className={`jf-list ${olListStyle} ${listType}`}>
           {children.map((item: any, index: number) => <React.Fragment key={index}>{item}</React.Fragment>)}
         </ol>
       )}
@@ -71,7 +71,7 @@ const List = ({
 const Item = (props: any) => {
   const { children } = props;
   return (
-    <li className="jiffyui-list--item">
+    <li className="jf-list--item">
       {children}
     </li>
   );

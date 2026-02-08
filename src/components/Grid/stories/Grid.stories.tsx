@@ -38,7 +38,7 @@ export default {
 
 const Template = ({ ...rest }) => {
   return (
-    <Card type={"Shadow"}>
+    <Card variant="outlined">
       <Grid
         gap={rest.gap}
         columns={rest.columns}
@@ -75,7 +75,7 @@ const Template = ({ ...rest }) => {
           </div>
         </Grid.Item>
       </Grid>
-      <Card type={"Shadow"}>
+      <Card variant="outlined">
         <div>Provide the children of grid inside the grid item wrapper</div>
         <pre>
           <code>

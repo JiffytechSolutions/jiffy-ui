@@ -36,7 +36,7 @@ const AppWrapper = ({ topBar, sideBar, footer, announcementBar, content, ...prop
       }
     }
     window.addEventListener('resize', handleResize);
-
+    handleResize();
     return () => {
       window.removeEventListener('resize', handleResize);
     };

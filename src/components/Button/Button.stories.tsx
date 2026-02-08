@@ -1,401 +1,841 @@
 import React from "react";
-import  Button  from "./Button";
-import { Airplay, ChevronDown } from "react-feather";
-import VerticalFlex from "../VerticalFlex/VerticalFlex";
-import HorizontalFlex from "../HorizontalFlex/HorizontalFlex";
-
-const variant = ["Primary", "Secondry", "Tertiary", "Link"];
-const sizes = ["XSmall", "Small", "Medium", "Large"];
-const color = ["Primary", "Positive", "Negative", "Waiting", "Neutral"];
+import Button from "./Button";
+import { 
+  Settings, 
+  Download, 
+  Trash2, 
+  Edit, 
+  Plus, 
+  Heart, 
+  Star, 
+  Bell, 
+  Mail, 
+  User, 
+  Lock, 
+  Globe,
+  ChevronDown,
+  ChevronRight,
+  ArrowRight,
+  Check,
+  X,
+  AlertCircle,
+  Info,
+  ExternalLink
+} from "react-feather";
+import FlexLayout from "../FlexLayout/FlexLayout";
+import InlineStack from "../InlineStack/InlineStack";
+import VerticalStack from "../VerticalStack/VerticalStack";
 
 export default {
-  title: "Components(Done)/Button",
+  title: "Components/Button",
   component: Button,
-  tags: ["autodocs"],
-
+  parameters: {
+    docs: {
+      description: {
+        component: 'A versatile and accessible button component with multiple variants, sizes, and customization options.',
+      },
+    },
+  },
   argTypes: {
     variant: {
-      description: "Select variant",
-      control: {
-        type: "radio",
-        options: variant,
-      },
-      defaultValue: "Primary",
+      description: "Visual variant of the button",
+      control: { type: "select" },
+      options: ["Primary", "Secondary", "Tertiary", "Link", "Ghost", "Danger"],
     },
-
     size: {
-      description: "Select Size",
-      control: {
-        type: "radio",
-        options: sizes,
-      },
-      defaultValue: "md",
+      description: "Size of the button",
+      control: { type: "select" },
+      options: ["XSmall", "Small", "Medium", "Large", "XLarge"],
     },
     color: {
-      description: "Select Color",
-      control: {
-        type: "radio",
-        options: color,
-      },
-      defaultValue: "",
+      description: "Color theme of the button",
+      control: { type: "select" },
+      options: ["Primary", "Positive", "Negative", "Waiting", "Neutral"],
     },
     isDisabled: {
-      description:
-        "Disabled Button prevents user interaction, set disabled prop to true to disabled a button.",
-      control: {
-        type: "boolean",
-      },
-      defaultValue: false,
-    },
-    icon: {
-      description: "Button can contain an icon",
-      control: {
-        type: "none",
-      },
-      defaultValue: "",
+      description: "Disables the button interaction",
+      control: { type: "boolean" },
     },
     isLoading: {
-      description: "Button can contain an icon",
-      control: {
-        type: "boolean",
-      },
-      defaultValue: false,
+      description: "Shows loading state with spinner",
+      control: { type: "boolean" },
     },
     isFullWidth: {
-      description: "Button can contain an icon",
-      control: {
-        type: "boolean",
-      },
-      defaultValue: false,
+      description: "Makes button full width",
+      control: { type: "boolean" },
+    },
+    rounded: {
+      description: "Applies rounded corners",
+      control: { type: "boolean" },
+    },
+    outlined: {
+      description: "Applies outlined style",
+      control: { type: "boolean" },
+    },
+    elevated: {
+      description: "Applies elevated shadow",
+      control: { type: "boolean" },
+    },
+    compact: {
+      description: "Applies compact padding",
+      control: { type: "boolean" },
     },
     children: {
-      description: "Button can contain an icon",
-      control: {
-        type: "text",
-      },
-      defaultValue: "Button",
+      description: "Button text content",
+      control: { type: "text" },
     },
   },
 };
-const Template = ({ ...rest }) => {
+
+// Interactive Template
+const Template = (args: any) => {
   return (
     <Button
-      variant={rest.variant}
-      alignIcon={rest.alignIcon}
-      size={rest.size}
-      color={rest.color}
-      icon={rest.icon}
-      isDisabled={rest.isDisabled}
-      isLoading={rest.isLoading}
-      isFullWidth={rest.isFullWidth}
-      onClick={() => alert("G")}
-      children={rest.children}
+      {...args}
+      onClick={() => alert("Button clicked!")}
     />
-
   );
 };
-export const Primary = Template.bind({});
 
-//Button with variant
-export const ButtonWithVariant: any = Template.bind({});
-ButtonWithVariant.decorators = [
-  () => {
-    return (
-      <VerticalFlex gap={20}>
-        <HorizontalFlex gap={10}>
-          {variant.map((variant: any, ind) => (
-            <Button
-              key={ind}
+// Default Story
+export const Default = Template.bind({}) as any;
+Default.args = {
+  children: "Default Button",
+  variant: "Primary",
+  size: "Medium",
+  color: "Neutral",
+};
 
-              icon={<Airplay size={15} />}
-              variant={variant}
-              color="Neutral"
-              size={"Medium"}
-              onClick={() => alert("G")}
-              children={variant}
-            />
-          ))}
-        </HorizontalFlex>
-        <HorizontalFlex gap={10}>
-          {variant.map((variant: any, ind) => (
-            <Button
-              key={ind}
-
-              icon={<Airplay size={15} />}
-              variant={variant}
-              color="Primary"
-              size={"Medium"}
-              onClick={() => alert("G")}
-              children={variant}
-            />
-          ))}
-        </HorizontalFlex>
-        <HorizontalFlex gap={10}>
-          {variant.map((variant: any, ind) => (
-            <Button
-              key={ind}
-
-              icon={<Airplay size={15} />}
-              variant={variant}
-              color="Negative"
-              size={"Medium"}
-              onClick={() => alert("G")}
-              children={variant}
-            />
-          ))}
-        </HorizontalFlex>
-        <HorizontalFlex gap={10}>
-          {variant.map((variant: any, ind) => (
-            <Button
-              key={ind}
-
-              icon={<Airplay size={15} />}
-              variant={variant}
-              color="Waiting"
-              size={"Medium"}
-              onClick={() => alert("G")}
-              children={variant}
-            />
-          ))}
-        </HorizontalFlex>
-        <HorizontalFlex gap={10}>
-          {variant.map((variant: any, ind) => (
-            <Button
-              key={ind}
-
-              icon={<Airplay size={15} />}
-              variant={variant}
-              color="Positive"
-              size={"Medium"}
-              onClick={() => alert("G")}
-              children={variant}
-            />
-          ))}
-        </HorizontalFlex>
-      </VerticalFlex>
-    );
-  },
-];
-
-//Button with variant
-export const ButtonWithColor: any = Template.bind({});
-ButtonWithColor.decorators = [
-  () => {
-    return (
-      <HorizontalFlex gap={10}>
-        {color.map((color: any, ind) => (
+// Variants Story
+export const Variants = () => {
+  const variants = ["Primary", "Secondary", "Tertiary", "Link", "Ghost", "Danger"];
+  
+  return (
+    
+      <InlineStack gap={4}>
+        {variants.map((variant) => (
           <Button
-            key={ind}
-
-            icon={<Airplay size={15} />}
-            variant={"Primary"}
-            color={color}
-            size={"Medium"}
-            onClick={() => alert("G")}
-            children={color}
-          />
+            key={variant}
+            variant={variant as any}
+            size="Medium"
+            color="Neutral"
+            onClick={() => alert(`${variant} clicked!`)}
+          >
+            {variant}
+          </Button>
         ))}
-      </HorizontalFlex>
-    );
-  },
-];
+      </InlineStack>
+    
+  );
+};
 
-//Button with Size
-export const ButtonWithSizes: any = Template.bind({});
-ButtonWithSizes.decorators = [
-  () => {
-    return (
-      <HorizontalFlex gap={10}>
-        {sizes.map((sizes: any, ind) => (
+// Sizes Story
+export const Sizes = () => {
+  const sizes = [ "Small", "Medium", "Large"];
+  
+  return (
+   
+      <InlineStack gap={4} align={"center"}>
+        {sizes.map((size) => (
           <Button
-            key={ind}
-            icon={<Airplay size={15} />}
+            key={size}
             variant="Primary"
-            color="Primary"
-            size={sizes}
-            onClick={() => alert("G")}
-            children="Button"
-          />
+            size={size as any}
+            color="Neutral"
+            onClick={() => alert(`${size} button clicked!`)}
+          >
+            {size}
+          </Button>
         ))}
-      </HorizontalFlex>
-    );
-  },
-];
+      </InlineStack>
+    
+  );
+};
 
-//Button with icons only
-export const ButtonWithIconOnly: any = Template.bind({});
-ButtonWithIconOnly.decorators = [
-  () => {
-    return (
-      <HorizontalFlex gap={10}>
-        {sizes.map((sizes: any, ind) => (
+// Colors Story
+export const Colors = () => {
+  const colors = ["Primary", "Positive", "Negative", "Waiting", "Neutral"];
+  
+  return (
+ 
+      <InlineStack gap={4}>
+        {colors.map((color) => (
           <Button
-            key={ind}
-            icon={<Airplay size={15} />}
+            key={color}
             variant="Primary"
-            color="Primary"
-            size={sizes}
-            onClick={() => alert("G")}
-            children=""
-          />
+            size="Medium"
+            color={color as any}
+            onClick={() => alert(`${color} button clicked!`)}
+          >
+            {color}
+          </Button>
         ))}
-      </HorizontalFlex>
-    );
-  },
-];
+      </InlineStack>
+   
+  );
+};
 
-//Button with variant with loading
-export const ButtonWithVariantLoading: any = Template.bind({});
-ButtonWithVariantLoading.decorators = [
-  () => {
-    return (
-      <HorizontalFlex gap={10}>
-        {variant.map((variant: any, ind) => (
-          <Button
-            key={ind}
-            isLoading
-            icon={<Airplay size={15} />}
-            variant={variant}
-            color="Primary"
-            size={"Medium"}
-            onClick={() => alert("G")}
-            children={variant}
-          />
-        ))}
-      </HorizontalFlex>
-    );
-  },
-];
+// With Icons Story
+export const WithIcons = () => {
+  return (
+    <VerticalStack gap={4}>
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          size="Medium"
+          icon={<Plus size={16} />}
+          onClick={() => alert("Add clicked!")}
+        >
+          Add Item
+        </Button>
+        
+        <Button
+          variant="Secondary"
+          size="Medium"
+          icon={<Download size={16} />}
+          onClick={() => alert("Download clicked!")}
+        >
+          Download
+        </Button>
+        
+        <Button
+          variant="Tertiary"
+          size="Medium"
+          icon={<Edit size={16} />}
+          onClick={() => alert("Edit clicked!")}
+        >
+          Edit
+        </Button>
+        
+        <Button
+          variant="Danger"
+          size="Medium"
+          icon={<Trash2 size={16} />}
+          onClick={() => alert("Delete clicked!")}
+        >
+          Delete
+        </Button>
+      </InlineStack>
+      
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          size="Medium"
+          suffixIcon={<ArrowRight size={16} />}
+          onClick={() => alert("Continue clicked!")}
+        >
+          Continue
+        </Button>
+        
+        <Button
+          variant="Secondary"
+          size="Medium"
+          suffixIcon={<ChevronDown size={16} />}
+          onClick={() => alert("Dropdown clicked!")}
+        >
+          Options
+        </Button>
+        
+        <Button
+          variant="Link"
+          size="Medium"
+          suffixIcon={<ExternalLink size={16} />}
+          onClick={() => alert("External link clicked!")}
+        >
+          External Link
+        </Button>
+      </InlineStack>
+    </VerticalStack>
+  );
+};
 
-//Button with variant
-export const ButtonWithColorLoading: any = Template.bind({});
-ButtonWithColorLoading.decorators = [
-  () => {
-    return (
-      <HorizontalFlex gap={10}>
-        {color.map((color: any, ind) => (
+// Icon Only Buttons Story
+export const IconOnlyButtons = () => {
+  const sizes = [ "Small", "Medium", "Large"];
+  
+  return (
+    <VerticalStack  gap={4}>
+      <InlineStack gap={4} align={"center"}>
+        {sizes.map((size) => (
           <Button
-            key={ind}
-            isLoading
-            icon={<Airplay size={15} />}
-            variant={"Primary"}
-            color={color}
-            size={"Medium"}
-            onClick={() => alert("G")}
-            children={color}
-          />
-        ))}
-      </HorizontalFlex>
-    );
-  },
-];
-
-//Button with Size
-export const ButtonWithSizesLoading: any = Template.bind({});
-ButtonWithSizesLoading.decorators = [
-  () => {
-    return (
-      <HorizontalFlex gap={10}>
-        {sizes.map((sizes: any, ind) => (
-          <Button
-            key={ind}
-            isLoading
-            icon={<Airplay size={15} />}
+            key={size}
             variant="Primary"
-            color="Primary"
-            size={sizes}
-            onClick={() => alert("G")}
-            children="Button"
+            size={size as any}
+            icon={<Settings size={size === "XSmall" ? 12 : size === "Small" ? 14 : size === "Medium" ? 16 : size === "Large" ? 18 : 20} />}
+            iconOnly
+            onClick={() => alert(`${size} icon button clicked!`)}
           />
         ))}
-      </HorizontalFlex>
-    );
-  },
-];
+      </InlineStack>
+      
+      <InlineStack gap={4} align={"center"}>
+        <Button
+          variant="Secondary"
+          size="Medium"
+          icon={<Heart size={16} />}
+          iconOnly
+          onClick={() => alert("Like clicked!")}
+        />
+        
+        <Button
+          variant="Tertiary"
+          size="Medium"
+          icon={<Star size={16} />}
+          iconOnly
+          onClick={() => alert("Favorite clicked!")}
+        />
+        
+        <Button
+          variant="Danger"
+          size="Medium"
+          icon={<Trash2 size={16} />}
+          iconOnly
+          onClick={() => alert("Delete clicked!")}
+        />
+        
+        <Button
+          variant="Ghost"
+          size="Medium"
+          icon={<Bell size={16} />}
+          iconOnly
+          onClick={() => alert("Notifications clicked!")}
+        />
+      </InlineStack>
+      
+      <InlineStack gap={4} align={"center"}>
+        <Button
+          variant="Primary"
+          size="Medium"
+          icon={<Settings size={16} />}
+          iconOnly
+          rounded
+          onClick={() => alert("Rounded settings clicked!")}
+        />
+        
+        <Button
+          variant="Secondary"
+          size="Medium"
+          icon={<Download size={16} />}
+          iconOnly
+          elevated
+          onClick={() => alert("Elevated download clicked!")}
+        />
+        
+        <Button
+          variant="Danger"
+          size="Medium"
+          icon={<Trash2 size={16} />}
+          iconOnly
+          outlined
+          onClick={() => alert("Outlined delete clicked!")}
+        />
+      </InlineStack>
+    </VerticalStack>
+  );
+};
 
-//Button with icons only
-export const ButtonWithIconOnlyLoading: any = Template.bind({});
-ButtonWithIconOnlyLoading.decorators = [
-  () => {
-    return (
-      <HorizontalFlex gap={10}>
-        {sizes.map((sizes: any, ind) => (
-          <Button
-            key={ind}
-            isLoading
-            icon={<Airplay size={15} />}
-            variant="Primary"
-            color="Primary"
-            size={sizes}
-            onClick={() => alert("G")}
-          />
-        ))}
-      </HorizontalFlex>
-    );
-  },
-];
+// With Badges Story
+export const WithBadges = () => {
+  return (
+    
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          size="Medium"
+          icon={<Bell size={16} />}
+          badge="3"
+          badgeVariant="primary"
+          onClick={() => alert("Notifications clicked!")}
+        >
+          Notifications
+        </Button>
+        
+        <Button
+          variant="Secondary"
+          size="Medium"
+          icon={<Mail size={16} />}
+          badge="12"
+          badgeVariant="success"
+          onClick={() => alert("Messages clicked!")}
+        >
+          Messages
+        </Button>
+        
+        <Button
+          variant="Tertiary"
+          size="Medium"
+          icon={<AlertCircle size={16} />}
+          badge="5"
+          badgeVariant="warning"
+          onClick={() => alert("Alerts clicked!")}
+        >
+          Alerts
+        </Button>
+        
+        <Button
+          variant="Danger"
+          size="Medium"
+          icon={<X size={16} />}
+          badge="2"
+          badgeVariant="error"
+          onClick={() => alert("Errors clicked!")}
+        >
+          Errors
+        </Button>
+      </InlineStack>
+    
+  );
+};
 
-//Button with disabled
-export const ButtonWithDisabled: any = Template.bind({});
-ButtonWithDisabled.decorators = [
-  () => {
-    return (
-      <HorizontalFlex gap={10}>
-        {color.map((color: any, ind) => (
-          <Button
-            key={ind}
-            isDisabled
-            icon={<Airplay size={15} />}
-            variant={"Primary"}
-            color={color}
-            size={"Medium"}
-            onClick={() => alert("G")}
-            children={color}
-          />
-        ))}
-      </HorizontalFlex>
-    );
-  },
-];
+// Loading States Story
+export const LoadingStates = () => {
+  return (
+    <VerticalStack gap={4}>
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          color="Primary"
+          size="Medium"
+          isLoading
+         
+          onClick={() => alert("This should not trigger")}
+        >
+          Save Changes
+        </Button>
+        
+        <Button
+          variant="Secondary"
+          size="Medium"
+          isLoading
+          icon={<Download size={16} />}
+          onClick={() => alert("This should not trigger")}
+        >
+          Download
+        </Button>
+        
+        <Button
+          variant="Danger"
+          size="Medium"
+          isLoading
+          icon={<Trash2 size={16} />}
+          onClick={() => alert("This should not trigger")}
+        >
+          Delete
+        </Button>
+        
+        <Button
+          variant="Tertiary"
+          size="Medium"
+          isLoading
+          icon={<Edit size={16} />}
+          onClick={() => alert("This should not trigger")}
+        >
+          Edit
+        </Button>
+      </InlineStack>
+      
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          size="Medium"
+          color="Primary"
+        
+          isLoading
+         
+          isFullWidth
+          onClick={() => alert("This should not trigger")}
+        >
+          Process Data
+        </Button>
+      </InlineStack>
+      
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          color="Primary"
+          size="Medium"
+          icon={<Settings size={16} />}
+          iconOnly
+          isLoading
+          onClick={() => alert("This should not trigger")}
+        />
+        
+        <Button
+          variant="Secondary"
+          size="Medium"
+          icon={<Heart size={16} />}
+          iconOnly
+          isLoading
+          onClick={() => alert("This should not trigger")}
+        />
+        
+        <Button
+          variant="Danger"
+          size="Medium"
+          icon={<Trash2 size={16} />}
+          iconOnly
+          isLoading
+          onClick={() => alert("This should not trigger")}
+        />
+        
+        <Button
+          variant="Ghost"
+          size="Medium"
+          icon={<Bell size={16} />}
+          iconOnly
+          isLoading
+          onClick={() => alert("This should not trigger")}
+        />
+      </InlineStack>
+      
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          size="Large"
+          isLoading
+          color="Primary"
+          icon={<Download size={18} />}
+          rounded
+          elevated
+          onClick={() => alert("This should not trigger")}
+        >
+          Upload Files
+        </Button>
+        
+        <Button
+          variant="Secondary"
+          size="Large"
+          isLoading
+          
+          icon={<Check size={18} />}
+          rounded
+          outlined
+          onClick={() => alert("This should not trigger")}
+        >
+          Sync Data
+        </Button>
+      </InlineStack>
+    </VerticalStack>
+  );
+};
 
-// Button with disabled and loading
-export const ButtonWithDisabledLoading: any = Template.bind({});
-ButtonWithDisabledLoading.decorators = [
-  () => {
-    return (
-      <HorizontalFlex gap={10}>
-        {color.map((color: any, ind) => (
-          <Button
-            key={ind}
-            isDisabled
-            isLoading
-            icon={<Airplay size={15} />}
-            variant={"Primary"}
-            color={color}
-            size={"Medium"}
-            onClick={() => alert("G")}
-            children={color}
-          />
-        ))}
-      </HorizontalFlex>
-    );
-  },
-];
+// Disabled States Story
+export const DisabledStates = () => {
+  return (
+   
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          size="Medium"
+          isDisabled
+          onClick={() => alert("This should not trigger")}
+        >
+          Disabled Primary
+        </Button>
+        
+        <Button
+          variant="Secondary"
+          size="Medium"
+          isDisabled
+          icon={<Download size={16} />}
+          onClick={() => alert("This should not trigger")}
+        >
+          Disabled Secondary
+        </Button>
+        
+        <Button
+          variant="Danger"
+          size="Medium"
+          isDisabled
+          icon={<Trash2 size={16} />}
+          onClick={() => alert("This should not trigger")}
+        >
+          Disabled Danger
+        </Button>
+      </InlineStack>
+   
+  );
+};
 
-//Button with right icon 
-export const ButtonWithRightIcons: any = Template.bind({});
-ButtonWithRightIcons.decorators = [
-  () => {
-    return (
+// Style Variants Story
+export const StyleVariants = () => {
+  return (
+    <VerticalStack gap={4}>
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          size="Medium"
+          rounded
+          onClick={() => alert("Rounded button clicked!")}
+        >
+          Rounded
+        </Button>
+        
+        <Button
+          variant="Secondary"
+          size="Medium"
+          // color="Neutral"
+          outlined
+          onClick={() => alert("Outlined button clicked!")}
+        >
+          Outlined
+        </Button>
+        
+        <Button
+          variant="Primary"
+          size="Medium"
+          elevated
+          onClick={() => alert("Elevated button clicked!")}
+        >
+          Elevated
+        </Button>
+        
+        <Button
+          variant="Primary"
+          size="Medium"
+          compact
+          onClick={() => alert("Compact button clicked!")}
+        >
+          Compact
+        </Button>
+      </InlineStack>
+      
+      <InlineStack gap={4}>
+        <Button
+           variant="Secondary"
+          size="Medium"
+          rounded
+          outlined
+          onClick={() => alert("Rounded outlined clicked!")}
+        >
+          Rounded Outlined
+        </Button>
+        
+        <Button
+           variant="Primary"
+          size="Medium"
+          rounded
+          elevated
+          onClick={() => alert("Rounded elevated clicked!")}
+        >
+          Rounded Elevated
+        </Button>
+        
+        <Button
+          variant="Danger"
+          size="Medium"
+          rounded
+          outlined
+          onClick={() => alert("Danger outlined clicked!")}
+        >
+          Danger Outlined
+        </Button>
+      </InlineStack>
+    </VerticalStack>
+  );
+};
+
+// Link Buttons Story
+export const LinkButtons = () => {
+  return (
+    <FlexLayout direction="column" gap={4}>
+      <InlineStack gap={4}>
+        <Button
+          href="https://example.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          variant="Link"
+          size="Medium"
+          onClick={() => alert("External link clicked!")}
+        >
+          External Link
+        </Button>
+        
+        <Button
+          href="#section"
+          variant="Link"
+          size="Medium"
+          icon={<ChevronRight size={16} />}
+          onClick={() => alert("Internal link clicked!")}
+        >
+          Internal Link
+        </Button>
+        
+        <Button
+          href="mailto:example@email.com"
+          variant="Link"
+          size="Medium"
+          icon={<Mail size={16} />}
+          onClick={() => alert("Email link clicked!")}
+        >
+          Email Link
+        </Button>
+      </InlineStack>
+    </FlexLayout>
+  );
+};
+
+// Full Width Story
+export const FullWidth = () => {
+  return (
+    <VerticalStack gap={4}>
       <Button
-        alignIcon="Right"
-        icon={<ChevronDown size={20} />}
-        variant={"Primary"}
-        color={"Waiting"}
-        size={"Medium"}
-        onClick={() => alert("G")}
-        children={"Button"}
-      />
-    );
-  },
-];
+        variant="Primary"
+        size="Medium"
+        isFullWidth
+        onClick={() => alert("Full width button clicked!")}
+      >
+        Full Width Button
+      </Button>
+      
+      <Button
+        variant="Secondary"
+        size="Medium"
+        isFullWidth
+        icon={<Download size={16} />}
+        onClick={() => alert("Full width with icon clicked!")}
+      >
+        Full Width with Icon
+      </Button>
+      
+      <Button
+        variant="Danger"
+        size="Medium"
+        isFullWidth
+        isLoading
+        
+        onClick={() => alert("This should not trigger")}
+      >
+        Full Width Loading
+      </Button>
+    </VerticalStack>
+  );
+};
+
+// Pressed and Active States Story
+export const PressedAndActiveStates = () => {
+  const [pressedButton, setPressedButton] = React.useState(false);
+  const [activeButton, setActiveButton] = React.useState(false);
+  
+  return (
+    
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          size="Medium"
+          pressed={pressedButton}
+          onClick={() => setPressedButton(!pressedButton)}
+        >
+          {pressedButton ? "Pressed" : "Press Me"}
+        </Button>
+        
+        <Button
+          variant="Secondary"
+          size="Medium"
+          active={activeButton}
+          onClick={() => setActiveButton(!activeButton)}
+        >
+          {activeButton ? "Active" : "Toggle Active"}
+        </Button>
+      </InlineStack>
+    
+  );
+};
+
+// Complex Example Story
+export const ComplexExample = () => {
+  const [isLoading, setIsLoading] = React.useState(false);
+  
+  const handleSave = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      alert("Changes saved successfully!");
+    }, 2000);
+  };
+  
+  return (
+    <VerticalStack gap={4}>
+      <InlineStack gap={4}>
+        <Button
+          variant="Primary"
+          size="Large"
+          icon={<Check size={18} />}
+          badge="New"
+          badgeVariant="success"
+          rounded
+          elevated
+          onClick={handleSave}
+          isLoading={isLoading}
+          
+        >
+          Save Changes
+        </Button>
+        
+        <Button
+          variant="Secondary"
+          size="Large"
+          icon={<Download size={18} />}
+          suffixIcon={<ExternalLink size={18} />}
+          rounded
+          onClick={() => alert("Export clicked!")}
+        >
+          Export Data
+        </Button>
+        
+        <Button
+          variant="Danger"
+          size="Large"
+          icon={<Trash2 size={18} />}
+          outlined
+          rounded
+          onClick={() => alert("Delete clicked!")}
+        >
+          Delete Account
+        </Button>
+      </InlineStack>
+      
+      <InlineStack gap={4}>
+        <Button
+          variant="Ghost"
+          size="Medium"
+          icon={<User size={16} />}
+          compact
+          onClick={() => alert("Profile clicked!")}
+        >
+          Profile
+        </Button>
+        
+        <Button
+          variant="Ghost"
+          size="Medium"
+          icon={<Settings size={16} />}
+          compact
+          onClick={() => alert("Settings clicked!")}
+        >
+          Settings
+        </Button>
+        
+        <Button
+          variant="Ghost"
+          size="Medium"
+          icon={<Lock size={16} />}
+          compact
+          onClick={() => alert("Security clicked!")}
+        >
+          Security
+        </Button>
+        
+        <Button
+          variant="Ghost"
+          size="Medium"
+          icon={<Globe size={16} />}
+          compact
+          onClick={() => alert("Language clicked!")}
+        >
+          Language
+        </Button>
+      </InlineStack>
+    </VerticalStack>
+  );
+};

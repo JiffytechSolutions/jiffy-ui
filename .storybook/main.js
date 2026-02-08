@@ -7,6 +7,10 @@ module.exports = {
     "@storybook/addon-a11y",
     "storybook-addon-designs"
   ],
+  framework: {
+    name: "@storybook/react-webpack5",
+    options: {},
+  },
   typescript: {
     check: true,
     checkOptions: {},
@@ -16,8 +20,5 @@ module.exports = {
       propFilter: (prop) =>
         prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
     },
-  },
-  core: {
-    builder: "webpack5",
   },
 };

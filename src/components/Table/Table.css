@@ -1,73 +1,358 @@
-.pixel-table__wrapper {
+/* CSS Custom Properties for Table */
+:root {
+  --jf-color-primary: #3b82f6;
+  --jf-color-text-primary: #1f2937;
+  --jf-color-text-secondary: #6b7280;
+  --jf-color-border: #e5e7eb;
+  --jf-color-border-light: #f3f4f6;
+  --jf-color-bg-hover: #f9fafb;
+  --jf-color-bg-selected: #eff6ff;
+  --jf-color-bg-selected-hover: #dbeafe;
+  --jf-color-surface: #ffffff;
+  --jf-color-surface-secondary: #f8fafc;
+  --jf-shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --jf-shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --jf-radius-md: 8px;
+  --jf-radius-lg: 12px;
+}
 
-    overflow-x: auto;
-    overscroll-behavior-x: contain;
-    border-radius: 5px;
-    border: 1px solid rgba(108, 132, 157, 0.18);
+/* Base Table Wrapper */
+.jf-table__wrapper {
+  position: relative;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  border-radius: var(--jf-radius-md);
+  border: 1px solid var(--jf-color-border);
+  background: var(--jf-color-surface);
+  box-shadow: var(--jf-shadow-sm);
+  
+  /* Scrollbar Styling */
+  &::-webkit-scrollbar {
+    height: 8px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: var(--jf-color-border-light);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: var(--jf-color-text-secondary);
+    border-radius: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb:hover {
+    background: var(--jf-color-text-primary);
+  }
+}
 
+/* Table Variants */
+.jf-table__wrapper--minimal {
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+}
 
-    .pixel-table {
-        width: 100%;
-        min-width: 100%;
-        border-collapse: collapse;
+.jf-table__wrapper--bordered {
+  border: 2px solid var(--jf-color-border);
+}
 
+.jf-table__wrapper--striped .jf-table .jf-table__row:nth-child(even) {
+  background-color: var(--jf-color-surface-secondary);
+}
 
-        .pixel-table__cell,
-        .pixel-table__heading {
-            text-align: left;
-        }
+/* Sticky Header */
+.jf-table__wrapper--sticky-header {
+  max-height: var(--max-height, 400px);
+  overflow-y: auto;
+}
 
-        .pixel-table__row {
-            border-top: 1px solid rgb(235 235 235);
-        }
+.jf-table__wrapper--sticky-header .jf-table__heading {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--jf-color-surface-secondary);
+}
 
-        .pixel-table__row:hover {
-            background-color: #f7f7f7;
-        }
+/* Base Table */
+.jf-table {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+  font-family: system-ui, -apple-system, sans-serif;
+}
 
+/* Density Variants */
+.jf-table--compact .jf-table__cell {
+  padding: 0.75rem 1rem;
+  font-size: 1.3rem;
+}
 
+.jf-table--compact .jf-table__heading {
+  padding: 0.75rem 1rem;
+}
 
-        .pixel-table__row:first-child {
-            border-top: 1px solid rgb(227 227 227);
-        }
+.jf-table--spacious .jf-table__cell {
+  padding: 2rem 1.5rem;
+  font-size: 1.5rem;
+}
 
-        .pixel-table__cell {
-            padding: 1.6rem 1.2rem;
-            font-size: 1.4rem;
-            color: #333;
-        }
+.jf-table--spacious .jf-table__heading {
+  padding: 1.5rem;
+}
 
-        .pixel-table__heading {
-            padding: 1.2rem;
-            background-color: #f1f1f1;
+/* Table Headings */
+.jf-table__heading {
+  padding: 1.2rem;
+  background-color: var(--jf-color-surface-secondary);
+  border-bottom: 2px solid var(--jf-color-border);
+  color: var(--jf-color-text-primary);
+  font-weight: 600;
+  text-align: left;
+  position: relative;
+  transition: background-color 0.2s ease;
+}
 
-            span {
-                font-size: 12px;
-                font-family: var(--jiffyui-medium-font);
-                letter-spacing: 0.06rem;
-            }
-        }
+.jf-table__heading--sortable {
+  cursor: pointer;
+  user-select: none;
+}
 
-        .pixel-table__heading.c-pointer:hover {
-            background: #efefef !important;
-        }
+.jf-table__heading--sortable:hover {
+  background-color: var(--jf-color-border-light);
+}
 
+.jf-table__heading--align-center {
+  text-align: center;
+}
 
+.jf-table__heading--align-right {
+  text-align: right;
+}
 
-        .pixel-table__headingCheckboxCell {
-            padding: 0.8rem 0.8rem 0.8rem 1.2rem;
-        }
+.jf-table__heading-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
 
-        .pixel-table__checkboxCell {
-            padding: 0.6rem 0.6rem 0.6rem 1.2rem;
-        }
+.jf-table__heading-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  color: var(--jf-color-text-primary);
+}
 
-        .pixel-table__row--selected {
-            background-color: #f3faff;
-        }
+.jf-table__sort-icon {
+  display: flex;
+  align-items: center;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
 
-        .pixel-table__row--selected:hover {
-            background-color: #eef8ff;
-        }
-    }
+.jf-table__heading--sortable:hover .jf-table__sort-icon {
+  opacity: 1;
+}
+
+/* Table Cells */
+.jf-table__cell {
+  padding: 1.6rem 1.2rem;
+  font-size: 1.4rem;
+  color: var(--jf-color-text-primary);
+  border-bottom: 1px solid var(--jf-color-border-light);
+  vertical-align: middle;
+  transition: background-color 0.2s ease;
+}
+
+.jf-table__cell--align-center {
+  text-align: center;
+}
+
+.jf-table__cell--align-right {
+  text-align: right;
+}
+
+/* Table Rows */
+.jf-table__row {
+  transition: background-color 0.2s ease;
+}
+
+.jf-table__row:hover {
+  background-color: var(--jf-color-bg-hover);
+}
+
+.jf-table__row--selected {
+  background-color: var(--jf-color-bg-selected);
+}
+
+.jf-table__row--selected:hover {
+  background-color: var(--jf-color-bg-selected-hover);
+}
+
+/* Row Borders Variant */
+.jf-table--row-borders .jf-table__row {
+  border-bottom: 1px solid var(--jf-color-border);
+}
+
+/* Checkbox Cells */
+.jf-table__headingCheckboxCell,
+.jf-table__checkboxCell {
+  width: 48px;
+  padding: 0.8rem 0.8rem 0.8rem 1.2rem;
+}
+
+/* Loading State */
+.jf-table__loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.jf-table__loading-spinner {
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--jf-color-border);
+  border-top: 3px solid var(--jf-color-primary);
+  border-radius: 50%;
+  animation: jf-spin 1s linear infinite;
+  margin-bottom: 1rem;
+}
+
+.jf-table__loading-message {
+  font-size: 1.4rem;
+  color: var(--jf-color-text-secondary);
+  margin: 0;
+}
+
+@keyframes jf-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Empty State */
+.jf-table__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.jf-table__empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+.jf-table__empty-message {
+  font-size: 1.4rem;
+  color: var(--jf-color-text-secondary);
+  margin: 0;
+}
+
+/* Responsive Behavior */
+@media (max-width: 768px) {
+  .jf-table__wrapper--responsive {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+  
+  /* Hide columns on mobile */
+  .jf-table__heading--hidden-mobile,
+  .jf-table__cell--hidden-mobile {
+    display: none;
+  }
+  
+  /* Stack mobile layout */
+  .jf-table__wrapper--stack-mobile {
+    overflow-x: visible;
+  }
+  
+  .jf-table__wrapper--stack-mobile .jf-table {
+    border: none;
+  }
+  
+  .jf-table__wrapper--stack-mobile .jf-table__heading {
+    display: none;
+  }
+  
+  .jf-table__wrapper--stack-mobile .jf-table__row {
+    display: block;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--jf-color-border);
+    border-radius: var(--jf-radius-md);
+    background: var(--jf-color-surface);
+    box-shadow: var(--jf-shadow-sm);
+  }
+  
+  .jf-table__wrapper--stack-mobile .jf-table__cell {
+    display: block;
+    padding: 0.5rem 0;
+    border: none;
+    text-align: left !important;
+  }
+  
+  .jf-table__wrapper--stack-mobile .jf-table__cell:before {
+    content: attr(data-label) ": ";
+    font-weight: 600;
+    color: var(--jf-color-text-secondary);
+    display: inline-block;
+    min-width: 100px;
+  }
+}
+
+/* Mobile-first responsive design */
+@media (max-width: 640px) {
+  .jf-table__cell,
+  .jf-table__heading {
+    padding: 1rem 0.75rem;
+    font-size: 1.3rem;
+  }
+  
+  .jf-table__heading-title {
+    font-size: 1.1rem;
+  }
+  
+  .jf-table__loading,
+  .jf-table__empty {
+    padding: 2rem 1rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --jf-color-primary: #60a5fa;
+    --jf-color-text-primary: #f9fafb;
+    --jf-color-text-secondary: #9ca3af;
+    --jf-color-border: #374151;
+    --jf-color-border-light: #4b5563;
+    --jf-color-bg-hover: #374151;
+    --jf-color-bg-selected: #1e3a8a;
+    --jf-color-bg-selected-hover: #1e40af;
+    --jf-color-surface: #1f2937;
+    --jf-color-surface-secondary: #374151;
+  }
+}
+
+/* High contrast mode */
+@media (prefers-contrast: high) {
+  .jf-table__wrapper {
+    border-width: 2px;
+  }
+  
+  .jf-table__heading {
+    border-bottom-width: 3px;
+  }
+  
+  .jf-table__row {
+    border-bottom-width: 2px;
+  }
 }

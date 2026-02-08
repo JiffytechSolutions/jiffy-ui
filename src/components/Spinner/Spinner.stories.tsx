@@ -1,6 +1,7 @@
 import React from "react";
-import HorizontalFlex from "../HorizontalFlex/HorizontalFlex";
 import Spinner from "./Spinner";
+import FlexLayout from "../FlexLayout/FlexLayout";
+import InlineStack from "../InlineStack/InlineStack";
 
 const color = [
   "Positive",
@@ -13,9 +14,9 @@ const color = [
 const size = ["Small", "Medium", "Large"];
 const labelPosition = ["Bottom", "Right"];
 export default {
-  title: "Components(Done)/Spinner",
+  title: "Components/Spinner",
   component: Spinner,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
   argTypes: {
     size: {
       description: "Select card type",
@@ -76,11 +77,11 @@ export const SpinnerWithColor: any = Template.bind({});
 SpinnerWithColor.decorators = [
   () => {
     return (
-      <HorizontalFlex gap={20}>
+      <InlineStack gap={4}>
         {color.map((color: any, ind) => (
           <Spinner key={ind} color={color} label={color} size={"Medium"} />
         ))}
-      </HorizontalFlex>
+      </InlineStack>
     );
   },
 ];
@@ -90,11 +91,11 @@ export const SpinnerWithSize: any = Template.bind({});
 SpinnerWithSize.decorators = [
   () => {
     return (
-      <HorizontalFlex gap={20}>
+      <InlineStack gap={4}>
         {size.map((size: any, ind) => (
           <Spinner key={ind} color={"Positive"} label="Loading" size={size} />
         ))}
-      </HorizontalFlex>
+      </InlineStack>
     );
   },
 ];
@@ -104,7 +105,7 @@ export const SpinnerWithLabelPosition: any = Template.bind({});
 SpinnerWithLabelPosition.decorators = [
   () => {
     return (
-      <HorizontalFlex gap={20}>
+      <InlineStack gap={4}>
         {labelPosition.map((labelPosition: any, ind) => (
           <Spinner
             key={ind}
@@ -114,7 +115,7 @@ SpinnerWithLabelPosition.decorators = [
             labelPosition={labelPosition}
           />
         ))}
-      </HorizontalFlex>
+      </InlineStack>
     );
   },
 ];

@@ -59,13 +59,13 @@ const Tooltip = ({
         const windowWidth = window.innerWidth;
 
         const topLeftCenterRight = () => {
-          tooltipRef.current.classList.add("Pixel-toolTip--top");
+          tooltipRef.current.classList.add("jf-toolTip--top");
           if (
             (tooltip.width - positionObject.width) / 2 >=
             positionObject.left
           ) {
             // Open top left
-            pointerRef.current.classList.add("Pixel-toolTip--topLeft");
+            pointerRef.current.classList.add("jf-toolTip--topLeft");
             pointerRef.current.style.left = positionObject.width / 2 - 3 + "px";
             tooltipRef.current.style.left = positionObject.left + "px";
             tooltipRef.current.style.top =
@@ -77,7 +77,7 @@ const Tooltip = ({
             scrollWidth
           ) {
             // Open top center
-            pointerRef?.current?.classList.add("Pixel-toolTip--topCenter");
+            pointerRef?.current?.classList.add("jf-toolTip--topCenter");
             tooltipRef.current.style.left =
               positionObject.left +
               positionObject.width / 2 -
@@ -87,7 +87,7 @@ const Tooltip = ({
               positionObject.top - tooltip.height - 7 + "px";
           } else {
             // Open top right
-            pointerRef.current.classList.add("Pixel-toolTip--topRight");
+            pointerRef.current.classList.add("jf-toolTip--topRight");
             pointerRef.current.style.right =
               positionObject.width / 2 - 3 + "px";
             tooltipRef.current.style.left =
@@ -97,7 +97,7 @@ const Tooltip = ({
           }
         };
         const rightTopCenterBottom = () => {
-          tooltipRef.current.classList.add("Pixel-toolTip--right");
+          tooltipRef.current.classList.add("jf-toolTip--right");
           if (
             0 >=
             positionObject.top - (tooltip.height - positionObject.height) / 2
@@ -116,7 +116,7 @@ const Tooltip = ({
           ) {
             // right center
 
-            pointerRef.current.classList.add("Pixel-toolTip--rightCenter");
+            pointerRef.current.classList.add("jf-toolTip--rightCenter");
             tooltipRef.current.style.left = positionObject.right + "px";
             tooltipRef.current.style.top =
               positionObject.top -
@@ -137,13 +137,13 @@ const Tooltip = ({
           }
         };
         const bottomLeftCenterRight = () => {
-          tooltipRef.current.classList.add("Pixel-toolTip--bottom");
+          tooltipRef.current.classList.add("jf-toolTip--bottom");
           if (
             (tooltip.width - positionObject.width) / 2 >=
             positionObject.left
           ) {
             // Bottom left
-            pointerRef.current.classList.add("Pixel-toolTip--bottomLeft");
+            pointerRef.current.classList.add("jf-toolTip--bottomLeft");
             pointerRef.current.style.left = positionObject.width / 2 - 3 + "px";
             tooltipRef.current.style.left = positionObject.left + "px";
             tooltipRef.current.style.top =
@@ -155,7 +155,7 @@ const Tooltip = ({
             scrollWidth
           ) {
             // Bottom center
-            pointerRef.current.classList.add("Pixel-toolTip--center");
+            pointerRef.current.classList.add("jf-toolTip--center");
             tooltipRef.current.style.left =
               positionObject.left +
               positionObject.width / 2 -
@@ -165,7 +165,7 @@ const Tooltip = ({
               positionObject.top + positionObject.height + "px";
           } else {
             // Bottom Right
-            pointerRef.current.classList.add("Pixel-toolTip--bottomRight");
+            pointerRef.current.classList.add("jf-toolTip--bottomRight");
             pointerRef.current.style.right =
               positionObject.width / 2 - 3 + "px";
             tooltipRef.current.style.left =
@@ -175,7 +175,7 @@ const Tooltip = ({
           }
         };
         const leftTopCenterBottom = () => {
-          tooltipRef.current.classList.add("Pixel-toolTip--left");
+          tooltipRef.current.classList.add("jf-toolTip--left");
           if (
             0 >=
             positionObject.top -
@@ -183,7 +183,7 @@ const Tooltip = ({
             tooltip.height / 2 >= positionObject.top + positionObject.height / 2
           ) {
             // Left Bottom
-            pointerRef.current.classList.add("Pixel-toolTip--leftBottom");
+            pointerRef.current.classList.add("jf-toolTip--leftBottom");
             pointerRef.current.style.top = positionObject.height / 2 - 6 + "px";
             tooltipRef.current.style.left =
               positionObject.left - tooltip.width - 7 + "px";
@@ -193,7 +193,7 @@ const Tooltip = ({
             positionObject.bottom + (tooltip.height - positionObject.height) / 2
           ) {
             // Left Center
-            pointerRef.current.classList.add("Pixel-toolTip--leftCenter");
+            pointerRef.current.classList.add("jf-toolTip--leftCenter");
             tooltipRef.current.style.left =
               positionObject.left - tooltip.width - 7 + "px";
             tooltipRef.current.style.top =
@@ -202,7 +202,7 @@ const Tooltip = ({
               "px";
           } else {
             // Left Top
-            pointerRef.current.classList.add("Pixel-toolTip--leftTop");
+            pointerRef.current.classList.add("jf-toolTip--leftTop");
             pointerRef.current.style.bottom =
               positionObject.height / 2 - 6 + "px";
             tooltipRef.current.style.left =
@@ -249,13 +249,13 @@ const Tooltip = ({
           ) {
             rightTopCenterBottom();
           } else if (positionObject.top > tooltip.height + 8) {
-            tooltipRef.current.classList.add("Pixel-toolTip--top");
+            tooltipRef.current.classList.add("jf-toolTip--top");
             if (
               windowWidth >=
               positionObject.right + (tooltip.width - positionObject.width) / 2
             ) {
               // Top center
-              pointerRef.current.classList.add("Pixel-toolTip--topCenter");
+              pointerRef.current.classList.add("jf-toolTip--topCenter");
               tooltipRef.current.style.left =
                 positionObject.left +
                 positionObject.width / 2 -
@@ -265,7 +265,7 @@ const Tooltip = ({
                 positionObject.top - tooltip.height - 7 + "px";
             } else {
               //top-right
-              pointerRef.current.classList.add("Pixel-toolTip--topRight");
+              pointerRef.current.classList.add("jf-toolTip--topRight");
               pointerRef.current.style.right =
                 positionObject.width / 2 - 3 + "px";
               tooltipRef.current.style.left =
@@ -278,13 +278,13 @@ const Tooltip = ({
             }
           } else if (remainingBottomheight >= tooltip.height + 8) {
             // Tooltip isOpen bottom then case bottom-center and bottom-right
-            tooltipRef.current.classList.add("Pixel-toolTip--bottom");
+            tooltipRef.current.classList.add("jf-toolTip--bottom");
             if (
               windowWidth >=
               positionObject.right + (tooltip.width - positionObject.width) / 2
             ) {
               // bottom center
-              pointerRef.current.classList.add("Pixel-toolTip--center");
+              pointerRef.current.classList.add("jf-toolTip--center");
               tooltipRef.current.style.left =
                 positionObject.left +
                 positionObject.width / 2 -
@@ -294,7 +294,7 @@ const Tooltip = ({
                 positionObject.top + positionObject.height + "px";
             } else {
               // bottom right
-              pointerRef.current.classList.add("Pixel-toolTip--bottomRight");
+              pointerRef.current.classList.add("jf-toolTip--bottomRight");
               pointerRef.current.style.right =
                 positionObject.width / 2 - 3 + "px";
               tooltipRef.current.style.left =
@@ -359,7 +359,7 @@ const Tooltip = ({
     <span
       role="none"
       ref={parentRef}
-      className="Pixel-toolTip"
+      className="jf-toolTip"
       onMouseOver={() => {
         desktopCondition &&
           setOpenState(true);
@@ -378,7 +378,7 @@ const Tooltip = ({
       {animateData && (
         <Portal>
           <div
-            id={"Pixel-toolTip" + rId}
+            id={"jf-toolTip" + rId}
             role="tooltip"
             ref={tooltipRef}
             style={{
@@ -386,12 +386,12 @@ const Tooltip = ({
               zIndex: zIndex,
             }}
             className={getClassNames({
-              "Pixel-toolTip__wrapper": true,
-              "Pixel-toolTip--in": openState,
-              "Pixel-toolTip--out": !openState,
+              "jf-toolTip__wrapper": true,
+              "jf-toolTip--in": openState,
+              "jf-toolTip--out": !openState,
             })}
           >
-            <span ref={pointerRef} className="Pixel-toolTip__pointer">
+            <span ref={pointerRef} className="jf-toolTip__pointer">
               <svg
                 width="6"
                 height="12"
@@ -402,14 +402,14 @@ const Tooltip = ({
                 <path d="M6 0V12L0 6L6 0Z" fill="#1c2433" />
               </svg>
             </span>
-            <div className="Pixel-toolTip__message">
+            <div className="jf-toolTip__message">
               {content}
-              <div className="Pixel-toolTip__footer">
-                <div className="Pixel-toolTip__cancel" onClick={(e) => { e.stopPropagation(); setOpenState(false) }}>Ok</div>
+              <div className="jf-toolTip__footer">
+                <div className="jf-toolTip__cancel" onClick={(e) => { e.stopPropagation(); setOpenState(false) }}>Ok</div>
               </div>
             </div>
           </div>
-          <div className="Pixel-toolTip__overlay"></div>
+          <div className="jf-toolTip__overlay"></div>
         </Portal>
       )}
     </span >

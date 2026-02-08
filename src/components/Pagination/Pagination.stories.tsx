@@ -5,7 +5,7 @@ import  Pagination  from "./Pagination";
 export default {
   title: "components/Pagination",
   component: Pagination,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
   argTypes: {},
 };
 const Template = ({ ...rest }) => {

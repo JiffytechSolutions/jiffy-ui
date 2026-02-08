@@ -20,13 +20,13 @@ const TextLink = forwardRef(
     const checkColor = (): string => {
       switch (linkType) {
         case "Success":
-          return "pixel-textLink--possitive";
+          return "jf-textLink--possitive";
         case "Danger":
-          return "pixel-textLink--negative";
+          return "jf-textLink--negative";
         case "Warning":
-          return "pixel-textLink--waiting";
+          return "jf-textLink--waiting";
         case "Default":
-          return "pixel-textLink--default";
+          return "jf-textLink--default";
         default:
           return "";
       }
@@ -35,10 +35,10 @@ const TextLink = forwardRef(
     const getType = checkColor();
     return (
       <span
-        className={`pixel-textLink ${getType} ${isDisabled ? "pixel--textLink--disabled" : ""}`}
+        className={`jf-textLink ${getType} ${isDisabled ? "jf--textLink--disabled" : ""}`}
       >
         <a
-          className="pixel-textLink__label"
+          className="jf-textLink__label"
           {...(url ? { href: url } : {})}
           onClick={
             url

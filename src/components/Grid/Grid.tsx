@@ -63,7 +63,7 @@ const Grid = (props: GridI) => {
   return (
     <div
       className={getClassNames({
-        "inte-grid": true,
+        "jf-grid": true,
         [customClass as string]: customClass,
       })}
       style={gridStyle}

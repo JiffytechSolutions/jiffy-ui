@@ -1,11 +1,12 @@
 import React from "react";
-import HorizontalFlex from "../HorizontalFlex/HorizontalFlex";
+import FlexLayout from "../FlexLayout/FlexLayout";
 import Tag from "./Tag";
+import InlineStack from "../InlineStack/InlineStack";
 
 const size = ["Small", "Medium", "Large"];
 
 export default {
-  title: "Components(Done)/Tag",
+  title: "Components/Tag",
   component: Tag,
   tags: ["autodocs"],
   argTypes: {
@@ -54,13 +55,13 @@ export const Tag_with_multiple_size: any = Template.bind({});
 Tag_with_multiple_size.decorators = [
   () => {
     return (
-      <HorizontalFlex gap={36}>
+      <InlineStack gap={4}>
         {size.map((sizes: any, ind) => (
           <Tag size={sizes}>
             {sizes}
           </Tag>
         ))}
-      </HorizontalFlex>
+      </InlineStack>
     );
   },
 ];
@@ -70,13 +71,13 @@ export const Tag_with_multiple_size_and_dismiss_Action: any = Template.bind({});
 Tag_with_multiple_size_and_dismiss_Action.decorators = [
   () => {
     return (
-      <HorizontalFlex gap={36}>
+      <InlineStack gap={4}>
         {size.map((sizes: any, ind) => (
           <Tag size={sizes} onDismis={()=>{alert('User clicked')}}>
             {sizes}
           </Tag>
         ))}
-      </HorizontalFlex>
+      </InlineStack>
     );
   },
-];
+];  

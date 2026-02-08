@@ -1,14 +1,14 @@
 import { useState } from "react";
 import  Button  from "../Button/Button";
 import SideSheet from "./SideSheet";
-import HorizontalFlex from "../HorizontalFlex/HorizontalFlex";
+import FlexLayout from "../FlexLayout/FlexLayout";
 import TextStyle from "../TextStyle/TextStyle";
 import React from "react";
 
 export default {
-  title: "components(Done)/SideSheet",
+  title: "components/SideSheet",
   component: SideSheet,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
   argTypes: {
     isOpen: {
       description: "Select card type",
@@ -54,14 +54,14 @@ const Template = ({ ...rest }) => {
       <Button onClick={() => setIsOpen(true)} children="Open" />
       <SideSheet isOpen={isOpen} onDismiss={() => setIsOpen(false)} title={rest.title}
         footer={
-          <HorizontalFlex gap={18} align={{
+          <FlexLayout gap={2} align={{
             sm: "center",
             md: "center",
-            lg: "spaceAround",
+            lg: "center",
           }}>
             <Button color="Primary" children="Proceed" />
-            <Button color="Primary" variant="Secondry" children="cancel" />
-          </HorizontalFlex>
+            <Button color="Primary" variant="Secondary" children="cancel" />
+          </FlexLayout>
         }
       >
         <TextStyle as="p">

@@ -2,9 +2,9 @@ import React from "react";
 import  Button  from "../Button/Button";
 import  ButtonGroup  from "./ButtonGroup";
 export default {
-    title: "components(Done)/ButtonGroup",
+    title: "components/ButtonGroup",
     component: ButtonGroup,
-    tags: ["autodocs"],
+    parameters: { docs: { autodocs: true, }, },
     argTypes: {
         segmented: {
             description: "Select card type",
@@ -32,9 +32,9 @@ ButtonGroup_with_variant.decorators = [
     () => {
         return (
             <ButtonGroup segmented={true}>
-                <Button children="Button" color="Primary" variant="Secondry" />
-                <Button children="Button1" color="Primary" variant="Secondry" />
-                <Button children="Button2" color="Primary" variant="Secondry" />
+                <Button children="Button" color="Primary" variant="Secondary" />
+                <Button children="Button1" color="Primary" variant="Secondary" />
+                <Button children="Button2" color="Primary" variant="Secondary" />
             </ButtonGroup>
         );
     },

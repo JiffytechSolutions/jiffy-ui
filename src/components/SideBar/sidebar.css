@@ -1,4 +1,4 @@
-.Pixel-sideBar {
+.jf-sideBar {
   border-right: 0.1rem solid rgb(229 231 235);
   width: 100%;
 
@@ -11,7 +11,7 @@
   height: 100vh;
 }
 
-.sidebar-header {
+.jf-sidebar-header {
   display: flex;
   position: relative;
   border-bottom: 1px solid #e4e4e4;
@@ -22,20 +22,20 @@
   align-items: center;
 }
 
-.Pixel-sideBar__logo {
+.jf-sideBar__logo {
   flex: 0 0 calc(100% - 30px);
 }
 
-.Pixel-sideBar__logo svg {
+.jf-sideBar__logo svg {
   width: 180px;
   height: 40px;
 }
 
-img.sidebar-logo {
+.jf-sidebar-logo {
   width: 50%;
 }
 
-.Pixel-sideBar__closeButton {
+.jf-sideBar__closeButton {
   transition: transform 0.3s ease-in-out;
   border: none;
   background: transparent;
@@ -48,38 +48,38 @@ img.sidebar-logo {
   transition: 0.3s all;
 }
 
-.Pixel-sideBar__closeButton:hover {
+.jf-sideBar__closeButton:hover {
   background-color: #e4e4e4;
 }
 
-.Pixel-sideBar__closeButton svg {
+.jf-sideBar__closeButton svg {
   width: 100%;
   display: block;
 }
 
-.Pixel-sideBar__ItemList {
+.jf-sideBar__ItemList {
   position: relative;
   padding-bottom: var(--footerHeight);
   flex-grow: 1;
 }
 
-.Pixel-sideBar__title {
+.jf-sideBar__title {
   padding: 0rem 1.6rem;
   font-size: 1.4rem;
   line-height: 2.4rem;
   margin-bottom: 0.8rem;
 }
 
-.Pixel-sideBar__itemBody {
+.jf-sideBar__itemBody {
   border-radius: 0.6rem;
 }
 
-.Pixel-sideBar .Pixel-sideBar__ItemList {
+.jf-sideBar .jf-sideBar__ItemList {
   height: calc(100vh - 140px);
   overflow-y: auto;
 }
 
-.Pixel-sideBar__list>.Pixel-sideBar__listItem>.Pixel-sideBar__itemBody {
+.jf-sideBar__list>.jf-sideBar__listItem>.jf-sideBar__itemBody {
   padding: 1.3rem 1.6rem;
   display: flex;
   justify-content: space-between;
@@ -88,101 +88,101 @@ img.sidebar-logo {
   align-items: center;
 }
 
-.Pixel-sideBar__label {
+.jf-sideBar__label {
   font-weight: 500;
   font-size: 1.4rem;
   line-height: 2.4rem;
 }
 
-.Pixel-sideBar__linkBody,
-.Pixel-sideBar__Icon,
-.Pixel-sideBar__badge,
-.Pixel-sideBar__label {
+.jf-sideBar__linkBody,
+.jf-sideBar__Icon,
+.jf-sideBar__badge,
+.jf-sideBar__label {
   display: flex;
   align-items: center;
   gap: 1.2rem;
 }
 
-.Pixel-sideBar__label {
+.jf-sideBar__label {
   color: #000;
 }
 
-.Pixel-sideBar__list,
-.Pixel-sideBar__childList {
+.jf-sideBar__list,
+.jf-sideBar__childList {
   margin-bottom: 0;
 }
 
-.Pixel-sideBar__childList {
+.jf-sideBar__childList {
   max-height: 0;
   transition: max-height 0.35s cubic-bezier(0, 1, 0, 1);
   overflow: hidden;
 }
 
-.Pixel-sideBar__listItem--expandable--active .Pixel-sideBar__childList {
+.jf-sideBar__listItem--expandable--active .jf-sideBar__childList {
   overflow: hidden;
   transition: max-height 0.3s cubic-bezier(1, 0, 1, 0);
   height: auto;
   max-height: 9999px;
 }
 
-li.Pixel-sideBar__listItem {
+li.jf-sideBar__listItem {
   border-radius: 4px;
   transition: 0.3s all;
 }
 
-.Pixel-sideBar__listItem:not(.Pixel-sideBar__listItem--expandable):hover,
-.Pixel-sideBar__listItem--expandable .Pixel-sideBar__itemBody:hover {
+.jf-sideBar__listItem:not(.jf-sideBar__listItem--expandable):hover,
+.jf-sideBar__listItem--expandable .jf-sideBar__itemBody:hover {
   background-color: rgb(46 91 255 / 9%);
 }
 
-.Pixel-sideBar__listItem--expandable--active>.Pixel-sideBar__itemBody {
+.jf-sideBar__listItem--expandable--active>.jf-sideBar__itemBody {
   background: rgba(46, 91, 255, 0.09);
 }
 
-.Pixel-sideBar__list>.Pixel-sideBar__listItem--active>.Pixel-sideBar__itemBody {
+.jf-sideBar__list>.jf-sideBar__listItem--active>.jf-sideBar__itemBody {
   position: relative;
 }
 
-.Pixel-sideBar__listItem--expandable--active .Pixel-sideBar__itemBody .Pixel-sideBar__Icon svg {
+.jf-sideBar__listItem--expandable--active .jf-sideBar__itemBody .jf-sideBar__Icon svg {
   stroke: rgb(46, 91, 255);
 }
 
-.Pixel-sideBar__list>.Pixel-sideBar__listItem--active>.Pixel-sideBar__itemBody .Pixel-sideBar__Icon svg {
+.jf-sideBar__list>.jf-sideBar__listItem--active>.jf-sideBar__itemBody .jf-sideBar__Icon svg {
   stroke: rgb(46, 91, 255);
 }
 
-.Pixel-sideBar__expandIcon--active svg {
+.jf-sideBar__expandIcon--active svg {
   stroke: rgb(46, 91, 255);
 }
 
-.Pixel-sideBar__childList .Pixel-sideBar__listItem--active .Pixel-sideBar__label {
+.jf-sideBar__childList .jf-sideBar__listItem--active .jf-sideBar__label {
   color: rgb(46, 91, 255);
 }
 
-.Pixel-sideBar__childList .Pixel-sideBar__listItem--active .Pixel-sideBar__itemBody {
+.jf-sideBar__childList .jf-sideBar__listItem--active .jf-sideBar__itemBody {
   background-color: rgb(46 91 255 / 9%);
 }
 
-.Pixel-sideBar__expandIcon--active svg:first-child {
+.jf-sideBar__expandIcon--active svg:first-of-child {
   transform: rotate(180deg);
   transition: all 0.3s ease-in-out;
 }
 
-.Pixel-sideBar__expandIcon:not(.Pixel-sideBar__expandIcon--active) svg:first-child {
+.jf-sideBar__expandIcon:not(.jf-sideBar__expandIcon--active) svg:first-of-child {
   transform: rotate(0deg);
   transition: all 0.3s ease-in-out;
 }
 
-.Pixel-sideBar__expandIcon svg {
+.jf-sideBar__expandIcon svg {
   display: block;
   width: 100%;
 }
 
-.Pixel-sideBar__listItem--expandable--active>.Pixel-sideBar__itemBody .Pixel-sideBar__label {
+.jf-sideBar__listItem--expandable--active>.jf-sideBar__itemBody .jf-sideBar__label {
   color: rgb(46, 91, 255);
 }
 
-.Pixel-sideBar__childList .Pixel-sideBar__itemBody {
+.jf-sideBar__childList .jf-sideBar__itemBody {
   display: flex;
   justify-content: space-between;
   gap: 1.2rem;
@@ -191,7 +191,7 @@ li.Pixel-sideBar__listItem {
   cursor: pointer;
 }
 
-.Pixel-sideBar__Item--footer {
+.jf-sideBar__Item--footer {
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -199,34 +199,34 @@ li.Pixel-sideBar__listItem {
   padding-bottom: 2.4rem;
 }
 
-.Pixel-sideBar__Item:not(.Pixel-sideBar__Item--footer) {
+.jf-sideBar__Item:not(.jf-sideBar__Item--footer) {
   padding-bottom: 1.6rem;
 }
 
-.Pixel-sideBar__Item {
+.jf-sideBar__Item {
   border-bottom: 1px dashed #e4e4e4;
 }
 
-.Pixel-sideBar__Item:last-child {
+.jf-sideBar__Item:last-child {
   border-bottom: none;
   padding-bottom: 0;
 }
 
-.Pixel-sideBar__Item+.Pixel-sideBar__Item:not(.Pixel-sideBar__Item--footer) {
+.jf-sideBar__Item+.jf-sideBar__Item:not(.jf-sideBar__Item--footer) {
   padding-top: 1.6rem;
 }
 
-.Pixel-sideBar__listItem--disabled {
+.jf-sideBar__listItem--disabled {
   cursor: not-allowed;
 }
 
-.Pixel-sideBar__listItem--disabled>div {
+.jf-sideBar__listItem--disabled>div {
   opacity: 0.5;
   pointer-events: none;
   user-select: none;
 }
 
-.Pixel-sideBar__listItem.Pixel-sideBar__listItem--expandable::before {
+.jf-sideBar__listItem.jf-sideBar__listItem--expandable::before {
   content: "";
   height: calc(100% - 75px);
   width: 1px;
@@ -236,16 +236,16 @@ li.Pixel-sideBar__listItem {
   left: 23px;
 }
 
-.Pixel-sideBar__listItem.Pixel-sideBar__listItem--expandable .Pixel-sideBar__childList {
+.jf-sideBar__listItem.jf-sideBar__listItem--expandable .jf-sideBar__childList {
   padding-left: 45px;
 }
 
-.Pixel-sideBar__listItem.Pixel-sideBar__listItem--expandable,
-.Pixel-sideBar__listItem.Pixel-sideBar__listItem--expandable .Pixel-sideBar__childList>.Pixel-sideBar__listItem {
+.jf-sideBar__listItem.jf-sideBar__listItem--expandable,
+.jf-sideBar__listItem.jf-sideBar__listItem--expandable .jf-sideBar__childList>.jf-sideBar__listItem {
   position: relative;
 }
 
-.Pixel-sideBar__listItem.Pixel-sideBar__listItem--expandable .Pixel-sideBar__childList>.Pixel-sideBar__listItem::after {
+.jf-sideBar__listItem.jf-sideBar__listItem--expandable .jf-sideBar__childList>.jf-sideBar__listItem::after {
   content: "";
   width: 14px;
   height: 15px;
@@ -263,23 +263,23 @@ li.Pixel-sideBar__listItem {
   box-shadow: 0px -1px 6px 0px rgba(0, 0, 0, 0.05);
 }
 
-.Pixel-sideBar--logout__Item {
+.jf-sideBar--logout__Item {
   display: flex;
   align-items: center;
   gap: 1.2rem;
   padding: 1.3rem 1.6rem;
   cursor: pointer;
-  background: var(--jiffyui-Negative-050);
+  background: var(--jf-Negative-050);
   border-radius: 0.4rem;
-  color: var(--jiffyui-Negative-050);
+  color: var(--jf-Negative-050);
   transition: 0.3s all;
 }
 
-.Pixel-sideBar--logout__Item:hover {
-  background-color: var(--jiffyui-Negative-100);
+.jf-sideBar--logout__Item:hover {
+  background-color: var(--jf-Negative-100);
 }
 
-.Pixel-sideBar--logout__Item svg,
-.Pixel-sideBar--logout__Item .Pixel-sideBar__label {
-  color: var(--jiffyui-Negative-500);
+.jf-sideBar--logout__Item svg,
+.jf-sideBar--logout__Item .jf-sideBar__label {
+  color: var(--jf-Negative-500);
 }

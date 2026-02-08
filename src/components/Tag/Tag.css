@@ -1,90 +1,90 @@
-.tag {
-    justify-content: flex-start;
-    position: relative;
-    display: inline-flex;
-    max-width: 100%;
-    align-items: center;
-    padding: 0.1rem 0.8rem;
-    background-color: var(--jiffyui-naturalLight-200);
-    border-radius: 0.4rem;
-    color: var(--jiffyui-naturalDark-1000);
+.jf-tag {
+  justify-content: flex-start;
+  position: relative;
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  padding: 0.1rem 0.8rem;
+  background-color: var(--jf-naturalLight-200);
+  border-radius: 0.4rem;
+  color: var(--jf-naturalDark-1000);
 
-    .tag-label {
-        display: inline-block;
-        vertical-align: middle;
-    }
+  .tag-label {
+      display: inline-block;
+      vertical-align: middle;
+  }
 
-    .tag-clear {
-        cursor: pointer;
-        border-radius: 0.4rem;
-        transition: 0.3s all;
-        text-align: center;
-        display: block;
-        height: 2rem;
-        width: 2rem;
-        max-height: 100%;
-        max-width: 100%;
-        margin-left: 0.5rem;
-    }
+  .jf-tag-clear {
+      cursor: pointer;
+      border-radius: 0.4rem;
+      transition: 0.3s all;
+      text-align: center;
+      display: block;
+      height: 2rem;
+      width: 2rem;
+      max-height: 100%;
+      max-width: 100%;
+      margin-left: 0.5rem;
+  }
 
-    .tag-clear:hover {
-        background-color: var(--jiffyui-naturalLight-300);
-    }
-    
-    .tag-clear svg {
-        display: block;
-        height: 100%;
-        width: 100%;
-    }
+  .jf-tag-clear:hover {
+      background-color: var(--jf-naturalLight-300);
+  }
+  
+  .jf-tag-clear svg {
+      display: block;
+      height: 100%;
+      width: 100%;
+  }
 }
 
-.tag.hasDismis {
-    padding-right: 0.4rem;
+.jf-tag.jf-hasDismis {
+  padding-right: 0.4rem;
 }
 
-.tag.tag--small {
-    height: 1.6rem;
+.jf-tag.jf-tag--small {
+  height: 1.8rem;
 
-    span.tag-label {
-        font-size: 1rem;
-        line-height: 1.6rem;
-    }
+  span.jf-tag-label {
+      font-size: 1.2rem;
+      line-height: 1.8rem;
+  }
 
-    span.tag-clear {
-        height: 1.2rem;
-        width: 1.2rem;
-        padding: 0;
-        border-radius: 0.1rem;
-    }
+  span.jf-tag-clear {
+      height: 1.2rem;
+      width: 1.2rem;
+      padding: 0;
+      border-radius: 0.1rem;
+  }
 }
 
-.tag.tag--medium {
-    height: 2rem;
+.jf-tag.jf-tag--medium {
+  height: 2rem;
 
-    span.tag-label {
-        font-size: 1.2rem;
-        line-height: 2rem;
-    }
+  span.jf-tag-label {
+      font-size: 1.3rem;
+      line-height: 2rem;
+  }
 
-    span.tag-clear {
-        height: 1.4rem;
-        width: 1.4rem;
-        padding: 0;
-        border-radius: 0.3rem;
-    }
+  span.jf-tag-clear {
+      height: 1.4rem;
+      width: 1.4rem;
+      padding: 0;
+      border-radius: 0.3rem;
+  }
 }
 
-.tag.tag--large {
-    height: 2.4rem;
+.jf-tag.jf-tag--large {
+  height: 2.4rem;
 
-    .tag-label {
-        font-size: 1.4rem;
-        line-height: 2.4rem;
-    }
+  .jf-tag-label {
+      font-size: 1.4rem;
+      line-height: 2.4rem;
+  }
 
-    .tag-clear {
-        height: 1.8rem;
-        width: 1.8rem;
-        padding: 0.1rem;
-    }
+  .jf-tag-clear {
+      height: 1.8rem;
+      width: 1.8rem;
+      padding: 0.1rem;
+  }
 }

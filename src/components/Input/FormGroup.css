@@ -3,15 +3,15 @@
   margin-bottom: 0.4rem;
   display: inline-block;
   word-break: break-word;
-  color: var(--jiffyui-naturalDark-1300);
+  color: var(--jf-naturalDark-1300);
   font-size: 1.4rem;
   line-height: 2rem;
-  font-family: var(--jiffyui-medium-font);
+  font-family: var(--jf-medium-font);
 }
 
 .jiffyui-formElement .jiffyui-formElement__textField ,
 .jiffyui-formElement__textArea {
-  border: 1px solid var(--jiffyui-naturalLight-300);
+  border: 1px solid var(--jf-naturalLight-300);
 }
 
 .jiffyui-formGroup {

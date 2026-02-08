@@ -11,24 +11,24 @@ const Tag = ({
   const checkSize = (): string => {
     switch (size) {
       case "Small":
-        return "tag--small";
+        return "jf-tag--small";
       case "Medium":
-        return "tag--medium";
+        return "jf-tag--medium";
       case "Large":
-        return "tag--large";
+        return "jf-tag--large";
       default:
-        return "tag--large";
+        return "jf-tag--large";
     }
   };
 
   const TageSize = checkSize();
 
   return (
-    <div className="tag-wrapp">
-      <div className={`tag ${TageSize} ${onDismis ? "hasDismis" : ""}`}>
-        <span className="tag-label">{children}</span>
+    <div className="jf-tag-wrapp">
+      <div className={`jf-tag ${TageSize} ${onDismis ? "jf-hasDismis" : ""}`}>
+        <span className="jf-tag-label">{children}</span>
         {onDismis &&
-          <span className="tag-clear" onClick={(e: any) => onDismis(e)} role="none">
+          <span className="jf-tag-clear" onClick={(e: any) => onDismis(e)} role="none">
             <X size={16} />
           </span>
         }

@@ -1,23 +1,23 @@
 
-.Pixel-item__text {
+.jf-item__text {
     color: rgb(41, 80, 219);
-    font-size: 1.4rem;
+    font-size: var(--jf-fs-13);
     font-weight: 500;
     line-height: 2rem;
 }
-.Pixel-item__text--active {
+.jf-item__text--active {
     color: rgb(25, 40, 57);
-    font-size: 1.4rem;
+    font-size: var(--jf-fs-13);
     font-weight: 500;
     line-height: 2rem;
 }
-.Pixel-breadCrumb__list {
+.jf-breadCrumb__list {
     display: flex;
     gap: 0.4rem;
     align-items: center;
     flex-wrap: wrap;
 }
-.Pixel-breadCrumb :not(:last-child) span:hover {
+.jf-breadCrumb :not(:last-child) span:hover {
     text-decoration: underline;
     cursor: pointer;
 }

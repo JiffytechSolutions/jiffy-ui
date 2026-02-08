@@ -1,4 +1,3 @@
-
 import { Download, FileText, RefreshCcw } from "react-feather";
 import MediaCard from "./MediaCard";
 import React from "react";
@@ -12,7 +11,7 @@ export default {
       description: "Select card type",
       control: {
         type: "radio",
-        options: ["Plain", "Shadow", "Borderd", "BorderWithShadow"],
+        options: ["Plain", "Shadow", "Bordered", "BorderWithShadow"],
       },
       defaultValue: "Plain",
     },
@@ -106,26 +105,24 @@ CardWithNoImage.decorators = [
   () => {
     return (
       <MediaCard
-        headerActions={[{
-          items: [
-            {
-              content: "Refresh",
-              onClick: () => { alert('Action1') },
-              prefixIcon: <RefreshCcw size={15} />
-            },
-            {
-              content: "Export",
-              onClick: () => { alert('Action2') },
-              prefixIcon: <FileText size={15} />
-            },
-            {
-              content: "Download",
-              onClick: () => { alert('Action3') },
-              prefixIcon: <Download size={15} />
-            }
-          ]
-        }]}
-        type={"Borderd"}
+        headerActions={[
+          {
+            label: "Refresh",
+            onClick: () => { alert('Action1') },
+            leading: <RefreshCcw size={15} />
+          },
+          {
+            label: "Export",
+            onClick: () => { alert('Action2') },
+            leading: <FileText size={15} />
+          },
+          {
+            label: "Download",
+            onClick: () => { alert('Action3') },
+            leading: <Download size={15} />
+          }
+        ]}
+        type={"Bordered"}
         title="Lorem ipsum is placeholder"
         subtitle="Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries"
       />
@@ -140,30 +137,94 @@ HorizontalMediaCard.decorators = [
     return (
       <MediaCard
         orientation="Horizontal"
-        headerActions={[{
-          items: [
-            {
-              content: "Refresh",
-              onClick: () => { alert('Action1') },
-              prefixIcon: <RefreshCcw size={15} />
-            },
-            {
-              content: "Export",
-              onClick: () => { alert('Action2') },
-              prefixIcon: <FileText size={15} />
-            },
-            {
-              content: "Download",
-              onClick: () => { alert('Action3') },
-              prefixIcon: <Download size={15} />
-            }
-          ]
-        }]}
+        headerActions={[
+          {
+            label: "Refresh",
+            onClick: () => { alert('Action1') },
+            leading: <RefreshCcw size={15} />
+          },
+          {
+            label: "Export",
+            onClick: () => { alert('Action2') },
+            leading: <FileText size={15} />
+          },
+          {
+            label: "Download",
+            onClick: () => { alert('Action3') },
+            leading: <Download size={15} />
+          }
+        ]}
         primaryAction={primaryAction1}
         secondaryAction={secondoryAction1}
-        type={"Borderd"}
+        type={"Bordered"}
         title="Lorem ipsum is placeholder"
         subtitle="Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries"
+      />
+    );
+  },
+];
+
+// MediaCard with Header Actions Showcase
+export const MediaCardWithHeaderActions: any = Template.bind({});
+MediaCardWithHeaderActions.args = {
+  type: "Bordered",
+  mediaSrc: "https://placehold.co/1000x700",
+  title: "Product Management Dashboard",
+  subtitle: "Complete analytics and insights for your product performance with detailed metrics and reports",
+  headerActions: [
+    {
+      label: "Refresh Data",
+      onClick: () => { alert('Refreshing data...') },
+      leading: <RefreshCcw size={15} />
+    },
+    {
+      label: "Export Report", 
+      onClick: () => { alert('Exporting report...') },
+      leading: <FileText size={15} />
+    },
+    {
+      label: "Download Image",
+      onClick: () => { alert('Downloading image...') },
+      leading: <Download size={15} />
+    }
+  ],
+  primaryAction: {
+    children: "View Details",
+    onClick: () => { alert('Viewing details...') }
+  },
+  secondaryAction: {
+    children: "Edit",
+    onClick: () => { alert('Editing...') }
+  }
+};
+
+// Header Actions Only (No Footer Actions)
+export const HeaderActionsOnly: any = Template.bind({});
+HeaderActionsOnly.decorators = [
+  () => {
+    return (
+      <MediaCard
+        type={"Shadow"}
+        mediaSrc="https://placehold.co/800x600"
+        title="Design System Components"
+        subtitle="A comprehensive collection of reusable UI components for modern web applications"
+        headerActions={[
+          {
+            label: "Copy Link",
+            onClick: () => { alert('Link copied to clipboard!') },
+            leading: <RefreshCcw size={15} />
+          },
+          {
+            label: "Share",
+            onClick: () => { alert('Opening share menu...') },
+            leading: <FileText size={15} />
+          },
+          {
+            label: "Bookmark",
+            onClick: () => { alert('Added to bookmarks!') },
+            leading: <Download size={15} />
+          }
+        ]}
       />
     );
   },

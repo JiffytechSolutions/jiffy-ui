@@ -4,7 +4,7 @@ import SkeletonCustom from "./SkeletonCustom";
 export default {
     title: "components(Done)/Skeleton/SkeletonCustom",
     component: SkeletonCustom,
-    tags: ["autodocs"],
+    parameters: { docs: { autodocs: true, }, },
     argTypes: {
 
     },

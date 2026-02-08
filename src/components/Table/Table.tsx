@@ -4,8 +4,18 @@ import { classnames } from "../../utilities/globalFunction";
 import "./Table.css";
 import Checkbox from "../Input/Checkbox/Checkbox";
 
+export interface TableHeading {
+  title: string;
+  key?: string;
+  sortable?: boolean;
+  width?: string | number;
+  align?: "left" | "center" | "right";
+  hideOnMobile?: boolean;
+  priority?: number; // Lower numbers have higher priority on mobile
+}
+
 export interface TableI {
-  headings: { title: string }[];
+  headings: TableHeading[];
   children: any;
   selectable?: boolean;
   onRowSelection?: (id: any) => void;
@@ -16,6 +26,31 @@ export interface TableI {
     headingIndex: number,
     direction: "ascending" | "descending"
   ) => void;
+  
+  // Enhanced Design Props
+  variant?: "default" | "minimal" | "bordered" | "striped";
+  density?: "comfortable" | "compact" | "spacious";
+  stickyHeader?: boolean;
+  maxHeight?: string | number;
+  
+  // Responsive Props
+  responsive?: boolean;
+  stackOnMobile?: boolean;
+  mobileBreakpoint?: string;
+  hideColumnsOnMobile?: number[]; // Column indices to hide on mobile
+  showRowBorders?: boolean;
+  
+  // State Props
+  loading?: boolean;
+  loadingMessage?: string;
+  emptyState?: React.ReactNode;
+  emptyMessage?: string;
+  
+  // Enhanced Styling
+  className?: string;
+  tableClassName?: string;
+  headerClassName?: string;
+  rowClassName?: string;
 }
 
 const Table = (props: TableI) => {
@@ -28,6 +63,31 @@ const Table = (props: TableI) => {
     sortDirection = "descending",
     sortColumnIndex,
     onSort,
+    
+    // Enhanced Design Props
+    variant = "default",
+    density = "comfortable",
+    stickyHeader = false,
+    maxHeight,
+    
+    // Responsive Props
+    responsive = true,
+    stackOnMobile = false,
+    mobileBreakpoint = "768px",
+    hideColumnsOnMobile = [],
+    showRowBorders = true,
+    
+    // State Props
+    loading = false,
+    loadingMessage = "Loading...",
+    emptyState,
+    emptyMessage = "No data available",
+    
+    // Enhanced Styling
+    className,
+    tableClassName,
+    headerClassName,
+    rowClassName,
   } = props;
   const [selectAll, setSelectAll] = useState<any>(false);
 
@@ -64,57 +124,122 @@ const Table = (props: TableI) => {
     }
   };
 
+  // Generate wrapper classes
+  const wrapperClasses = classnames({
+    "jf-table__wrapper": true,
+    [`jf-table__wrapper--${variant}`]: variant !== "default",
+    [`jf-table__wrapper--${density}`]: density !== "comfortable",
+    "jf-table__wrapper--responsive": responsive,
+    "jf-table__wrapper--stack-mobile": stackOnMobile,
+    "jf-table__wrapper--sticky-header": stickyHeader,
+    [className || ""]: className,
+  });
+
+  // Generate table classes
+  const tableClasses = classnames({
+    "jf-table": true,
+    [`jf-table--${variant}`]: variant !== "default",
+    [`jf-table--${density}`]: density !== "comfortable",
+    "jf-table--row-borders": showRowBorders,
+    [tableClassName || ""]: tableClassName,
+  });
+
+  // Generate CSS custom properties for responsive behavior
+  const wrapperStyle = {
+    "--mobile-breakpoint": mobileBreakpoint,
+    "--max-height": typeof maxHeight === "number" ? `${maxHeight}px` : maxHeight,
+    ...({} as React.CSSProperties),
+  };
+
+  // Render loading state
+  if (loading) {
+    return (
+      <div className={wrapperClasses} style={wrapperStyle}>
+        <div className="jf-table__loading">
+          <div className="jf-table__loading-spinner"></div>
+          <p className="jf-table__loading-message">{loadingMessage}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Render empty state
+  if (!children || (Array.isArray(children) && children.length === 0)) {
+    return (
+      <div className={wrapperClasses} style={wrapperStyle}>
+        <div className="jf-table__empty">
+          {emptyState || (
+            <>
+              <div className="jf-table__empty-icon">📋</div>
+              <p className="jf-table__empty-message">{emptyMessage}</p>
+            </>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="pixel-table__wrapper">
-      <table className="pixel-table" role="table">
-        <thead>
+    <div className={wrapperClasses} style={wrapperStyle}>
+      <table className={tableClasses} role="table">
+        <thead className={headerClassName}>
           <tr>
             {selectable && (
-              <td className="pixel-table__heading pixel-table__headingCheckboxCell">
+              <th className="jf-table__heading jf-table__headingCheckboxCell">
                 <Checkbox
                   onChange={handleSelectAll}
                   checked={selectAll}
                 />
-              </td>
+              </th>
             )}
-            {headings.map((ele: any, ind: any) => {
+            {headings.map((heading: TableHeading, ind: number) => {
+              const isSortable = heading.sortable ?? sortable?.[ind];
+              const isHiddenOnMobile = heading.hideOnMobile || hideColumnsOnMobile.includes(ind);
+              
               return (
                 <th
-                  key={ele.title}
+                  key={heading.key || heading.title}
                   className={classnames({
-                    "pixel-table__heading": true,
-                    "c-pointer": sortable?.[ind],
+                    "jf-table__heading": true,
+                    "jf-table__heading--sortable": isSortable,
+                    "jf-table__heading--hidden-mobile": isHiddenOnMobile,
+                    [`jf-table__heading--align-${heading.align}`]: heading.align,
+                    "c-pointer": isSortable,
                   })}
+                  style={{
+                    width: heading.width,
+                    "--priority": heading.priority,
+                  } as React.CSSProperties}
                   onClick={() =>
-                    onSort?.(
+                    isSortable && onSort?.(
                       ind,
                       sortDirection === "ascending" ? "descending" : "ascending"
                     )
                   }
                 >
-                  <div className="flex-row gap-8 justify-between align-center">
-                    <span>{ele.title}</span>
-                    {sortable?.[ind] && (
-                      <span className="flex-row pixel-sortable__icon">
-                        <svg width="20" height="20" fill="none">
+                  <div className="jf-table__heading-content">
+                    <span className="jf-table__heading-title">{heading.title}</span>
+                    {isSortable && (
+                      <span className="jf-table__sort-icon">
+                        <svg width="20" height="20" fill="none" viewBox="0 0 20 20">
                           <path
                             fill={
                               sortColumnIndex === ind &&
                               sortDirection === "descending"
-                                ? "hsla(227, 100%, 59%, 1)"
-                                : "hsla(211, 22%, 56%, 1)"
+                                ? "var(--jf-color-primary)"
+                                : "var(--jf-color-text-secondary)"
                             }
                             d="M10.59 2.251a.817.817 0 0 0-1.18 0L5.245 6.537a.875.875 0 0 0 0 1.212.817.817 0 0 0 1.179 0L10 4.069l3.577 3.68a.817.817 0 0 0 1.179 0 .874.874 0 0 0 0-1.212L10.589 2.25Z"
-                          ></path>
+                          />
                           <path
                             fill={
                               sortColumnIndex === ind &&
                               sortDirection === "ascending"
-                                ? "hsla(227, 100%, 59%, 1)"
-                                : "hsla(211, 22%, 56%, 1)"
+                                ? "var(--jf-color-primary)"
+                                : "var(--jf-color-text-secondary)"
                             }
                             d="M9.41 17.749a.817.817 0 0 0 1.18 0l4.166-4.286a.874.874 0 0 0 0-1.212.817.817 0 0 0-1.179 0L10 15.931l-3.577-3.68a.817.817 0 0 0-1.179 0 .874.874 0 0 0 0 1.212l4.167 4.286Z"
-                          ></path>
+                          />
                         </svg>
                       </span>
                     )}
@@ -129,6 +254,9 @@ const Table = (props: TableI) => {
             React.cloneElement(child, {
               selectable,
               onRowSelection,
+              hideColumnsOnMobile,
+              stackOnMobile,
+              rowClassName,
             })
           )}
         </tbody>
@@ -138,17 +266,29 @@ const Table = (props: TableI) => {
 };
 
 const Row = (props: any) => {
-  const { children, selectable, id, onRowSelection, selected } = props;
+  const { 
+    children, 
+    selectable, 
+    id, 
+    onRowSelection, 
+    selected, 
+    hideColumnsOnMobile = [],
+    stackOnMobile = false,
+    rowClassName,
+    ...otherProps 
+  } = props;
+  
+  const rowClasses = classnames({
+    "jf-table__row": true,
+    "jf-table__row--selected": selected,
+    "jf-table__row--stack-mobile": stackOnMobile,
+    [rowClassName || ""]: rowClassName,
+  });
+
   return (
-    <tr
-      className={classnames({
-        "pixel-table__row": true,
-        "pixel-table__row--selected": selected,
-      })}
-      id={id}
-    >
+    <tr className={rowClasses} id={id} {...otherProps}>
       {selectable && (
-        <td className="pixel-table__cell pixel-table__checkboxCell">
+        <td className="jf-table__cell jf-table__checkboxCell">
           <Checkbox
             onChange={() => {
               onRowSelection(id);
@@ -157,14 +297,44 @@ const Row = (props: any) => {
           />
         </td>
       )}
-      {children}
+      {React.Children.map(children, (child, index) => 
+        React.cloneElement(child, {
+          isHiddenOnMobile: hideColumnsOnMobile.includes(index),
+          columnIndex: index,
+        })
+      )}
     </tr>
   );
 };
 
 const Cell = (props: any) => {
-  const { children } = props;
-  return <td className="pixel-table__cell">{children}</td>;
+  const { 
+    children, 
+    align = "left", 
+    width,
+    className,
+    isHiddenOnMobile = false,
+    columnIndex,
+    ...otherProps 
+  } = props;
+  
+  const cellClasses = classnames({
+    "jf-table__cell": true,
+    [`jf-table__cell--align-${align}`]: align !== "left",
+    "jf-table__cell--hidden-mobile": isHiddenOnMobile,
+    [className || ""]: className,
+  });
+
+  const cellStyle = {
+    width,
+    "--column-index": columnIndex,
+  } as React.CSSProperties;
+
+  return (
+    <td className={cellClasses} style={cellStyle} {...otherProps}>
+      {children}
+    </td>
+  );
 };
 
 Table.Row = Row;

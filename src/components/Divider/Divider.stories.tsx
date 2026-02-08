@@ -1,7 +1,8 @@
 import React from "react";
 import Divider from "./Divider";
-import VerticalFlex from "../VerticalFlex/VerticalFlex";
+import FlexLayout from "../FlexLayout/FlexLayout";
 import TextStyle from "../TextStyle/TextStyle";
+import VerticalStack from "../VerticalStack/VerticalStack";
 
 const thickness = ["Thinner", "Thin", "Thick", "Thicker"];
 const type = ["Solid", "Dashed", "Dotted"];
@@ -9,9 +10,9 @@ const color = ["Normal", "Subtile", "Muted"];
 const orientation = ["Horizontal", "Vertical"];
 
 export default {
-  title: "Components(Done)/Divider",
+  title: "Components/Divider",
   component: Divider,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
 
   argTypes: {
     thickness: {
@@ -66,10 +67,10 @@ export const Divider_with_multiple_thickness: any = Template.bind({});
 Divider_with_multiple_thickness.decorators = [
   () => {
     return (
-      <VerticalFlex gap={36}>
+      <VerticalStack gap={4}>
         {thickness.map((thickness: any, ind) => (
-          <VerticalFlex gap={8} key={ind}>
-            <TextStyle as="legend" alignment="Center" fontWeight="Medium">
+          <VerticalStack gap={4} key={ind} align={"stretch"}>
+            <TextStyle as="legend" alignment="center" fontWeight="medium">
               {thickness}
             </TextStyle>
             <Divider
@@ -79,9 +80,9 @@ Divider_with_multiple_thickness.decorators = [
               type="Solid"
               thickness={thickness}
             />
-          </VerticalFlex>
+          </VerticalStack>
         ))}
-      </VerticalFlex>
+      </VerticalStack>
     );
   },
 ];
@@ -91,10 +92,10 @@ export const Divider_with_multiple_style: any = Template.bind({});
 Divider_with_multiple_style.decorators = [
   () => {
     return (
-      <VerticalFlex gap={36}>
+      <VerticalStack gap={4}>
         {type.map((type: any, ind) => (
-          <VerticalFlex gap={8} key={ind}>
-            <TextStyle as="legend" alignment="Center" fontWeight="Medium">
+          <VerticalStack gap={4} key={ind}  align={"stretch"} justifyContent={"between"}>
+            <TextStyle as="legend" alignment="center" fontWeight="medium">
               {type}
             </TextStyle>
             <Divider
@@ -104,9 +105,9 @@ Divider_with_multiple_style.decorators = [
               type={type}
               thickness={"Thin"}
             />
-          </VerticalFlex>
+          </VerticalStack>
         ))}
-      </VerticalFlex>
+      </VerticalStack>
     );
   },
 ];
@@ -116,10 +117,10 @@ export const Divider_with_multiple_color: any = Template.bind({});
 Divider_with_multiple_color.decorators = [
   () => {
     return (
-      <VerticalFlex gap={36}>
+      <VerticalStack gap={4}>
         {color.map((color: any, ind) => (
-          <VerticalFlex gap={8} key={ind}>
-            <TextStyle as="legend" alignment="Center" fontWeight="Medium">
+          <VerticalStack gap={4} key={ind} align={"stretch"}>
+            <TextStyle as="legend" alignment="center" fontWeight="medium">
               {color}
             </TextStyle>
             <Divider
@@ -129,9 +130,9 @@ Divider_with_multiple_color.decorators = [
               type="Solid"
               thickness={"Thin"}
             />
-          </VerticalFlex>
+          </VerticalStack>
         ))}
-      </VerticalFlex>
+      </VerticalStack>
     );
   },
 ];
@@ -141,10 +142,10 @@ export const Divider_with_multiple_orientation: any = Template.bind({});
 Divider_with_multiple_orientation.decorators = [
   () => {
     return (
-      <VerticalFlex gap={36}>
+      <VerticalStack gap={4}>
         {orientation.map((orientation: any, ind) => (
-          <VerticalFlex gap={8} key={ind}>
-            <TextStyle as="legend" alignment="Center" fontWeight="Medium">
+          <VerticalStack gap={4} key={ind} align={"stretch"}>
+            <TextStyle as="legend" alignment="center" fontWeight="medium">
               {orientation}
             </TextStyle>
             <Divider
@@ -154,67 +155,11 @@ Divider_with_multiple_orientation.decorators = [
               type="Solid"
               thickness={"Thin"}
             />
-          </VerticalFlex>
+          </VerticalStack>
         ))}
-      </VerticalFlex>
+      </VerticalStack>
     );
   },
 ];
 
-//Dot Indicator with all colors
-// export const dot_indicators_with_all_colors: any = Template.bind({});
-// dot_indicators_with_all_colors.decorators = [
-//     () => {
-//         return (
-//             <HorizontalFlex gap={20}>
-//                 {color.map((color: any, ind) => (
-//                     <Indicator
-//                         key={ind}
-//                         color={color}
-//                         label={color}
-//                         showLabel={false}
-//                     />
-//                 ))}
-//             </HorizontalFlex>
-//         );
-//     },
-// ];
 
-//Label Indicator with all sizes
-// export const Label_Indicator_with_all_sizes: any = Template.bind({});
-// Label_Indicator_with_all_sizes.decorators = [
-//     () => {
-//         return (
-//             <HorizontalFlex gap={20}>
-//                 {size.map((size: any, ind) => (
-//                     <Indicator
-//                         key={ind}
-//                         color="Positive"
-//                         label={size}
-//                         size={size}
-//                     />
-//                 ))}
-//             </HorizontalFlex>
-//         );
-//     },
-// ];
-
-//Dot Indicator with all sizes
-// export const Dot_Indicator_with_all_sizes: any = Template.bind({});
-// Dot_Indicator_with_all_sizes.decorators = [
-//     () => {
-//         return (
-//             <HorizontalFlex gap={20}>
-//                 {size.map((size: any, ind) => (
-//                     <Indicator
-//                         key={ind}
-//                         color="Positive"
-//                         label={size}
-//                         showLabel={false}
-//                         size={size}
-//                     />
-//                 ))}
-//             </HorizontalFlex>
-//         );
-//     },
-// ];

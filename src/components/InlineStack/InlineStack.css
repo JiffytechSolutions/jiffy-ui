@@ -1,0 +1,164 @@
+/* InlineStack Component Styles */
+
+.jf-inline-stack {
+  display: flex;
+  flex-direction: row;
+}
+
+.jf-inline-stack-container {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Gap utilities - using unique class names to avoid conflicts */
+.jf-inline-stack-gap-0 {
+  gap: 0;
+}
+
+.jf-inline-stack-gap-1 {
+  gap: 0.25rem; /* 4px */
+}
+
+.jf-inline-stack-gap-2 {
+  gap: 0.5rem; /* 8px */
+}
+
+.jf-inline-stack-gap-3 {
+  gap: 1rem; /* 16px */
+}
+
+.jf-inline-stack-gap-4 {
+  gap: 1.5rem; /* 24px */
+}
+
+.jf-inline-stack-gap-5 {
+  gap: 3rem; /* 48px */
+}
+
+/* Responsive gap utilities */
+@media (min-width: 576px) {
+  .jf-inline-stack-gap-sm-0 { gap: 0; }
+  .jf-inline-stack-gap-sm-1 { gap: 0.25rem; }
+  .jf-inline-stack-gap-sm-2 { gap: 0.5rem; }
+  .jf-inline-stack-gap-sm-3 { gap: 1rem; }
+  .jf-inline-stack-gap-sm-4 { gap: 1.5rem; }
+  .jf-inline-stack-gap-sm-5 { gap: 3rem; }
+}
+
+@media (min-width: 768px) {
+  .jf-inline-stack-gap-md-0 { gap: 0; }
+  .jf-inline-stack-gap-md-1 { gap: 0.25rem; }
+  .jf-inline-stack-gap-md-2 { gap: 0.5rem; }
+  .jf-inline-stack-gap-md-3 { gap: 1rem; }
+  .jf-inline-stack-gap-md-4 { gap: 1.5rem; }
+  .jf-inline-stack-gap-md-5 { gap: 3rem; }
+}
+
+@media (min-width: 992px) {
+  .jf-inline-stack-gap-lg-0 { gap: 0; }
+  .jf-inline-stack-gap-lg-1 { gap: 0.25rem; }
+  .jf-inline-stack-gap-lg-2 { gap: 0.5rem; }
+  .jf-inline-stack-gap-lg-3 { gap: 1rem; }
+  .jf-inline-stack-gap-lg-4 { gap: 1.5rem; }
+  .jf-inline-stack-gap-lg-5 { gap: 3rem; }
+}
+
+@media (min-width: 1200px) {
+  .jf-inline-stack-gap-xl-0 { gap: 0; }
+  .jf-inline-stack-gap-xl-1 { gap: 0.25rem; }
+  .jf-inline-stack-gap-xl-2 { gap: 0.5rem; }
+  .jf-inline-stack-gap-xl-3 { gap: 1rem; }
+  .jf-inline-stack-gap-xl-4 { gap: 1.5rem; }
+  .jf-inline-stack-gap-xl-5 { gap: 3rem; }
+}
+
+@media (min-width: 1400px) {
+  .jf-inline-stack-gap-xxl-0 { gap: 0; }
+  .jf-inline-stack-gap-xxl-1 { gap: 0.25rem; }
+  .jf-inline-stack-gap-xxl-2 { gap: 0.5rem; }
+  .jf-inline-stack-gap-xxl-3 { gap: 1rem; }
+  .jf-inline-stack-gap-xxl-4 { gap: 1.5rem; }
+  .jf-inline-stack-gap-xxl-5 { gap: 3rem; }
+}
+
+/* Wrap behavior */
+.jf-inline-stack-wrap {
+  flex-wrap: wrap;
+}
+
+.jf-inline-stack-nowrap {
+  flex-wrap: nowrap;
+}
+
+/* Width and centering utilities */
+.jf-inline-stack-full-width {
+  width: 100%;
+}
+
+.jf-inline-stack-centered {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Ensure proper flex behavior */
+.jf-inline-stack > *,
+.jf-inline-stack-container > * {
+  flex-shrink: 0;
+}
+
+/* Alignment utilities using bootstrap-compatible classes */
+.jf-inline-stack .jf-align-items-start,
+.jf-inline-stack-container .jf-align-items-start {
+  align-items: flex-start;
+}
+
+.jf-inline-stack.jf-align-items-center,
+.jf-inline-stack-container.jf-align-items-center {
+  align-items: center;
+}
+
+.jf-inline-stack.jf-align-items-end,
+.jf-inline-stack-container.jf-align-items-end {
+  align-items: flex-end;
+}
+
+.jf-inline-stack.jf-align-items-baseline,
+.jf-inline-stack-container.jf-align-items-baseline {
+  align-items: baseline;
+}
+
+.jf-inline-stack.jf-align-items-stretch,
+.jf-inline-stack-container.jf-align-items-stretch {
+  align-items: stretch;
+}
+
+/* Justify content utilities */
+.jf-inline-stack.jf-justify-content-start,
+.jf-inline-stack-container.jf-justify-content-start {
+  justify-content: flex-start;
+}
+
+.jf-inline-stack.jf-justify-content-center,
+.jf-inline-stack-container.jf-justify-content-center {
+  justify-content: center;
+}
+
+.jf-inline-stack.jf-justify-content-end,
+.jf-inline-stack-container.jf-justify-content-end {
+  justify-content: flex-end;
+}
+
+.jf-inline-stack.jf-justify-content-between,
+.jf-inline-stack-container.jf-justify-content-between {
+  justify-content: space-between;
+}
+
+.jf-inline-stack.jf-justify-content-around,
+.jf-inline-stack-container.jf-justify-content-around {
+  justify-content: space-around;
+}
+
+.jf-inline-stack.jf-justify-content-evenly,
+.jf-inline-stack-container.jf-justify-content-evenly {
+  justify-content: space-evenly;
+}

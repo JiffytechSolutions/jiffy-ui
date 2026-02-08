@@ -4,7 +4,7 @@ import  Breadcrumb  from "./Breadcrumb";
 export default {
   title: "components/Breadcrumb",
   component: Breadcrumb,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
   argTypes: {},
 };
 

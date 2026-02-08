@@ -1,294 +1,476 @@
-/* textfiled size */
-.jiffyui-formElement .jiffyui-formElement__textField {
-  height: 4.4rem;
-  transition: 0.2s all;
-  border: 1px solid var(--jiffyui-naturalLight-300);
-}
-
-.jiffyui-formElement__inner:hover .jiffyui-formElement__textField {
-  border-color: var(--jiffyui-Cerulean-600);
-}
-
-.jiffyui-formElement__control::placeholder {
-  color: var(--jiffyui-naturalLight-500);
-}
-
-.jiffyui-formElement__textField:focus,
-.jiffyui-formElement__textField:active,
-.jiffyui-formElement__textField:focus-within,
-.jiffyui-formElement__textField:focus-visible,
-.jiffyui-formElement__textField:visited {
-  box-shadow: 0px 0px 8px -4px var(--jiffyui-Cerulean-600) !important;
-  outline: none;
-  border: 1px solid var(--jiffyui-Cerulean-600);
-}
-
-.jiffyui-formElement--success {
-  .jiffyui-formElement__textField {
-    border-color: var(--jiffyui-Possitive-200);
-  }
-
-  &:hover .jiffyui-formElement__textField {
-    border-color: var(--jiffyui-Possitive-400);
-  }
-
-  .jiffyui-formElement__textField:focus,
-  .jiffyui-formElement__textField:active,
-  .jiffyui-formElement__textField:focus-within,
-  .jiffyui-formElement__textField:focus-visible,
-  .jiffyui-formElement__textField:visited {
-    box-shadow: 0px 0px 8px -4px var(--jiffyui-Possitive-400);
-    border-color: var(--jiffyui-Possitive-400);
-  }
-
-  .jiffyui-formElement__itemHelp>span {
-    color: var(--jiffyui-Possitive-600);
-  }
-}
-
-.jiffyui-formElement--error {
-  .jiffyui-formElement__textField {
-    border-color: var(--jiffyui-Negative-300);
-  }
-
-  &:hover .jiffyui-formElement__textField {
-    border-color: var(--jiffyui-Negative-400);
-  }
-
-  .jiffyui-formElement__textField:focus,
-  .jiffyui-formElement__textField:active,
-  .jiffyui-formElement__textField:focus-within,
-  .jiffyui-formElement__textField:focus-visible,
-  .jiffyui-formElement__textField:visited {
-    box-shadow: 0px 0px 8px -4px var(--jiffyui-Negative-400);
-    border-color: var(--jiffyui-Negative-400);
-  }
-
-  .jiffyui-formElement__itemHelp>span {
-    color: var(--jiffyui-Negative-600);
-  }
-}
-
-.jiffyui-formElement--warning {
-  .jiffyui-formElement__textField {
-    border-color: var(--jiffyui-Notice-200);
-  }
-
-  &:hover .jiffyui-formElement__textField:hover {
-    border-color: var(--jiffyui-Notice-400);
-  }
-
-  .jiffyui-formElement__textField:focus,
-  .jiffyui-formElement__textField:active,
-  .jiffyui-formElement__textField:focus-within,
-  .jiffyui-formElement__textField:focus-visible,
-  .jiffyui-formElement__textField:visited {
-    box-shadow: 0px 0px 8px -4px var(--jiffyui-Notice-400);
-    border-color: var(--jiffyui-Notice-400);
-  }
-
-  .jiffyui-formElement__itemHelp>span {
-    color: var(--jiffyui-Notice-400);
-  }
-}
-
-/* Inner Prefix and Suffix */
-.jiffyui-formElement__itemHelp>span {
-  font-size: 1.3rem;
-  line-height: 1.6rem;
-  text-align: left;
-  color: var(--jiffyui-naturalLight-600);
-}
-
-.jiffyui-formElement--hasPrefix .jiffyui-formElement__prefixIcon,
-.jiffyui-formElement--hasSuffix .jiffyui-formElement__suffixIcon {
-  position: absolute;
-  left: 1.2rem;
-  z-index: 1;
-  top: 50%;
-  transform: translateY(-50%);
-  max-width: 8rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 1.4rem;
-  line-height: 2rem;
-  color: var(--jiffyui-naturalDark-1000);
-  display: inline-flex;
-}
-
-.jiffyui-formElement--hasPrefix .jiffyui-formElement__prefixIcon {
-  padding-right: 0.8rem;
-}
-
-.jiffyui-formElement--hasSuffix .jiffyui-formElement__suffixIcon {
-  left: unset;
-  right: 1.2rem;
-  padding-left: 0.8rem;
-}
-
-.jiffyui-formElement--hasPrefix .jiffyui-formElement__prefixIcon svg,
-.jiffyui-formElement--hasSuffix .jiffyui-formElement__suffixIcon svg {
-  display: flex;
-  width: 18px;
-}
-
-.jiffyui-formElement--disabled {
-  opacity: 0.6;
-  cursor: not-allowed !important;
-}
-
-.jiffyui-formElement--disabled::after {
-  content: '';
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  cursor: not-allowed;
-  top: 0;
-  left: 0;
-  z-index: 99;
-}
-
-.jiffyui-formElement__control {
-  color: var(--jiffyui-Cloud-900);
-  font-size: 1.4rem;
-  font-style: normal;
-  text-decoration-line: none;
-  line-height: 1.5rem;
-  letter-spacing: 0rem;
-  text-align: left;
-  margin: 0px;
-  flex: 1 1 0%;
-  background-color: var(--jiffyui-white);
-  padding: 1.2rem;
-  width: 100%;
-  height: 3.8rem;
-  resize: none;
-  outline: none;
-  border: none;
-  cursor: auto;
-  border-radius: 0.4rem;
-}
-
-.jiffyui-formElement__inner {
-  background-color: var(--jiffyui-white);
-  border-radius: 0.4rem;
-  display: flex;
-  flex-direction: row;
-  width: 100%;
+/* TextField Container */
+.jf-textfield {
   position: relative;
-  border: 0rem none;
-  transition-duration: 400ms;
-}
-
-/* Helper text */
-.jiffyui-formElement__itemHelp--hasHelpIcon {
   display: flex;
-  gap: 0.8rem;
-  align-items: flex-start;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
 }
 
-.jiffyui-formElement__itemHelp--helpIcon svg {
+.jf-textfield--full-width {
+  width: 100%;
+}
+
+/* Label */
+.jf-textfield-label {
+  font-size: 1.4rem;
+  color: var(--jf-dark);
+  line-height: 1.4;
   display: block;
-  width: 1.5rem;
-  height: 1.5rem;
+  font-family: var(--jf-medium-font);
 }
 
-/* Clear */
-.jiffyui-formElement__inner .jiffyui-formElement--clear {
-  position: absolute;
-  cursor: pointer;
+.jf-textfield-required {
+  color: var(--jf-Negative-600);
+  margin-left: 0.25rem;
+}
+
+/* Input Container */
+.jf-textfield-container {
+  position: relative;
   display: flex;
-  justify-content: center;
   align-items: center;
-  border-radius: 50%;
-  top: 50%;
-  z-index: 99;
-  transform: translateY(-50%);
-  right: 1.2rem;
-  padding: 0.2rem;
+  background: white;
+  border: 1px solid var(--jf-naturalLight-300);
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  overflow: hidden;
 }
 
-.jiffyui-formElement__inner .jiffyui-formElement--clear svg {
-  color: #837373;
-  transition: 0.3s all;
+.jf-textfield-container:hover {
+  border-color: #9ca3af;
 }
 
-.jiffyui-formElement__inner .jiffyui-formElement--clear:hover svg {
-  color: var(--jiffyui-Cloud-900);
+.jf-textfield--focused .jf-textfield-container {
+  outline: 2px solid var(--jf-black);
+  outline-offset: -1px;
+  border-color: var(--jf-black);
 }
 
-.jiffyui--required:after {
-  content: "*";
-  margin-left: 0.5rem;
-  color: var(--jiffyui-Negative-700);
+/* Input Element */
+.jf-textfield-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 1.4rem;
+  color: var(--jf-black);
+  padding: 0.75rem 1rem;
+  line-height: 1.5;
+  min-width: 0;
 }
 
-/* size  */
-.jiffyui-formElement--large {
-  .jiffyui-formElement__textField {
-    height: 4.6rem;
+.jf-textfield-input::placeholder {
+  color: var(--jf-naturalLight-300);
+}
+
+.jf-textfield-input:disabled {
+  color: var(--jf-naturalLight-300);
+  cursor: not-allowed;
+}
+
+/* Size Variants */
+.jf-textfield--small .jf-textfield-input {
+  padding: 0.5rem 0.75rem;
+  font-size: 1.3rem;
+}
+
+.jf-textfield--small .jf-textfield-container {
+  min-height: 3.2rem;
+}
+
+.jf-textfield--medium .jf-textfield-input {
+  padding: 0.75rem 1rem;
+  font-size: 1.4rem;
+}
+
+.jf-textfield--medium .jf-textfield-container {
+  min-height: 4rem;
+}
+
+.jf-textfield--large .jf-textfield-input {
+  padding: 1rem 1.25rem;
+  font-size: 1.5rem;
+}
+
+.jf-textfield--large .jf-textfield-container {
+  min-height: 4.8rem;
+}
+
+/* Visual Variants */
+.jf-textfield--default .jf-textfield-container {
+  border: 1px solid var(--jf-naturalLight-300);
+  background: white;
+}
+
+.jf-textfield--outlined .jf-textfield-container {
+  border: 2px solid #e5e7eb;
+  background: white;
+}
+
+.jf-textfield--filled .jf-textfield-container {
+  border: 1px solid transparent;
+  background: #f9fafb;
+}
+
+.jf-textfield--filled:hover .jf-textfield-container {
+  background: #f3f4f6;
+}
+
+.jf-textfield--filled.jf-textfield--focused .jf-textfield-container {
+  background: white;
+  border-color: #3b82f6;
+}
+
+/* Validation States */
+.jf-textfield--error .jf-textfield-container {
+  border-color: var(--jf-Negative-600);
+}
+
+.jf-textfield--error.jf-textfield--focused .jf-textfield-container {
+  outline-color: var(--jf-Negative-600);
+  border-color: var(--jf-Negative-600);
+}
+
+.jf-textfield--warning .jf-textfield-container {
+  border-color: var(--jf-Notice-600);
+}
+
+.jf-textfield--warning.jf-textfield--focused .jf-textfield-container {
+  outline-color: var(--jf-Notice-600);
+  border-color: var(--jf-Notice-600);
+}
+
+.jf-textfield--success .jf-textfield-container {
+  border-color: var(--jf-Possitive-600);
+}
+
+.jf-textfield--success.jf-textfield--focused .jf-textfield-container {
+  outline-color: var(--jf-Possitive-600);
+  border-color: var(--jf-Possitive-600);
+}
+
+/* Disabled State */
+.jf-textfield--disabled .jf-textfield-container {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.jf-textfield--disabled .jf-textfield-container:hover {
+  border-color: #e5e7eb;
+}
+
+.jf-textfield--disabled .jf-textfield-label {
+  color: #9ca3af;
+}
+
+/* Read-only State */
+.jf-textfield--readonly .jf-textfield-container {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+}
+
+.jf-textfield--readonly .jf-textfield-input {
+  cursor: default;
+}
+
+/* Leading Element */
+.jf-textfield-leading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1rem;
+  color: #6b7280;
+  flex-shrink: 0;
+}
+
+.jf-textfield--has-leading .jf-textfield-input {
+  padding-left: 0.5rem;
+}
+
+.jf-textfield--small .jf-textfield-leading {
+  padding-left: 0.75rem;
+}
+
+.jf-textfield--large .jf-textfield-leading {
+  padding-left: 1.25rem;
+}
+
+/* Trailing Elements */
+.jf-textfield-trailing {
+  display: flex;
+  align-items: center;
+  padding-right: 1rem;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.jf-textfield--has-trailing .jf-textfield-input {
+  padding-right: 0.5rem;
+}
+
+.jf-textfield--small .jf-textfield-trailing {
+  padding-right: 0.75rem;
+}
+
+.jf-textfield--large .jf-textfield-trailing {
+  padding-right: 1.25rem;
+}
+
+/* Clear Button */
+.jf-textfield-clear {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: none;
+  color: #9ca3af;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.jf-textfield-clear:hover {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+.jf-textfield-clear:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Password Toggle */
+.jf-textfield-password-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  background: none;
+  color: #9ca3af;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.jf-textfield-password-toggle:hover {
+  color: #6b7280;
+  background: #f3f4f6;
+}
+
+.jf-textfield-password-toggle:focus-visible {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Trailing Element */
+.jf-textfield-trailing-element {
+  display: flex;
+  align-items: center;
+  color: #6b7280;
+  font-size: 1.4rem;
+  white-space: nowrap;
+}
+
+.jf-textfield--small .jf-textfield-trailing-element {
+  font-size: 1.3rem;
+}
+
+.jf-textfield--large .jf-textfield-trailing-element {
+  font-size: 1.5rem;
+}
+
+/* Help Text */
+.jf-textfield-help {
+  font-size: 1.2rem;
+  line-height: 1.4;
+  margin-top: 0.25rem;
+}
+
+.jf-textfield-help--default {
+  color: var(--jf-naturalDark-900);
+  font-family: var(--jf-regular-font);
+}
+
+.jf-textfield-help--error {
+  color: var(--jf-Negative-600);
+}
+
+.jf-textfield-help--warning {
+  color: var(--jf-Notice-600);
+}
+
+.jf-textfield-help--success {
+  color: var(--jf-Possitive-600);
+}
+
+/* Icon Sizing */
+.jf-textfield-leading svg,
+.jf-textfield-trailing svg {
+  width: 1.6rem;
+  height: 1.6rem;
+  display: block;
+}
+
+.jf-textfield--small .jf-textfield-leading svg,
+.jf-textfield--small .jf-textfield-trailing svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.jf-textfield--large .jf-textfield-leading svg,
+.jf-textfield--large .jf-textfield-trailing svg {
+  width: 1.8rem;
+  height: 1.8rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .jf-textfield-input {
+    font-size: 1.6rem; /* Prevent zoom on iOS */
+  }
+  
+  .jf-textfield--small .jf-textfield-input {
+    font-size: 1.4rem;
+  }
+  
+  .jf-textfield--medium .jf-textfield-input {
+    font-size: 1.6rem;
+  }
+  
+  .jf-textfield--large .jf-textfield-input {
+    font-size: 1.7rem;
+  }
+  
+  .jf-textfield-container {
+    min-height: 4.4rem;
+  }
+  
+  .jf-textfield--small .jf-textfield-container {
+    min-height: 3.6rem;
+  }
+  
+  .jf-textfield--large .jf-textfield-container {
+    min-height: 5.2rem;
   }
 }
 
-.jiffyui-formElement--medium {
-
-  .jiffyui-formElement__prefixIcon,
-  .jiffyui-formElement__suffixIcon {
-    font-size: 1.2rem;
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .jf-textfield-container {
+    border-width: 2px;
   }
-
-  .jiffyui-formElement__prefixIcon svg,
-  .jiffyui-formElement__suffixIcon svg {
-    width: 1.6rem;
-    height: 1.6rem;
+  
+  .jf-textfield--focused .jf-textfield-container {
+    outline-width: 3px;
   }
-
-  .jiffyui-formElement__textField {
-    height: 3.8rem;
-    padding-top: 0.8rem;
-    padding-bottom: 0.8rem;
+  
+  .jf-textfield-clear,
+  .jf-textfield-password-toggle {
+    border: 1px solid #6b7280;
   }
 }
 
-.jiffyui-formElement--small {
-
-  .jiffyui-formElement__prefixIcon,
-  .jiffyui-formElement__suffixIcon {
-    font-size: 1.2rem;
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .jf-textfield-label {
+    color: #f3f4f6;
   }
-
-  .jiffyui-formElement__prefixIcon svg,
-  .jiffyui-formElement__suffixIcon svg {
-    width: 1.5rem;
-    height: 1.5rem;
+  
+  .jf-textfield-container {
+    background: #1f2937;
+    border-color: #4b5563;
   }
-
-  .jiffyui-formElement__textField {
-    height: 3.4rem;
-    padding-top: 0.6rem;
-    padding-bottom: 0.6rem;
-    font-size: 1.3rem;
+  
+  .jf-textfield-container:hover {
+    border-color: #6b7280;
+  }
+  
+  .jf-textfield-input {
+    color: #f3f4f6;
+  }
+  
+  .jf-textfield-input::placeholder {
+    color: #9ca3af;
+  }
+  
+  .jf-textfield--filled .jf-textfield-container {
+    background: #374151;
+  }
+  
+  .jf-textfield--filled:hover .jf-textfield-container {
+    background: #4b5563;
+  }
+  
+  .jf-textfield--disabled .jf-textfield-container {
+    background: #374151;
+    border-color: #4b5563;
+  }
+  
+  .jf-textfield-leading,
+  .jf-textfield-trailing-element {
+    color: #9ca3af;
+  }
+  
+  .jf-textfield-clear,
+  .jf-textfield-password-toggle {
+    color: #9ca3af;
+  }
+  
+  .jf-textfield-clear:hover,
+  .jf-textfield-password-toggle:hover {
+    color: #d1d5db;
+    background: #374151;
   }
 }
 
-.jiffyui-formElement--xSmall {
-
-  .jiffyui-formElement__prefixIcon,
-  .jiffyui-formElement__suffixIcon {
-    font-size: 1.2rem;
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .jf-textfield-container,
+  .jf-textfield-clear,
+  .jf-textfield-password-toggle {
+    transition: none;
   }
+}
 
-  .jiffyui-formElement__prefixIcon svg,
-  .jiffyui-formElement__suffixIcon svg {
-    width: 1.4rem;
-    height: 1.4rem;
-  }
+/* Focus-visible polyfill support */
+.jf-textfield-clear:focus:not(:focus-visible),
+.jf-textfield-password-toggle:focus:not(:focus-visible) {
+  outline: none;
+}
 
-  .jiffyui-formElement__textField {
-    height: 30px;
-    padding-top: 0.4rem;
-    padding-bottom: 0.4rem;
-    font-size: 1.2rem;
-  }
+/* Number input arrows removal */
+.jf-textfield-input[type="number"]::-webkit-outer-spin-button,
+.jf-textfield-input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.jf-textfield-input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Search input styling */
+.jf-textfield-input[type="search"]::-webkit-search-decoration,
+.jf-textfield-input[type="search"]::-webkit-search-cancel-button,
+.jf-textfield-input[type="search"]::-webkit-search-results-button,
+.jf-textfield-input[type="search"]::-webkit-search-results-decoration {
+  -webkit-appearance: none;
+}
+
+/* Password field security */
+.jf-textfield-input[type="password"] {
+  font-family: text-security-disc, -webkit-text-security-disc, monospace;
+}
+
+.jf-textfield-input[type="password"]::-ms-reveal {
+  display: none;
 }

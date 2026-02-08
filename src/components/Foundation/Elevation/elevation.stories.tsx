@@ -1,6 +1,6 @@
 import Card from "../../Card/Card";
 import TextStyle from "../../TextStyle/TextStyle";
-import HorizontalFlex from "../../HorizontalFlex/HorizontalFlex";
+import FlexLayout from "../../FlexLayout/FlexLayout";
 import { Elevations } from "./Elevation";
 import "./elevation.css";
 import React from "react";
@@ -24,7 +24,7 @@ const Template = () => {
   // const useToasts = useToast();
 
   return (
-    <HorizontalFlex gap={36}>
+    <FlexLayout gap={3}>
       {Object.keys(Elevations)?.map((elevations: any, index: number) => {
         return Elevations[elevations]?.map((elevations: any, index: number) => {
           return (
@@ -33,8 +33,8 @@ const Template = () => {
               className={`story-color-aria`}
               style={{ boxShadow: elevations.value }}
             >
-              <Card key={index} type="Plain">
-                <TextStyle as="h3" textColor="Dark" fontWeight="Medium">
+              <Card key={index} variant="outlined">
+                <TextStyle as="h3" textColor="Dark" fontWeight="medium">
                   {elevations.name}
                 </TextStyle>
               </Card>
@@ -42,7 +42,7 @@ const Template = () => {
           );
         });
       })}
-    </HorizontalFlex>
+    </FlexLayout>
   );
 };
 export const Primary: any = Template.bind({});

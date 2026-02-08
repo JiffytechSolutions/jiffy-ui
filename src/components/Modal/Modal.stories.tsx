@@ -1,14 +1,14 @@
 import { useState } from "react";
 import Button from "../Button/Button";
 import Modal from "./Modal";
-import HorizontalFlex from "../HorizontalFlex/HorizontalFlex";
+import FlexLayout from "../FlexLayout/FlexLayout";
 import TextStyle from "../TextStyle/TextStyle";
 import React from "react";
 
 export default {
-  title: "components(Done)/Modal",
+  title: "components/Modal",
   component: Modal,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
   argTypes: {
     isOpen: {
       description: "Select card type",
@@ -55,14 +55,14 @@ const Template = ({ ...rest }) => {
       <Modal
         isOpen={isOpen} onDismiss={() => setIsOpen(false)} title={'Modal title'}
         // footer={
-        //   <HorizontalFlex gap={12} align={{
+        //   <FlexLayout gap={12} align={{
         //     sm: "end",
         //     md: "end",
         //     lg: "end",
         //   }}>
         //     <Button color="Primary" children="Proceed" />
         //     <Button color="Primary" variant="Secondry" children="cancel" />
-        //   </HorizontalFlex>
+        //   </FlexLayout>
         // }
         primaryAction={{
           children: "Ok",

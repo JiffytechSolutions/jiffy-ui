@@ -1,7 +1,7 @@
 import Card from "../../Card/Card";
 import TextStyle from "../../TextStyle/TextStyle";
 import { BorderWidth } from "./BorderWidth";
-import VerticalFlex from "../../VerticalFlex/VerticalFlex";
+import FlexLayout from "../../FlexLayout/FlexLayout";
 import "./borderwidth.css";
 import React from "react";
 
@@ -28,13 +28,13 @@ export default {
 
 const Template = () => {
     return (
-        <VerticalFlex gap={36}>
+        <FlexLayout gap={4}>
             {BorderWidth?.map((borderWidth: any, index: number) => {
                 return (
                     <div key={index} className={`story-border`} style={{ borderWidth: borderWidth.value }}>
-                        <Card key={index} type="Plain">
+                        <Card key={index} variant="outlined">
 
-                            <TextStyle as="h3" textColor="Dark" fontWeight="Medium" type="MdHeading">
+                            <TextStyle as="h3" textColor="Dark" fontWeight="medium" type="MdHeading">
                                 {borderWidth.name}
                             </TextStyle>
                             <TextStyle as="p" type="MdBody" textColor="Secondary">
@@ -44,7 +44,7 @@ const Template = () => {
                     </div>
                 );
             })}
-        </VerticalFlex>
+        </FlexLayout>
     );
 };
 export const Primary: any = Template.bind({});

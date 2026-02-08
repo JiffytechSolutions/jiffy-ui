@@ -25,29 +25,29 @@ const ProgressBar = forwardRef(({
     const checkSize = (): string => {
         switch (size) {
             case "Small":
-                return "progress--small";
+                return "jf-progress--small";
             case "Medium":
-                return "progress--medium";
+                return "jf-progress--medium";
             case "Large":
-                return "progress--large";
+                return "jf-progress--large";
             default:
-                return "progress--medium";
+                return "jf-progress--medium";
         }
     };
     const checkVarients = (): string => {
         switch (variant) {
             case "Positive":
-                return "progress--possitive";
+                return "jf-progress--possitive";
             case "Negative":
-                return "progress--negative";
+                return "jf-progress--negative";
             case "Notice":
-                return "progress--notice";
+                return "jf-progress--notice";
             case "Primary":
-                return "progress--primary";
+                return "jf-progress--primary";
             case "Neutral":
-                return "progress--neutral"
+                return "jf-progress--neutral"
             default:
-                return "progress--default";
+                return "jf-progress--default";
         }
     };
 
@@ -57,13 +57,13 @@ const ProgressBar = forwardRef(({
     return (
         <div
             ref={ref}
-            className={`progress ${progressVarent} ${progressSize}`}
+            className={`jf-progress ${progressVarent} ${progressSize}`}
             progress-data={outOf}
         >
-            <div className="progress-inner" style={{ 'width': valuePercentage + '%' }}>
-                <label className="progress-label">{label}</label>
+            <div className="jf-progress-inner" style={{ 'width': valuePercentage + '%' }}>
+                <label className="jf-progress-label">{label}</label>
             </div>
-            <div className="progress-val">{valuePercentage + '%'}</div>
+            <div className="jf-progress-val">{valuePercentage + '%'}</div>
 
         </div>
     );

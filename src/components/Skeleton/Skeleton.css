@@ -118,6 +118,6 @@
 .SkeletonLine .SkeletonLine-item:last-child {
     width: 50%;
 }
-.SkeletonLine .SkeletonLine-item:first-child {
+.SkeletonLine .SkeletonLine-item:first-of-child {
     width: 100%;
 }

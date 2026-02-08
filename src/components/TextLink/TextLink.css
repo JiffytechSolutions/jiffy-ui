@@ -1,79 +1,79 @@
-.pixel-textLink {
+.jf-textLink {
     display: inline-block;
     cursor: pointer;
 }
 
-.pixel-textLink__label {
+.jf-textLink__label {
     font-size: 1.4rem;
     transition: 0.3s all;
-    color: var(--jiffyui-link-color);
+    color: var(--jf-link-color);
     display: flex;
     align-items: center;
     gap: 0.4rem
 }
 
-.pixel-textLink__label svg {
+.jf-textLink__label svg {
     min-width: 16px;
     display: inline-block;
     vertical-align: baseline;
     align-items: center;
 }
 
-.pixel-textLink__label:hover {
-    color: var(--jiffyui-link-hover-color);
+.jf-textLink__label:hover {
+    color: var(--jf-link-hover-color);
     text-decoration: underline;
 }
 
-.pixel-textLink__label:active {
-    color: var(--jiffyui-link-hover-color) !important;
+.jf-textLink__label:active {
+    color: var(--jf-link-hover-color) !important;
     text-decoration: underline;
 }
 
 /* Danger TextLink */
-.pixel-textLink--negative .pixel-textLink__label {
-    color: var(--jiffyui--negative-color);
+.jf-textLink--negative .jf-textLink__label {
+    color: var(--jf--negative-color);
     text-decoration: underline;
 }
 
-.pixel-textLink--negative .pixel-textLink__label:hover {
-    color: var(--jiffyui--negative-hover-color);
+.jf-textLink--negative .jf-textLink__label:hover {
+    color: var(--jf--negative-hover-color);
     text-decoration: unset;
 }
 
-.pixel-textLink--negative .pixel-textLink__label:active {
-    color: var(--jiffyui--negative-hover-color) !important;
+.jf-textLink--negative .jf-textLink__label:active {
+    color: var(--jf--negative-hover-color) !important;
     text-decoration: unset;
 }
 
-.pixel--textLink--disabled.pixel-textLink--negative .pixel-textLink__label,
-.pixel--textLink--disabled.pixel-textLink--negative .pixel-textLink__label:hover,
-.pixel--textLink--disabled.pixel-textLink--negative .pixel-textLink__label:active {
-    color: var(--jiffyui--negative-hover-color) !important;
+.jf--textLink--disabled.jf-textLink--negative .jf-textLink__label,
+.jf--textLink--disabled.jf-textLink--negative .jf-textLink__label:hover,
+.jf--textLink--disabled.jf-textLink--negative .jf-textLink__label:active {
+    color: var(--jf--negative-hover-color) !important;
     text-decoration: unset;
     opacity: 0.4;
 }
 
 /* Danger TextLink End */
 /* Warning TextLink */
-.pixel-textLink--waiting .pixel-textLink__label {
-    color: var(--jiffyui--warning-color);
+.jf-textLink--waiting .jf-textLink__label {
+    color: var(--jf--warning-color);
     text-decoration: underline;
 }
 
-.pixel-textLink--waiting .pixel-textLink__label:hover {
-    color: var(--jiffyui--warning-hover-color);
+.jf-textLink--waiting .jf-textLink__label:hover {
+    color: var(--jf--warning-hover-color);
     text-decoration: unset;
 }
 
-.pixel-textLink--waiting .pixel-textLink__label:active {
-    color: var(--jiffyui--warning-hover-color) !important;
+.jf-textLink--waiting .jf-textLink__label:active {
+    color: var(--jf--warning-hover-color) !important;
     text-decoration: unset;
 }
 
-.pixel--textLink--disabled.pixel-textLink--waiting .pixel-textLink__label,
-.pixel--textLink--disabled.pixel-textLink--waiting .pixel-textLink__label:hover,
-.pixel--textLink--disabled.pixel-textLink--waiting .pixel-textLink__label:active {
-    color: var(--jiffyui--warning-hover-color) !important;
+.jf--textLink--disabled.jf-textLink--waiting .jf-textLink__label,
+.jf--textLink--disabled.jf-textLink--waiting .jf-textLink__label:hover,
+.jf--textLink--disabled.jf-textLink--waiting .jf-textLink__label:active {
+    color: var(--jf--warning-hover-color) !important;
     text-decoration: unset;
 }
 
@@ -84,42 +84,42 @@
 
 /* Successs */
 /* Warning TextLink */
-.pixel-textLink--possitive .pixel-textLink__label {
-    color: var(--jiffyui--success-color);
+.jf-textLink--possitive .jf-textLink__label {
+    color: var(--jf--success-color);
     text-decoration: underline;
 }
 
-.pixel-textLink--possitive .pixel-textLink__label:hover {
-    color: var(--jiffyui--success-hover-color);
+.jf-textLink--possitive .jf-textLink__label:hover {
+    color: var(--jf--success-hover-color);
     text-decoration: unset;
 }
 
-.pixel-textLink--possitive .pixel-textLink__label:active {
-    color: var(--jiffyui--success-hover-color) !important;
+.jf-textLink--possitive .jf-textLink__label:active {
+    color: var(--jf--success-hover-color) !important;
     text-decoration: unset;
 }
 
-.pixel--textLink--disabled.pixel-textLink--possitive .pixel-textLink__label,
-.pixel--textLink--disabled.pixel-textLink--possitive .pixel-textLink__label:hover,
-.pixel--textLink--disabled.pixel-textLink--possitive .pixel-textLink__label:active {
-    color: var(--jiffyui--success-hover-color) !important;
+.jf--textLink--disabled.jf-textLink--possitive .jf-textLink__label,
+.jf--textLink--disabled.jf-textLink--possitive .jf-textLink__label:hover,
+.jf--textLink--disabled.jf-textLink--possitive .jf-textLink__label:active {
+    color: var(--jf--success-hover-color) !important;
     text-decoration: unset;
     opacity: 0.4;
 }
 
-.pixel--textLink--disabled .pixel-textLink__label,
-.pixel--textLink--disabled .pixel-textLink__label:hover,
-.pixel--textLink--disabled .pixel-textLink__label:active {
+.jf--textLink--disabled .jf-textLink__label,
+.jf--textLink--disabled .jf-textLink__label:hover,
+.jf--textLink--disabled .jf-textLink__label:active {
     text-decoration: none;
-    color: var(--jiffyui--success-hover-color) !important;
+    color: var(--jf--success-hover-color) !important;
     opacity: 0.4;
 }
 
-.pixel-textLink.pixel--textLink--disabled {
+.jf-textLink.jf--textLink--disabled {
     position: relative
 }
 
-.pixel-textLink.pixel--textLink--disabled::after {
+.jf-textLink.jf--textLink--disabled::after {
     content: '';
     width: 100%;
     height: 100%;

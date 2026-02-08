@@ -1,34 +1,25 @@
+
 @font-face {
-  font-family: "roboto-light";
-  src: url("./assets/fonts/roboto-light.woff") format("woff"),
-    url("./assets/fonts/roboto-light.woff") format("woff");
+  font-family: "inter-regular";
+  src: url("./assets/fonts/Inter_Regular.woff2") format("woff2"),
+    url("./assets/fonts/Inter_Regular.woff") format("woff");
+  font-style: normal;
+  font-display: swap;
+  font-weight: normal;
+}
+@font-face {
+  font-family: "inter-semiBold";
+  src: url("./assets/fonts/Inter_SemiBold.woff2") format("woff2"),
+    url("./assets/fonts/Inter_SemiBold.woff") format("woff");
   font-style: normal;
   font-display: swap;
   font-weight: normal;
 }
 
 @font-face {
-  font-family: "roboto-regular";
-  src: url("./assets/fonts/roboto-regular.woff2") format("woff2"),
-    url("./assets/fonts/roboto-regular.woff") format("woff");
-  font-style: normal;
-  font-display: swap;
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: "roboto-Medium";
-  src: url("./assets/fonts/roboto-medium.woff2") format("woff2"),
-    url("./assets/fonts/roboto-medium.woff") format("woff");
-  font-style: normal;
-  font-display: swap;
-  font-weight: normal;
-}
-
-@font-face {
-  font-family: "roboto-bold";
-  src: url("./assets/fonts/roboto-bold.woff2") format("woff2"),
-    url("./assets/fonts/roboto-bold.woff") format("woff");
+  font-family: "inter-bold";
+  src: url("./assets/fonts/Inter_Bold.woff2") format("woff2"),
+    url("./assets/fonts/Inter_Bold.woff") format("woff");
   font-style: normal;
   font-display: swap;
   font-weight: normal;
@@ -36,169 +27,213 @@
 
 :root {
   font-size: 62.5%;
-  --jiffyui-primary-color: #305EFF;
-  --jiffyui-secondary-color: #5c6f7c;
-  --jiffyui-tertiary-color: #6C849D1F;
-  --jiffyui-tertiary-hover-color: #6C849D2E;
-  --jiffyui-default-body-color: #3f5360;
-  --jiffyui--success-color: #029564;
-  --jiffyui--success-hover-color: #03573b;
-  --jiffyui--negative-color: #D92D20;
-  --jiffyui--negative-hover-color: #97160c;
-  --jiffyui--warning-hover-color: #a74c0b;
-  --jiffyui--warning-color: #E9690C;
-  --jiffyui-link-color: #2950DA;
-  --jiffyui-link-hover-color: #305EFF;
-  --jiffyui-possitive-color: #00A251;
-  --jiffyui-primary-hover-color: #1d1b1b;
+  --jf-primary-color: #305EFF;
+  --jf-secondary-color: #5c6f7c;
+  --jf-tertiary-color: #6C849D1F;
+  --jf-tertiary-hover-color: #6C849D2E;
+  --jf-default-body-color: #3f5360;
+  --jf--success-color: #029564;
+  --jf--success-hover-color: #03573b;
+  --jf--negative-color: #D92D20;
+  --jf--negative-hover-color: #97160c;
+  --jf--warning-hover-color: #a74c0b;
+  --jf--warning-color: #E9690C;
+  --jf-link-color: #2950DA;
+  --jf-link-hover-color: #305EFF;
+  --jf-possitive-color: #00A251;
+  --jf-primary-hover-color: #1d1b1b;
 
-  --jiffyui-Cerulean-050: #F5F8FF;
-  --jiffyui-Cerulean-100: #D8E4FD;
-  --jiffyui-Cerulean-200: #B4CDFD;
-  --jiffyui-Cerulean-300: #75A3FF;
-  --jiffyui-Cerulean-400: #4D7FFF;
-  --jiffyui-Cerulean-500: #305EFF;
-  --jiffyui-Cerulean-600: #2950DA;
-  --jiffyui-Cerulean-700: #2243B6;
-  --jiffyui-Cerulean-800: #1B3591;
-  --jiffyui-Cerulean-900: #14286D;
-  --jiffyui-Cerulean-1000: #0D1A48;
+  --jf-Cerulean-050: #F5F8FF;
+  --jf-Cerulean-100: #D8E4FD;
+  --jf-Cerulean-200: #B4CDFD;
+  --jf-Cerulean-300: #75A3FF;
+  --jf-Cerulean-400: #4D7FFF;
+  --jf-Cerulean-500: #305EFF;
+  --jf-Cerulean-600: #2950DA;
+  --jf-Cerulean-700: #2243B6;
+  --jf-Cerulean-800: #1B3591;
+  --jf-Cerulean-900: #14286D;
+  --jf-Cerulean-1000: #0D1A48;
 
-  --jiffyui-Possitive-050: #EBFAF3;
-  --jiffyui-Possitive-100: #DAF5E8;
-  --jiffyui-Possitive-200: #B6ECD1;
-  --jiffyui-Possitive-300: #91E3BA;
-  --jiffyui-Possitive-400: #48D08C;
-  --jiffyui-Possitive-500: #00BE5F;
-  --jiffyui-Possitive-600: #00A251;
-  --jiffyui-Possitive-700: #008743;
-  --jiffyui-Possitive-800: #006C36;
-  --jiffyui-Possitive-900: #005128;
-  --jiffyui-Possitive-1000: #00361B;
+  --jf-Possitive-050: #EBFAF3;
+  --jf-Possitive-100: #DAF5E8;
+  --jf-Possitive-200: #B6ECD1;
+  --jf-Possitive-300: #91E3BA;
+  --jf-Possitive-400: #48D08C;
+  --jf-Possitive-500: #00BE5F;
+  --jf-Possitive-600: #00A251;
+  --jf-Possitive-700: #008743;
+  --jf-Possitive-800: #006C36;
+  --jf-Possitive-900: #005128;
+  --jf-Possitive-1000: #00361B;
 
-  --jiffyui-Negative-050: #FFF5F5;
-  --jiffyui-Negative-100: #FEE4E2;
-  --jiffyui-Negative-200: #FEC6C3;
-  --jiffyui-Negative-300: #FD9D96;
-  --jiffyui-Negative-400: #F96C62;
-  --jiffyui-Negative-500: #F04438;
-  --jiffyui-Negative-600: #D92D20;
-  --jiffyui-Negative-700: #B42318;
-  --jiffyui-Negative-800: #9A0E0E;
-  --jiffyui-Negative-900: #880C0C;
-  --jiffyui-Negative-1000: #750A0A;
+  --jf-Negative-050: #FFF5F5;
+  --jf-Negative-100: #FEE4E2;
+  --jf-Negative-200: #FEC6C3;
+  --jf-Negative-300: #FD9D96;
+  --jf-Negative-400: #F96C62;
+  --jf-Negative-500: #F04438;
+  --jf-Negative-600: #D92D20;
+  --jf-Negative-700: #B42318;
+  --jf-Negative-800: #9A0E0E;
+  --jf-Negative-900: #880C0C;
+  --jf-Negative-1000: #750A0A;
 
-  --jiffyui-Notice-050: #FFF3EB;
-  --jiffyui-Notice-100: #FFE1CC;
-  --jiffyui-Notice-200: #FFC499;
-  --jiffyui-Notice-300: #FFAC70;
-  --jiffyui-Notice-400: #FF9040;
-  --jiffyui-Notice-500: #FF7A1A;
-  --jiffyui-Notice-600: #E9690C;
-  --jiffyui-Notice-700: #C65C10;
-  --jiffyui-Notice-800: #A24D10;
-  --jiffyui-Notice-900: #813E0E;
-  --jiffyui-Notice-1000: #5D2C09;
+  --jf-Notice-050: #FFF3EB;
+  --jf-Notice-100: #FFE1CC;
+  --jf-Notice-200: #FFC499;
+  --jf-Notice-300: #FFAC70;
+  --jf-Notice-400: #FF9040;
+  --jf-Notice-500: #FF7A1A;
+  --jf-Notice-600: #E9690C;
+  --jf-Notice-700: #C65C10;
+  --jf-Notice-800: #A24D10;
+  --jf-Notice-900: #813E0E;
+  --jf-Notice-1000: #5D2C09;
 
-  --jiffyui-Sapphire-050: #E7F6FE;
-  --jiffyui-Sapphire-100: #CFEDFC;
-  --jiffyui-Sapphire-200: #A8DFFA;
-  --jiffyui-Sapphire-300: #79CEF8;
-  --jiffyui-Sapphire-400: #57C1F6;
-  --jiffyui-Sapphire-500: #15B0F3;
-  --jiffyui-Sapphire-600: #1291D0;
-  --jiffyui-Sapphire-700: #0F78AD;
-  --jiffyui-Sapphire-800: #0C608A;
-  --jiffyui-Sapphire-900: #094868;
-  --jiffyui-Sapphire-1000: #063145;
+  --jf-Sapphire-050: #E7F6FE;
+  --jf-Sapphire-100: #CFEDFC;
+  --jf-Sapphire-200: #A8DFFA;
+  --jf-Sapphire-300: #79CEF8;
+  --jf-Sapphire-400: #57C1F6;
+  --jf-Sapphire-500: #15B0F3;
+  --jf-Sapphire-600: #1291D0;
+  --jf-Sapphire-700: #0F78AD;
+  --jf-Sapphire-800: #0C608A;
+  --jf-Sapphire-900: #094868;
+  --jf-Sapphire-1000: #063145;
 
-  --jiffyui-Cloud-050: #EDF4F7;
-  --jiffyui-Cloud-100: #E6EFF4;
-  --jiffyui-Cloud-200: #CBDDE6;
-  --jiffyui-Cloud-300: #97BBCD;
-  --jiffyui-Cloud-400: #6091A9;
-  --jiffyui-Cloud-500: #387594;
-  --jiffyui-Cloud-600: #1F5C7A;
-  --jiffyui-Cloud-700: #1D4B63;
-  --jiffyui-Cloud-800: #143D52;
-  --jiffyui-Cloud-900: #032A3E;
-  --jiffyui-Cloud-1000: #021C29;
+  --jf-Cloud-050: #EDF4F7;
+  --jf-Cloud-100: #E6EFF4;
+  --jf-Cloud-200: #CBDDE6;
+  --jf-Cloud-300: #97BBCD;
+  --jf-Cloud-400: #6091A9;
+  --jf-Cloud-500: #387594;
+  --jf-Cloud-600: #1F5C7A;
+  --jf-Cloud-700: #1D4B63;
+  --jf-Cloud-800: #143D52;
+  --jf-Cloud-900: #032A3E;
+  --jf-Cloud-1000: #021C29;
 
-  --jiffyui-Sea-050: #EDF7F7;
-  --jiffyui-Sea-100: #E2F3F3;
-  --jiffyui-Sea-200: #C2E0E0;
-  --jiffyui-Sea-300: #97CDCD;
-  --jiffyui-Sea-400: #60A9A9;
-  --jiffyui-Sea-500: #389494;
-  --jiffyui-Sea-600: #1F7A7A;
-  --jiffyui-Sea-700: #1D6363;
-  --jiffyui-Sea-800: #145252;
-  --jiffyui-Sea-900: #033E3E;
-  --jiffyui-Sea-1000: #022929;
+  --jf-Sea-050: #EDF7F7;
+  --jf-Sea-100: #E2F3F3;
+  --jf-Sea-200: #C2E0E0;
+  --jf-Sea-300: #97CDCD;
+  --jf-Sea-400: #60A9A9;
+  --jf-Sea-500: #389494;
+  --jf-Sea-600: #1F7A7A;
+  --jf-Sea-700: #1D6363;
+  --jf-Sea-800: #145252;
+  --jf-Sea-900: #033E3E;
+  --jf-Sea-1000: #022929;
 
-  --jiffyui-Forest-050: #EBFAF3;
-  --jiffyui-Forest-100: #DAF5E8;
-  --jiffyui-Forest-200: #B6ECD1;
-  --jiffyui-Forest-300: #91E3BA;
-  --jiffyui-Forest-400: #48D08C;
-  --jiffyui-Forest-500: #00BE6F;
-  --jiffyui-Forest-600: #009E5C;
-  --jiffyui-Forest-700: #00874F;
-  --jiffyui-Forest-800: #006C3F;
-  --jiffyui-Forest-900: #00512F;
-  --jiffyui-Forest-1000: #003821;
+  --jf-Forest-050: #EBFAF3;
+  --jf-Forest-100: #DAF5E8;
+  --jf-Forest-200: #B6ECD1;
+  --jf-Forest-300: #91E3BA;
+  --jf-Forest-400: #48D08C;
+  --jf-Forest-500: #00BE6F;
+  --jf-Forest-600: #009E5C;
+  --jf-Forest-700: #00874F;
+  --jf-Forest-800: #006C3F;
+  --jf-Forest-900: #00512F;
+  --jf-Forest-1000: #003821;
 
-  --jiffyui-naturalLight-000: #FFFFFF;
-  --jiffyui-naturalLight-050: #F8FAFC;
-  --jiffyui-naturalLight-100: #F1F5FA;
-  --jiffyui-naturalLight-200: #E3EAF3;
-  --jiffyui-naturalLight-300: #CBD5E2;
-  --jiffyui-naturalLight-400: #B1C1D2;
-  --jiffyui-naturalLight-500: #90A5BB;
-  --jiffyui-naturalLight-600: #768EA7;
-  --jiffyui-naturalLight-700: #6C849D;
+  --jf-naturalLight-000: #FFFFFF;
+  --jf-naturalLight-050: #F8FAFC;
+  --jf-naturalLight-100: #F1F5FA;
+  --jf-naturalLight-200: #E3EAF3;
+  --jf-naturalLight-300: #CBD5E2;
+  --jf-naturalLight-400: #B1C1D2;
+  --jf-naturalLight-500: #90A5BB;
+  --jf-naturalLight-600: #768EA7;
+  --jf-naturalLight-700: #6C849D;
 
-  --jiffyui-naturalDark-800: #58728D;
-  --jiffyui-naturalDark-900: #40566D;
-  --jiffyui-naturalDark-1000: #2F4256;
-  --jiffyui-naturalDark-1100: #243547;
-  --jiffyui-naturalDark-1200: #192839;
-  --jiffyui-naturalDark-1300: #0C1927;
+  --jf-naturalDark-800: #58728D;
+  --jf-naturalDark-900: #737373;
+  --jf-naturalDark-1000: #2F4256;
+  --jf-naturalDark-1100: #243547;
+  --jf-naturalDark-1200: #192839;
+  --jf-naturalDark-1300: #0C1927;
 
-  --jiffyui-black: #000000;
-  --jiffyui-white: #ffffff;
+  --jf-black: #000000;
+  --jf-white: #ffffff;
 
-  --jiffyui-low-elevation: 0rem 0.2rem 0.5rem 0rem rgba(25, 40, 57, 0.1);
-  --jiffyui-mid-elevation: 0rem 0.8rem 2.4rem 0rem rgba(25, 40, 57, 0.12);
-  --jiffyui-high-elevation: 0rem 1.6rem 4.8rem -0.4rem rgba(25, 40, 57, 0.18);
+  --jf-low-elevation: 0rem 0.2rem 0.5rem 0rem rgba(25, 40, 57, 0.1);
+  --jf-mid-elevation: 0rem 0.8rem 2.4rem 0rem rgba(25, 40, 57, 0.12);
+  --jf-high-elevation: 0rem 1.6rem 4.8rem -0.4rem rgba(25, 40, 57, 0.18);
 
-  --jiffyui-borderRadius-none: 0rem;
-  --jiffyui-borderRadius-xsmall: 0.1rem;
-  --jiffyui-borderRadius-small: 0.2rem;
-  --jiffyui-borderRadius-medium: 0.4rem;
-  --jiffyui-borderRadius-large: 0.8rem;
-  --jiffyui-borderRadius-xlarge: 1.2rem;
-  --jiffyui-borderRadius-2xlarge: 1.6rem;
-  --jiffyui-borderRadius-max: 100rem;
+  --jf-borderRadius-none: 0rem;
+  --jf-borderRadius-xsmall: 0.1rem;
+  --jf-borderRadius-small: 0.2rem;
+  --jf-borderRadius-medium: 0.4rem;
+  --jf-borderRadius-large: 0.8rem;
+  --jf-borderRadius-xlarge: 1.2rem;
+  --jf-borderRadius-2xlarge: 1.6rem;
+  --jf-borderRadius-max: 100rem;
 
-  --jiffyui-borderWidth-none: 0rem;
-  --jiffyui-borderWidth-thinner: 0.05rem;
-  --jiffyui-borderWidth-thin: 0.1rem;
-  --jiffyui-borderWidth-thick: .15rem;
-  --jiffyui-borderWidth-thicker: 0.2rem;
+  --jf-borderWidth-none: 0rem;
+  --jf-borderWidth-thinner: 0.05rem;
+  --jf-borderWidth-thin: 0.1rem;
+  --jf-borderWidth-thick: .15rem;
+  --jf-borderWidth-thicker: 0.2rem;
 
-  --jiffyui-light-font: 'roboto-light';
-  --jiffyui-regular-font: 'roboto-regular';
-  --jiffyui-medium-font: 'roboto-Medium';
-  --jiffyui-bold-font: 'roboto-bold';
+  --jf-light-font: 'inter-light';
+  --jf-regular-font: 'inter-regular';
+  --jf-medium-font: 'inter-semiBold';
+  --jf-bold-font: 'inter-bold';
+
+  --jf-fs-12: 1.2rem;
+  --jf-fs-13: 1.3rem;
+  --jf-fs-14: 1.4rem;
+  --jf-fs-15: 1.5rem;
+  --jf-fs-16: 1.6rem;
+  --jf-fs-17: 1.7rem;
+  --jf-fs-18: 1.8rem;
+  --jf-fs-19: 1.9rem;
+  --jf-fs-20: 2rem;
+  --jf-fs-21: 2.1rem;
+  --jf-fs-22: 2.2rem;
+  --jf-fs-23: 2.3rem;
+  --jf-fs-24: 2.4rem;
+  --jf-fs-25: 2.5rem;
+  --jf-fs-26: 2.6rem;
+  --jf-fs-27: 2.7rem;
+  --jf-fs-28: 2.8rem;
+  --jf-fs-29: 2.9rem;
+  --jf-fs-30: 3rem;
+  --jf-fs-31: 3.1rem;
+  --jf-fs-32: 3.2rem;
+  --jf-fs-33: 3.3rem;
+  --jf-fs-34: 3.4rem;
+  --jf-fs-35: 3.5rem;
+  --jf-fs-36: 3.6rem;
+  --jf-fs-37: 3.7rem;
+  --jf-fs-38: 3.8rem;
+  --jf-fs-39: 3.9rem;
+  --jf-fs-40: 4rem;
+
+  /* Line height */
+  --jf-lh-10: 1rem;
+  --jf-lh-12: 1.2rem;
+  --jf-lh-14: 1.4rem;
+  --jf-lh-16: 1.6rem;
+  --jf-lh-18: 1.8rem;
+  --jf-lh-20: 2rem;
+  --jf-lh-22: 2.2rem;
+  --jf-lh-24: 2.4rem;
+  --jf-lh-28: 2.8rem;
+  --jf-lh-32: 3.2rem;
+  --jf-lh-36: 3.6rem;
+  --jf-lh-40: 4rem;
 }
 
 body,
 p {
-  font-family: var(--jiffyui-regular-font);
-  font-size: 1.4rem;
-  color: var(--jiffyui-naturalDark-1300);
-  line-height: 2.1rem;
+  font-family: var(--jf-regular-font);
+  font-size: var(--jf-fs-13);
+  color: var(--jf-naturalDark-1300);
+  line-height: var(--jf-lh-22);
 }
 
 body {
@@ -655,97 +690,88 @@ p {
 /* margin end */
 /* Typography */
 .font-size-12 {
-  font-size: 1.2rem;
+  font-size: var(--jf-fs-12);
 }
 
 /* 12px */
 .font-size-14 {
-  font-size: 1.4rem;
+  font-size: var(--jf-fs-14);
 }
 
 /* 14px */
 .font-size-16 {
-  font-size: 1.6rem;
+  font-size: var(--jf-fs-16);
 }
 
 /* 16px */
 .font-size-18 {
-  font-size: 1.8rem;
+  font-size: var(--jf-fs-18);
 }
 
 /* 18px */
 .font-size-20 {
-  font-size: 2rem;
+  font-size: var(--jf-fs-20);
 }
 
 /* 20px */
 .font-size-24 {
-  font-size: 2.4rem;
+  font-size: var(--jf-fs-24);
 }
 
 /* 24px */
 .font-size-30 {
-  font-size: 3rem;
+  font-size: var(--jf-fs-30);
 }
 
 /* 30px */
 .font-size-36 {
-  font-size: 3.6rem;
+  font-size: var(--jf-fs-36);
 }
 
-/* 36px */
-.font-size-48 {
-  font-size: 4.8rem;
-}
-
-/* 48px */
-.font-size-60 {
-  font-size: 6rem;
-}
 
 /* 60px */
 .line-height-10 {
-  line-height: 1rem;
+  line-height: var(--jf-lh-10);
 }
 
 .line-height-12 {
-  line-height: 1.2rem;
+  line-height: var(--jf-lh-12);
 }
 
 .line-height-14 {
-  line-height: 1.4rem;
+  line-height: var(--jf-lh-14);
 }
 
 .line-height-16 {
-  line-height: 1.6rem;
+  line-height: var(--jf-lh-16);
 }
 
 .line-height-18 {
-  line-height: 1.8rem;
+  line-height: var(--jf-lh-18);
 }
 
 .line-height-20 {
-  line-height: 2rem;
+  line-height: var(--jf-lh-20);
 }
 
 .line-height-22 {
-  line-height: 2.2rem;
+  line-height: var(--jf-lh-22);
 }
 
 .line-height-24 {
-  line-height: 2.4rem;
+  line-height: var(--jf-lh-24);
 }
 
 .line-height-28 {
-  line-height: 2.8rem;
+  line-height: var(--jf-lh-28);
 }
 
 .line-height-32 {
-  line-height: 3.2rem;
+  line-height: var(--jf-lh-32);
 }
 
 .line-height-36 {
-  line-height: 3.6rem;
+  line-height: var(--jf-lh-36);
 }
 
 .line-height-40 {
@@ -889,366 +915,7 @@ p {
   gap: 2rem;
 }
 /* gap */
-.flex-row.f-gap-2>.flex-item {
-  padding-left: 1px;
-  padding-right: 1px;
-  margin-top: 1px;
-  margin-bottom: 1px;
-}
 
-.flex-row.f-gap-2 {
-  margin-left: -1px;
-  margin-right: -1px;
-}
-
-.flex-row.f-gap-4>.flex-item {
-  padding-left: 2px;
-  padding-right: 2px;
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
-
-.flex-row.f-gap-4 {
-  margin-left: -2px;
-  margin-right: -2px;
-}
-
-.flex-row.f-gap-6>.flex-item {
-  padding-left: 3px;
-  padding-right: 3px;
-  margin-top: 3px;
-  margin-bottom: 3px;
-}
-
-.flex-row.f-gap-6 {
-  margin-left: -3px;
-  margin-right: -3px;
-}
-
-.flex-row.f-gap-8>.flex-item {
-  padding-left: 4px;
-  padding-right: 4px;
-  margin-top: 4px;
-  margin-bottom: 4px;
-}
-
-.flex-row.f-gap-8 {
-  margin-left: -4px;
-  margin-right: -4px;
-}
-
-.flex-row.f-gap-10>.flex-item {
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-bottom: 5px;
-  margin-top: 5px;
-}
-
-.flex-row.f-gap-10 {
-  margin-left: -5px;
-  margin-right: -5px;
-}
-
-.flex-row.f-gap-12>.flex-item {
-  padding-left: 6px;
-  padding-right: 6px;
-  margin-top: 6px;
-  margin-bottom: 6px;
-}
-
-.flex-row.f-gap-12 {
-  margin-left: -6px;
-  margin-right: -6px;
-}
-
-.flex-row.f-gap-14>.flex-item {
-  padding-left: 7px;
-  padding-right: 7px;
-  margin-top: 7px;
-  margin-bottom: 7px;
-}
-
-.flex-row.f-gap-14 {
-  margin-left: -7px;
-  margin-right: -7px;
-}
-
-.flex-row.f-gap-16>.flex-item {
-  padding-left: 8px;
-  padding-right: 8px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
-.flex-row.f-gap-16 {
-  margin-left: -8px;
-  margin-right: -8px;
-}
-
-.flex-row.f-gap-18>.flex-item {
-  padding-left: 9px;
-  padding-right: 9px;
-  margin-top: 9px;
-  margin-bottom: 9px;
-}
-
-.flex-row.f-gap-18 {
-  margin-left: -9px;
-  margin-right: -9px;
-}
-
-.flex-row.f-gap-20>.flex-item {
-  padding-left: 10px;
-  padding-right: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.flex-row.f-gap-20 {
-  margin-left: -10px;
-  margin-right: -10px;
-}
-
-.flex-row.f-gap-22>.flex-item {
-  padding-left: 11px;
-  padding-right: 11px;
-  margin-top: 11px;
-  margin-bottom: 11px;
-}
-
-.flex-row.f-gap-22 {
-  margin-left: -11px;
-  margin-right: -11px;
-}
-
-.flex-row.f-gap-24>.flex-item {
-  padding-left: 12px;
-  padding-right: 12px;
-  margin-bottom: 12px;
-  margin-top: 12px;
-}
-
-.flex-row.f-gap-24 {
-  margin-left: -12px;
-  margin-right: -12px;
-}
-
-.flex-row.f-gap-26>.flex-item {
-  padding-left: 13px;
-  padding-right: 13px;
-  margin-top: 13px;
-  margin-bottom: 13px;
-}
-
-.flex-row.f-gap-26 {
-  margin-left: -13px;
-  margin-right: -13px;
-}
-
-.flex-row.f-gap-28>.flex-item {
-  padding-left: 14px;
-  padding-right: 14px;
-  margin-top: 14px;
-  margin-bottom: 14px;
-}
-
-.flex-row.f-gap-28 {
-  margin-left: -14px;
-  margin-right: -14px;
-}
-
-.flex-row.f-gap-32>.flex-item {
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-top: 16px;
-  margin-bottom: 16px;
-}
-
-.flex-row.f-gap-32 {
-  margin-left: -16px;
-  margin-right: -16px;
-}
-
-.flex-row.f-gap-36>.flex-item {
-  padding-left: 18px;
-  padding-right: 18px;
-  margin-top: 18px;
-  margin-bottom: 18px;
-}
-
-.flex-row.f-gap-36 {
-  margin-left: -18px;
-  margin-right: -18px;
-}
-
-.flex-row.f-gap-40>.flex-item {
-  padding-left: 20px;
-  padding-right: 20px;
-  margin-top: 16px;
-  margin-bottom: 16px;
-}
-
-.flex-row.f-gap-40 {
-  margin-left: -20px;
-  margin-right: -20px;
-}
-
-.flex-Container.f-gap-2 {
-  padding-left: 1px;
-  padding-right: 1px;
-}
-
-.flex-Container.f-gap-4 {
-  padding-left: 2px;
-  padding-right: 2px;
-}
-
-.flex-Container.f-gap-6 {
-  padding-left: 3px;
-  padding-right: 3px;
-}
-
-.flex-Container.f-gap-8 {
-  padding-left: 4px;
-  padding-right: 4px;
-}
-
-.flex-Container.f-gap-10 {
-  padding-left: 5px;
-  padding-right: 5px;
-}
-
-.flex-Container.f-gap-12 {
-  padding-left: 6px;
-  padding-right: 6px;
-}
-
-.flex-Container.f-gap-14 {
-  padding-left: 7px;
-  padding-right: 7px;
-}
-
-.flex-Container.f-gap-16 {
-  padding-left: 8px;
-  padding-right: 8px;
-}
-
-.flex-Container.f-gap-18 {
-  padding-left: 9px;
-  padding-right: 9px;
-}
-
-.flex-Container.f-gap-20 {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.flex-Container.f-gap-22 {
-  padding-left: 11px;
-  padding-right: 11px;
-}
-
-.flex-Container.f-gap-24 {
-  padding-left: 12px;
-  padding-right: 12px;
-}
-
-.flex-Container.f-gap-26 {
-  padding-left: 13px;
-  padding-right: 13px;
-}
-
-.flex-Container.f-gap-28 {
-  padding-left: 14px;
-  padding-right: 14px;
-}
-
-.flex-Container.f-gap-32 {
-  padding-left: 16px;
-  padding-right: 16px;
-}
-
-.flex-Container.f-gap-36 {
-  padding-left: 18px;
-  padding-right: 18px;
-}
-
-.flex-Container.f-gap-40 {
-  padding-left: 20px;
-  padding-right: 20px;
-}
-
-.flex-column.f-gap-2>.flex-item {
-  margin-top: 0.2rem;
-}
-
-.flex-column.f-gap-4>.flex-item {
-  margin-top: 0.4rem;
-}
-
-.flex-column.f-gap-6>.flex-item {
-  margin-top: 0.6rem;
-}
-
-.flex-column.f-gap-8>.flex-item {
-  margin-top: 0.8rem;
-}
-
-.flex-column.f-gap-10>.flex-item {
-  margin-top: 1rem;
-}
-
-.flex-column.f-gap-12>.flex-item {
-  margin-top: 1.2rem;
-}
-
-.flex-column.f-gap-14>.flex-item {
-  margin-top: 1.4rem;
-}
-
-.flex-column.f-gap-16>.flex-item {
-  margin-top: 1.6rem;
-}
-
-.flex-column.f-gap-18>.flex-item {
-  margin-top: 1.8rem;
-}
-
-.flex-column.f-gap-20>.flex-item {
-  margin-top: 2rem;
-}
-
-.flex-column.f-gap-22>.flex-item {
-  margin-top: 2.2rem;
-}
-
-.flex-column.f-gap-24>.flex-item {
-  margin-top: 2.4rem;
-}
-
-.flex-column.f-gap-26>.flex-item {
-  margin-top: 2.6rem;
-}
-
-.flex-column.f-gap-28>.flex-item {
-  margin-top: 2.8rem;
-}
-
-.flex-column.f-gap-32>.flex-item {
-  margin-top: 3.2rem;
-}
-
-.flex-column.f-gap-36>.flex-item {
-  margin-top: 3.6rem;
-}
-
-.flex-column.f-gap-40>.flex-item {
-  margin-top: 4rem;
-}
-
-.flex-column>.flex-item:first-child {
-  margin-top: 0rem !important;
-}
 
 .z-index-0 {
   z-index: 0;

@@ -9,7 +9,7 @@ const color = ["Primary", "Positive", "Negative", "Waiting", "Neutral"];
 export default {
     title: "Components(Done)/AppWrapper",
     component: AppWrapper,
-    tags: ["autodocs"],
+    parameters: { docs: { autodocs: true, }, },
     argTypes: {
 
     },
@@ -18,7 +18,7 @@ export default {
 const Template = ({ ...rest }) => {
     return (
         <AppWrapper
-            content={<Card type={"Shadow"}>
+            content={<Card variant="outlined">
                 App content
             </Card>}
             sideBar={<div className="demo-sidebar">Sidebar content here</div>}

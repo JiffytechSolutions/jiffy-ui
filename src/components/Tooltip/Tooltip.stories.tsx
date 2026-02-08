@@ -6,7 +6,7 @@ import React from "react";
 export default {
     title: "Components/Tooltip",
     component: Tooltip,
-    tags: ["autodocs"],
+    parameters: { docs: { autodocs: true, }, },
     argTypes: {
 
     },

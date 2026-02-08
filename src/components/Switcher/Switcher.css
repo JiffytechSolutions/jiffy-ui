@@ -1,4 +1,4 @@
-.Pixel-toggle {
+.jf-toggle {
     -webkit-appearance: none;
     -moz-appearance: none;
     appearance: none;
@@ -16,12 +16,12 @@
     background-color: rgb(203 203 203);
 }
   
-.Pixel-toggle__wrapper > label {
+.jf-toggle__wrapper > label {
     display: inline-flex;
     justify-content: flex-start;
     gap: 1.2rem;
 }
-.Pixel-toggle__text {
+.jf-toggle__text {
     font-weight: 400;
     font-size: 1.6rem;
     line-height: 2.2rem;
@@ -29,7 +29,7 @@
     cursor: pointer;
 }
 
-.Pixel-toggle:after {
+.jf-toggle:after {
     content: "";
     position: absolute;
     top: 0.2rem;
@@ -42,37 +42,37 @@
     transition: all 0.2s cubic-bezier(0.5, 0.1, 0.75, 1.35);
 }
 
-.Pixel-toggle[disabled] {
+.jf-toggle[disabled] {
     cursor: not-allowed;
     background: #e1e1e1;
     -webkit-user-select: none;
     user-select: none;
 }
 
-.Pixel-toggle:checked[disabled] {
+.jf-toggle:checked[disabled] {
     background: rgb(196 209 255);
     -webkit-user-select: none;
     user-select: none;
 }
 
-.Pixel-toggle--disabled .Pixel-toggle__text {
+.jf-toggle--disabled .jf-toggle__text {
     cursor: not-allowed;
     -webkit-user-select: none;
     user-select: none;
     color: rgb(169, 172, 178);
 }
 
-.Pixel-toggle[disabled]:after {
+.jf-toggle[disabled]:after {
     box-shadow: unset !important;
     -webkit-user-select: none;
     user-select: none;
 }
 
-.Pixel-toggle:checked {
+.jf-toggle:checked {
     background: rgb(46, 91, 255);
 }
 
-.Pixel-toggle:checked:after {
+.jf-toggle:checked:after {
     background: rgb(255, 255, 255);
     transform: translatex(1.8rem);
     box-shadow: -0.5px 0.5px 8px rgba(0, 0, 0, 0.5);

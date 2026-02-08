@@ -1,70 +1,70 @@
-.progress {
-    background: var(--jiffyui-naturalLight-300);
+.jf-progress {
+    background: var(--jf-naturalLight-300);
     height: 8px;
     border-radius: 5px;
     position: relative;
     margin-top: 3rem;
 }
 
-.progress-inner {
-    background: var(--jiffyui-naturalDark-1300);
+.jf-progress-inner {
+    background: var(--jf-naturalDark-1300);
     height: 100%;
     border-radius: 10px;
     position: relative;
     transition: 0.3s all;
 }
 
-label.progress-label {
+label.jf-progress-label {
     position: absolute;
     bottom: calc(100% + 0.5rem);
     transition: 0.3s all;
     display: inline-block;
     word-break: break-word;
-    color: var(--jiffyui-naturalDark-1300);
+    color: var(--jf-naturalDark-1300);
     font-size: 1.4rem;
     line-height: 2rem;
-    font-family: var(--jiffyui-regular-font);
+    font-family: var(--jf-regular-font);
     width: max-content;
 }
 
-.progress-val {
+.jf-progress-val {
     position: absolute;
     right: 0;
     bottom: calc(100% + 5px);
     font-size: 1.4rem;
     border-radius: 4px;
-    color: var(--jiffyui-naturalDark-1300);
+    color: var(--jf-naturalDark-1300);
     transition: 0.3s all;
 }
 
-.progress--possitive .progress-inner {
-    background: var(--jiffyui-Possitive-600);
+.jf-progress--possitive .jf-progress-inner {
+    background: var(--jf-Possitive-600);
 }
 
-.progress--negative .progress-inner {
-    background-color: var(--jiffyui-Negative-600);
+.jf-progress--negative .jf-progress-inner {
+    background-color: var(--jf-Negative-600);
 }
 
-.progress--notice .progress-inner {
-    background-color: var(--jiffyui-Notice-400);
+.jf-progress--notice .jf-progress-inner {
+    background-color: var(--jf-Notice-400);
 }
 
-.progress--primary .progress-inner {
-    background-color: var(--jiffyui-Cerulean-600);
+.jf-progress--primary .jf-progress-inner {
+    background-color: var(--jf-Cerulean-600);
 }
 
-.progress--neutral .progress-inner {
-    background-color: var(--jiffyui-naturalDark-1300);
+.jf-progress--neutral .jf-progress-inner {
+    background-color: var(--jf-naturalDark-1300);
 }
 
-.progress.progress--small {
+.jf-progress.jf-progress--small {
     height: 0.4rem;
 }
 
-.progress.progress--medium {
+.jf-progress.jf-progress--medium {
     height: 0.6rem;
 }
 
-.progress.progress--large {
+.jf-progress.jf-progress--large {
     height: 0.8rem;
 }

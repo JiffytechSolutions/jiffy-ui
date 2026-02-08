@@ -1,57 +1,57 @@
-.Pixel-toolTip {
+.jf-toolTip {
   display: inline-flex;
 }
 
-.Pixel-toolTip__pointer {
+.jf-toolTip__pointer {
   position: absolute;
   display: inline-flex;
 }
 
 /* ToolTip-pointer  css*/
-.Pixel-toolTip--rightCenter {
+.jf-toolTip--rightCenter {
   left: 0.1rem;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.Pixel-toolTip--center {
+.jf-toolTip--center {
   top: 0.1rem;
   left: 49%;
   transform: rotate(90deg) translateX(-50%);
 }
 
-.Pixel-toolTip--bottomRight,
-.Pixel-toolTip--bottomLeft {
+.jf-toolTip--bottomRight,
+.jf-toolTip--bottomLeft {
   top: 0.1rem;
   transform: rotate(90deg) translateX(-50%);
 }
 
-.Pixel-toolTip--topCenter {
+.jf-toolTip--topCenter {
   bottom: 0.1rem;
   left: 49%;
   transform: rotate(270deg) translateX(-50%);
 }
 
-.Pixel-toolTip--leftCenter {
+.jf-toolTip--leftCenter {
   top: 50%;
   right: 0.1rem;
   transform: translateY(-50%) rotate(180deg);
 }
 
-.Pixel-toolTip--topRight,
-.Pixel-toolTip--topLeft {
+.jf-toolTip--topRight,
+.jf-toolTip--topLeft {
   bottom: 0.1rem;
   transform: rotate(270deg) translateX(-50%);
 }
 
-.Pixel-toolTip--leftTop,
-.Pixel-toolTip--leftBottom {
+.jf-toolTip--leftTop,
+.jf-toolTip--leftBottom {
   right: 0.4rem;
   transform: rotate(180deg) translateX(-50%);
 }
 
 /* Tooltip Message */
-.Pixel-toolTip__message {
+.jf-toolTip__message {
   background: #1F262D;
   max-width: 30rem;
   font-size: 1.4rem;
@@ -65,60 +65,60 @@
 
 /* Animation */
 /* Animation Right */
-.Pixel-toolTip--right {
+.jf-toolTip--right {
   padding-left: 0.7rem;
 
-  &.Pixel-toolTip--in {
+  &.jf-toolTip--in {
     animation: tooltipInRight 0.1s linear forwards;
     transform-origin: left center;
   }
 
-  &.Pixel-toolTip--out {
+  &.jf-toolTip--out {
     animation: tooltipOutRight 0.1s linear forwards;
     transform-origin: left center;
   }
 }
 
 /* Animation Left */
-.Pixel-toolTip--left {
+.jf-toolTip--left {
   padding-right: 0.7rem;
 
-  &.Pixel-toolTip--in {
+  &.jf-toolTip--in {
     animation: tooltipInLeft 0.1s linear forwards;
     transform-origin: right center;
   }
 
-  &.Pixel-toolTip--out {
+  &.jf-toolTip--out {
     animation: tooltipOutLeft 0.1s linear forwards;
     transform-origin: right center;
   }
 }
 
 /* Animation Top */
-.Pixel-toolTip--top {
+.jf-toolTip--top {
   padding-bottom: 0.7rem;
 
-  &.Pixel-toolTip--in {
+  &.jf-toolTip--in {
     animation: tooltipInTop 0.1s linear forwards;
     transform-origin: bottom center;
   }
 
-  &.Pixel-toolTip--out {
+  &.jf-toolTip--out {
     animation: tooltipOutTop 0.1s linear forwards;
     transform-origin: bottom center;
   }
 }
 
 /* Animation Bottom */
-.Pixel-toolTip--bottom {
+.jf-toolTip--bottom {
   padding-top: 0.7rem;
 
-  &.Pixel-toolTip--in {
+  &.jf-toolTip--in {
     animation: tooltipInBottom 0.1s linear forwards;
     transform-origin: bottom center;
   }
 
-  &.Pixel-toolTip--out {
+  &.jf-toolTip--out {
     animation: tooltipOutBottom 0.1s linear forwards;
     transform-origin: bottom center;
   }
@@ -242,23 +242,23 @@
 
 @media (min-width: 768px) {
 
-  .Pixel-toolTip__footer,
-  .Pixel-toolTip__overlay {
+  .jf-toolTip__footer,
+  .jf-toolTip__overlay {
     display: none;
   }
 }
 
 @media (max-width: 767px) {
-  .Pixel-toolTip__pointer {
+  .jf-toolTip__pointer {
     display: none;
   }
 
-  .Pixel-toolTip__footer {
+  .jf-toolTip__footer {
     margin-top: 15px;
     text-align: center;
   }
 
-  .Pixel-toolTip__cancel {
+  .jf-toolTip__cancel {
     border: 1px solid #e4e4e4;
     display: inline-block;
     padding: 2px 6px;
@@ -267,13 +267,13 @@
     cursor: pointer;
   }
 
-  .Pixel-toolTip__message {
+  .jf-toolTip__message {
     text-align: center;
     padding: 1.8rem;
     max-width: 100%;
   }
 
-  .Pixel-toolTip__wrapper {
+  .jf-toolTip__wrapper {
     z-index: 999999;
 
     left: 50% !important;
@@ -284,12 +284,12 @@
     width: calc(100% - 100px);
   }
 
-  .Pixel-toolTip__wrapper.Pixel-toolTip--in {
+  .jf-toolTip__wrapper.jf-toolTip--in {
 
     opacity: 1;
   }
 
-  .Pixel-toolTip__overlay {
+  .jf-toolTip__overlay {
     position: fixed;
     left: 0;
     top: 0;

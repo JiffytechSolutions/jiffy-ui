@@ -9,21 +9,21 @@ function Switcher(props: SwitcherI): JSX.Element {
   return (
     <div
       className={classnames({
-        "Pixel-toggle__wrapper": true,
-        "Pixel-toggle--disabled": isDisabled,
+        "jf-toggle__wrapper": true,
+        "jf-toggle--disabled": isDisabled,
       })}
     >
-      <label htmlFor={`Pixel-toggle-${rId}`}>
+      <label htmlFor={`jf-toggle-${rId}`}>
         <input
-          id={`Pixel-toggle-${rId}`}
+          id={`jf-toggle-${rId}`}
           disabled={isDisabled}
-          aria-label={`Pixel-toggle-${rId}`}
+          aria-label={`jf-toggle-${rId}`}
           type="checkbox"
-          className="Pixel-toggle"
+          className="jf-toggle"
           checked={checked}
           onChange={() => onChange?.(!checked)}
         ></input>
-        {label && <span className="Pixel-toggle__text">{label}</span>}
+        {label && <span className="jf-toggle__text">{label}</span>}
       </label>
     </div>
   );

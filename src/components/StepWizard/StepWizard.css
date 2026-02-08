@@ -1,16 +1,16 @@
-.stepWizard {
+.jf-stepWizard {
   display: flex;
   flex-wrap: nowrap;
   justify-content: center;
   align-items: flex-start;
 }
 
-.stepWizard__step {
+.jf-stepWizard__step {
   text-align: center;
   position: relative;
 }
 
-.stepWizard__icon {
+.jf-stepWizard__icon {
   display: block;
   width: 15px;
   height: 15px;
@@ -25,14 +25,14 @@
   color: #333;
 }
 
-.stepWizard__icon svg {
+.jf-stepWizard__icon svg {
   display: block;
   width: 100%;
   height: 100%;
 }
 
-.stepWizard__step::after,
-.stepWizard__step::before {
+.jf-stepWizard__step::after,
+.jf-stepWizard__step::before {
   content: '';
   width: calc(50% - 17px);
   height: 1.5px;
@@ -41,53 +41,53 @@
   top: 11px;
 }
 
-.stepWizard__step::before {
+.jf-stepWizard__step::before {
   left: 0;
 }
 
-.stepWizard__step::after {
+.jf-stepWizard__step::after {
   right: 0;
 }
 
-.stepWizard .stepWizard__step:first-child::before,
-.stepWizard .stepWizard__step:last-child::after {
+.jf-stepWizard .jf-stepWizard__step:first-of-child::before,
+.jf-stepWizard .jf-stepWizard__step:last-child::after {
   display: none;
 }
 
-.stepWizard__step--process .stepWizard__icon,
-.stepWizard--mobile .stepWizard__icon {
+.jf-stepWizard__step--process .jf-stepWizard__icon,
+.jf-stepWizard--mobile .jf-stepWizard__icon {
   background: #f9e7c5;
   color: #bb8728;
 }
 
-.stepWizard__step--process .stepWizard__icon svg,
-.stepWizard--mobile .stepWizard__icon svg {
+.jf-stepWizard__step--process .jf-stepWizard__icon svg,
+.jf-stepWizard--mobile .jf-stepWizard__icon svg {
   color: #bb8728;
 }
 
-.stepWizard__step--finish .stepWizard__icon,
-.stepWizard--mobile .stepWizard__icon.stepWizard__icon--finish  {
+.jf-stepWizard__step--finish .jf-stepWizard__icon,
+.jf-stepWizard--mobile .jf-stepWizard__icon.jf-stepWizard__icon--finish  {
   background: #b7f7dc;
   color: #1b875a;
 }
 
-.stepWizard__step--finish .stepWizard__icon svg {
+.jf-stepWizard__step--finish .jf-stepWizard__icon svg {
   color: #1b875a;
 }
 
-li.stepWizard__step.stepWizard__step--finish::after {
+li.jf-stepWizard__step.jf-stepWizard__step--finish::after {
   background: linear-gradient(90deg, #1b875a 67%, #d3b52a 100%);
 }
 
-li.stepWizard__step.stepWizard__step--process::before {
+li.jf-stepWizard__step.jf-stepWizard__step--process::before {
   background: linear-gradient(90deg, #d3b52a 38%, #edb03f 100%);
 }
 
-li.stepWizard__step.stepWizard__step--finish::before {
+li.jf-stepWizard__step.jf-stepWizard__step--finish::before {
   background: linear-gradient(90deg, #d3b52a 0%, #1b875a 34%);
 }
 
-.stepWizard__body .stepWizard__label {
+.jf-stepWizard__body .jf-stepWizard__label {
   color: #333;
   display: block;
   margin-top: 5px;
@@ -95,60 +95,60 @@ li.stepWizard__step.stepWizard__step--finish::before {
   line-height: 20px;
 }
 
-p.stepWizard__description {
+p.jf-stepWizard__description {
   font-size: 1.2rem;
   color: #655c5c;
 }
 
-.stepWizard--mobile .stepWizard__activeStep {
+.jf-stepWizard--mobile .jf-stepWizard__activeStep {
   margin-bottom: 8px;
 }
 
-ul.stepWizard--mobile__lineList {
+ul.jf-stepWizard--mobile__lineList {
   display: flex;
   height: 5px;
   gap: 2px;
 }
 
-.stepWizard--mobile__line {
+.jf-stepWizard--mobile__line {
   width: 100%;
   height: 5px;
   background: #a99e9e;
   border-radius: 4px;
 }
 
-li.stepWizard--mobile__line.stepWizard--mobile__line--finish {
+li.jf-stepWizard--mobile__line.jf-stepWizard--mobile__line--finish {
   background: #1b875a;
 }
 
-li.stepWizard--mobile__line.stepWizard--mobile__line--process {
+li.jf-stepWizard--mobile__line.jf-stepWizard--mobile__line--process {
   background: #edb03f;
 }
 
-.stepWizard__activeStep {
+.jf-stepWizard__activeStep {
   display: flex;
   align-items: flex-start;
   gap: 0.8rem;
 }
 
-.stepWizard--mobile .stepWizard__icon {
+.jf-stepWizard--mobile .jf-stepWizard__icon {
   display: inline-block;
   margin: unset;
   width: 24px;
   height: 24px;
 }
 
-.stepWizard--mobile label.stepWizard__label {
+.jf-stepWizard--mobile label.jf-stepWizard__label {
   margin-top: 0;
 }
 
-.stepWizard.stepWizard--vertical {
+.jf-stepWizard.jf-stepWizard--vertical {
   flex-wrap: wrap;
   justify-content: start;
   align-items: flex-start;
 }
 
-.stepWizard--vertical .stepWizard__step {
+.jf-stepWizard--vertical .jf-stepWizard__step {
   text-align: left;
   display: flex;
   justify-content: start;
@@ -158,16 +158,16 @@ li.stepWizard--mobile__line.stepWizard--mobile__line--process {
   padding-top: 20px;
 }
 
-.stepWizard--vertical .stepWizard__icon {
+.jf-stepWizard--vertical .jf-stepWizard__icon {
   margin: unset;
 }
 
-.stepWizard--vertical .stepWizard__body .stepWizard__label {
+.jf-stepWizard--vertical .jf-stepWizard__body .jf-stepWizard__label {
   margin-top: 0;
 }
 
-.stepWizard--vertical .stepWizard__step::after,
-.stepWizard--vertical .stepWizard__step::before {
+.jf-stepWizard--vertical .jf-stepWizard__step::after,
+.jf-stepWizard--vertical .jf-stepWizard__step::before {
   width: 1.5px;
   height: calc(50% - 5px);
   left: 11px;
@@ -175,15 +175,15 @@ li.stepWizard--mobile__line.stepWizard--mobile__line--process {
   bottom: 0;
 }
 
-.stepWizard--vertical .stepWizard__step::before {
+.jf-stepWizard--vertical .jf-stepWizard__step::before {
   top: 0;
   height: calc(50% - 25px);
 }
 
-.stepWizard--vertical li.stepWizard__step.stepWizard__step--finish::after {
+.jf-stepWizard--vertical li.jf-stepWizard__step.jf-stepWizard__step--finish::after {
   background: linear-gradient(180deg, #1b875a 67%, #d3b52a 100%);
 }
 
-.stepWizard--vertical li.stepWizard__step.stepWizard__step--finish::before {
+.jf-stepWizard--vertical li.jf-stepWizard__step.jf-stepWizard__step--finish::before {
   background: linear-gradient(180deg, #d3b52a 0%, #1b875a 34%);
 }

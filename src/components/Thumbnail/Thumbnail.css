@@ -1,45 +1,534 @@
-.thumbnail {
-    display: inline-flex;
-    width: 40px;
-    height: 40px;
-    border-radius: 4px;
-}
-.thumbnail-img {
-    width: 100%;
-    height: auto;
-    border-radius: 4px;
+/* Modern Thumbnail Component Styles */
+
+/* CSS Custom Properties for Design System */
+:root {
+  /* Colors */
+  --thumbnail-background: #f8fafc;
+  --thumbnail-border: #e2e8f0;
+  --thumbnail-border-hover: #cbd5e1;
+  --thumbnail-border-focus: #3b82f6;
+  --thumbnail-foreground: #64748b;
+  --thumbnail-error-bg: #fef2f2;
+  --thumbnail-error-border: #fecaca;
+  --thumbnail-error-color: #dc2626;
+  --thumbnail-overlay-bg: rgba(0, 0, 0, 0.6);
+  --thumbnail-badge-bg: #ef4444;
+  --thumbnail-badge-color: #ffffff;
+  
+  /* Spacing */
+  --thumbnail-spacing-xs: 0.125rem;
+  --thumbnail-spacing-sm: 0.25rem;
+  --thumbnail-spacing-md: 0.5rem;
+  --thumbnail-spacing-lg: 0.75rem;
+  --thumbnail-spacing-xl: 1rem;
+  
+  /* Sizes */
+  --thumbnail-size-xs: 2rem;   /* 32px */
+  --thumbnail-size-sm: 2.5rem; /* 40px */
+  --thumbnail-size-md: 3rem;   /* 48px */
+  --thumbnail-size-lg: 4rem;   /* 64px */
+  --thumbnail-size-xl: 5rem;   /* 80px */
+  
+  /* Border radius */
+  --thumbnail-radius-sm: 0.25rem;
+  --thumbnail-radius-md: 0.5rem;
+  --thumbnail-radius-lg: 0.75rem;
+  --thumbnail-radius-full: 50%;
+  
+  /* Shadows */
+  --thumbnail-shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --thumbnail-shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --thumbnail-shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -2px rgb(0 0 0 / 0.1);
+  
+  /* Transitions */
+  --thumbnail-transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --thumbnail-transition-fast: all 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  
+  /* Z-indices */
+  --thumbnail-z-content: 1;
+  --thumbnail-z-overlay: 2;
+  --thumbnail-z-badge: 3;
+  --thumbnail-z-focus: 4;
 }
 
-.thumbnail--extraSmall {
-    height: 32px;
-    width: 32px;
+/* Dark mode variables */
+[data-theme="dark"] {
+  --thumbnail-background: #1e293b;
+  --thumbnail-border: #334155;
+  --thumbnail-border-hover: #475569;
+  --thumbnail-foreground: #94a3b8;
+  --thumbnail-error-bg: #450a0a;
+  --thumbnail-error-border: #7f1d1d;
+  --thumbnail-error-color: #f87171;
 }
-.thumbnail--small {
-    width: 40px;
-    height: 40px;
+
+/* Base Thumbnail Container */
+.jf-thumbnail {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--thumbnail-background);
+  border: 1px solid var(--thumbnail-border);
+  overflow: hidden;
+  transition: var(--thumbnail-transition);
+  user-select: none;
+  font-family: system-ui, -apple-system, sans-serif;
 }
-.thumbnail--medium {
-    width: 50px;
-    height: 50px;
+
+.jf-thumbnail:focus {
+  outline: none;
 }
-.thumbnail--large {
-    width: 60px;
-    height: 60px;
+
+/* Content Container */
+.jf-thumbnail-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: var(--thumbnail-z-content);
 }
-.thumbnail--cover .thumbnail-img {
-    object-fit: cover;
+
+/* Image Styles */
+.jf-thumbnail-image {
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: var(--thumbnail-transition);
 }
-.thumbnail--contain .thumbnail-img {
-    object-fit: contain;
+
+/* Placeholder and Loading States */
+.jf-thumbnail-placeholder {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--thumbnail-background);
 }
-.thumbnail--fill .thumbnail-img {
-    object-fit: fill;
+
+.jf-thumbnail-skeleton {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background-color: #e2e8f0;
+  position: relative;
+  overflow: hidden;
 }
-.thumbnail-click {
-    cursor: pointer;
-    transition: 0.3s all;
+
+.jf-thumbnail-skeleton-shimmer {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.6),
+    transparent
+  );
+  animation: shimmer 1.5s infinite;
 }
-.thumbnail-click:hover{
-    opacity: 0.7;
-    transform: scale(1.05);
+
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Fallback Content */
+.jf-thumbnail-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--thumbnail-foreground);
+  background: var(--thumbnail-background);
+}
+
+.jf-thumbnail-initials {
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--thumbnail-foreground);
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.jf-thumbnail-fallback-icon,
+.jf-thumbnail-error-icon {
+  color: var(--thumbnail-foreground);
+  opacity: 0.7;
+}
+
+/* Error State */
+.jf-thumbnail--error .jf-thumbnail-fallback {
+  background: var(--thumbnail-error-bg);
+  border-color: var(--thumbnail-error-border);
+}
+
+.jf-thumbnail-error-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--thumbnail-spacing-sm);
+  text-align: center;
+}
+
+.jf-thumbnail-error-icon {
+  color: var(--thumbnail-error-color);
+}
+
+.jf-thumbnail-error-text {
+  font-size: 0.75rem;
+  color: var(--thumbnail-error-color);
+  font-weight: 500;
+}
+
+/* Size Variants */
+.jf-thumbnail--extrasmall {
+  width: var(--thumbnail-size-xs);
+  height: var(--thumbnail-size-xs);
+}
+
+.jf-thumbnail--small {
+  width: var(--thumbnail-size-sm);
+  height: var(--thumbnail-size-sm);
+}
+
+.jf-thumbnail--medium {
+  width: var(--thumbnail-size-md);
+  height: var(--thumbnail-size-md);
+}
+
+.jf-thumbnail--large {
+  width: var(--thumbnail-size-lg);
+  height: var(--thumbnail-size-lg);
+}
+
+.jf-thumbnail--extralarge {
+  width: var(--thumbnail-size-xl);
+  height: var(--thumbnail-size-xl);
+}
+
+/* Size-specific initials and icons */
+.jf-thumbnail--extrasmall .jf-thumbnail-initials {
+  font-size: 0.625rem;
+}
+
+.jf-thumbnail--small .jf-thumbnail-initials {
+  font-size: 0.75rem;
+}
+
+.jf-thumbnail--medium .jf-thumbnail-initials {
+  font-size: 0.875rem;
+}
+
+.jf-thumbnail--large .jf-thumbnail-initials {
+  font-size: 1rem;
+}
+
+.jf-thumbnail--extralarge .jf-thumbnail-initials {
+  font-size: 1.25rem;
+}
+
+/* Shape Variants */
+.jf-thumbnail--rounded {
+  border-radius: var(--thumbnail-radius-md);
+}
+
+.jf-thumbnail--circular {
+  border-radius: var(--thumbnail-radius-full);
+}
+
+.jf-thumbnail--square {
+  border-radius: 0;
+}
+
+/* Object Fit Variants */
+.jf-thumbnail--cover .jf-thumbnail-image {
+  object-fit: cover;
+}
+
+.jf-thumbnail--contain .jf-thumbnail-image {
+  object-fit: contain;
+}
+
+.jf-thumbnail--fill .jf-thumbnail-image {
+  object-fit: fill;
+}
+
+.jf-thumbnail--scaledown .jf-thumbnail-image {
+  object-fit: scale-down;
+}
+
+.jf-thumbnail--none .jf-thumbnail-image {
+  object-fit: none;
+}
+
+/* Visual Variants */
+.jf-thumbnail--default {
+  /* Default styling already applied */
+}
+
+.jf-thumbnail--detailed {
+  border-width: 2px;
+  box-shadow: var(--thumbnail-shadow-sm);
+}
+
+.jf-thumbnail--minimal {
+  border: none;
+  background: transparent;
+}
+
+.jf-thumbnail--card {
+  border-width: 1px;
+  box-shadow: var(--thumbnail-shadow-md);
+  background: #ffffff;
+}
+
+[data-theme="dark"] .jf-thumbnail--card {
+  background: var(--thumbnail-background);
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.3);
+}
+
+/* Aspect Ratio Support */
+.jf-thumbnail--aspect-1-1 {
+  aspect-ratio: 1 / 1;
+  width: auto;
+  height: auto;
+}
+
+.jf-thumbnail--aspect-4-3 {
+  aspect-ratio: 4 / 3;
+  width: auto;
+  height: auto;
+}
+
+.jf-thumbnail--aspect-16-9 {
+  aspect-ratio: 16 / 9;
+  width: auto;
+  height: auto;
+}
+
+.jf-thumbnail--aspect-3-2 {
+  aspect-ratio: 3 / 2;
+  width: auto;
+  height: auto;
+}
+
+/* Clickable State */
+.jf-thumbnail--clickable {
+  cursor: pointer;
+  transition: var(--thumbnail-transition);
+}
+
+.jf-thumbnail--clickable:hover {
+  border-color: var(--thumbnail-border-hover);
+  transform: translateY(-1px);
+  box-shadow: var(--thumbnail-shadow-lg);
+}
+
+.jf-thumbnail--clickable:active {
+  transform: translateY(0);
+  box-shadow: var(--thumbnail-shadow-md);
+}
+
+/* Disabled State */
+.jf-thumbnail--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Hover State */
+.jf-thumbnail--hovered:not(.jf-thumbnail--disabled) {
+  border-color: var(--thumbnail-border-hover);
+}
+
+.jf-thumbnail--clickable.jf-thumbnail--hovered:not(.jf-thumbnail--disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--thumbnail-shadow-lg);
+}
+
+/* Loading State */
+.jf-thumbnail--loading {
+  /* Loading styles handled by skeleton */
+}
+
+/* Overlay */
+.jf-thumbnail-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--thumbnail-overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.875rem;
+  font-weight: 500;
+  opacity: 0;
+  transition: var(--thumbnail-transition);
+  z-index: var(--thumbnail-z-overlay);
+  backdrop-filter: blur(2px);
+}
+
+.jf-thumbnail:hover .jf-thumbnail-overlay {
+  opacity: 1;
+}
+
+/* Badge */
+.jf-thumb-with-badge {
+  position: relative;
+}
+.jf-thumbnail-badge {
+  position: absolute;
+  top: var(--thumbnail-spacing-xs);
+  right: var(--thumbnail-spacing-xs);
+  background: var(--thumbnail-badge-bg);
+  color: var(--thumbnail-badge-color);
+  border-radius: var(--thumbnail-radius-full);
+  min-width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 600;
+  z-index: var(--thumbnail-z-badge);
+  box-shadow: var(--thumbnail-shadow-sm);
+  top: -6px;
+  right: -4px;
+}
+
+/* Focus Ring */
+.jf-thumbnail-focus-ring {
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid var(--thumbnail-border-focus);
+  border-radius: inherit;
+  opacity: 0;
+  transition: var(--thumbnail-transition-fast);
+  z-index: var(--thumbnail-z-focus);
+  pointer-events: none;
+}
+
+.jf-thumbnail:focus .jf-thumbnail-focus-ring,
+.jf-thumbnail:focus-visible .jf-thumbnail-focus-ring {
+  opacity: 1;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .jf-thumbnail {
+    border-width: 2px;
+  }
+  
+  .jf-thumbnail--clickable:hover {
+    border-width: 3px;
+  }
+  
+  .jf-thumbnail-focus-ring {
+    border-width: 3px;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .jf-thumbnail,
+  .jf-thumbnail-image,
+  .jf-thumbnail-overlay,
+  .jf-thumbnail-focus-ring,
+  .jf-thumbnail-skeleton-shimmer {
+    transition: none;
+    animation: none;
+  }
+  
+  .jf-thumbnail--clickable:hover {
+    transform: none;
+  }
+}
+
+/* Print Styles */
+@media print {
+  .jf-thumbnail {
+    break-inside: avoid;
+    box-shadow: none !important;
+    border: 1px solid #000 !important;
+  }
+  
+  .jf-thumbnail-overlay {
+    display: none;
+  }
+  
+  .jf-thumbnail-badge {
+    background: #000 !important;
+    color: #fff !important;
+  }
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  .jf-thumbnail--clickable:hover {
+    transform: none;
+    box-shadow: var(--thumbnail-shadow-md);
+  }
+  
+  .jf-thumbnail-overlay {
+    opacity: 0;
+  }
+  
+  .jf-thumbnail--clickable:active .jf-thumbnail-overlay {
+    opacity: 1;
+  }
+}
+
+/* Dark mode enhancements */
+[data-theme="dark"] .jf-thumbnail-skeleton {
+  background-color: #334155;
+}
+
+[data-theme="dark"] .jf-thumbnail-skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+}
+
+/* Animation for successful image load */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.jf-thumbnail-image[src]:not([src=""]) {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Enhanced accessibility */
+.jf-thumbnail[role="button"] {
+  outline-offset: 2px;
+}
+
+.jf-thumbnail[role="button"]:focus-visible {
+  outline: 2px solid var(--thumbnail-border-focus);
+  outline-offset: 2px;
 }

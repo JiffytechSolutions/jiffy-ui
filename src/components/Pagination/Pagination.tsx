@@ -26,20 +26,20 @@ const Pagination = (props: PaginationI) => {
     <nav
       aria-label="Pagination"
       className={classnames({
-        "Pixel-Pagination": true,
+        "jf-Pagination": true,
         "flex-row justify-between": type === "end",
       })}
     >
       {primaryAction && (
-        <div className="Pixel-Pagination__action">{primaryAction}</div>
+        <div className="jf-Pagination__action">{primaryAction}</div>
       )}
       <div
         className={classnames({
           "flex-row align-center": true,
-          "Pixel-Pagination__center justify-center": type === "center",
+          "jf-Pagination__center justify-center": type === "center",
         })}
       >
-        <div className="Pixel-ButtonGroup__Item">
+        <div className="jf-ButtonGroup__Item">
           <Button
             children="Previous"
             variant="Tertiary"
@@ -47,8 +47,8 @@ const Pagination = (props: PaginationI) => {
             onClick={() => onPrevious?.()}
           />
         </div>
-        {children && <div className="Pixel-Pagination__label">{children}</div>}
-        <div className="Pixel-ButtonGroup__Item">
+        {children && <div className="jf-Pagination__label">{children}</div>}
+        <div className="jf-ButtonGroup__Item">
           <Button
             children="Next"
             variant="Tertiary"

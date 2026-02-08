@@ -1,183 +1,357 @@
-.pixel-Text--root {
-    margin: 0;
-    padding: 0;
-    line-height: 22px;
-    color: var(--jiffyui-naturalDark-1200);
+/* TextStyle Component - Shopify Polaris inspired design */
+
+.jf-text {
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
+  color: #202223;
+  font-weight: 400;
+  font-style: normal;
+  text-decoration: none;
+  word-wrap: break-word;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p,
-span,
-dd,
-dt,
-strong,
-legend {
-    /* font-size: 1.5rem; */
-    font-weight: normal;
+/* Variant styles - Following Polaris patterns */
+.jf-text--heading {
+  font-weight: 600;
+  line-height: 1.2;
 }
 
-p,
-span,
-dd,
-dt,
-legend {
-    font-family: var(--jiffyui-regular-font);
+.jf-text--body {
+  font-weight: 400;
+  line-height: 1.5;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    font-family: var(--jiffyui-bold-font);
+.jf-text--caption {
+  font-weight: 400;
+  line-height: 1.4;
 }
 
-strong,
-b {
-    font-family: var(--jiffyui-medium-font);
+.jf-text--subdued {
+  font-weight: 400;
+  line-height: 1.5;
 }
 
-.pixel-Text--2XlHeading {
-    font-size: 3rem;
-    font-family: var(--jiffyui-bold-font);
+.jf-text--code {
+  font-family: 'SF Mono', Monaco, Inconsolata, 'Roboto Mono', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace;
+  font-weight: 400;
+  line-height: 1.4;
+  background-color: #f6f6f7;
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
 }
 
-.pixel-Text--XlHeading {
-    font-size: 2.4rem;
-    font-family: var(--jiffyui-bold-font);
+/* Size variants - Polaris typography scale */
+.jf-text--xs {
+  font-size: 1rem;
 }
 
-.pixel-Text--LgHeading {
-    font-size: 2rem;
-    font-family: var(--jiffyui-bold-font);
+.jf-text--sm {
+  font-size: 1.2rem;
 }
 
-.pixel-Text--MdHeading {
-    font-size: 1.4rem;
-    font-family: var(--jiffyui-bold-font);
+.jf-text--md {
+  font-size: 1.4rem;
 }
 
-.pixel-Text--SmHeading {
-    font-size: 1.3rem;
-    font-family: var(--jiffyui-bold-font);
+.jf-text--lg {
+  font-size: 1.6rem;
 }
 
-.pixel-Text--XsHeading {
-    font-size: 1.2rem;
-    font-family: var(--jiffyui-bold-font);
+.jf-text--xl {
+  font-size: 1.8rem;
 }
 
-.pixel-Text--LgBody {
-    font-size: 1.4rem;
+.jf-text--2xl {
+  font-size: 2rem;
 }
 
-.pixel-Text--MdBody {
-    font-size: 1.3rem;
+/* Heading specific sizes */
+.jf-text--heading.jf-text--xs {
+  font-size: 1.4rem;
 }
 
-.pixel-Text--SmBody {
-    font-size: 1.2rem;
+.jf-text--heading.jf-text--sm {
+  font-size: 1.6rem;
 }
 
-.pixel-Text--xsBody {
-    font-size: 1.1rem;
+.jf-text--heading.jf-text--md {
+  font-size: 1.8rem;
 }
 
-.pixel-Text-light {
-    font-family: var(--jiffyui-light-font);
+.jf-text--heading.jf-text--lg {
+  font-size: 2rem;
 }
 
-.pixel-Text-regular {
-    font-family: var(--jiffyui-regular-font);
+.jf-text--heading.jf-text--xl {
+  font-size: 2.2rem;
 }
 
-.pixel-Text-medium {
-    font-family: var(--jiffyui-medium-font);
+.jf-text--heading.jf-text--2xl {
+  font-size: 2.4rem;
 }
 
-.pixel-Text-bold {
-    font-family: var(--jiffyui-bold-font);
+/* Tone variants - Following Polaris color system */
+.jf-text--default {
+  color: #202223;
 }
 
-.pixel-Text--alignLeft {
-    text-align: left;
+.jf-text--success {
+  color: #0a5a0a;
 }
 
-.pixel-Text--alignCenter {
-    text-align: center;
+.jf-text--warning {
+  color: #856404;
 }
 
-.pixel-Text--alignRight {
-    text-align: right;
+.jf-text--critical {
+  color: #d82c0d;
 }
 
-.pixel-Text--alignJustify {
-    text-align: justify;
+.jf-text--subdued {
+  color: #6d7175;
 }
 
-.pixel-Text-linethrough {
-    text-decoration: line-through;
+.jf-text--emphasis {
+  color: #5c6ac4;
 }
 
-.pixel-Text-underline {
-    text-decoration: underline;
+/* Font weight variants */
+.jf-text--light {
+  font-weight: 300;
 }
 
-.pixel-Text-italic {
-    font-style: italic;
+.jf-text--regular {
+  font-weight: 400;
 }
 
-/* text color */
-.pixel-text__dark {
-    color: var(--jiffyui-naturalDark-1300);
+.jf-text--medium {
+  font-weight: 500;
 }
 
-.pixel-text__primary {
-    color: var(--jiffyui-Cerulean-600);
+.jf-text--semibold {
+  font-weight: 600;
 }
 
-.pixel-text__secondary {
-    color: var(--jiffyui-naturalDark-900)
+.jf-text--bold {
+  font-weight: 700;
 }
 
-.pixel-text__disabled {
-    color: var(--jiffyui-naturalLight-300);
+/* Text alignment */
+.jf-text--start {
+  text-align: left;
 }
 
-.pixel-text__possitive {
-    color: var(--jiffyui-Possitive-600);
+.jf-text--center {
+  text-align: center;
 }
 
-.pixel-text_negative {
-    color: var(--jiffyui-Negative-600);
+.jf-text--end {
+  text-align: right;
 }
 
-.pixel-text__waiting {
-    color: var(--jiffyui-Notice-600);
+.jf-text--justify {
+  text-align: justify;
 }
 
-.pixel-text__invert {
-    color: var(--jiffyui-white);
+/* Text decoration */
+.jf-text--underline {
+  text-decoration: underline;
 }
 
-/* .pixel-Text--success {
-    color: var(--jiffyui--success-color);
+.jf-text--line-through {
+  text-decoration: line-through;
 }
-.pixel-Text--critical {
-    color: var(--jiffyui--negative-color);
+
+.jf-text--none {
+  text-decoration: none;
 }
-.pixel-Text--warning {
-    color: var(--jiffyui--warning-color);
+
+/* Font style */
+.jf-text--normal {
+  font-style: normal;
 }
-.pixel-Text--primary {
-    color: var(--jiffyui-primary-color);
+
+.jf-text--italic {
+  font-style: italic;
 }
-.pixel-Text--secondry {
-    color: var(--jiffyui-secondary-color);
-} */
+
+/* Truncate */
+.jf-text--truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Disabled state */
+.jf-text--disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Dark mode support - Polaris dark theme */
+@media (prefers-color-scheme: dark) {
+  .jf-text--default {
+    color: #e1e3e5;
+  }
+  
+  .jf-text--success {
+    color: #4ade80;
+  }
+  
+  .jf-text--warning {
+    color: #fbbf24;
+  }
+  
+  .jf-text--critical {
+    color: #f87171;
+  }
+  
+  .jf-text--subdued {
+    color: #9ca3af;
+  }
+  
+  .jf-text--emphasis {
+    color: #818cf8;
+  }
+  
+  .jf-text--code {
+    background-color: #374151;
+    color: #e1e3e5;
+  }
+}
+
+/* Legacy support for backward compatibility */
+.jf-text--root {
+  margin: 0;
+  padding: 0;
+  line-height: 22px;
+  color: var(--jf-naturalDark-1200);
+}
+
+/* Legacy heading styles */
+.jf-text--2XlHeading {
+  font-size: 3rem;
+  font-family: var(--jf-bold-font);
+}
+
+.jf-text--XlHeading {
+  font-size: 2.4rem;
+  font-family: var(--jf-bold-font);
+}
+
+.jf-text--LgHeading {
+  font-size: 2rem;
+  font-family: var(--jf-bold-font);
+}
+
+.jf-text--MdHeading {
+  font-size: 1.4rem;
+  font-family: var(--jf-bold-font);
+}
+
+.jf-text--SmHeading {
+  font-size: 1.3rem;
+  font-family: var(--jf-bold-font);
+}
+
+.jf-text--XsHeading {
+  font-size: 1.2rem;
+  font-family: var(--jf-bold-font);
+}
+
+.jf-text--LgBody {
+  font-size: 1.4rem;
+}
+
+.jf-text--MdBody {
+  font-size: 1.3rem;
+}
+
+.jf-text--SmBody {
+  font-size: 1.2rem;
+}
+
+.jf-text--xsBody {
+  font-size: 1.1rem;
+}
+
+/* Legacy font weights */
+.jf-text-light {
+  font-family: var(--jf-light-font);
+}
+.jf-text-regular {
+  font-family: var(--jf-regular-font);
+}
+
+.jf-text-medium {
+  font-family: var(--jf-medium-font);
+}
+
+.jf-Text-bold {
+  font-family: var(--jf-bold-font);
+}
+
+/* Legacy alignment */
+.jf-Text--alignLeft {
+  text-align: left;
+}
+
+.jf-Text--alignCenter {
+  text-align: center;
+}
+
+.jf-Text--alignRight {
+  text-align: right;
+}
+
+.jf-Text--alignJustify {
+  text-align: justify;
+}
+
+/* Legacy text decoration */
+.jf-Text-linethrough {
+  text-decoration: line-through;
+}
+
+.jf-Text-underline {
+  text-decoration: underline;
+}
+
+.jf-Text-italic {
+  font-style: italic;
+}
+
+/* Legacy text colors */
+.jf-text__dark {
+  color: var(--jf-naturalDark-1300);
+}
+
+.jf-text__primary {
+  color: var(--jf-Cerulean-600);
+}
+
+.jf-text__secondary {
+  color: var(--jf-naturalDark-900);
+}
+
+.jf-text__disabled {
+  color: var(--jf-naturalLight-300);
+}
+
+.jf-text__possitive {
+  color: var(--jf-Possitive-600);
+}
+
+.jf-text_negative {
+  color: var(--jf-Negative-600);
+}
+
+.jf-text__waiting {
+  color: var(--jf-Notice-600);
+}
+
+.jf-text__invert {
+  color: var(--jf-white);
+}

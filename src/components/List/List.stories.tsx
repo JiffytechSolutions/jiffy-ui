@@ -2,9 +2,9 @@ import React from "react";
 import List from "./List";
 
 export default {
-    title: "Components(Done)/List",
+    title: "Components/List",
     component: List,
-    tags: ["autodocs"],
+    parameters: { docs: { autodocs: true, }, },
     argTypes: {
 
     },

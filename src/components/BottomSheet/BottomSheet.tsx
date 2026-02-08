@@ -8,28 +8,44 @@ export interface BottomSheetI {
   isOpen: boolean;
   onDismiss?: () => void;
   children: string | React.ReactNode;
+  size?: 'small' | 'medium' | 'large';
+  showDragHandle?: boolean;
+  preventBackdropClose?: boolean;
 }
 
 function BottomSheet(props: BottomSheetI) {
-  const { isOpen, onDismiss, children, heading } = props;
+  const { 
+    isOpen, 
+    onDismiss, 
+    children, 
+    heading, 
+    size = 'medium',
+    showDragHandle = true,
+    preventBackdropClose = false
+  } = props;
   const open = useDelay(isOpen, 600);
   return open || isOpen ? (
     <Portal>
       <div className="bottom-sheet__wrapper">
         <div
-          className={`bottom-sheet-overlay  ${isOpen && open ? "open" : "close"}`}
-          onClick={onDismiss}
+          className={`bottom-sheet-overlay ${isOpen && open ? "open" : "close"}`}
+          onClick={preventBackdropClose ? undefined : onDismiss}
           role="none"
         ></div>
-        <div className={`bottom-sheet ${isOpen && open ? "open" : "close"}`}>
+        <div className={`bottom-sheet bottom-sheet--${size} ${isOpen && open ? "open" : "close"}`}>
           <div className="bottom-sheet-content">
+            {showDragHandle && (
+              <div className="bottom-sheet-drag-handle">
+                <div className="drag-handle-indicator"></div>
+              </div>
+            )}
             <div
               className={
                 heading ? "bottom-sheet__heading" : "bottom-sheet-header"
               }
             >
-              {heading && <h3 className="text-size-16 font-weight-600 line-height-24">{heading}</h3>}
-              <button className="close-button" onClick={onDismiss}>
+              {heading && <h3 className="font-size-16 font-weight-600 line-height-24">{heading}</h3>}
+              <button className="bottom-sheet-close-button" onClick={onDismiss} aria-label="Close">
                 <X size={20} />
               </button>
             </div>
@@ -41,4 +57,4 @@ function BottomSheet(props: BottomSheetI) {
   ) : null;
 }
 
-export default  BottomSheet ;
+export default BottomSheet;

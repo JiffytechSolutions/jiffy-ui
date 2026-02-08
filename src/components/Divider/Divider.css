@@ -1,48 +1,48 @@
-.jiffyui-divider {
-    &.jiffyui-divider--vertical {
+.jf-divider {
+    &.jf-divider--vertical {
         height: auto;
         min-height: 50px;
         width: 0px;
         border-left: none !important;
         border-top: none !important;
-        border-right: 1px solid var(--jiffyui-naturalLight-200);
+        border-right: 1px solid var(--jf-naturalLight-200);
         border-bottom: none !important;
     }
-    &.jiffyui-divider--horizontal {
+    &.jf-divider--horizontal {
         height: 0;
         border-left: none !important;
         border-top: none !important;
         border-right: none !important;
-        border-bottom: 1px solid var(--jiffyui-naturalLight-200);
+        border-bottom: 1px solid var(--jf-naturalLight-200);
     }
-    &.jiffyui-divider--thinner {
-        border-width: var(--jiffyui-borderWidth-thinner);
+    &.jf-divider--thinner {
+        border-width: var(--jf-borderWidth-thinner);
     }
-    &.jiffyui-divider--thin {
-        border-width: var(--jiffyui-borderWidth-thin)
+    &.jf-divider--thin {
+        border-width: var(--jf-borderWidth-thin)
     }
-    &.jiffyui-divider--thick {
-        border-width: var(--jiffyui-borderWidth-thick);
+    &.jf-divider--thick {
+        border-width: var(--jf-borderWidth-thick);
     }
-    &.jiffyui-divider--thicker {
-        border-width: var(--jiffyui-borderWidth-thicker);
+    &.jf-divider--thicker {
+        border-width: var(--jf-borderWidth-thicker);
     }
-    &.jiffyui-divider--solid {
+    &.jf-divider--solid {
         border-style: solid;
     }
-    &.jiffyui-divider--dashed {
+    &.jf-divider--dashed {
         border-style: dashed;
     }
-    &.jiffyui-divider--dotted {
+    &.jf-divider--dotted {
         border-style: dotted;
     }
-    &.jiffyui-indicator--normal {
-        border-color: var(--jiffyui-naturalLight-300);
+    &.jf-indicator--normal {
+        border-color: var(--jf-naturalLight-300);
     }
-    &.jiffyui-indicator--subtile {
-        border-color: var(--jiffyui-naturalLight-200);
+    &.jf-indicator--subtile {
+        border-color: var(--jf-naturalLight-200);
     }
-    &.jiffyui-indicator--muted {
-        border-color: var(--jiffyui-naturalLight-100);
+    &.jf-indicator--muted {
+        border-color: var(--jf-naturalLight-100);
     }
 }

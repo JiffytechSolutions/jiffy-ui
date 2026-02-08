@@ -1,123 +1,123 @@
-.jiffyui-avatar {
-    background: var(--jiffyui-Sapphire-050);
+.jf-avatar {
+    background: var(--jf-Sapphire-050);
     display: inline-flex;
     border-radius: 0.4rem;
     border: 1px solid #e4e4e4;
 }
 
-.jiffyui-avatar-icon {
+.jf-avatar-icon {
     width: 100%;
     height: 100%;
 }
 
-.jiffyui-avatar-icon * {
+.jf-avatar-icon * {
     width: 100%;
     height: 100%;
 }
 
-.jiffyui-avatar {
-    &.jiffyui-avatar--small {
+.jf-avatar {
+    &.jf-avatar--small {
         height: 3.2rem;
         width: 3.2rem;
     }
 
-    &.jiffyui-avatar--medium {
+    &.jf-avatar--medium {
         width: 3.6rem;
         height: 3.6rem;
     }
 
-    &.jiffyui-avatar--large {
+    &.jf-avatar--large {
         height: 4rem;
         width: 4rem;
     }
 
-    &.jiffyui-avatar--xLarge {
+    &.jf-avatar--xLarge {
         height: 4.4rem;
         width: 4.4rem;
     }
 
-    &.jiffyui-avatar--circle {
+    &.jf-avatar--circle {
         border-radius: 100%;
     }
 }
 
-.jiffyui-avatar.jiffyui-avatar--xLarge.jiffyui-avatar--circle,
-.jiffyui-avatar.jiffyui-avatar--xLarge.jiffyui-avatar--squire {
+.jf-avatar.jf-avatar--xLarge.jf-avatar--circle,
+.jf-avatar.jf-avatar--xLarge.jf-avatar--squire {
     padding: 0.8rem;
 }
 
-.jiffyui-avatar.jiffyui-avatar--large.jiffyui-avatar--circle,
-.jiffyui-avatar.jiffyui-avatar--large.jiffyui-avatar--squire {
+.jf-avatar.jf-avatar--large.jf-avatar--circle,
+.jf-avatar.jf-avatar--large.jf-avatar--squire {
     padding: 0.8rem;
 }
 
-.jiffyui-avatar.jiffyui-avatar--medium.jiffyui-avatar--circle,
-.jiffyui-avatar.jiffyui-avatar--medium.jiffyui-avatar--squire {
+.jf-avatar.jf-avatar--medium.jf-avatar--circle,
+.jf-avatar.jf-avatar--medium.jf-avatar--squire {
     padding: 0.7rem;
     
 }
 
-.jiffyui-avatar.jiffyui-avatar--small.jiffyui-avatar--circle,
-.jiffyui-avatar.jiffyui-avatar--small.jiffyui-avatar--squire {
+.jf-avatar.jf-avatar--small.jf-avatar--circle,
+.jf-avatar.jf-avatar--small.jf-avatar--squire {
     padding: 0.6rem;
 }
 
-.jiffyui-jiffyui-avatar.jiffyui-has-image-icon {
+.jf-avatar.jf-has-image-icon {
     padding: 0 !important;
-    border: var(--jiffyui-borderWidth-thin) solid var(--jiffyui-naturalLight-300);
+    border: var(--jf-borderWidth-thin) solid var(--jf-naturalLight-300);
 }
 
-.jiffyui-avatar.jiffyui-has-image-icon .jiffyui-avatar-icon>img {
+.jf-avatar.jf-has-image-icon .jf-avatar-icon>img {
     border-radius: 100%;
 }
 
-.jiffyui-avatar.jiffyui-has-image-icon.jiffyui-avatar--squire .jiffyui-avatar-icon>img {
+.jf-avatar.jf-has-image-icon.jf-avatar--squire .jf-avatar-icon>img {
     border-radius: 0.4rem;
 }
 
-.jiffyui-avatar.jiffyui-has-action {
+.jf-avatar.jf-has-action {
     cursor: pointer;
 }
 
-.jiffyui-avatar.jiffyui-has-action:hover {
+.jf-avatar.jf-has-action:hover {
     opacity: 0.8;
 }
 
-.jiffyui-avatar.jiffyui-has-indicator {
+.jf-avatar.jf-has-indicator {
     position: relative;
 }
 
-.jiffyui-avatar-indicator {
+.jf-avatar-indicator {
     position: absolute;
     top: -0.3rem;
     right: -0.3rem;
     padding: 0.2rem;
-    background: var(--jiffyui-white);
+    background: var(--jf-white);
     border-radius: 100%;
     z-index: 1;
 }
 
-.jiffyui-avatar-indicator .jiffyui-indicator,
-.jiffyui-avatar-indicator .jiffyui-indicator-dot {
+.jf-avatar-indicator .jf-indicator,
+.jf-avatar-indicator .jf-indicator-dot {
     display: block;
 }
 
-.jiffyui-avatar.jiffyui-avatar--xLarge span.jiffyui-indicator-dot {
+.jf-avatar.jf-avatar--xLarge span.jf-indicator-dot {
     height: 1.1rem;
     width: 1.1rem;
 }
 
-.jiffyui-avatar.jiffyui-avatar--large span.jiffyui-indicator-dot {
+.jf-avatar.jf-avatar--large span.jf-indicator-dot {
     width: 0.9rem;
     height: 0.9rem;
 }
 
-.jiffyui-avatar.jiffyui-avatar--medium span.jiffyui-indicator-dot {
+.jf-avatar.jf-avatar--medium span.jf-indicator-dot {
     height: 0.7rem;
     width: 0.7rem;
 }
 
-.jiffyui-avatar.jiffyui-avatar--small span.jiffyui-indicator-dot {
+.jf-avatar.jf-avatar--small span.jf-indicator-dot {
     height: 0.5rem;
     width: 0.5rem;
 }

@@ -23,7 +23,7 @@ const sizes = [
 export default {
   title: "Components/ProgressBar",
   component: ProgressBar,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
 
   argTypes: {
     variant: {

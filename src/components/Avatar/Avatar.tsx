@@ -24,34 +24,34 @@ const Avatar = ({
   const checkSize = (): string => {
     switch (size) {
       case "Small":
-        return "jiffyui-avatar--small";
+        return "jf-avatar--small";
       case "Medium":
-        return "jiffyui-avatar--medium";
+        return "jf-avatar--medium";
       case "Large":
-        return "jiffyui-avatar--large";
+        return "jf-avatar--large";
       case "Xlarge":
-        return "jiffyui-avatar--xLarge";
+        return "jf-avatar--xLarge";
       default:
-        return "jiffyui-avatar--medium";
+        return "jf-avatar--medium";
     }
   };
 
   const checkShape = (): string => {
     switch (shape) {
       case "Circle":
-        return "jiffyui-avatar--circle";
+        return "jf-avatar--circle";
       case "Squire":
-        return "jiffyui-avatar--squire";
+        return "jf-avatar--squire";
       default:
-        return "jiffyui-avatar--squire";
+        return "jf-avatar--squire";
     }
   }
   const avatarSize = checkSize();
   const avatarShape = checkShape();
   return (
-    <div onClick={onClick} className={`jiffyui-avatar ${avatarSize} ${avatarShape} ${srcIco ? "jiffyui-has-image-icon" : ""} ${onClick ? "jiffyui-has-action" : ""} ${indicator ? "jiffyui-has-indicator" : ""}`}>
-      {indicator ? <div className="jiffyui-avatar-indicator">{indicator}</div> : null}
-      <div className="jiffyui-avatar-icon" data-labe={label}>
+    <div onClick={onClick} className={`jf-avatar ${avatarSize} ${avatarShape} ${srcIco ? "jf-has-image-icon" : ""} ${onClick ? "jf-has-action" : ""} ${indicator ? "jf-has-indicator" : ""}`}>
+      {indicator ? <div className="jf-avatar-indicator">{indicator}</div> : null}
+      <div className="jf-avatar-icon" data-labe={label}>
         {srcIco ? (<img src={`${srcIco}`} alt={label ? label : "Avatar"} />) : icon}
       </div>
     </div>

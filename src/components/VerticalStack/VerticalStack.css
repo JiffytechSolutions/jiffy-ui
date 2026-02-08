@@ -1,0 +1,165 @@
+/* VerticalStack Component Styles */
+
+.jf-vertical-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.jf-vertical-stack-container {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Gap utilities - using unique class names to avoid conflicts */
+.jf-vertical-stack-gap-0 {
+  gap: 0;
+}
+
+.jf-vertical-stack-gap-1 {
+  gap: 0.25rem; /* 4px */
+}
+
+.jf-vertical-stack-gap-2 {
+  gap: 0.5rem; /* 8px */
+}
+
+.jf-vertical-stack-gap-3 {
+  gap: 1rem; /* 16px */
+}
+
+.jf-vertical-stack-gap-4 {
+  gap: 1.5rem; /* 24px */
+}
+
+.jf-vertical-stack-gap-5 {
+  gap: 3rem; /* 48px */
+}
+
+/* Responsive gap utilities */
+@media (min-width: 576px) {
+  .jf-vertical-stack-gap-sm-0 { gap: 0; }
+  .jf-vertical-stack-gap-sm-1 { gap: 0.25rem; }
+  .jf-vertical-stack-gap-sm-2 { gap: 0.5rem; }
+  .jf-vertical-stack-gap-sm-3 { gap: 1rem; }
+  .jf-vertical-stack-gap-sm-4 { gap: 1.5rem; }
+  .jf-vertical-stack-gap-sm-5 { gap: 3rem; }
+}
+
+@media (min-width: 768px) {
+  .jf-vertical-stack-gap-md-0 { gap: 0; }
+  .jf-vertical-stack-gap-md-1 { gap: 0.25rem; }
+  .jf-vertical-stack-gap-md-2 { gap: 0.5rem; }
+  .jf-vertical-stack-gap-md-3 { gap: 1rem; }
+  .jf-vertical-stack-gap-md-4 { gap: 1.5rem; }
+  .jf-vertical-stack-gap-md-5 { gap: 3rem; }
+}
+
+@media (min-width: 992px) {
+  .jf-vertical-stack-gap-lg-0 { gap: 0; }
+  .jf-vertical-stack-gap-lg-1 { gap: 0.25rem; }
+  .jf-vertical-stack-gap-lg-2 { gap: 0.5rem; }
+  .jf-vertical-stack-gap-lg-3 { gap: 1rem; }
+  .jf-vertical-stack-gap-lg-4 { gap: 1.5rem; }
+  .jf-vertical-stack-gap-lg-5 { gap: 3rem; }
+}
+
+@media (min-width: 1200px) {
+  .jf-vertical-stack-gap-xl-0 { gap: 0; }
+  .jf-vertical-stack-gap-xl-1 { gap: 0.25rem; }
+  .jf-vertical-stack-gap-xl-2 { gap: 0.5rem; }
+  .jf-vertical-stack-gap-xl-3 { gap: 1rem; }
+  .jf-vertical-stack-gap-xl-4 { gap: 1.5rem; }
+  .jf-vertical-stack-gap-xl-5 { gap: 3rem; }
+}
+
+@media (min-width: 1400px) {
+  .jf-vertical-stack-gap-xxl-0 { gap: 0; }
+  .jf-vertical-stack-gap-xxl-1 { gap: 0.25rem; }
+  .jf-vertical-stack-gap-xxl-2 { gap: 0.5rem; }
+  .jf-vertical-stack-gap-xxl-3 { gap: 1rem; }
+  .jf-vertical-stack-gap-xxl-4 { gap: 1.5rem; }
+  .jf-vertical-stack-gap-xxl-5 { gap: 3rem; }
+}
+
+/* Wrap behavior (rarely used in vertical stacks) */
+.jf-vertical-stack-wrap {
+  flex-wrap: wrap;
+}
+
+.jf-vertical-stack-nowrap {
+  flex-wrap: nowrap;
+}
+
+/* Height and centering utilities */
+.jf-vertical-stack-full-height {
+  height: 100%;
+  min-height: 100%;
+}
+
+.jf-vertical-stack-centered {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* Ensure proper flex behavior */
+.jf-vertical-stack > *,
+.jf-vertical-stack-container > * {
+  flex-shrink: 0;
+}
+
+/* Alignment utilities for horizontal alignment in vertical stack */
+.jf-vertical-stack .jf-align-items-start,
+.jf-vertical-stack-container .jf-align-items-start {
+  align-items: flex-start;
+}
+
+.jf-vertical-stack .jf-align-items-center,
+.jf-vertical-stack-container .jf-align-items-center {
+  align-items: center;
+}
+
+.jf-vertical-stack .jf-align-items-end,
+.jf-vertical-stack-container .jf-align-items-end {
+  align-items: flex-end;
+}
+
+.jf-vertical-stack .jf-align-items-baseline,
+.jf-vertical-stack-container .jf-align-items-baseline {
+  align-items: baseline;
+}
+
+.jf-vertical-stack.jf-align-items-stretch,
+.jf-vertical-stack-container.jf-align-items-stretch {
+  align-items: stretch;
+}
+
+/* Justify content utilities for vertical alignment in vertical stack */
+.jf-vertical-stack .jf-justify-content-start,
+.jf-vertical-stack-container .jf-justify-content-start {
+  justify-content: flex-start;
+}
+
+.jf-vertical-stack .jf-justify-content-center,
+.jf-vertical-stack-container .jf-justify-content-center {
+  justify-content: center;
+}
+
+.jf-vertical-stack .jf-justify-content-end,
+.jf-vertical-stack-container .jf-justify-content-end {
+  justify-content: flex-end;
+}
+
+.jf-vertical-stack .jf-justify-content-between,
+.jf-vertical-stack-container .jf-justify-content-between {
+  justify-content: space-between;
+}
+
+.jf-vertical-stack .jf-justify-content-around,
+.jf-vertical-stack-container .jf-justify-content-around {
+  justify-content: space-around;
+}
+
+.jf-vertical-stack .jf-justify-content-evenly,
+.jf-vertical-stack-container .jf-justify-content-evenly {
+  justify-content: space-evenly;
+}

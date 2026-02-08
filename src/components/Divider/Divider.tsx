@@ -10,49 +10,49 @@ const Divider = ({
   const checkThikness = (): string => {
     switch (thickness) {
       case "Thinner":
-        return "jiffyui-divider--thinner";
+        return "jf-divider--thinner";
       case "Thin":
-        return "jiffyui-divider--thin";
+        return "jf-divider--thin";
       case "Thick":
-        return "jiffyui-divider--thick";
+        return "jf-divider--thick";
       case "Thicker":
-        return "jiffyui-divider--thicker";
+        return "jf-divider--thicker";
       default:
-        return "jiffyui-divider--thinner";
+        return "jf-divider--thinner";
     }
   };
 
   const checkStyle = (): string => {
     switch (type) {
       case "Solid":
-        return "jiffyui-divider--solid";
+        return "jf-divider--solid";
       case "Dashed":
-        return "jiffyui-divider--dashed";
+        return "jf-divider--dashed";
       case "Dotted":
-        return "jiffyui-divider--dotted";
+        return "jf-divider--dotted";
       default:
-        return "jiffyui-divider--solid";
+        return "jf-divider--solid";
     }
   };
 
   const checkColor = (): string => {
     switch (color) {
       case "Normal":
-        return "jiffyui-indicator--normal";
+        return "jf-indicator--normal";
       case "Subtile":
-        return "jiffyui-indicator--subtile";
+        return "jf-indicator--subtile";
       case "Muted":
-        return "jiffyui-indicator--muted";
+        return "jf-indicator--muted";
       default:
-        return "jiffyui-indicator--normal";
+        return "jf-indicator--normal";
     }
   };
   const checkOrientation = (): string => {
     switch (orientation) {
       case "Vertical":
-        return "jiffyui-divider--vertical";
+        return "jf-divider--vertical";
       default:
-        return "jiffyui-divider--horizontal";
+        return "jf-divider--horizontal";
     }
   };
 
@@ -61,7 +61,7 @@ const Divider = ({
   const dividerStyle = checkStyle();
   const dividerOrientation = checkOrientation();
   return (
-    <div className={`jiffyui-divider ${dividertThikness} ${DividerColor} ${dividerStyle} ${dividerOrientation}`}>
+    <div className={`jf-divider ${dividertThikness} ${DividerColor} ${dividerStyle} ${dividerOrientation}`}>
     </div>
   );
 };

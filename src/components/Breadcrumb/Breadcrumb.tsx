@@ -8,45 +8,45 @@ const Breadcrumb = (props: BreadcrumbI): JSX.Element => {
   return (
     <nav
       className={classnames({
-        "Pixel-breadCrumb": true,
+        "jf-breadCrumb": true,
       })}
       aria-label="breadCrumb"
     >
-      <ul className="Pixel-breadCrumb__list">
+      <ul className="jf-breadCrumb__list">
         {items.map((e, i) => {
           return (
             <React.Fragment key={i}>
               {i !== 0 ? (
                 <li
                   className={classnames({
-                    "Pixel-breadCrumb__item": true,
-                    "Pixel-breadCrumb__item--active":
+                    "jf-breadCrumb__item": true,
+                    "jf-breadCrumb__item--active":
                       i === Object.keys(items).length - 1,
                   })}
                 >
-                  <span className="Pixel-breadcrumb__separator mr-4">/</span>
+                  <span className="jf-breadcrumb__separator mr-4">/</span>
                   {i === Object.keys(items).length - 1 ? (
-                    <span className="Pixel-item__text--active">{e.label}</span>
+                    <span className="jf-item__text--active">{e.label}</span>
                   ) : (
                     <span
                       role="none"
                       onClick={() => {
                         onClick?.(e.value, e);
                       }}
-                      className="Pixel-item__text"
+                      className="jf-item__text"
                     >
                       {e.label}
                     </span>
                   )}
                 </li>
               ) : (
-                <li className="Pixel-breadCrumb__item">
+                <li className="jf-breadCrumb__item">
                   <span
                     role="none"
                     onClick={() => {
                       onClick?.(e.value, e);
                     }}
-                    className="Pixel-item__text"
+                    className="jf-item__text"
                   >
                     {e.label}
                   </span>

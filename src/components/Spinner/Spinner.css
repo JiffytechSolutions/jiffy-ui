@@ -1,11 +1,11 @@
-.spinner {
+.jf-spinner {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     gap: 0.4rem;
 }
 
-.spinner .spinner-circle {
+.jf-spinner .jf-spinner-circle {
     -moz-animation: rotation 1s infinite linear;
     -o-animation: rotation 1s infinite linear;
     -webkit-animation: rotation 0.75s linear infinite;
@@ -16,78 +16,78 @@
     border-style: solid;
 }
 
-label.spinner-label {
+label.jf-spinner-label {
     color: #6a6a6a;
 }
 
 
-.spinner-large .spinner-circle {
+.jf-spinner-large .jf-spinner-circle {
     width: 2.4rem;
     height: 2.4rem;
 }
 
-.spinner-medium .spinner-circle {
+.jf-spinner-medium .jf-spinner-circle {
     width: 2rem;
     height: 2rem;
 }
 
-.spinner-small .spinner-circle {
+.jf-spinner-small .jf-spinner-circle {
     width: 1.6rem;
     height: 1.6rem;
 }
 
-label.spinner-label {
+label.jf-spinner-label {
     font-size: 1.4rem;
     color: #6a6a6a;
 }
 
 
-.spinner-small .spinner-label {
+.jf-spinner-small .jf-spinner-label {
     font-size: 1.2rem;
 }
 
-.spinner-medium .spinner-label {
+.jf-spinner-medium .jf-spinner-label {
     font-size: 1.3rem;
 }
 
 
 
-.spinner.spinner-small .spinner-circle {
+.jf-spinner.jf-spinner-small .jf-spinner-circle {
     border-width: 0.1rem;
 }
 
 
-.spinner-positive .spinner-circle {
-    border-color: var(--jiffyui-Possitive-800);
-    border-left-color: var(--jiffyui-Possitive-600);
+.jf-spinner-positive .jf-spinner-circle {
+    border-color: var(--jf-Possitive-800);
+    border-left-color: var(--jf-Possitive-600);
 }
 
-.spinner-negative .spinner-circle {
-    border-color: var(--jiffyui-Negative-800);
-    border-left-color: var(--jiffyui-Negative-400);
+.jf-spinner-negative .jf-spinner-circle {
+    border-color: var(--jf-Negative-800);
+    border-left-color: var(--jf-Negative-400);
 }
 
-.spinner-notice .spinner-circle {
-    border-color: var(--jiffyui-Notice-800);
-    border-left-color: var(--jiffyui-Notice-400);
+.jf-spinner-notice .jf-spinner-circle {
+    border-color: var(--jf-Notice-800);
+    border-left-color: var(--jf-Notice-400);
 }
 
-.spinner-info .spinner-circle {
-    border-color: var(--jiffyui-Sapphire-800);
-    border-left-color: var(--jiffyui-Sapphire-500);
+.jf-spinner-info .jf-spinner-circle {
+    border-color: var(--jf-Sapphire-800);
+    border-left-color: var(--jf-Sapphire-500);
 }
 
-.spinner-neutral .spinner-circle {
-    border-color: var(--jiffyui-Cloud-800);
-    border-left-color: var(--jiffyui-Cloud-400);
+.jf-spinner-neutral .jf-spinner-circle {
+    border-color: var(--jf-Cloud-800);
+    border-left-color: var(--jf-Cloud-400);
 }
 
-.spinner-primary .spinner-circle {
-    border-color: var(--jiffyui-Cerulean-800);
-    border-left-color: var(--jiffyui-Cerulean-500);
+.jf-spinner-primary .jf-spinner-circle {
+    border-color: var(--jf-Cerulean-800);
+    border-left-color: var(--jf-Cerulean-500);
 }
 
-.spinner.spinner-labelRight {
+.jf-spinner.jf-spinner-labelRight {
     flex-direction: row;
     gap: 1rem;
 }

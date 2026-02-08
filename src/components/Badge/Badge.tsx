@@ -12,55 +12,55 @@ import "./badge.css";
     const checkSize = (): string => {
         switch (size) {
             case "Small":
-                return "badge--small";
+                return "jf-badge--small";
             case "Medium":
-                return "badge--medium";
+                return "jf-badge--medium";
             case "Large":
-                return "badge--large";
+                return "jf-badge--large";
             default:
-                return "badge--medium";
+                return "jf-badge--medium";
         }
     };
 
     const checkColor = (): string => {
         switch (color) {
             case "Positive":
-                return "badge--positive";
+                return "jf-badge--positive";
             case "Negative":
-                return "badge--negative";
+                return "jf-badge--negative";
             case "Notice":
-                return "badge--notice";
+                return "jf-badge--notice";
             case "Neutral":
-                return "badge--neutral";
+                return "jf-badge--neutral";
             case "Primary":
-                return "badge--primary";
+                return "jf-badge--primary";
             default:
-                return "badge--positive";
+                return "jf-badge--positive";
         }
     }
     const checkType = (): string => {
         switch (type) {
             case "Partial":
-                return "badge--type__partial";
+                return "jf-badge--type__partial";
             case "Full":
-                return "badge--type__full";
+                return "jf-badge--type__full";
             case "None":
-                return "badge--type__none";
+                return "jf-badge--type__none";
             default:
-                return "badge--type__none";
+                return "jf-badge--type__none";
         }
     };
 
     const checkEmphasis = (): string => {
         switch (emphasis) {
             case "Subtile":
-                return "badge--subtile";
+                return "jf-badge--subtile";
             case "Intense":
-                return "badge--intense";
+                return "jf-badge--intense";
             case "OutLine":
-                return "badge--outline";
+                return "jf-badge--outline";
             default:
-                return "badge--subtile";
+                return "jf-badge--subtile";
         }
     }
 
@@ -70,11 +70,11 @@ import "./badge.css";
     const BadgeEmphasis = checkEmphasis();
 
     return (
-        <div className="badge-wrapp">
-            <div className={`badge ${BadgeSize} ${BadgeColor} ${BadgeType} ${BadgeEmphasis}`}>
-                {type === "Partial" ? <span className="partial"></span> : null}
-                {type === "Full" ? <span className="complete"></span> : null}
-                <label className="badge-label">
+        <div className="jf-badge-wrapp">
+            <div className={`jf-badge ${BadgeSize} ${BadgeColor} ${BadgeType} ${BadgeEmphasis}`}>
+                {type === "Partial" ? <span className="jf-partial"></span> : null}
+                {type === "Full" ? <span className="jf-complete"></span> : null}
+                <label className="jf-badge-label">
                     {children}
                 </label>
             </div>

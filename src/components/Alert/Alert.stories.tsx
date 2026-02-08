@@ -1,142 +1,213 @@
 import React from "react";
+import FlexLayout from "../FlexLayout/FlexLayout";
 import Alert from "./Alert";
-import { ExternalLink } from "react-feather";
-import VerticalFlex from "../VerticalFlex/VerticalFlex";
+import VerticalStack from "../VerticalStack/VerticalStack";
+import InlineStack from "../InlineStack/InlineStack";
 
-const emphasis = ["Subtile", "Intense"];
-const color = ["Primary", "Positive", "Negative", "Waiting", "Neutral"];
+const emphasis = ["Subtle", "Intense"];
+const variants = ["default", "success", "error", "warning", "info"];
 
 export default {
-  title: "Components(Done)/Alert",
+  title: "Components/Alert",
   component: Alert,
   tags: ["autodocs"],
   argTypes: {
     title: {
-      description: "Type title",
+      description: "Alert title",
       control: {
         type: "text",
       },
-      defaultValue: "",
+      defaultValue: "Alert Title",
     },
-    description: {
-      description: "Type description",
+    children: {
+      description: "Alert message content",
       control: {
         type: "text",
       },
-      defaultValue: "",
+      defaultValue: "This is an alert message.",
     },
-    color: {
-      description: "Select Color",
+    variant: {
+      description: "Select variant",
       control: {
         type: "radio",
-        options: color,
+        options: variants,
       },
-      defaultValue: "",
+      defaultValue: "default",
     },
-
     emphasis: {
       description: "Select emphasis",
       control: {
         type: "radio",
         options: emphasis,
       },
-      defaultValue: "Subtile",
+      defaultValue: "Subtle",
     },
-    onDismiss: {
-
-    }
   },
+  args: {
+    title: "Alert Title",
+    children: "This is an alert message.",
+    variant: "default",
+    emphasis: "Subtle",
+  }
 };
 
-const primaryAction1 = {
-  isLoading: false,
-  content: "Action",
-  onClick: () => {
-    alert("Conngratulations You proceeded :)");
-  },
-};
-const secondoryAction1 = {
-  icon: <ExternalLink size={18} />,
-  label: "Click me",
-  onClick: () => {
-    alert("Conngratulations You proceeded :)");
-  },
-};
 const Template = ({ ...rest }) => {
   return (
     <Alert
-      description={rest.description}
-      icon={rest.icon}
-      color={rest.color}
-      emphasis={rest.emphasis}
       title={rest.title}
-      primaryAction={primaryAction1}
-      secondaryAction={secondoryAction1}
-      onDismiss={() => { alert('ttttttt'); }}
-    />
+      variant={rest.variant}
+      emphasis={rest.emphasis}
+      onDismiss={rest.onDismiss ? () => alert("Alert dismissed!") : undefined}
+      primaryAction={rest.primaryAction}
+      secondaryAction={rest.secondaryAction}
+    >
+      {rest.children}
+    </Alert>
   );
 };
 
 export const Primary = Template.bind({});
 
-// Alert without action
-export const Alert_without_action: any = Template.bind({});
-Alert_without_action.decorators = [
+// Alert with multiple variants
+export const Alert_with_multiple_variants: any = Template.bind({});
+Alert_with_multiple_variants.decorators = [
   () => {
     return (
-      <VerticalFlex gap={10}>
-        <Alert
-          description={"Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."}
-          icon={<ExternalLink />}
-          color={"Negative"}
-          emphasis={"Subtile"}
-          title={"Lorem ipsum is placeholder"}
-        />
-      </VerticalFlex>
+      <VerticalStack gap={4}>
+        <Alert variant="default" title="Default Alert">
+          This is a default alert message.
+        </Alert>
+        <Alert variant="success" title="Success Alert">
+          This is a success alert message.
+        </Alert>
+        <Alert variant="error" title="Error Alert">
+          This is an error alert message.
+        </Alert>
+        <Alert variant="warning" title="Warning Alert">
+          This is a warning alert message.
+        </Alert>
+        <Alert variant="info" title="Info Alert">
+          This is an info alert message.
+        </Alert>
+      </VerticalStack>
     );
   },
 ];
 
-// Alert with multiple color
-export const Alert_with_multiple_color: any = Template.bind({});
-Alert_with_multiple_color.decorators = [
+// Alert with multiple emphasis levels
+export const Alert_with_emphasis_levels: any = Template.bind({});
+Alert_with_emphasis_levels.decorators = [
   () => {
     return (
-      <VerticalFlex gap={10}>
-        {color.map((color: any) => (
-          <Alert
-            description={"Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."}
-            icon={<ExternalLink size={18} />}
-            color={color}
-            emphasis={"Subtile"}
-            title={"Lorem ipsum is placeholder"}
-            primaryAction={primaryAction1}
-            secondaryAction={secondoryAction1}
-          />
-        ))}
-      </VerticalFlex>
+      <VerticalStack gap={4} align={"stretch"}>
+        <VerticalStack gap={2} align={"stretch"}>
+          <h3>Subtle Emphasis</h3>
+          <VerticalStack gap={4} align={"stretch"}>
+            <Alert variant="success" emphasis="Subtle" title="Subtle Success">
+              This is a subtle success alert.
+            </Alert>
+            <Alert variant="error" emphasis="Subtle" title="Subtle Error">
+              This is a subtle error alert.
+            </Alert>
+          </VerticalStack>
+        </VerticalStack>
+        <VerticalStack gap={2} align={"stretch"}>
+          <h3>Intense Emphasis</h3>
+          <VerticalStack gap={4} align={"stretch"}>
+            <Alert variant="success" emphasis="Intense" title="Intense Success">
+              This is an intense success alert.
+            </Alert>
+            <Alert variant="error" emphasis="Intense" title="Intense Error">
+              This is an intense error alert.
+            </Alert>
+          </VerticalStack>
+        </VerticalStack>
+      </VerticalStack>
     );
   },
 ];
 
-// Alert with multiple color and Intense
-export const Alert_with_multiple_color_and_Intense: any = Template.bind({});
-Alert_with_multiple_color_and_Intense.decorators = [
+// Dismissible alerts
+export const Alert_with_dismiss_action: any = Template.bind({});
+Alert_with_dismiss_action.decorators = [
   () => {
     return (
-      <VerticalFlex gap={10}>
-        {color.map((color: any) => (
-          <Alert
-            description={"Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."}
-            icon={<ExternalLink size={18} />}
-            color={color}
-            emphasis={"Intense"}
-            title={"Lorem ipsum is placeholder"}
-            primaryAction={primaryAction1}
-            secondaryAction={secondoryAction1}
-          />
-        ))}
-      </VerticalFlex>
+      <VerticalStack gap={4}>
+        <Alert 
+          variant="default"
+          title="Dismissible Default Alert"
+          onDismiss={() => alert("Default alert dismissed!")}
+        >
+          You can dismiss this default alert by clicking the X button.
+        </Alert>
+        <Alert 
+          variant="success"
+          title="Dismissible Success Alert"
+          onDismiss={() => alert("Success alert dismissed!")}
+        >
+          You can dismiss this success alert by clicking the X button.
+        </Alert>
+        <Alert 
+          variant="error"
+          title="Dismissible Error Alert"
+          onDismiss={() => alert("Error alert dismissed!")}
+        >
+          You can dismiss this error alert by clicking the X button.
+        </Alert>
+      </VerticalStack>
+    );
+  },
+];
+
+// Alerts with actions
+export const Alert_with_primary_and_secondary_actions: any = Template.bind({});
+Alert_with_primary_and_secondary_actions.decorators = [
+  () => {
+    return (
+      <VerticalStack gap={4}>
+        <Alert 
+          variant="warning"
+          title="Update Available"
+          primaryAction={{
+            children: "Update Now",
+            onClick: () => alert("Update clicked!"),
+          }}
+          secondaryAction={{
+            children: "Later",
+            onClick: () => alert("Later clicked!"),
+          }}
+        >
+          A new version is available. Would you like to update now?
+        </Alert>
+        
+        <Alert 
+          variant="error"
+          title="Connection Failed"
+          primaryAction={{
+            children: "Retry",
+            onClick: () => alert("Retry clicked!"),
+          }}
+          secondaryAction={{
+            children: "Get Help",
+            variant: "Link",
+            onClick: () => alert("Help clicked!"),
+          }}
+        >
+          Unable to connect to the server. Please try again.
+        </Alert>
+        
+        <Alert 
+          variant="success"
+          title="Task Completed"
+          onDismiss={() => alert("Alert dismissed!")}
+          primaryAction={{
+            children: "View Details",
+            onClick: () => alert("View details clicked!"),
+          }}
+        >
+          Your task has been completed successfully.
+        </Alert>
+      </VerticalStack>
     );
   },
 ];

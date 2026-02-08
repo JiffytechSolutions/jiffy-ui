@@ -1,14 +1,465 @@
-.inte-copyClipboard {
+/* Copy Clipboard Component Styles */
+.jf-copy-clipboard {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  gap: var(--jf-borderRadius-medium);
+  font-family: var(--jf-regular-font);
+}
+
+/* Action-only mode */
+.jf-copy-clipboard--action-only {
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+}
+
+/* Variants */
+.jf-copy-clipboard--inline {
+  background: transparent;
+}
+
+.jf-copy-clipboard--outlined {
+  border: var(--jf-borderWidth-thin) solid var(--jf-naturalLight-300);
+  border-radius: var(--jf-borderRadius-medium);
+  padding: var(--jf-borderRadius-large);
+  background: var(--jf-naturalLight-000);
+}
+
+.jf-copy-clipboard--filled {
+  background: var(--jf-naturalLight-100);
+  border-radius: var(--jf-borderRadius-medium);
+  padding: var(--jf-borderRadius-large);
+  border: var(--jf-borderWidth-thin) solid var(--jf-naturalLight-200);
+}
+
+.jf-copy-clipboard--minimal {
+  background: transparent;
+  padding: var(--jf-borderRadius-small);
+}
+
+/* Size variants */
+.jf-copy-clipboard--small {
+  font-size: 1.2rem;
+  gap: var(--jf-borderRadius-small);
+}
+
+.jf-copy-clipboard--small .jf-copy-clipboard-content {
+  gap: var(--jf-borderRadius-small);
+}
+
+.jf-copy-clipboard--medium {
+  font-size: 1.4rem;
+  gap: var(--jf-borderRadius-medium);
+}
+
+.jf-copy-clipboard--medium .jf-copy-clipboard-content {
+  gap: var(--jf-borderRadius-medium);
+}
+
+.jf-copy-clipboard--large {
+  font-size: 1.6rem;
+  gap: var(--jf-borderRadius-large);
+}
+
+.jf-copy-clipboard--large .jf-copy-clipboard-content {
+  gap: var(--jf-borderRadius-large);
+}
+
+/* States */
+.jf-copy-clipboard--disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.jf-copy-clipboard--copied .jf-copy-clipboard-button {
+  background-color: var(--jf-Possitive-100);
+  border-color: var(--jf-Possitive-300);
+  color: var(--jf-Possitive-700);
+}
+
+/* Label */
+.jf-copy-clipboard-label {
   display: flex;
   align-items: center;
-  gap: 1.6rem;
 }
-.inte-copyClip__center {
+
+.jf-copy-clipboard-label-text {
+  font-weight: 500;
+  color: var(--jf-naturalDark-900);
+  font-size: inherit;
+}
+
+/* Content container */
+.jf-copy-clipboard-content {
+  display: flex;
+  align-items: center;
+  gap: var(--jf-borderRadius-medium);
+  min-height: 3.2rem;
+}
+
+/* Preview text */
+.jf-copy-clipboard-preview {
+  display: flex;
+  align-items: center;
+  gap: var(--jf-borderRadius-small);
+  flex: 1;
+  min-width: 0;
+  padding: var(--jf-borderRadius-small) var(--jf-borderRadius-medium);
+  background: var(--jf-naturalLight-050);
+  border: var(--jf-borderWidth-thin) solid var(--jf-naturalLight-200);
+  border-radius: var(--jf-borderRadius-medium);
+  transition: all 0.2s ease;
+}
+
+.jf-copy-clipboard-preview:hover {
+  border-color: var(--jf-naturalLight-300);
+  background: var(--jf-naturalLight-100);
+}
+
+.jf-copy-clipboard-preview-text {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--jf-regular-font);
+  font-size: inherit;
+  color: var(--jf-naturalDark-800);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+/* Buttons */
+.jf-copy-clipboard-button {
+  display: inline-flex;
+  align-items: center;
   justify-content: center;
+  gap: var(--jf-borderRadius-small);
+  border: var(--jf-borderWidth-thin) solid var(--jf-naturalLight-300);
+  background: var(--jf-naturalLight-000);
+  color: var(--jf-naturalDark-800);
+  border-radius: var(--jf-borderRadius-medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--jf-medium-font);
+  font-size: inherit;
+  font-weight: 500;
+  outline: none;
+  position: relative;
+  overflow: hidden;
 }
-.inte-copyClip__end {
-  justify-content: end;
+
+.jf-copy-clipboard-button:hover {
+  background: var(--jf-naturalLight-100);
+  border-color: var(--jf-naturalLight-400);
+  transform: translateY(-1px);
+  box-shadow: var(--jf-low-elevation);
 }
-.inte-copyClip__fill {
-  justify-content: space-between;
+
+.jf-copy-clipboard-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.jf-copy-clipboard-button:focus {
+  border-color: var(--jf-primary-color);
+  box-shadow: 0 0 0 3px var(--jf-Cerulean-100);
+}
+
+.jf-copy-clipboard-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Icon-only button */
+.jf-copy-clipboard-button--icon-only {
+  padding: var(--jf-borderRadius-medium);
+  min-width: 3.2rem;
+  height: 3.2rem;
+}
+
+.jf-copy-clipboard--small .jf-copy-clipboard-button--icon-only {
+  padding: var(--jf-borderRadius-small);
+  min-width: 2.8rem;
+  height: 2.8rem;
+}
+
+.jf-copy-clipboard--large .jf-copy-clipboard-button--icon-only {
+  padding: 1rem;
+  min-width: 4rem;
+  height: 4rem;
+}
+
+/* Button with text */
+.jf-copy-clipboard-button--with-text {
+  padding: var(--jf-borderRadius-medium) var(--jf-borderRadius-large);
+  min-height: 3.2rem;
+}
+
+.jf-copy-clipboard--small .jf-copy-clipboard-button--with-text {
+  padding: var(--jf-borderRadius-small) var(--jf-borderRadius-medium);
+  min-height: 2.8rem;
+}
+
+.jf-copy-clipboard--large .jf-copy-clipboard-button--with-text {
+  padding: 1rem 1.6rem;
+  min-height: 4rem;
+}
+
+/* Reveal button */
+.jf-copy-clipboard-button--reveal {
+  background: transparent;
+  border: none;
+  padding: var(--jf-borderRadius-small);
+  color: var(--jf-naturalDark-600);
+  min-width: auto;
+  height: auto;
+}
+
+.jf-copy-clipboard-button--reveal:hover {
+  background: var(--jf-naturalLight-200);
+  color: var(--jf-naturalDark-800);
+  transform: none;
+  box-shadow: none;
+}
+
+.jf-copy-clipboard-button--reveal:focus {
+  border-color: transparent;
+  box-shadow: 0 0 0 2px var(--jf-primary-color);
+  border-radius: var(--jf-borderRadius-small);
+}
+
+/* Action button styles */
+.jf-copy-clipboard-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--jf-borderRadius-small);
+  border: var(--jf-borderWidth-thin) solid var(--jf-primary-color);
+  background: var(--jf-primary-color);
+  color: var(--jf-naturalLight-000);
+  border-radius: var(--jf-borderRadius-medium);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: var(--jf-medium-font);
+  font-size: inherit;
+  font-weight: 500;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.jf-copy-clipboard-action-button:hover {
+  background: var(--jf-Cerulean-600);
+  border-color: var(--jf-Cerulean-600);
+  transform: translateY(-1px);
+  box-shadow: var(--jf-low-elevation);
+}
+
+.jf-copy-clipboard-action-button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.jf-copy-clipboard-action-button:focus {
+  box-shadow: 0 0 0 3px var(--jf-Cerulean-100);
+}
+
+.jf-copy-clipboard-action-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Action button variants */
+.jf-copy-clipboard-action-button--icon {
+  padding: var(--jf-borderRadius-medium);
+  min-width: 3.2rem;
+  height: 3.2rem;
+}
+
+.jf-copy-clipboard-action-button--text {
+  padding: var(--jf-borderRadius-medium) var(--jf-borderRadius-large);
+  min-height: 3.2rem;
+}
+
+.jf-copy-clipboard-action-button--icon-text {
+  padding: var(--jf-borderRadius-medium) var(--jf-borderRadius-large);
+  min-height: 3.2rem;
+}
+
+/* Size variants for action buttons */
+.jf-copy-clipboard--small .jf-copy-clipboard-action-button--icon {
+  padding: var(--jf-borderRadius-small);
+  min-width: 2.8rem;
+  height: 2.8rem;
+}
+
+.jf-copy-clipboard--small .jf-copy-clipboard-action-button--text,
+.jf-copy-clipboard--small .jf-copy-clipboard-action-button--icon-text {
+  padding: var(--jf-borderRadius-small) var(--jf-borderRadius-medium);
+  min-height: 2.8rem;
+}
+
+.jf-copy-clipboard--large .jf-copy-clipboard-action-button--icon {
+  padding: 1rem;
+  min-width: 4rem;
+  height: 4rem;
+}
+
+.jf-copy-clipboard--large .jf-copy-clipboard-action-button--text,
+.jf-copy-clipboard--large .jf-copy-clipboard-action-button--icon-text {
+  padding: 1rem 1.6rem;
+  min-height: 4rem;
+}
+
+/* Success state for action buttons */
+.jf-copy-clipboard--copied .jf-copy-clipboard-action-button {
+  background-color: var(--jf-Possitive-600);
+  border-color: var(--jf-Possitive-600);
+}
+
+.jf-copy-clipboard--copied .jf-copy-clipboard-action-button:hover {
+  background-color: var(--jf-Possitive-700);
+  border-color: var(--jf-Possitive-700);
+}
+
+/* Secondary action button variant */
+.jf-copy-clipboard-action-button--secondary {
+  background: var(--jf-naturalLight-000);
+  color: var(--jf-primary-color);
+  border-color: var(--jf-primary-color);
+}
+
+.jf-copy-clipboard-action-button--secondary:hover {
+  background: var(--jf-Cerulean-050);
+  color: var(--jf-Cerulean-600);
+  border-color: var(--jf-Cerulean-600);
+}
+
+/* Ghost action button variant */
+.jf-copy-clipboard-action-button--ghost {
+  background: transparent;
+  color: var(--jf-primary-color);
+  border-color: transparent;
+}
+
+.jf-copy-clipboard-action-button--ghost:hover {
+  background: var(--jf-Cerulean-050);
+  color: var(--jf-Cerulean-600);
+  border-color: var(--jf-Cerulean-100);
+}
+
+/* Button text */
+.jf-copy-clipboard-button-text {
+  font-size: inherit;
+  line-height: 1;
+}
+
+/* Success animation */
+@keyframes copySuccess {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.jf-copy-clipboard--copied .jf-copy-clipboard-button--icon-only,
+.jf-copy-clipboard--copied .jf-copy-clipboard-action-button {
+  animation: copySuccess 0.3s ease;
+}
+
+/* Toast notification */
+.jf-copy-clipboard-toast {
+  position: absolute;
+  top: -4rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: var(--jf-borderRadius-small);
+  padding: var(--jf-borderRadius-medium) var(--jf-borderRadius-large);
+  background: var(--jf-naturalDark-1200);
+  color: var(--jf-naturalLight-000);
+  border-radius: var(--jf-borderRadius-medium);
+  font-size: 1.2rem;
+  font-weight: 500;
+  white-space: nowrap;
+  z-index: 1000;
+  animation: toastSlideIn 0.3s ease;
+  box-shadow: var(--jf-mid-elevation);
+}
+
+.jf-copy-clipboard-toast::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid var(--jf-naturalDark-1200);
+}
+
+@keyframes toastSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .jf-copy-clipboard-content {
+    gap: var(--jf-borderRadius-small);
+  }
+  
+  .jf-copy-clipboard-preview {
+    padding: var(--jf-borderRadius-small);
+  }
+  
+  .jf-copy-clipboard-button--with-text {
+    padding: var(--jf-borderRadius-small) var(--jf-borderRadius-medium);
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .jf-copy-clipboard-button {
+    border-width: 2px;
+  }
+  
+  .jf-copy-clipboard-preview {
+    border-width: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .jf-copy-clipboard-button,
+  .jf-copy-clipboard-preview,
+  .jf-copy-clipboard-toast {
+    transition: none;
+    animation: none;
+  }
+  
+  .jf-copy-clipboard-button:hover {
+    transform: none;
+  }
+  
+  .jf-copy-clipboard--copied .jf-copy-clipboard-button--icon-only {
+    animation: none;
+  }
 }

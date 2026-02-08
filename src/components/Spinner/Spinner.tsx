@@ -11,21 +11,21 @@ import "./Spinner.css";
   const getSpinnerSize = () => {
     switch (size) {
       case "Small":
-        return "spinner-small";
+        return "jf-spinner-small";
       case "Medium":
-        return "spinner-medium";
+        return "jf-spinner-medium";
       case "Large":
-        return "spinner-large";
+        return "jf-spinner-large";
       default:
-        return "spinner-large";
+        return "jf-spinner-large";
     }
   };
   const getLabelPosition = () => {
     switch (labelPosition) {
       case "Right":
-        return "spinner-labelRight";
+        return "jf-spinner-labelRight";
       case "Bottom":
-        return "spinner-labelBottom";
+        return "jf-spinner-labelBottom";
       default:
         return "";
     }
@@ -34,19 +34,19 @@ import "./Spinner.css";
   const getSpinnerColor = () => {
     switch (color) {
       case "Positive":
-        return "spinner-positive";
+        return "jf-spinner-positive";
       case "Negative":
-        return "spinner-negative";
+        return "jf-spinner-negative";
       case "Notice":
-        return "spinner-notice";
+        return "jf-spinner-notice";
       case "Information":
-        return "spinner-info";
+        return "jf-spinner-info";
       case "Neutral":
-        return "spinner-neutral";
+        return "jf-spinner-neutral";
       case "Primary":
-        return "spinner-primary";
+        return "jf-spinner-primary";
       default:
-        return "spinner-neutral";
+        return "jf-spinner-neutral";
     }
   };
 
@@ -54,9 +54,9 @@ import "./Spinner.css";
   const labelPosition1 = getLabelPosition();
   const spinnerColor = getSpinnerColor();
   return (
-    <div className={`spinner ${spinnerSize} ${labelPosition1} ${spinnerColor}`}>
-      <div className="spinner-circle"></div>
-      {label && <label className="spinner-label">{label}</label>}
+    <div className={`jf-spinner ${spinnerSize} ${labelPosition1} ${spinnerColor}`}>
+      <div className="jf-spinner-circle"></div>
+      {label && <label className="jf-spinner-label">{label}</label>}
     </div>
   );
 };

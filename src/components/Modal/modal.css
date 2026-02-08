@@ -1,82 +1,205 @@
-.jiffyui-modal {
-    position: fixed;
-    z-index: 9999;
-    background: #fff;
-    transition: 0.8s all;
-    max-width: 600px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-50%) scale(0.95);
-    top: -230%;
-    opacity: 0;
-    border-radius: 5px;
-    visibility: hidden;
-    opacity: 0;
-}
-.jiffyui-modal.open {
-    right: 0;
-    top: 50%;
-    opacity: 1;
-    transform: translateX(-50%) translateY(-50%) scale(1);
-    visibility: visible;
-    opacity: 1;
-}
-.jiffyui-modal_overlay {
+/* Modal Overlay */
+.jf-modal_overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0,0,0,.8);
+    background-color: rgba(0, 0, 0, 0.6);
     opacity: 0;
-    z-index: -99;
+    z-index: 9998;
     visibility: hidden;
-    transition: 0.4s all;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    backdrop-filter: blur(2px);
 }
-.jiffyui-modal_overlay.open {
-    opacity: 0.5;
-    z-index: 999;
+
+.jf-modal_overlay.open {
+    opacity: 1;
     visibility: visible;
 }
 
-.jiffyui-modal-header {
+/* Modal Container */
+.jf-modal {
+    position: fixed;
+    z-index: 9999;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    left: 50%;
+    top: 50%;
+    transform: translateX(-50%) translateY(-50%) scale(0.9);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 90vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.jf-modal.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-50%) scale(1);
+}
+
+/* Size Variants */
+.jf-modal--small {
+    max-width: 400px;
+    width: 90%;
+}
+
+.jf-modal--medium {
+    max-width: 600px;
+    width: 90%;
+}
+
+.jf-modal--large {
+    max-width: 800px;
+    width: 90%;
+}
+
+.jf-modal--fullscreen {
+    max-width: 95vw;
+    max-height: 95vh;
+    width: 95vw;
+    height: 95vh;
+    border-radius: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .jf-modal {
+        margin: 1rem;
+        width: calc(100% - 2rem);
+        max-width: none;
+    }
+    
+    .jf-modal--fullscreen {
+        margin: 0;
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+}
+
+/* Modal Inner Container */
+.jf-modal_inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+.jf-modal-content {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* Modal Header */
+.jf-modal-header {
     display: flex;
     justify-content: space-between;
-    flex-wrap: wrap;
-    padding: 1.6rem;
-    border-bottom: 1px solid #e4e4e4;
     align-items: center;
-    padding-right: 50px;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    border-bottom: 1px solid #e5e7eb;
+    flex-shrink: 0;
     position: relative;
 }
-.jiffyui-modal {
-    .jiffyui-close-button {
-        border: none;
-        background: transparent;
-        cursor: pointer;
-        width: 28px;
-        height: 28px;
-        transition: 0.3s all;
-        border-radius: 4px;
-        position: absolute;
-        right: 1.6rem;
-    }
-    .jiffyui-close-button svg {
-        display: block;
-        width: 100%;
-        height: 100%;
-    }
-    .jiffyui-close-button:hover {
-        background: #e4e4e4;
-    }
+
+.jf-modal-header h4 {
+    margin: 0;
+    flex: 1;
+    padding-right: 2rem;
 }
 
-.jiffyui-modal-body {
-    padding: 1.6rem;
-    color: #646464;
+/* Close Button */
+.jf-close-button {
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease-in-out;
+    color: #6b7280;
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.jf-close-button:hover {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.jf-close-button:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+.jf-close-button svg {
+    display: block;
+    width: 20px;
+    height: 20px;
+}
+
+/* Modal Body */
+.jf-modal-body {
+    padding: 1.5rem;
+    color: #374151;
     overflow-y: auto;
+    flex: 1;
+    line-height: 1.6;
 }
 
-.jiffyui-modal_footer {
-    padding: 0.6rem 1.6rem;
-    border-top: 1px solid #e4e4e4;
+/* Modal Footer */
+.jf-modal_footer {
+    padding: 1rem 1.5rem 1.5rem 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    background: #f9fafb;
+    flex-shrink: 0;
+}
+
+/* Focus Management */
+.jf-modal:focus {
+    outline: none;
+}
+
+/* Animation Improvements */
+.jf-modal {
+    will-change: transform, opacity;
+}
+
+.jf-modal_overlay {
+    will-change: opacity;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .jf-modal {
+        border: 2px solid #000;
+    }
+    
+    .jf-modal-header {
+        border-bottom: 2px solid #000;
+    }
+    
+    .jf-modal_footer {
+        border-top: 2px solid #000;
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    .jf-modal,
+    .jf-modal_overlay {
+        transition: none;
+    }
 }

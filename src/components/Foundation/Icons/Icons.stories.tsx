@@ -41,7 +41,7 @@ export default {
 const Template = ({ ...rest }: any) => {
     const icons: any = IconsData({ ...rest });
     return (
-        <Card type={"Borderd"}>
+        <Card variant="outlined">
             <div className="inte-icons__wrapper">
                 <div>
                     {icons.map((item: any, index: number) => {

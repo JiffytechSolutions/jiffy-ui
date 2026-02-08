@@ -1,5 +1,5 @@
 import React from "react";
-import HorizontalFlex from "../../HorizontalFlex/HorizontalFlex";
+import FlexLayout from "../../FlexLayout/FlexLayout";
 import SkeletonButton from "./SkeletonButton";
 
 const size = ["XSmall", "Small", "Medium", "Large"];
@@ -7,7 +7,7 @@ const objectFit = ["Fill", "Contain", "Cover", "Default"];
 export default {
   title: "components(Done)/Skeleton/SkeletonButton",
   component: SkeletonButton,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
   argTypes: {},
 };
 const Template = ({ ...rest }) => {
@@ -20,11 +20,11 @@ export const ThumbnailWithSize: any = Template.bind({});
 ThumbnailWithSize.decorators = [
   () => {
     return (
-      <HorizontalFlex gap={20}>
+      <FlexLayout gap={2}>
         {size.map((size: any, index) => (
           <SkeletonButton key={index} size={size} />
         ))}
-      </HorizontalFlex>
+      </FlexLayout>
     );
   },
 ];

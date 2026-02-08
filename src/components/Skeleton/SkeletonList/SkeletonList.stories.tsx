@@ -4,7 +4,7 @@ import SkeletonList from "./SkeletonList";
 export default {
     title: "components(Done)/Skeleton/SkeletonList",
     component: SkeletonList,
-    tags: ["autodocs"],
+    parameters: { docs: { autodocs: true, }, },
     argTypes: {
 
     },

@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "../../Card/Card";
 import TextStyle from "../../TextStyle/TextStyle";
-import HorizontalFlex from "../../HorizontalFlex/HorizontalFlex";
+import FlexLayout from "../../FlexLayout/FlexLayout";
 import { BorderRadius } from "./BorderRadius";
 import "./BorderRadius.css";
 
@@ -17,12 +17,12 @@ export default {
 
 const Template = () => {
     return (
-        <HorizontalFlex gap={36} wrap={true}>
+        <FlexLayout gap={3} wrap={true}>
             {BorderRadius?.map((borderRadius: any, index: number) => {
                 return (
                     <div className={`story-border border-radius`} style={{ borderRadius: borderRadius.value }}>
-                        <Card key={index} type="Plain">
-                            <TextStyle as="h3" textColor="Dark" fontWeight="Medium" type="MdHeading">
+                        <Card key={index} variant="outlined">
+                            <TextStyle as="h3" textColor="Dark" fontWeight="medium" type="MdHeading">
                                 {borderRadius.name}
                             </TextStyle>
                             <TextStyle as="p" type="MdBody" textColor="Secondary">
@@ -32,7 +32,7 @@ const Template = () => {
                     </div>
                 );
             })}
-        </HorizontalFlex>
+        </FlexLayout>
     );
 };
 export const Primary: any = Template.bind({});

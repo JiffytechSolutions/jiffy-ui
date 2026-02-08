@@ -1,58 +1,893 @@
+/* ==============================================
+   TOPBAR COMPONENT STYLES - RESPONSIVE DESIGN
+   ============================================== */
 
+/* CSS Custom Properties for theming */
+:root {
+  --topbar-bg-default: #ffffff;
+  --topbar-bg-elevated: #ffffff;
+  --topbar-bg-outlined: #ffffff;
+  --topbar-bg-minimal: rgba(255, 255, 255, 0.85);
+  --topbar-bg-glass: rgba(255, 255, 255, 0.9);
+  
+  --topbar-border-color: #e2e8f0;
+  --topbar-border-hover: #cbd5e1;
+  --topbar-shadow-elevated: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --topbar-shadow-outlined: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --topbar-shadow-hover: 0 10px 25px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --topbar-shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  
+  --topbar-height-compact: 48px;
+  --topbar-height-default: 64px;
+  --topbar-height-comfortable: 80px;
+  
+  --topbar-padding-x-compact: 1rem;
+  --topbar-padding-x-default: 1.5rem;
+  --topbar-padding-x-comfortable: 2rem;
+  
+  --topbar-gap-compact: 0.5rem;
+  --topbar-gap-default: 1rem;
+  --topbar-gap-comfortable: 1.5rem;
+  
+  --topbar-toggle-size: 40px;
+  --topbar-border-radius: 8px;
+  --topbar-border-radius-lg: 12px;
+  --topbar-transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --topbar-transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  --topbar-transition-bounce: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  
+  --topbar-mobile-overlay-bg: rgba(0, 0, 0, 0.6);
+  --topbar-mobile-menu-width: 320px;
+  
+  /* Interactive colors */
+  --topbar-hover-bg: rgba(0, 0, 0, 0.04);
+  --topbar-active-bg: rgba(0, 0, 0, 0.08);
+  --topbar-focus-ring: rgba(59, 130, 246, 0.5);
+  --topbar-accent-color: #3b82f6;
+  --topbar-text-primary: #1f2937;
+  --topbar-text-secondary: #6b7280;
+  
+  /* Gradient definitions */
+  --topbar-gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --topbar-gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  --topbar-gradient-hover: linear-gradient(135deg, rgba(103, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  
+  /* Responsive breakpoints */
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+  --breakpoint-xxl: 1400px;
+}
+
+/* ==============================================
+   BASE TOPBAR CONTAINER
+   ============================================== */
+  .topbar-mobile-menu-open .jiffyui-sidebar__Wrapper {
+    left: 0;
+    z-index: 9999;
+}
+.topbar-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background-color: var(--topbar-bg-default);
+  transition: var(--topbar-transition);
+  position: relative;
+  z-index: 1000;
+  min-height: var(--topbar-height-default);
+  padding: 0 var(--topbar-padding-x-default);
+  color: var(--topbar-text-primary);
+  overflow: hidden;
+}
+
+.topbar-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--topbar-gradient-glass);
+  opacity: 0;
+  transition: opacity var(--topbar-transition);
+  pointer-events: none;
+}
+
+.topbar-container:hover::before {
+  opacity: 1;
+}
+
+/* ==============================================
+   TOPBAR VARIANTS
+   ============================================== */
+.topbar-elevated {
+  background-color: var(--topbar-bg-elevated);
+  box-shadow: var(--topbar-shadow-elevated);
+  border-radius: 0 0 var(--topbar-border-radius-lg) var(--topbar-border-radius-lg);
+}
+
+.topbar-elevated:hover {
+  box-shadow: var(--topbar-shadow-hover);
+  transform: translateY(-1px);
+}
+
+.topbar-outlined {
+  background-color: var(--topbar-bg-outlined);
+  box-shadow: var(--topbar-shadow-outlined);
+  border: 1px solid var(--topbar-border-color);
+  transition: var(--topbar-transition);
+}
+
+.topbar-outlined:hover {
+  border-color: var(--topbar-border-hover);
+  box-shadow: var(--topbar-shadow-hover);
+}
+
+.topbar-minimal {
+  background: var(--topbar-bg-minimal);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.topbar-minimal::before {
+  background: var(--topbar-gradient-hover);
+}
+
+/* Glass morphism variant */
+.topbar-glass {
+  background: var(--topbar-bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--topbar-shadow-glass);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Gradient variant */
+.topbar-gradient {
+  background: var(--topbar-gradient-primary);
+  color: white;
+  box-shadow: var(--topbar-shadow-elevated);
+}
+
+.topbar-gradient::before {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+}
+
+/* ==============================================
+   TOPBAR SIZES
+   ============================================== */
+.topbar-compact {
+  min-height: var(--topbar-height-compact);
+  padding: 0 var(--topbar-padding-x-compact);
+}
+
+.topbar-comfortable {
+  min-height: var(--topbar-height-comfortable);
+  padding: 0 var(--topbar-padding-x-comfortable);
+}
+
+/* ==============================================
+   TOPBAR POSITIONING
+   ============================================== */
+.topbar-sticky {
+  position: sticky;
+  top: 0;
+}
+
+.topbar-fixed {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+/* ==============================================
+   TOPBAR BORDERS
+   ============================================== */
+.topbar-border-top {
+  border-top: 1px solid var(--topbar-border-color);
+}
+
+.topbar-border-bottom {
+  border-bottom: 1px solid var(--topbar-border-color);
+}
+
+.topbar-border-both {
+  border-top: 1px solid var(--topbar-border-color);
+  border-bottom: 1px solid var(--topbar-border-color);
+}
+
+/* ==============================================
+   TOPBAR CONTENT LAYOUT
+   ============================================== */
+.topbar-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 100%;
+  gap: var(--topbar-gap-default);
+}
+
+.topbar-full-width .topbar-content {
+  max-width: none;
+}
+
+/* ==============================================
+   TOPBAR SECTIONS
+   ============================================== */
+.topbar-section {
+  display: flex;
+  align-items: center;
+  gap: var(--topbar-gap-default);
+  min-width: 0; /* Allow sections to shrink */
+}
+
+.topbar-section-left {
+  flex: 0 1 auto;
+  justify-content: flex-start;
+}
+
+.topbar-section-center {
+  flex: 1 1 auto;
+  justify-content: center;
+  text-align: center;
+}
+
+.topbar-section-right {
+  flex: 0 1 auto;
+  justify-content: flex-end;
+}
+
+.topbar-section-content {
+  display: flex;
+  align-items: center;
+  gap: inherit;
+  min-width: 0;
+}
+
+/* Compact size adjustments */
+.topbar-compact .topbar-section {
+  gap: var(--topbar-gap-compact);
+}
+
+.topbar-comfortable .topbar-section {
+  gap: var(--topbar-gap-comfortable);
+}
+
+/* ==============================================
+   MOBILE TOGGLE BUTTON
+   ============================================== */
+.topbar-mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--topbar-toggle-size);
+  height: var(--topbar-toggle-size);
+  border: none;
+  background: transparent;
+  border-radius: var(--topbar-border-radius);
+  cursor: pointer;
+  transition: var(--topbar-transition);
+  color: inherit;
+  padding: 0;
+  margin: 0;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.topbar-mobile-toggle::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: var(--topbar-hover-bg);
+  border-radius: 50%;
+  transition: var(--topbar-transition-fast);
+  transform: translate(-50%, -50%);
+}
+
+.topbar-mobile-toggle:hover::before {
+  width: 100%;
+  height: 100%;
+}
+
+.topbar-mobile-toggle:hover {
+  background-color: var(--topbar-hover-bg);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.topbar-mobile-toggle:focus-visible {
+  outline: 2px solid var(--topbar-focus-ring);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px var(--topbar-focus-ring);
+}
+
+.topbar-mobile-toggle:active {
+  transform: scale(0.95) translateY(0);
+  background-color: var(--topbar-active-bg);
+}
+
+/* Hamburger icon animation */
+.topbar-mobile-toggle svg {
+  transition: var(--topbar-transition);
+}
+
+.topbar-mobile-toggle:hover svg {
+  transform: rotate(90deg);
+}
+
+.topbar-mobile-toggle[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+/* Interactive pulse effect */
+.topbar-mobile-toggle.pulse {
+  animation: topbar-pulse 2s infinite;
+}
+
+@keyframes topbar-pulse {
+  0% {
+    box-shadow: 0 0 0 0 var(--topbar-focus-ring);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
+  }
+}
+
+/* ==============================================
+   LOGO SECTIONS
+   ============================================== */
+.topbar-mobile-logo,
+.topbar-desktop-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: var(--topbar-transition);
+  border-radius: var(--topbar-border-radius);
+  padding: 0.25rem 0.5rem;
+  margin: -0.25rem -0.5rem;
+}
+
+.topbar-mobile-logo:hover,
+.topbar-desktop-logo:hover {
+  background-color: var(--topbar-hover-bg);
+  transform: translateY(-1px);
+}
+
+.topbar-mobile-logo {
+  display: none;
+}
+
+.topbar-mobile-logo img,
+.topbar-desktop-logo img {
+  height: 32px;
+  width: auto;
+  object-fit: contain;
+  transition: var(--topbar-transition);
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+.topbar-mobile-logo:hover img,
+.topbar-desktop-logo:hover img {
+  transform: scale(1.05);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+/* Size adjustments for logos */
+.topbar-compact .topbar-mobile-logo img,
+.topbar-compact .topbar-desktop-logo img {
+  height: 24px;
+}
+
+.topbar-comfortable .topbar-mobile-logo img,
+.topbar-comfortable .topbar-desktop-logo img {
+  height: 40px;
+}
+
+/* ==============================================
+   INTERACTIVE CONTENT ELEMENTS
+   ============================================== */
+
+/* Navigation links */
+.topbar-section-content a {
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  padding: 0.5rem 1rem;
+  border-radius: var(--topbar-border-radius);
+  transition: var(--topbar-transition);
+  font-weight: 500;
+}
+
+.topbar-section-content a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--topbar-accent-color);
+  transition: var(--topbar-transition);
+  transform: translateX(-50%);
+}
+
+.topbar-section-content a:hover {
+  background-color: var(--topbar-hover-bg);
+  color: var(--topbar-accent-color);
+  transform: translateY(-1px);
+}
+
+.topbar-section-content a:hover::before {
+  width: 60%;
+}
+
+.topbar-section-content a:active {
+  transform: translateY(0);
+  background-color: var(--topbar-active-bg);
+}
+
+/* Interactive buttons and controls */
+.topbar-section-content button,
+.topbar-section-content [role="button"] {
+  border-radius: var(--topbar-border-radius);
+  transition: var(--topbar-transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.topbar-section-content button:hover,
+.topbar-section-content [role="button"]:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Search bar interactions */
+.topbar-search-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--topbar-border-radius-lg);
+  transition: var(--topbar-transition);
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid transparent;
+}
+
+.topbar-search-container:hover {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: var(--topbar-border-hover);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.topbar-search-container:focus-within {
+  background: white;
+  border-color: var(--topbar-accent-color);
+  box-shadow: 0 0 0 3px var(--topbar-focus-ring), 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-1px);
+}
+
+.topbar-search-container input {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding: 0.75rem 1rem;
+  font-size: 14px;
+  color: var(--topbar-text-primary);
+  width: 100%;
+  transition: var(--topbar-transition);
+}
+
+.topbar-search-container input::placeholder {
+  color: var(--topbar-text-secondary);
+  transition: var(--topbar-transition);
+}
+
+.topbar-search-container:focus-within input::placeholder {
+  color: transparent;
+}
+
+/* Badge and notification indicators */
+.topbar-badge {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  transition: var(--topbar-transition);
+  padding: 0.5rem;
+  border-radius: var(--topbar-border-radius);
+  margin: -0.5rem;
+}
+
+.topbar-badge:hover {
+  background-color: var(--topbar-hover-bg);
+  transform: translateY(-1px);
+}
+
+.topbar-badge .badge-indicator {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 18px;
+  height: 18px;
+  background: #ef4444;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10px;
+  font-weight: 600;
+  border: 2px solid white;
+  animation: topbar-badge-pulse 2s infinite;
+}
+
+@keyframes topbar-badge-pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Avatar component */
+.topbar-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 2px solid transparent;
+  transition: var(--topbar-transition);
+  cursor: pointer;
+  position: relative;
+}
+
+.topbar-avatar:hover {
+  border-color: var(--topbar-accent-color);
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.topbar-avatar::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  border: 2px solid var(--topbar-accent-color);
+  border-radius: 50%;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: var(--topbar-transition);
+}
+
+.topbar-avatar:hover::after {
+  opacity: 0.3;
+  transform: scale(1.2);
+}
+
+/* ==============================================
+   MOBILE OVERLAY
+   ============================================== */
+.topbar-mobile-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--topbar-mobile-overlay-bg);
+  z-index: 999;
+  opacity: 0;
+  animation: topbar-fade-in 0.2s ease-out forwards;
+}
+
+.topbar-mobile-overlay.topbar-mobile-slide {
+  background-color: transparent;
+}
+
+/* ==============================================
+   RESPONSIVE VISIBILITY UTILITIES
+   ============================================== */
+/* Small devices and up (≥576px) */
+.d-sm-none { display: none !important; }
+.d-sm-flex { display: flex !important; }
+
+/* Medium devices and up (≥768px) */
+@media (min-width: 768px) {
+  .d-md-none { display: none !important; }
+  .d-md-flex { display: flex !important; }
+}
+
+/* Large devices and up (≥992px) */
+@media (min-width: 992px) {
+  .d-lg-none { display: none !important; }
+  .d-lg-flex { display: flex !important; }
+}
+
+/* Extra large devices and up (≥1200px) */
+@media (min-width: 1200px) {
+  .d-xl-none { display: none !important; }
+  .d-xl-flex { display: flex !important; }
+}
+
+/* Extra extra large devices and up (≥1400px) */
+@media (min-width: 1400px) {
+  .d-xxl-none { display: none !important; }
+  .d-xxl-flex { display: flex !important; }
+}
+
+/* ==============================================
+   MOBILE BREAKPOINT VARIANTS
+   ============================================== */
+
+/* Mobile breakpoint: SM (up to 576px) */
+@media (max-width: 575.98px) {
+  .topbar-mobile-sm .topbar-mobile-toggle {
+    display: flex;
+  }
+  
+  .topbar-mobile-sm .topbar-mobile-logo {
+    display: flex;
+  }
+  
+  .topbar-mobile-sm .topbar-desktop-logo {
+    display: none;
+  }
+}
+
+/* Mobile breakpoint: MD (up to 768px) */
+@media (max-width: 767.98px) {
+  .topbar-mobile-md .topbar-mobile-toggle {
+    display: flex;
+  }
+  
+  .topbar-mobile-md .topbar-mobile-logo {
+    display: flex;
+  }
+  
+  .topbar-mobile-md .topbar-desktop-logo {
+    display: none;
+  }
+}
+
+/* Mobile breakpoint: LG (up to 992px) - DEFAULT */
+@media (max-width: 991.98px) {
+  .topbar-mobile-lg .topbar-mobile-toggle,
+  .topbar-container .topbar-mobile-toggle {
+    display: flex;
+  }
+  
+  .topbar-mobile-lg .topbar-mobile-logo,
+  .topbar-container .topbar-mobile-logo {
+    display: flex;
+  }
+  
+  .topbar-mobile-lg .topbar-desktop-logo,
+  .topbar-container .topbar-desktop-logo {
+    display: none;
+  }
+}
+
+/* Mobile breakpoint: XL (up to 1200px) */
+@media (max-width: 1199.98px) {
+  .topbar-mobile-xl .topbar-mobile-toggle {
+    display: flex;
+  }
+  
+  .topbar-mobile-xl .topbar-mobile-logo {
+    display: flex;
+  }
+  
+  .topbar-mobile-xl .topbar-desktop-logo {
+    display: none;
+  }
+}
+
+/* Mobile breakpoint: XXL (up to 1400px) */
+@media (max-width: 1399.98px) {
+  .topbar-mobile-xxl .topbar-mobile-toggle {
+    display: flex;
+  }
+  
+  .topbar-mobile-xxl .topbar-mobile-logo {
+    display: flex;
+  }
+  
+  .topbar-mobile-xxl .topbar-desktop-logo {
+    display: none;
+  }
+}
+
+/* ==============================================
+   RESPONSIVE TOPBAR ADJUSTMENTS
+   ============================================== */
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .topbar-container {
+    padding: 0 var(--topbar-padding-x-default);
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .topbar-container {
+    padding: 0 var(--topbar-padding-x-default);
+  }
+  
+  .topbar-content {
+    gap: var(--topbar-gap-default);
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .topbar-container {
+    padding: 0 var(--topbar-padding-x-comfortable);
+  }
+  
+  .topbar-content {
+    gap: var(--topbar-gap-comfortable);
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .topbar-container {
+    padding: 0 var(--topbar-padding-x-comfortable);
+  }
+}
+
+/* ==============================================
+   ANIMATIONS
+   ============================================== */
+@keyframes topbar-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes topbar-slide-in {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes topbar-slide-out {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+/* ==============================================
+   BODY CLASSES FOR MOBILE MENU
+   ============================================== */
+.topbar-mobile-menu-open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+}
+
+/* ==============================================
+   ACCESSIBILITY ENHANCEMENTS
+   ============================================== */
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .topbar-container,
+  .topbar-mobile-toggle,
+  .topbar-mobile-overlay {
+    transition: none;
+    animation: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .topbar-container {
+    border: 1px solid;
+  }
+  
+  .topbar-mobile-toggle {
+    border: 1px solid;
+  }
+}
+
+/* Focus management */
+.topbar-container:focus-within {
+  outline: none;
+}
+
+/* ==============================================
+   LEGACY SUPPORT & BACKWARDS COMPATIBILITY
+   ============================================== */
+
+/* Support for old class names (deprecated but maintained for compatibility) */
+.Pixel-appBar--container {
+  @extend .topbar-container;
+}
 
 .appBar__connectLeft {
-    display: flex;
-    gap: 1.6rem;
+  display: flex;
+  gap: 1.6rem;
+  align-items: center;
 }
 
-.Pixel-appBar--container {
-    padding: 2rem 2.4rem;
-  
-    display: flex;
-    align-items: center;
-    width: 100%;
-    justify-content: space-between;
- 
-}
-
-.Pixel-appBar--stickyTop {
-    position: sticky;
-    top: 0;
-}
-
-.Pixel-appBar__connectLeft {
-    display: flex;
-    gap: 1.2rem;
-}
-
-.Pixel-appBar__logoSection {
-    display: flex;
-}
-
-.Pixel-appBar__toggleButton {
-    display: none;
-
+.Pixel-appBar__connectRight {
+  display: flex;
+  align-items: center;
 }
 
 .jiffyui-mobile_toggle {
-    cursor: pointer;
+  @extend .topbar-mobile-toggle;
+  display: none;
+  cursor: pointer;
 }
 
-.jiffyui-mobile_logo,
-.jiffyui-mobile_toggle {
-    display: none;
+.jiffyui-mobile_logo {
+  @extend .topbar-mobile-logo;
+  display: none;
 }
 
 .jiffyui-mobile_toggle svg {
-    width: 35px;
-    color: #333;
+  width: 24px;
+  height: 24px;
+  color: currentColor;
 }
 
-@media (max-width: 1279px) {
+.jiffyui-sidebar_overlay {
+  @extend .topbar-mobile-overlay;
+}
 
-    .jiffyui-mobile_logo,
-    .jiffyui-mobile_toggle {
-        display: block;
-    }
+/* Mobile display rules for legacy classes */
+@media (max-width: 991.98px) {
+  .jiffyui-mobile_logo,
+  .jiffyui-mobile_toggle {
+    display: flex;
+  }
+}
 
+/* ==============================================
+   UTILITY CLASSES
+   ============================================== */
+
+/* Spacing utilities for topbar content */
+.topbar-gap-0 { gap: 0 !important; }
+.topbar-gap-1 { gap: 0.25rem !important; }
+.topbar-gap-2 { gap: 0.5rem !important; }
+.topbar-gap-3 { gap: 1rem !important; }
+.topbar-gap-4 { gap: 1.5rem !important; }
+.topbar-gap-5 { gap: 3rem !important; }
+
+/* Flex utilities */
+.topbar-flex-grow { flex-grow: 1; }
+.topbar-flex-shrink { flex-shrink: 1; }
+.topbar-flex-none { flex: none; }
+
+/* Text utilities */
+.topbar-text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }

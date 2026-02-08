@@ -1,175 +1,330 @@
 import React from "react";
 import TextStyle from "./TextStyle";
 
-const textColor = ['Dark', 'Secondary', 'Disabled', 'Primary', 'Possitve', 'Negative', 'Waiting', 'Invert']
+// Polaris variants and options
+const variants = ["heading", "body", "caption", "subdued", "code"];
+const tones = ["default", "success", "warning", "critical", "subdued", "emphasis"];
+const sizes = ["xs", "sm", "md", "lg", "xl", "2xl"];
+const fontWeights = ["light", "regular", "medium", "semibold", "bold"];
+const alignments = ["start", "center", "end", "justify"];
+
 export default {
     title: 'Components/TextStyle',
     component: TextStyle,
-    tags: ["autodocs"],
+    parameters: { docs: { autodocs: true, }, },
     argTypes: {
-
         as: {
-            description: "Select Element type",
+            description: "HTML element to render",
             control: {
-                type: "radio",
-                options: ["dt", "dd", "h1", "h2", "h3", "h4", "h5", 'h6', 'p', 'span', 'strong', 'legend'],
+                type: "select",
+                options: ["h1", "h2", "h3", "h4", "h5", "h6", "p", "span", "strong", "em", "legend", "label", "dt", "dd"],
             },
-            defaultValue: "p"
+            defaultValue: "span"
         },
-        type: {
-            description: "Select Element type",
+        variant: {
+            description: "Visual style variant",
             control: {
-                type: "radio",
-                options: ["XsHeading", "SmHeading", "MdHeading", "LgHeading", "XlHeading", "2XlHeading", "LgBody", "SmBody", "MdBody", 'LgBody'],
+                type: "select",
+                options: variants,
             },
-            defaultValue: "",
+            defaultValue: "body",
         },
-
+        tone: {
+            description: "Tone of the text",
+            control: {
+                type: "select",
+                options: tones,
+            },
+            defaultValue: "default",
+        },
+        size: {
+            description: "Size of the text",
+            control: {
+                type: "select",
+                options: sizes,
+            },
+            defaultValue: "md",
+        },
         fontWeight: {
-            description: "Select font weight",
+            description: "Font weight",
             control: {
-                type: "radio",
-                options: ["Light", "Regular", "Medium", "Bold"],
+                type: "select",
+                options: [undefined, ...fontWeights],
             },
-            defaultValue: "",
+            defaultValue: undefined,
         },
-
         alignment: {
-            description: "Manage alignment",
+            description: "Text alignment",
             control: {
-                type: "radio",
-                options: ["Start", "Center", "End", "Justify"],
+                type: "select",
+                options: [undefined, ...alignments],
             },
-            defaultValue: "justify",
+            defaultValue: undefined,
+        },
+        textDecoration: {
+            description: "Text decoration",
+            control: {
+                type: "select",
+                options: [undefined, "underline", "line-through", "none"],
+            },
+            defaultValue: undefined,
+        },
+        fontStyle: {
+            description: "Font style",
+            control: {
+                type: "select",
+                options: [undefined, "normal", "italic"],
+            },
+            defaultValue: undefined,
+        },
+        truncate: {
+            description: "Whether to truncate text",
+            control: {
+                type: "boolean",
+            },
+            defaultValue: false,
+        },
+        disabled: {
+            description: "Whether the text is disabled",
+            control: {
+                type: "boolean",
+            },
+            defaultValue: false,
         },
         children: {
-            description: "Select types",
+            description: "Text content",
             control: {
                 type: "text",
             },
-            defaultValue:
-                "demo text 1 ",
-        },
-        textColor: {
-            description: "Manage color of text",
-            control: {
-                type: "radio",
-                options: textColor,
-            },
-            defaultValue: "",
+            defaultValue: "This is sample text content for demonstration purposes.",
         },
     }
 };
 
 const Template = ({ ...rest }) => {
     return (
-        <>
-            {/* <Card cardType="plain"> */}
-
-            <TextStyle as={rest.as} textStyle={rest.textStyle} textDecoration={rest.textDecoration} type={rest.type} alignment={rest.alignment} textColor={rest.textColor} fontWeight={rest.fontWeight}>
-                {rest.children}
-            </TextStyle>
-            {/* </Card> */}
-        </>
+        <TextStyle
+            as={rest.as}
+            variant={rest.variant}
+            tone={rest.tone}
+            size={rest.size}
+            fontWeight={rest.fontWeight}
+            alignment={rest.alignment}
+            textDecoration={rest.textDecoration}
+            fontStyle={rest.fontStyle}
+            truncate={rest.truncate}
+            disabled={rest.disabled}
+        >
+            {rest.children}
+        </TextStyle>
     );
 };
 
 export const Default = Template.bind({});
 
-// H1 Heading
-export const H1Heading: any = Template.bind({});
-H1Heading.decorators = [
-    () => {
-        return (
-            <TextStyle as="h1" type="LgHeading" fontWeight="Medium" textColor="Dark">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            </TextStyle>
-        );
-    },
-];
+// Heading variants
+export const HeadingVariants = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle variant="heading" size="2xl" as="h1">
+            Heading 2XL - Main Page Title
+        </TextStyle>
+        <TextStyle variant="heading" size="xl" as="h2">
+            Heading XL - Section Title
+        </TextStyle>
+        <TextStyle variant="heading" size="lg" as="h3">
+            Heading LG - Subsection Title
+        </TextStyle>
+        <TextStyle variant="heading" size="md" as="h4">
+            Heading MD - Card Title
+        </TextStyle>
+        <TextStyle variant="heading" size="sm" as="h5">
+            Heading SM - Small Title
+        </TextStyle>
+        <TextStyle variant="heading" size="xs" as="h6">
+            Heading XS - Micro Title
+        </TextStyle>
+    </div>
+);
 
-// Text style with color variations 
-export const TextStyleWithColorVariations: any = Template.bind({});
-TextStyleWithColorVariations.decorators = [
-    () => {
-        return (
-            <>
+// Body text variants
+export const BodyVariants = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle variant="body" size="lg">
+            Body LG - Large body text for important content
+        </TextStyle>
+        <TextStyle variant="body" size="md">
+            Body MD - Standard body text for most content
+        </TextStyle>
+        <TextStyle variant="body" size="sm">
+            Body SM - Smaller body text for secondary content
+        </TextStyle>
+        <TextStyle variant="body" size="xs">
+            Body XS - Extra small body text for captions
+        </TextStyle>
+    </div>
+);
 
-                {textColor.map((textcolor: any, index) => (
-                    <TextStyle key={index} type="MdBody" as="p" fontWeight="Regular" textColor={textcolor} >
-                        Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.
-                    </TextStyle>
-                ))}
+// Tone variations
+export const ToneVariations = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle variant="body" tone="default">
+            Default tone - Standard text color
+        </TextStyle>
+        <TextStyle variant="body" tone="success">
+            Success tone - Positive feedback or completed actions
+        </TextStyle>
+        <TextStyle variant="body" tone="warning">
+            Warning tone - Caution or attention needed
+        </TextStyle>
+        <TextStyle variant="body" tone="critical">
+            Critical tone - Errors or important warnings
+        </TextStyle>
+        <TextStyle variant="body" tone="subdued">
+            Subdued tone - Secondary or less important information
+        </TextStyle>
+        <TextStyle variant="body" tone="emphasis">
+            Emphasis tone - Highlighted or important information
+        </TextStyle>
+    </div>
+);
 
-            </>
-        );
-    },
-];
+// Font weight variations
+export const FontWeightVariations = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle variant="body" fontWeight="light">
+            Light weight - 300
+        </TextStyle>
+        <TextStyle variant="body" fontWeight="regular">
+            Regular weight - 400
+        </TextStyle>
+        <TextStyle variant="body" fontWeight="medium">
+            Medium weight - 500
+        </TextStyle>
+        <TextStyle variant="body" fontWeight="semibold">
+            Semibold weight - 600
+        </TextStyle>
+        <TextStyle variant="body" fontWeight="bold">
+            Bold weight - 700
+        </TextStyle>
+    </div>
+);
 
-// H3 Heading
-// export const h3_heading: any = Template.bind({});
-// h3_heading.decorators = [
-//     () => {
-//         return (
-//             <TextStyle type="heading_h3" text="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
-//         );
-//     },
-// ];
+// Text alignment
+export const TextAlignment = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle variant="body" alignment="start">
+            Start aligned text (left)
+        </TextStyle>
+        <TextStyle variant="body" alignment="center">
+            Center aligned text
+        </TextStyle>
+        <TextStyle variant="body" alignment="end">
+            End aligned text (right)
+        </TextStyle>
+        <TextStyle variant="body" alignment="justify">
+            Justified text that spreads across the full width of the container
+        </TextStyle>
+    </div>
+);
 
-// H4 Heading
-// export const h4_heading: any = Template.bind({});
-// h4_heading.decorators = [
-//     () => {
-//         return (
-//             <TextStyle type="heading_h4" text="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
-//         );
-//     },
-// ];
+// Text decoration and styles
+export const TextDecorationAndStyles = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle variant="body" textDecoration="underline">
+            Underlined text
+        </TextStyle>
+        <TextStyle variant="body" textDecoration="line-through">
+            Line through text
+        </TextStyle>
+        <TextStyle variant="body" fontStyle="italic">
+            Italic text
+        </TextStyle>
+        <TextStyle variant="body" fontWeight="bold" fontStyle="italic">
+            Bold italic text
+        </TextStyle>
+    </div>
+);
 
-// H5 Heading
-// export const h5_heading: any = Template.bind({});
-// h5_heading.decorators = [
-//     () => {
-//         return (
-//             <TextStyle type="heading_h5" text="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
-//         );
-//     },
-// ];
+// Caption and subdued text
+export const CaptionAndSubdued = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle variant="caption" size="sm">
+            Caption text - Used for small labels and metadata
+        </TextStyle>
+        <TextStyle variant="subdued" size="sm">
+            Subdued text - Secondary information with reduced emphasis
+        </TextStyle>
+        <TextStyle variant="body" tone="subdued">
+            Body text with subdued tone
+        </TextStyle>
+    </div>
+);
 
-// H6 Heading
-// export const h6_heading: any = Template.bind({});
-// h6_heading.decorators = [
-//     () => {
-//         return (
-//             <TextStyle type="heading_h6" text="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
+// Code text
+export const CodeText = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle variant="code" size="sm">
+            const example = "code snippet";
+        </TextStyle>
+        <TextStyle variant="code" size="md">
+            function handleClick() {'{'} return true; {'}'}
+        </TextStyle>
+        <TextStyle variant="code" size="lg">
+            npm install @shopify/polaris
+        </TextStyle>
+    </div>
+);
 
-//         );
-//     },
-// ];
+// Truncated text
+export const TruncatedText = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '200px' }}>
+        <TextStyle variant="body" truncate>
+            This is a very long text that will be truncated with ellipsis when it exceeds the container width
+        </TextStyle>
+        <TextStyle variant="body" truncate>
+            Short text
+        </TextStyle>
+    </div>
+);
 
-// Paragraph text
-// export const pragraph_text: any = Template.bind({});
-// pragraph_text.decorators = [
-//     () => {
-//         return (
-//             <TextStyle type="paragraph" text=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis impedit aut sequi atque. Ipsa unde molestias dolorum commodi dicta voluptas amet facere repellat fugit, alias aut modi molestiae obcaecati optio." />
-//         );
-//     },
-// ];
+// Disabled text
+export const DisabledText = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle variant="body">
+            Normal text
+        </TextStyle>
+        <TextStyle variant="body" disabled>
+            Disabled text
+        </TextStyle>
+        <TextStyle variant="heading" disabled>
+            Disabled heading
+        </TextStyle>
+    </div>
+);
 
-// All Types of heading and paragraph
-// export const all_heading_para: any = Template.bind({});
-// all_heading_para.decorators = [
-//     () => {
-//         return (<>
-//             <TextStyle type="heading_h1" text="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
-//             <TextStyle type="heading_h2" text="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
-//             <TextStyle type="heading_h3" text="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
-//             <TextStyle type="heading_h4" text="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
-//             <TextStyle type="heading_h5" text="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
-//             <TextStyle type="heading_h6" text="Lorem ipsum dolor sit amet consectetur adipisicing elit." />
-//             <TextStyle type="paragraph" text=" Lorem ipsum dolor sit amet consectetur adipisicing elit. Quis impedit aut sequi atque. Ipsa unde molestias dolorum commodi dicta voluptas amet facere repellat fugit, alias aut modi molestiae obcaecati optio." />
-//         </>
-//         );
-//     },
-// ];
+// Size comparison
+export const SizeComparison = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle variant="body" size="xs">Extra Small (0.75rem)</TextStyle>
+        <TextStyle variant="body" size="sm">Small (0.875rem)</TextStyle>
+        <TextStyle variant="body" size="md">Medium (1rem)</TextStyle>
+        <TextStyle variant="body" size="lg">Large (1.125rem)</TextStyle>
+        <TextStyle variant="body" size="xl">Extra Large (1.25rem)</TextStyle>
+        <TextStyle variant="body" size="2xl">2X Large (1.5rem)</TextStyle>
+    </div>
+);
+
+// Legacy stories for backward compatibility
+export const LegacyTextStyles = () => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <TextStyle as="h1" className="pixel-Text--root pixel-Text--LgHeading pixel-Text-bold pixel-text__dark">
+            Legacy H1 Heading
+        </TextStyle>
+        <TextStyle as="p" className="pixel-Text--root pixel-Text--MdBody pixel-Text-regular pixel-text__primary">
+            Legacy paragraph with primary color
+        </TextStyle>
+        <TextStyle as="span" className="pixel-Text--root pixel-Text--SmBody pixel-Text-medium pixel-text__secondary">
+            Legacy span with secondary color
+        </TextStyle>
+    </div>
+);

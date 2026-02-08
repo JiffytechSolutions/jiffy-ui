@@ -1,114 +1,127 @@
 import React from "react";
+import { AlertCircle, CheckCircle, X, Info, AlertTriangle } from "react-feather";
+import Button from "../Button/Button";
+import type { ButtonI } from "../Button/Button";
 import "./alert.css";
 
-import { AlertCircle, ExternalLink, X } from "react-feather";
-import Button, { ButtonI } from "../Button/Button";
-import TextLink, { TextLinkI } from "../TextLink/TextLink";
-
-const Alert = ({
-    title = "Alert title here",
-    description = "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
-    color = "Positive",
-    emphasis = "Subtile",
-    onDismiss,
-    icon = <AlertCircle size={20} />,
-    secondaryAction,
-    primaryAction,
-    ...props
-}: AlertI) => {
-    const checkColor = (): string => {
-        switch (color) {
-            case "Positive":
-                return "jiffyui-alert--possitive";
-            case "Negative":
-                return "jiffyui-alert--negative";
-            case "Waiting":
-                return "jiffyui-alert--waiting";
-            case "Primary":
-                return "jiffyui-alert--primary";
-            case "Neutral":
-                return "jiffyui-alert--neutral"
-            default:
-                return "jiffyui-alert--neutral";
-        }
-    };
-    const checkEmphasis = (): string => {
-        switch (emphasis) {
-            case "Subtile":
-                return "jiffyui-alert--subtile";
-            case "Intense":
-                return "jiffyui-alert--intense";
-            default:
-                return "";
-        }
-    };
-
-    const AlertColor = checkColor();
-    const AlertEmphasis = checkEmphasis();
-    return (
-        <div className={`jiffyui-alert ${AlertColor} ${AlertEmphasis} ${onDismiss ? "hasDismiss" : ""}`}>
-            {onDismiss && <div className="jiffyui-alert-dismiss"> <Button variant="Tertiary" icon={<X size={16} />} children=""
-                onClick={() => onDismiss?.()}
-            /></div>}
-            <div className="jiffyui-alert_inner">
-                {icon && (
-                    <div className="jiffyui-alert_icon">{icon}</div>
-                )}
-                <div className="jiffyui-alert_content">
-                    {title &&
-                        <h3 className="jiffyui-alert_tile">{title}</h3>
-                    }
-                    {description &&
-                        <p className="jiffyui-alert_description">{description}</p>
-                    }
-                    {primaryAction || secondaryAction ? (
-                        <div className="jiffyui-alert_actions">
-                            {primaryAction1()}
-                            {secondaryAction1()}
-                        </div>
-                    ) : null}
-                </div>
-            </div>
-        </div>
-    );
-
-    function primaryAction1() {
-        if (primaryAction) {
-            const primaryAction1 = primaryAction;
-            return (
-                <Button
-                    size={primaryAction1.size ? primaryAction1.size : "Medium"}
-                    children={primaryAction1.children ? primaryAction1.children : "Submit"}
-                    {...primaryAction1}
-                    variant={primaryAction1.variant ? primaryAction1.variant : "Secondry"}
-                />
-            );
-        }
-    }
-    function secondaryAction1() {
-        if (secondaryAction) {
-            const secondaryAction1 = secondaryAction;
-            return (
-                <TextLink
-                    label={secondaryAction1.label ? secondaryAction1.label : "Medium"}
-                    icon={secondaryAction1.icon ? secondaryAction1.icon : <ExternalLink size={16} />}
-                    {...secondaryAction1}
-
-                />
-            );
-        }
-    }
+// Icon mapping for different variants
+const iconMap = {
+  success: CheckCircle,
+  error: AlertTriangle,
+  warning: AlertTriangle,
+  info: Info,
+  default: AlertCircle,
 };
 
-export interface AlertI {
-    title?: string;
-    description: React.ReactNode | string;
-    color: "Primary" | "Positive" | "Negative" | "Waiting" | "Neutral";
-    emphasis?: "Subtile" | "Intense";
-    onDismiss?: () => void;
-    primaryAction?: ButtonI;
-    secondaryAction?: TextLinkI;
-    icon: React.ReactNode;
+const Alert = ({
+  children = "Alert message here",
+  title,
+  variant = "default",
+  emphasis = "Subtle",
+  onDismiss,
+  primaryAction,
+  secondaryAction,
+  className,
+  style,
+  ...props
+}: AlertProps) => {
+  // Get the appropriate icon
+  const IconComponent = iconMap[variant as keyof typeof iconMap] || iconMap.default;
+
+  // Generate CSS classes
+  const alertClasses = [
+    "jf-alert",
+    `jf-alert--${variant}`,
+    `jf-alert--${emphasis.toLowerCase()}`,
+    onDismiss ? "jf-alert--dismissible" : "",
+    (primaryAction || secondaryAction) ? "jf-alert--with-actions" : "",
+    className || "",
+  ].filter(Boolean).join(" ");
+
+  return (
+    <div className={alertClasses} style={style} role="alert" {...props}>
+      {/* Dismiss button */}
+      {onDismiss && (
+        <button
+          type="button"
+          className="jf-alert-dismiss"
+          onClick={onDismiss}
+          aria-label="Dismiss alert"
+        >
+          <X size={16} />
+        </button>
+      )}
+
+      <div className="jf-alert-inner">
+        {/* Icon */}
+        <div className="jf-alert-icon">
+          <IconComponent size={20} />
+        </div>
+
+        {/* Content */}
+        <div className="jf-alert-content">
+          {title && <h3 className="jf-alert-title">{title}</h3>}
+          <div className="jf-alert-description">{children}</div>
+          
+          {/* Actions */}
+          {(primaryAction || secondaryAction) && (
+            <div className="jf-alert-actions">
+              {primaryAction && (
+                <Button
+                  size="Small"
+                  variant="Primary"
+                  {...primaryAction}
+                >
+                  {primaryAction.children || "Primary Action"}
+                </Button>
+              )}
+              {secondaryAction && (
+                <Button
+                  size="Small"
+                  variant="Secondary"
+                  {...secondaryAction}
+                >
+                  {secondaryAction.children || "Secondary Action"}
+                </Button>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export interface AlertProps {
+  /** Alert content */
+  children?: React.ReactNode;
+  
+  /** Alert title */
+  title?: string;
+  
+  /** Visual variant of the alert */
+  variant?: "default" | "success" | "error" | "warning" | "info";
+  
+  /** Emphasis level */
+  emphasis?: "Subtle" | "Intense";
+  
+  /** Callback when dismiss button is clicked */
+  onDismiss?: () => void;
+  
+  /** Primary action button configuration */
+  primaryAction?: ButtonI;
+  
+  /** Secondary action button configuration */
+  secondaryAction?: ButtonI;
+  
+  /** Additional CSS classes */
+  className?: string;
+  
+  /** Additional inline styles */
+  style?: React.CSSProperties;
+  
+  /** Additional HTML attributes */
+  [key: string]: any;
 }
 
 export default Alert;

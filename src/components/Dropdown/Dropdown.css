@@ -1,8 +1,345 @@
-.pixel-dropdown {
-    border: 1px solid #6C849D2E;
-    box-shadow: 0px 8px 24px 0px #1928391F;
-    background-color: #ffffff;
-    max-height: 25rem;
-    overflow: auto;
-    border-radius: 4px;
+/* Popover Base Styles */
+.jf-popover {
+  position: relative;
+  display: inline-block;
+}
+
+.jf-popover-trigger {
+  cursor: pointer;
+}
+
+.jf-popover--disabled .jf-popover-trigger {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.jf-popover-portal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 1000;
+}
+
+.jf-popover-content {
+  pointer-events: auto;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  animation: popover-enter 0.15s ease-out;
+}
+
+@keyframes popover-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Dropdown Container */
+.jf-dropdown-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.jf-dropdown-label {
+  margin-bottom: 0.4rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: #374151;
+  line-height: 1.3;
+}
+
+.jf-dropdown-required {
+  color: #ef4444;
+  margin-left: 0.2rem;
+}
+
+/* Main Dropdown */
+.jf-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+  width: 100%;
+}
+
+.jf-dropdown:hover {
+  border-color: #9ca3af;
+}
+
+.jf-dropdown:focus-within {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Dropdown Sizes */
+.jf-dropdown--small {
+  padding: 0.5rem 0.75rem;
+  font-size: 1.3rem;
+  min-height: 3.2rem;
+}
+
+.jf-dropdown--medium {
+  padding: 0.75rem 1rem;
+  font-size: 1.4rem;
+  min-height: 4rem;
+}
+
+.jf-dropdown--large {
+  padding: 1rem 1.25rem;
+  font-size: 1.5rem;
+  min-height: 4.8rem;
+}
+
+/* Dropdown Variants */
+.jf-dropdown--primary {
+  border-color: #3b82f6;
+}
+
+.jf-dropdown--primary:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.jf-dropdown--success {
+  border-color: #10b981;
+}
+
+.jf-dropdown--success:focus-within {
+  border-color: #059669;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.jf-dropdown--error {
+  border-color: #ef4444;
+}
+
+.jf-dropdown--error:focus-within {
+  border-color: #dc2626;
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.jf-dropdown--warning {
+  border-color: #f59e0b;
+}
+
+.jf-dropdown--warning:focus-within {
+  border-color: #d97706;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+/* Dropdown States */
+.jf-dropdown--disabled {
+  background: #f9fafb;
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.jf-dropdown--disabled:hover {
+  border-color: #e5e7eb;
+}
+
+.jf-dropdown--full-width {
+  width: 100%;
+}
+
+.jf-dropdown--open {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.jf-dropdown--open .jf-dropdown-icon {
+  transform: rotate(180deg);
+}
+
+/* Dropdown Value */
+.jf-dropdown-value {
+  flex: 1;
+  text-align: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #374151;
+}
+
+.jf-dropdown--disabled .jf-dropdown-value {
+  color: #9ca3af;
+}
+
+/* Dropdown Icon */
+.jf-dropdown-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+  color: #6b7280;
+  transition: transform 0.2s ease;
+}
+
+.jf-dropdown--disabled .jf-dropdown-icon {
+  color: #d1d5db;
+}
+
+/* Dropdown Content */
+.jf-dropdown-content {
+  min-width: 200px;
+  max-height: 20rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.5rem 0;
+}
+
+/* Dropdown Items */
+.jf-dropdown-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  color: #374151;
+  font-size: 1.4rem;
+}
+
+.jf-dropdown-item:hover {
+  background-color: #f9fafb;
+}
+
+.jf-dropdown-item--selected {
+  background-color: #eff6ff;
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.jf-dropdown-item--disabled {
+  color: #9ca3af;
+  cursor: not-allowed;
+  background-color: transparent;
+}
+
+.jf-dropdown-item--disabled:hover {
+  background-color: transparent;
+}
+
+/* Error Message */
+.jf-dropdown-error-message {
+  margin-top: 0.4rem;
+  font-size: 1.2rem;
+  color: #ef4444;
+  line-height: 1.3;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .jf-dropdown-content {
+    max-height: 15rem;
+  }
+  
+  .jf-dropdown--small {
+    min-height: 3.6rem;
+    font-size: 1.4rem;
+  }
+  
+  .jf-dropdown--medium {
+    min-height: 4.4rem;
+    font-size: 1.5rem;
+  }
+  
+  .jf-dropdown--large {
+    min-height: 5.2rem;
+    font-size: 1.6rem;
+  }
+}
+
+/* Custom scrollbar for dropdown content */
+.jf-dropdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.jf-dropdown-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.jf-dropdown-content::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.jf-dropdown-content::-webkit-scrollbar-thumb:hover {
+  background: #a1a1a1;
+}
+
+/* Popover Placement Animations */
+.jf-popover--top .jf-popover-content {
+  animation: popover-enter-top 0.15s ease-out;
+}
+
+.jf-popover--bottom .jf-popover-content {
+  animation: popover-enter-bottom 0.15s ease-out;
+}
+
+.jf-popover--left .jf-popover-content {
+  animation: popover-enter-left 0.15s ease-out;
+}
+
+.jf-popover--right .jf-popover-content {
+  animation: popover-enter-right 0.15s ease-out;
+}
+
+@keyframes popover-enter-top {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes popover-enter-bottom {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes popover-enter-left {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes popover-enter-right {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateX(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateX(0);
+  }
 }

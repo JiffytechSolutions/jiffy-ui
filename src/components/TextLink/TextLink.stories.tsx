@@ -1,13 +1,14 @@
 import React from "react";
-import HorizontalFlex from "../HorizontalFlex/HorizontalFlex";
+import FlexLayout from "../FlexLayout/FlexLayout";
 import TextStyle from "../TextStyle/TextStyle";
 import TextLink from "./TextLink";
 import { ExternalLink } from "react-feather";
+import InlineStack from "../InlineStack/InlineStack";
 
 export default {
   title: "Components/TextLink",
   component: TextLink,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
   argTypes: {
     label: {
       description: "Kindly Enter Label",
@@ -177,7 +178,7 @@ export const Text_Links_With_Link_Types: any = Template.bind({});
 Text_Links_With_Link_Types.decorators = [
   () => {
     return (
-      <HorizontalFlex gap={10}>
+      <InlineStack gap={2}>
         {LinkType.map((item: any, index) => (
           <TextLink
             key={index}
@@ -187,7 +188,7 @@ Text_Links_With_Link_Types.decorators = [
             icon={<ExternalLink size="16" />}
           />
         ))}
-      </HorizontalFlex>
+      </InlineStack>
     );
   },
 ];

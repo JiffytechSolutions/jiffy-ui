@@ -1,16 +1,17 @@
 import { Settings } from "react-feather";
-import HorizontalFlex from "../HorizontalFlex/HorizontalFlex";
+import FlexLayout from "../FlexLayout/FlexLayout";
 import Avatar from "./Avatar";
 import Indicator from "../Indicator/Indicator";
 import React from "react";
+import InlineStack from "../InlineStack/InlineStack";
 
 const size = ["Small", "Medium", "Large", "Xlarge"];
 const shape = ["Circle", "Squire"];
 
 export default {
-    title: "Components(Done)/Avatar",
+    title: "Components/Avatar",
     component: Avatar,
-    tags: ["autodocs"],
+    parameters: { docs: { autodocs: true, }, },
     argTypes: {
         size: {
             description: "Select Size",
@@ -79,7 +80,7 @@ export const Avatar_with_image_icon: any = Template.bind({});
 Avatar_with_image_icon.decorators = [
     () => {
         return (
-            <HorizontalFlex gap={36}>
+            <InlineStack gap={2}>
                 {shape.map((shapes: any, ind) => (
                     <Avatar
                         srcIco="https://t3.ftcdn.net/jpg/02/33/46/24/240_F_233462402_Fx1yke4ng4GA8TJikJZoiATrkncvW6Ib.jpg"
@@ -88,7 +89,7 @@ Avatar_with_image_icon.decorators = [
                         label={"User"}
                     />
                 ))}
-            </HorizontalFlex>
+            </InlineStack>
         );
     },
 ];
@@ -98,7 +99,7 @@ export const Avatar_with_multiple_sizes: any = Template.bind({});
 Avatar_with_multiple_sizes.decorators = [
     () => {
         return (
-            <HorizontalFlex gap={10}>
+            <InlineStack gap={2}>
                 {size.map((size: any, ind) => (
                     <Avatar
                         key={ind}
@@ -107,7 +108,7 @@ Avatar_with_multiple_sizes.decorators = [
                         label={"Users"}
                     />
                 ))}
-            </HorizontalFlex>
+            </InlineStack>
         );
     },
 ];
@@ -117,7 +118,7 @@ export const Avatar_with_multiple_sizes_using_image: any = Template.bind({});
 Avatar_with_multiple_sizes_using_image.decorators = [
     () => {
         return (
-            <HorizontalFlex gap={10}>
+            <InlineStack gap={2}>
                 {size.map((size: any, ind) => (
                     <Avatar
                         key={ind}
@@ -127,7 +128,7 @@ Avatar_with_multiple_sizes_using_image.decorators = [
                         label={"Users"}
                     />
                 ))}
-            </HorizontalFlex>
+            </InlineStack>
         );
     },
 ];
@@ -156,7 +157,7 @@ export const Avatar_with_indicator: any = Template.bind({});
 Avatar_with_indicator.decorators = [
     () => {
         return (
-            <HorizontalFlex gap={10}>
+            <InlineStack gap={2}>
                 {size.map((size: any, ind) => (
                     <Avatar
                         onClick={() => { alert('click with indicator') }}
@@ -168,7 +169,7 @@ Avatar_with_indicator.decorators = [
                         label={"Users"}
                     />
                 ))}
-            </HorizontalFlex>
+            </InlineStack>
         );
     },
 ];

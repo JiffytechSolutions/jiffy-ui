@@ -3,9 +3,9 @@ import  Card  from "../../Card/Card";
 import StepWizard from "../StepWizard";
 
 export default {
-  title: "Components(Done)/StepWizard",
+  title: "Components/StepWizard",
   component: StepWizard,
-  tags: ["autodocs"],
+  parameters: { docs: { autodocs: true, }, },
   argTypes: {
 
   },
@@ -42,7 +42,7 @@ const Template = ({ ...rest }) => {
   }, [rest.currentStep]);
 
   return (
-    <Card type={"Borderd"} headerTitle="StepWizard">
+    <Card variant="outlined" header={{ title: "Small Card" }}>
       <StepWizard
         {...rest}
         currentStep={currStep}

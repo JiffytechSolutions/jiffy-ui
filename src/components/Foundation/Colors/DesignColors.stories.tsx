@@ -1,6 +1,6 @@
 import Card from "../../Card/Card";
 import TextStyle from "../../TextStyle/TextStyle";
-import HorizontalFlex from "../../HorizontalFlex/HorizontalFlex";
+import FlexLayout from "../../FlexLayout/FlexLayout";
 import CopyClipboard from "../../CopyClipboard/CopyClipboard";
 import { DesignColors } from "./DesignColors";
 import "./color.css";
@@ -28,8 +28,8 @@ const Template = () => {
     <>
       {Object.keys(DesignColors)?.map((colors: any, index: number) => {
         return (
-          <Card key={index} type="Shadow" headerTitle={colors}>
-            <HorizontalFlex gap={8} wrap={true}>
+          <Card key={index} variant="outlined"header={{ title: colors }}>
+            <FlexLayout gap={2} wrap={true}>
               {DesignColors[colors]?.map((color: any, index: number) => {
                 return (
                   <div
@@ -38,14 +38,14 @@ const Template = () => {
                       } ${index === 0 || index === 1 || index === 2 ? "text-color-dark" : ""}`}
                     style={{ backgroundColor: color.colorHex }}
                   >
-                    <Card key={index} type="Borderd">
+                    <Card key={index} variant="outlined">
                       <div className="story-color-box">
-                        <TextStyle as="h3" textColor="Dark" fontWeight="Medium">
+                        <TextStyle as="h3" textColor="Dark" fontWeight="medium">
                           {color.colorName}
                         </TextStyle>
                       </div>
                       <CopyClipboard
-                        iconAlign="right"
+                       
                         label={color.colorHex}
                         value={color.colorHex}
                       />
@@ -53,7 +53,7 @@ const Template = () => {
                   </div>
                 );
               })}
-            </HorizontalFlex>
+            </FlexLayout>
           </Card>
         );
       })}

@@ -1,35 +1,35 @@
 ol,
 ul,
-.jiffyui-list {
+.jf-list {
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
-.jiffyui-list .jiffyui-list--item {
+.jf-list .jf-list--item {
   font-size: 1.4rem;
   line-height: 2.2rem;
   margin-bottom: 0.8rem;
-  color: var(--jiffyui-naturalDark-900);
+  color: var(--jf-naturalDark-900);
   position: relative;
   padding-left: 1.6rem;
 }
 
-.jiffyui-olList--decimal__style {
+.jf-olList--decimal__style {
   --listStyleType: decimal;
 }
 
-.jiffyui-olList--roman__style {
+.jf-olList--roman__style {
   --listStyleType: lower-roman;
 }
 
-.jiffyui-olList--alfabet__style {
+.jf-olList--alfabet__style {
   --listStyleType: lower-alpha;
 }
 
-ol.jiffyui-list li.jiffyui-list--item::before {
+ol.jf-list li.jf-list--item::before {
   margin-right: 1rem;
-  font-family: var(--jiffyui-medium-font);
+  font-family: var(--jf-medium-font);
   color: var();
   vertical-align: top;
   position: absolute;
@@ -37,49 +37,49 @@ ol.jiffyui-list li.jiffyui-list--item::before {
   top: 0;
 }
 
-.jiffyui-olList--decimal__style .jiffyui-olList--decimal {
+.jf-olList--decimal__style .jf-olList--decimal {
   counter-reset: listStyle;
   list-style-type: none;
 }
 
-.jiffyui-olList--decimal__style .jiffyui-olList--decimal li {
+.jf-olList--decimal__style .jf-olList--decimal li {
   counter-increment: listStyle;
 }
 
-.jiffyui-olList--decimal__style .jiffyui-olList--decimal li::before {
+.jf-olList--decimal__style .jf-olList--decimal li::before {
   content: counter(listStyle, var(--listStyleType)) ".";
 }
-.jiffyui-unList--squire .jiffyui-list--item::before {
-  border: var(--jiffyui-borderWidth-thin) solid var(--jiffyui-naturalLight-700);
+.jf-unList--squire .jf-list--item::before {
+  border: var(--jf-borderWidth-thin) solid var(--jf-naturalLight-700);
 }
 
-.jiffyui-olList--roman__style .jiffyui-olList--roman {
+.jf-olList--roman__style .jf-olList--roman {
   counter-reset: listStyle;
   list-style-type: none;
 }
 
-.jiffyui-olList--roman__style .jiffyui-olList--roman li {
+.jf-olList--roman__style .jf-olList--roman li {
   counter-increment: listStyle;
 }
 
-.jiffyui-olList--roman__style .jiffyui-olList--roman li::before {
+.jf-olList--roman__style .jf-olList--roman li::before {
   content: counter(listStyle, var(--listStyleType)) ".";
 }
 
-.jiffyui-olList--alfabet__style .jiffyui-olList--alfabet {
+.jf-olList--alfabet__style .jf-olList--alfabet {
   counter-reset: listStyle;
   list-style-type: none;
 }
 
-.jiffyui-olList--alfabet__style .jiffyui-olList--alfabet li {
+.jf-olList--alfabet__style .jf-olList--alfabet li {
   counter-increment: listStyle;
 }
 
-.jiffyui-olList--alfabet__style .jiffyui-olList--alfabet li::before {
+.jf-olList--alfabet__style .jf-olList--alfabet li::before {
   content: counter(listStyle, var(--listStyleType)) ".";
 }
 
-.jiffyui-list--unordered li.jiffyui-list--item::before {
+.jf-list--unordered li.jf-list--item::before {
   content: '';
   width: 0.7rem;
   height: 0.7rem;
@@ -88,21 +88,21 @@ ol.jiffyui-list li.jiffyui-list--item::before {
   top: 0.7rem;
 }
 
-.jiffyui-unList--disc .jiffyui-list--item::before {
-  background: var(--jiffyui-naturalLight-400);
+.jf-unList--disc .jf-list--item::before {
+  background: var(--jf-naturalLight-400);
   border-radius: 100%;
 }
 
-.jiffyui-unList--squire .jiffyui-list--item::before {
+.jf-unList--squire .jf-list--item::before {
   border-radius: 0;
-  background-color: var(--jiffyui-borderWidth-thin);
+  background-color: var(--jf-borderWidth-thin);
 }
 
-.jiffyui-unList--circle .jiffyui-list--item::before {
+.jf-unList--circle .jf-list--item::before {
   border-radius: 100%;
-  border: var(--jiffyui-borderWidth-thin) solid var(--jiffyui-naturalLight-400);
+  border: var(--jf-borderWidth-thin) solid var(--jf-naturalLight-400);
 }
 
-.jiffyui-list--ordered .jiffyui-list--item {
+.jf-list--ordered .jf-list--item {
   padding-left: 1.8rem;
 }

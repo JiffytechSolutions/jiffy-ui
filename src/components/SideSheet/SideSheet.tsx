@@ -16,26 +16,26 @@ const SideSheet = ({
   const open = useDelay(isOpen, 600);
   return (open || isOpen) ? (
     <Portal>
-      <div className={`side-sheet_overlay  ${(isOpen && open) ? "open" : "close"}`}
+      <div className={`jf-sideSheet_overlay  ${(isOpen && open) ? "open" : "close"}`}
         onClick={onDismiss}
         role="none"
       ></div>
-      <div className={`side-sheet ${(isOpen && open) ? "open" : "close"}`}>
-        <div className={`side-sheet_inner`}>
-          <div className="side-sheet-content">
-            <div className="side-sheet-header">
+      <div className={`jf-sideSheet ${(isOpen && open) ? "open" : "close"}`}>
+        <div className={`jf-sideSheet_inner`}>
+          <div className="jf-sideSheet-content">
+            <div className="jf-sideSheet-header">
               {title && (
                 <TextStyle as="h4" type="MdHeading" textColor="Dark">{title}</TextStyle>
               )}
-              <button className="close-button" onClick={onDismiss}>
+              <button className="jf-close-button" onClick={onDismiss}>
                 <X size={20} />
               </button>
             </div>
-            <div className="side-sheet-body">
+            <div className="jf-sideSheet-body">
               {children}
             </div>
             {footer &&
-              <div className="side-sheet_footer">
+              <div className="jf-sideSheet_footer">
                 {footer}
               </div>
             }
