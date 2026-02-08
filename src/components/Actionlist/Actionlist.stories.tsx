@@ -15,6 +15,7 @@ import {
   Command
 } from "react-feather";
 import InlineStack from "../InlineStack/InlineStack";
+
 import VerticalStack from "../VerticalStack/VerticalStack";
 
 const sizes = ["Small", "Medium", "Large"];
