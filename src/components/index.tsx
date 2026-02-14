@@ -123,6 +123,10 @@ export { default as Table } from './Table/Table';
 // export type { TableI } from './Table/Table';
 
 export { default as Tabs } from './Tabs/Tabs';
+export { default as TabsContent } from './Tabs/Tabs';
+export { default as TabsList } from './Tabs/Tabs';
+export { default as TabsTrigger } from './Tabs/Tabs';
+
 // export type { TabsI } from './Tabs/Tabs';
 
 export { default as Tag } from './Tag/Tag';
