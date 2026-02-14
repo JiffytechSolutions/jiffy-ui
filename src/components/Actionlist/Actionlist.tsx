@@ -3,7 +3,7 @@ import { Check } from "react-feather";
 import Popover from "../Dropdown/Dropdown";
 import "./actionlist.css";
 
-const ActionListComponent = ({
+const ActionList = ({
   children,
   items = [],
   trigger = "click",
@@ -343,10 +343,7 @@ export interface ActionListItemsI {
   divider?: boolean;
 }
 
-// Memoized ActionList component for better performance  
-const ActionList = React.memo(ActionListComponent);
+
 
 export default ActionList;
 
-// Also export with legacy name for backward compatibility
-export { ActionList as Actionlist };
